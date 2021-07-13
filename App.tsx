@@ -5,7 +5,7 @@ import {View, Text} from 'react-native';
   return (
     <View>
       <Text>
-      Hola mundo
+       Testeando en Prod
       </Text>
     </View>
   )
@@ -13,4 +13,3 @@ import {View, Text} from 'react-native';
 
 
 export default App;
-testss
