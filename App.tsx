@@ -1,16 +1,18 @@
+import 'react-native-gesture-handler';
 import React from 'react';
-import {View, Text} from 'react-native';
+
+import { NavigationContainer } from '@react-navigation/native';
+
+import { DrawerNavigation } from './src/Navigation/DrawerNavigation';
+import { TopTapNavigator } from './src/Navigation/TopTapNavigator';
 
  const App = () => {
   return (
-    <View>
-      <Text>
-      Hola mundo
-      </Text>
-    </View>
+    <NavigationContainer>
+      <TopTapNavigator/>
+    </NavigationContainer>
   )
 }
 
 
 export default App;
-testss
