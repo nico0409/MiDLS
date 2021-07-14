@@ -9,7 +9,7 @@ import { TopTapNavigator } from './src/Navigation/TopTapNavigator';
  const App = () => {
   return (
     <NavigationContainer>
-      <TopTapNavigator/>
+      <DrawerNavigation/>
     </NavigationContainer>
   )
 }
