@@ -3,12 +3,12 @@ import React from 'react';
 import {View, Text} from 'react-native';
 
 
- export const Pagina2Screeen = () => {
+ export const ContactScreen = () => {
   return (
    
       <View>
         <Text>
-        pagina2
+        pagina3
         </Text>
       </View>
    
