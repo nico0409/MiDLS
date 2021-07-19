@@ -18,28 +18,26 @@ interface Props extends MaterialTopTabScreenProps <ParamListBase,'PersonaScreen'
 }
 
  export const NewsScreen= ({navigation}:Props) => {
-  const {signIn,status,currentUrl} = useContext(AuthContext)
+  const {signIn,status,changeURLNews} = useContext(AuthContext)
  
   
- 
- 
- return (
+  console.log('estado afuera:'+status)
+  /* useEffect(() => {
+    navigation.addListener('tabPress',()=>console.log('entre a notcias'))
+     
+   }, []) */
+
+  return (
    
       <View style={styless.containerWebView}>
-        {
-          (false)?
-            <ActivityIndicator size={35} color="rgba(245,217,47,1)" style={{marginTop:20}}></ActivityIndicator>
-            :
-            <WebView 
-              key={status}
-              onNavigationStateChange={navstate=>signIn(navstate.url)}
-              style={styless.webview}
-              source={{ uri: 'https://midls.dls-archer.com/midls/?page_id=419' }}
-              />
-        }
-        
-        </View>
-        
+          <WebView 
+          key={status}
+          onLoadEnd={()=>signIn()}
+          onNavigationStateChange={navstate=>changeURLNews(navstate.url)} 
+          style={styless.webview}
+          source={{ uri: 'https://midls.dls-archer.com/midls/?page_id=419' }} />
+      </View>
+   
   )
 }
 

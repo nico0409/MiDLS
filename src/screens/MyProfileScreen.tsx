@@ -23,11 +23,11 @@ interface Props extends MaterialTopTabScreenProps <ParamListBase,'PersonaScreen'
  export const MyProfileScreen = ( {navigation}:Props ) => {
 
 
-  const {signIn,logOut,status} = useContext(AuthContext)
+  const {signIn,changeURLProfile,status} = useContext(AuthContext)
  
  
 
- console.log('estado afuera:'+status)
+ 
 
   
 /* useEffect(() => {
@@ -41,15 +41,18 @@ interface Props extends MaterialTopTabScreenProps <ParamListBase,'PersonaScreen'
    // console.log(webviewRef.current!.startUrl); 
   }  */
   
- // console.log(status);
+  
 
   return (
     <View style={styless.containerWebView}>
          <WebView
-            onNavigationStateChange={navstate=>signIn(navstate.url)} 
+            //onNavigationStateChange={navstate=>signIn(navstate.url)} 
+           //onNavigationStateChange={navstate=>console.log(navstate.url)}
+           onLoadEnd={()=>signIn()}
+          onNavigationStateChange={navstate=>changeURLProfile(navstate.url)} 
             style={styless.webview}
             key={status}
-            source={{ uri: 'https://midls.dls-archer.com/midls/?page_id=48' }} 
+            source={{ uri: 'https://midls.dls-archer.com/midls/user/' }} 
             /> 
     </View>    
          )

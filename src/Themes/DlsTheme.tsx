@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 export const styless = StyleSheet.create({
-    containerWebView:{
+  containerWebView:{
       flex:1,
       paddingTop:'5%'
     },
