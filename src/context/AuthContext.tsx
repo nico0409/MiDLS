@@ -1,10 +1,12 @@
-import React,{ createContext, useReducer,useState} from 'react'
+import React,{ createContext, useReducer,useState, useEffect } from 'react'
 import { authReducer, AuthState } from './authReducer'
+
 
 
 type AuthContextProps={
     status:'checking'|'authenticated'|'not-authenticated';
     errorMessage:string|null;
+    currentUrl:string;
     signIn:(url:string)=> void;
     logOut:()=>void;
     removeError:()=>void;
@@ -34,7 +36,8 @@ export const AuthProvider=({children}:any)=>{
         
         if (!currentUrl.includes('https://midls.dls-archer.com/midls/login/')&& currentUrl!=''&&state.status!='authenticated')
         {
-        dispatch({type:'signIn'})
+            dispatch({type:'signIn'})
+
         }
          if((currentUrl.includes('https://midls.dls-archer.com/midls/login/')&& state.status=='authenticated')) 
         {
@@ -52,6 +55,7 @@ export const AuthProvider=({children}:any)=>{
              signIn,
             logOut,
             removeError,
+            currentUrl,
            
             
         }}>
