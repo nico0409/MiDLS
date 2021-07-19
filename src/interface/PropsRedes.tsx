@@ -8,5 +8,6 @@ export interface PropsRedes {
 
 export interface DataRedes {
     id: number;
+    url: string;
     props: PropsRedes;
 };

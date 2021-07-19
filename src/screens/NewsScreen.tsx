@@ -6,7 +6,6 @@ import { View, ActivityIndicator } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { styless } from '../Themes/DlsTheme';
 import { AuthContext } from '../context/AuthContext';
-import { colors } from '../../../pruductosApp/src/Navigation/Tabs';
 import { useState } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -35,7 +34,8 @@ interface Props extends MaterialTopTabScreenProps <ParamListBase,'PersonaScreen'
               key={status}
               onNavigationStateChange={navstate=>signIn(navstate.url)}
               style={styless.webview}
-              source={{ uri: 'https://midls.dls-archer.com/midls/?page_id=419' }} />
+              source={{ uri: 'https://midls.dls-archer.com/midls/?page_id=419' }}
+              />
         }
         
         </View>
