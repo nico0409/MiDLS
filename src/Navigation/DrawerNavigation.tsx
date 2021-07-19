@@ -15,10 +15,11 @@ export const DrawerNavigation = () => {
   const {isConnected}=useNetInfo();
   return (
     <SafeAreaView style={styles.container}>
+     {isConnected?
       <Drawer.Navigator
         drawerContent={(props: any) => <DrawerMenu {...props} />}
       >
-      {isConnected?
+      
         <Drawer.Screen name="TopTapNavigator" component={TopTapNavigator} />
         <Drawer.Screen name="ContactScreen" component={ContactScreen} />
       </Drawer.Navigator>
