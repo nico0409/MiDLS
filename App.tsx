@@ -3,16 +3,27 @@ import React from 'react';
 
 import { NavigationContainer } from '@react-navigation/native';
 
+
+
+import { AuthProvider } from './src/context/AuthContext';
 import { DrawerNavigation } from './src/Navigation/DrawerNavigation';
-import { TopTapNavigator } from './src/Navigation/TopTapNavigator';
-import { Backgrond } from './src/components/Backgrond';
-import { WhitOutConection } from './src/screens/WhitOutConection';
+
+
+
+const AppState=({children}:{children:JSX.Element|JSX.Element[]})=>{
+  return(
+    <AuthProvider>
+    {children}
+    </AuthProvider>
+  )
+}
 
  const App = () => {
   return (
     <NavigationContainer>
-     {/*  <DrawerNavigation/> */}
-     <WhitOutConection/>
+      <AppState>
+        <DrawerNavigation/>
+      </AppState>
     </NavigationContainer>
   )
 }
