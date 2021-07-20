@@ -14,6 +14,7 @@ import { NewsScreen } from '../screens/NewsScreen';
 import { MyProfileScreen } from '../screens/MyProfileScreen';
 import { PaycheckScreen } from '../screens/PaycheckScreen';
 import { MyProfileScreenDrawer } from '../screens/MyProfileScreenDrawer';
+import { colors } from '../Themes/DlsTheme';
 
 const Drawer = createDrawerNavigator();
 
@@ -49,6 +50,7 @@ export const DrawerNavigation = () => {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor:colors.dlsGrayPrimary,
     flex: 1,
   },
 });
