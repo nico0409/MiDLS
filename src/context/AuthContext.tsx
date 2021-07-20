@@ -1,5 +1,6 @@
-import React,{ createContext, useReducer,useState} from 'react'
+import React,{ createContext, useReducer,useState, useEffect } from 'react'
 import { authReducer, AuthState } from './authReducer'
+
 
 
 type AuthContextProps={
@@ -46,29 +47,25 @@ export const AuthProvider=({children}:any)=>{
     const signIn=()=>{
      
        
-        //setCurrentUrl(url)
-        //currentUrl=url;
-        //console.log(currentUrl);
-        console.log('nwes'+currentUrlNews);
-        console.log('profile'+currentUrlProfile);
-        console.log(state.status);
+      
 
         if ((currentUrlProfile.includes('https://midls.dls-archer.com/midls/user/')||
         currentUrlNews.includes('https://midls.dls-archer.com/midls/noticias/')||
-        currentUrlNews.includes('https://midls.dls-archer.com/midls/noticias-dls-buenos-aires/')
+        currentUrlNews.includes('https://midls.dls-archer.com/midls/noticias-dls-buenos-aires/')||
+        currentUrlNews.includes('https://midls.dls-archer.com/midls/mi-recibo/')||
+        currentUrlNews.includes('https://midls.dls-archer.com/midls/contacto-2/')||
+        currentUrlNews.includes('https://midls.dls-archer.com/midls/consultas-y-reclamos/')
         )&&state.status!='authenticated')
         {
-            console.log(currentUrlNews);
-            console.log(currentUrlProfile);
-            console.log(state.status);
-            
-            console.log('entr al distpach');
-            
+        
+        
         dispatch({type:'signIn'})
         }
-         if((currentUrlNews.includes('https://midls.dls-archer.com/midls/login/')||
-         currentUrlProfile.includes('https://midls.dls-archer.com/midls/login/')&& (state.status=='authenticated' || state.status=='checking'))) 
+         if(((currentUrlNews.includes('https://midls.dls-archer.com/midls/login/')||
+         currentUrlProfile.includes('https://midls.dls-archer.com/midls/login/'))&& (state.status=='authenticated' || state.status=='checking'))) 
         {
+           
+           
             dispatch({type:'logOut'})
         }      
         

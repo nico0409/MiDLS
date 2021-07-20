@@ -12,13 +12,17 @@ export const MapScreen = () => {
   const { isConnected } = useNetInfo();
   return (
 
-    <View style={styless.containerWebView}>
-      {isConnected ? <WebView
-        style={styless.webview}
-        source={{ uri: 'https://www.google.com/maps/d/u/0/embed?mid=1RstH1PUHyNfyMUr0KSTgThfmuDLvGwIs' }}
-      /> :
+    <View style={[styless.containerWebView, { paddingTop: 0 }]}>
+
+      {isConnected ?
+        <WebView
+          style={styless.webview}
+          source={{ uri: 'https://www.google.com/maps/d/u/0/embed?mid=1RstH1PUHyNfyMUr0KSTgThfmuDLvGwIs' }}
+        />
+        :
         <WhitOutConection />
       }
+      
     </View>
 
   )
