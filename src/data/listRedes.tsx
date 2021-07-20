@@ -1,4 +1,5 @@
-import { DataRedes } from '../interface/PropsRedes';
+import { DataRedes } from '../interfaces/PropsRedes';
+import { colors } from '../Themes/DlsTheme';
 
 export const listRedes: DataRedes[] = [
     {
@@ -7,7 +8,7 @@ export const listRedes: DataRedes[] = [
         props: {
             type: "icon",
             nameOrUrl: "logo-youtube",
-            color: "black",
+            color: colors.dlsYellowSecondary,
             size: 80,
             descr: "dls-archer.com"
         }
@@ -18,7 +19,7 @@ export const listRedes: DataRedes[] = [
         props: {
             type: "icon",
             nameOrUrl: "logo-youtube",
-            color: "black",
+            color: colors.dlsGrayPrimary,
             size: 80,
             descr: "archerwell.com"
         }
@@ -29,7 +30,7 @@ export const listRedes: DataRedes[] = [
         props: {
             type: "icon",
             nameOrUrl: "logo-youtube",
-            color: "black",
+            color: colors.dlsYellowSecondary,
             size: 80,
             descr: "DLS Latinoamerica"
         }
@@ -40,7 +41,7 @@ export const listRedes: DataRedes[] = [
         props: {
             type: "icon",
             nameOrUrl: "logo-youtube",
-            color: "black",
+            color: colors.dlsGrayPrimary,
             size: 80,
             descr: "Archer Well"
         }
@@ -51,7 +52,7 @@ export const listRedes: DataRedes[] = [
         props: {
             type: "icon",
             nameOrUrl: "logo-linkedin",
-            color: "black",
+            color: colors.dlsBluePrimary,
             size: 80,
             descr: "DLS Archer"
         }
@@ -62,7 +63,7 @@ export const listRedes: DataRedes[] = [
         props: {
             type: "icon",
             nameOrUrl: "logo-linkedin",
-            color: "black",
+            color: colors.dlsBluePrimary,
             size: 80,
             descr: "DLS Argentina"
         }

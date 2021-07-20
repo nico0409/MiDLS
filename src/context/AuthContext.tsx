@@ -51,10 +51,13 @@ export const AuthProvider=({children}:any)=>{
 
         if ((currentUrlProfile.includes('https://midls.dls-archer.com/midls/user/')||
         currentUrlNews.includes('https://midls.dls-archer.com/midls/noticias/')||
-        currentUrlNews.includes('https://midls.dls-archer.com/midls/noticias-dls-buenos-aires/')
+        currentUrlNews.includes('https://midls.dls-archer.com/midls/noticias-dls-buenos-aires/')||
+        currentUrlNews.includes('https://midls.dls-archer.com/midls/mi-recibo/')||
+        currentUrlNews.includes('https://midls.dls-archer.com/midls/contacto-2/')||
+        currentUrlNews.includes('https://midls.dls-archer.com/midls/consultas-y-reclamos/')
         )&&state.status!='authenticated')
         {
-        console.log('entre al sigin');
+        
         
         dispatch({type:'signIn'})
         }

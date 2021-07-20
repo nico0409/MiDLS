@@ -8,14 +8,13 @@ export const DrawerMenu = () => {
 
     return (
         <View style={styles.container}>
-
+           
             <TouchableOpacity
                 style={styles.botonRedes}
                 onPress={() => setIsVisible(true)}>
-                <Text>Redes</Text>
+                <Text>Visitanos</Text>
             </TouchableOpacity>
-
-            <Modal
+              <Modal
                 animationType="slide"
                 visible={isVisible}
                 transparent={true}
@@ -43,6 +42,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
+        paddingTop:'40%'
     },
     botonRedes: {
         width: '80%',

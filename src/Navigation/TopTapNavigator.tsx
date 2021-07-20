@@ -9,6 +9,7 @@ import { MyProfileScreen } from '../screens/MyProfileScreen';
 import { MapScreen } from '../screens/MapScreen';
 import { NewsScreen } from '../screens/NewsScreen';
 import { ToggleDrawerHeader } from '../components/ToggleDrawerHeader';
+import { colors } from '../Themes/DlsTheme';
 
 
 interface Props extends DrawerScreenProps<any, any> { };
@@ -25,9 +26,9 @@ export const TopTapNavigator = ({ navigation, route }: Props) => {
          tabBarOptions={{
            showIcon:true,
            showLabel:false,
-           pressColor:'rgba(245,217,47,1)',
-           activeTintColor:'rgba(245,217,47,1)',
-           inactiveTintColor:'rgba(0,183,237,1)',
+           pressColor:colors.dlsYellowSecondary,
+           activeTintColor:colors.dlsYellowSecondary,
+           inactiveTintColor:colors.dlsBluePrimary,
            indicatorStyle:{backgroundColor:'rgba(0,183,237,1)'}
 
          }}
