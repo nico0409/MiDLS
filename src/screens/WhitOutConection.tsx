@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     buttonText: {
         fontSize: 20,
         color: 'rgba(0,0,0,0.8)',
-        fontFamily: 'StagSans-Light',
+        //fontFamily: 'StagSans-Light',
         fontStyle: 'italic',
         textDecorationLine: 'underline',
         

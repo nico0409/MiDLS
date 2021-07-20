@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     itemText:{
         marginLeft:10,
         fontSize:19,
-        fontFamily:'StagSans-Semibold',
+        //fontFamily:'StagSans-Semibold',
         color:colors.dlsYellowSecondary,
         fontStyle: 'italic',
 
