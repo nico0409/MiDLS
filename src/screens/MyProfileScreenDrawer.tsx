@@ -28,7 +28,7 @@ interface Props extends DrawerScreenProps<any, any> { };
 
   
 
-   console.log('estado afuera:'+status) 
+   
   return (
     <View style={{flex:1}}> 
     <ToggleDrawerHeader route={route} navigation={navigation} /> 

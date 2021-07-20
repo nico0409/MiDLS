@@ -39,6 +39,7 @@ export const AuthProvider=({children}:any)=>{
    const changeURLNews=(url:string)=>{
 
         currentUrlNews=url;
+        console.log(currentUrlNews);
     }
     const changeURLProfile =(url:string)=>{
 
@@ -48,6 +49,7 @@ export const AuthProvider=({children}:any)=>{
      
        
       
+
 
         if ((currentUrlProfile.includes('https://midls.dls-archer.com/midls/user/')||
         currentUrlNews.includes('https://midls.dls-archer.com/midls/noticias/')||
