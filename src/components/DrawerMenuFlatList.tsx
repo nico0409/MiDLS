@@ -6,13 +6,14 @@ import { FlatLIstMenuItem } from './FlatLIstMenuItem';
 import { ItemSeparator } from './ItemSeparator';
 import { ScrollView } from 'react-native-gesture-handler';
 import { DrawerMenu } from './DrawerMenu';
+import { colors } from '../Themes/DlsTheme';
 
 export const MenuInterno=({navigation}: DrawerContentComponentProps<DrawerContentOptions>)=>{
 
     return(
          
        
-          <View style={{flex:1}}>
+          <View style={{flex:1 ,backgroundColor:colors.dlsGrayPrimary}}>
           
             <View style={{...styless.avatarContainer ,marginBottom:40}}>
                <Image

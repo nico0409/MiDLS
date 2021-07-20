@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
         fontFamily: 'StagSans-Light',
         fontStyle: 'italic',
         textDecorationLine: 'underline',
+        
 
 
 

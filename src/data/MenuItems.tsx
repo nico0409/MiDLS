@@ -10,15 +10,9 @@ export const menuItems:MenuItem[]=[{
     components:'PaycheckScreen'
 },
 {
-    name:'Test Covid',
-    icon:'git-commit-outline',
-    components:'SwitchScreen'
-},
-
-{
     name:'Mi Perfil',
     icon:'person-outline',
-    components:'MyProfileScreen'
+    components:'MyProfileScreenDrawer'
 },
 {
     name:'Noticias',

@@ -5,6 +5,8 @@ import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import  Icon  from 'react-native-vector-icons/Ionicons';
 import { MenuItem } from '../interfaces/appInterfaces';
 import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types';
+import { colors } from '../Themes/DlsTheme';
+
 
 interface Props{
  menuItem:MenuItem   
@@ -25,20 +27,17 @@ export const FlatLIstMenuItem = ({menuItem,navigation}:Props) => {
            <Icon
             name={menuItem.icon}
             size={23}
-            color={'black'}
+            color={colors.dlsYellowSecondary}
            
            />
-        <Text style={{...styles.itemText,
-                    color:'black'
-                    }}>
-            {/* <Text style={{...styles.itemText,color:colors.text}}> */}
+        <Text style={styles.itemText}>
                 {menuItem.name}
                 </Text>
                 <View style={{flex:1}}></View>
         <Icon
             name="chevron-forward-outline"
             size={30}
-            color={'black'}
+            color={colors.dlsBluePrimary}
         />        
        </View>
        </TouchableOpacity>
@@ -49,8 +48,15 @@ const styles = StyleSheet.create({
         flexDirection:'row'
     },
     itemText:{
-        marginLeft:5,
+        marginLeft:10,
         fontSize:19,
+        fontFamily:'StagSans-Semibold',
+        color:colors.dlsYellowSecondary,
+        fontStyle: 'italic',
+
+        
+        
+
     },
   
     
