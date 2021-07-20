@@ -13,9 +13,19 @@ const Drawer = createDrawerNavigator();
 
 export const DrawerNavigation = () => {
   const {isConnected}=useNetInfo();
+
+
+
   return (
     <SafeAreaView style={styles.container}>
-     {isConnected?
+     {!isConnected && isConnected!==null?
+    
+     
+      <WhitOutConection/>
+
+     
+     
+     :
       <Drawer.Navigator
         drawerContent={(props: any) => <DrawerMenu {...props} />}
       >
@@ -23,9 +33,9 @@ export const DrawerNavigation = () => {
         <Drawer.Screen name="TopTapNavigator" component={TopTapNavigator} />
         <Drawer.Screen name="ContactScreen" component={ContactScreen} />
       </Drawer.Navigator>
-      :
-      <WhitOutConection/>
       }
+     
+      
     </SafeAreaView>
   );
 }

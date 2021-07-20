@@ -47,23 +47,22 @@ export const AuthProvider=({children}:any)=>{
     const signIn=()=>{
      
        
-        //setCurrentUrl(url)
-        //currentUrl=url;
-        //console.log(currentUrl);
-        console.log('nwes'+currentUrlNews);
-        console.log('profile'+currentUrlProfile);
-        console.log(state.status);
+      
 
         if ((currentUrlProfile.includes('https://midls.dls-archer.com/midls/user/')||
         currentUrlNews.includes('https://midls.dls-archer.com/midls/noticias/')||
         currentUrlNews.includes('https://midls.dls-archer.com/midls/noticias-dls-buenos-aires/')
         )&&state.status!='authenticated')
         {
+        console.log('entre al sigin');
+        
         dispatch({type:'signIn'})
         }
-         if((currentUrlNews.includes('https://midls.dls-archer.com/midls/login/')||
-         currentUrlProfile.includes('https://midls.dls-archer.com/midls/login/')&& (state.status=='authenticated' || state.status=='checking'))) 
+         if(((currentUrlNews.includes('https://midls.dls-archer.com/midls/login/')||
+         currentUrlProfile.includes('https://midls.dls-archer.com/midls/login/'))&& (state.status=='authenticated' || state.status=='checking'))) 
         {
+           
+           
             dispatch({type:'logOut'})
         }      
         
