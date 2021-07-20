@@ -13,6 +13,7 @@ import { RrhhScreen } from '../screens/RrhhScreen';
 import { NewsScreen } from '../screens/NewsScreen';
 import { MyProfileScreen } from '../screens/MyProfileScreen';
 import { PaycheckScreen } from '../screens/PaycheckScreen';
+import { MyProfileScreenDrawer } from '../screens/MyProfileScreenDrawer';
 
 const Drawer = createDrawerNavigator();
 
@@ -36,7 +37,7 @@ export const DrawerNavigation = () => {
         <Drawer.Screen name="ContactScreen" component={ContactScreen} />
        <Drawer.Screen name="RrhhScreen" component={RrhhScreen}/>
        <Drawer.Screen name="NewsScreen" component={NewsScreen}/> 
-       <Drawer.Screen name="MyProfileScreen" component={MyProfileScreen}/> 
+       <Drawer.Screen name="MyProfileScreenDrawer" component={MyProfileScreenDrawer}/> 
        <Drawer.Screen name="PaycheckScreen" component={PaycheckScreen}/>
       </Drawer.Navigator>
       }
