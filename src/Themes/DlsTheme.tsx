@@ -15,6 +15,7 @@ export const styless = StyleSheet.create({
 })
 
 export const colors = {
+
   dlsBluePrimary: 'rgba(0,183,237,1)',
   dlsYellowSecondary: 'rgba(245,217,47,1)',
   dlsGrayPrimary: 'rgba(66,73,78,1)',

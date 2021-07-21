@@ -83,11 +83,13 @@ const styles = StyleSheet.create({
     },
     closeBtn: {
         backgroundColor: colors.dlsGrayPrimary,
-        width: 60,
-        height: 60,
+        //width: 60,
+        //height: 60,
+         width: '14.5%',
+        height: '7%',
         position: 'absolute',
-        bottom: 50,
-        right: 25,
+        bottom: '2%',
+        right: '2%',
         borderRadius: 100,
         alignItems: 'center',
         justifyContent: 'center'
@@ -96,8 +98,8 @@ const styles = StyleSheet.create({
         backgroundColor: colors.dlsBluePrimary,
         position: 'absolute',
         borderRadius: 100,
-        width: 20,
-        height: 20,
+        width: '30%',
+        height: '30%',
 
     }
 })

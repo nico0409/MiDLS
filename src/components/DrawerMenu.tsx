@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Text, View, TouchableOpacity, StyleSheet, Modal } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { colors } from '../Themes/DlsTheme';
 import { RedesContent } from './RedesContent';
 
@@ -26,6 +27,7 @@ export const DrawerMenu = () => {
 
                         <View style={styles.titleContainer}>
                             <Text style={styles.textModal}>Nuestras Redes!</Text>
+                            <Icon name={'close-outline'} size={40} color={'white'} style={styles.closebtn} />
                         </View>
 
                         <RedesContent />
@@ -80,8 +82,13 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 24
     },
+    closebtn:{
+
+        
+    },
     titleContainer: {
         alignItems: 'center',
+        flexDirection:'row',
         backgroundColor: colors.dlsGrayPrimary,
         height: '15%',
         justifyContent: 'center',
