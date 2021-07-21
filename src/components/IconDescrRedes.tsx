@@ -3,7 +3,7 @@ import { View, StyleSheet, Text } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { PropsRedes } from '../interface/PropsRedes';
+import { PropsRedes } from '../interfaces/PropsRedes';
 
 export const IconDescrRedes = ({ type, nameOrUrl, color, size, descr }: PropsRedes) => {
     return (
@@ -16,10 +16,8 @@ export const IconDescrRedes = ({ type, nameOrUrl, color, size, descr }: PropsRed
 
 const styles = StyleSheet.create({
     button:{
-        width: '80%',
-        height: 130,
+        height: 120,
         alignItems: 'center',
         justifyContent: 'center',
-        marginVertical: 20
     }
 })
