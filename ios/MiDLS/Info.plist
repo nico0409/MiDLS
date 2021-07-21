@@ -54,11 +54,15 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>Ionicons.ttf</string>
+		<string>FontAwesome.ttf</string>
+		<string>Stag-Semibold.ttf</string>
+		<string>StagSans-Light.ttf</string>
+		<string>StagSans-LightItalic.ttf</string>
+		<string>StagSans-Semibold.ttf</string>
 		<string>AntDesign.ttf</string>
 		<string>Entypo.ttf</string>
 		<string>EvilIcons.ttf</string>
 		<string>Feather.ttf</string>
-		<string>FontAwesome.ttf</string>
 		<string>FontAwesome5_Brands.ttf</string>
 		<string>FontAwesome5_Regular.ttf</string>
 		<string>FontAwesome5_Solid.ttf</string>
@@ -69,10 +73,6 @@
 		<string>Octicons.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
-		<string>Stag-Semibold.ttf</string>
-		<string>StagSans-Light.ttf</string>
-		<string>StagSans-LightItalic.ttf</string>
-		<string>StagSans-Semibold.ttf</string>
 	</array>
 </dict>
 </plist>

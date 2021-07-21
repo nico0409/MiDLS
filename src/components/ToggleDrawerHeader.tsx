@@ -37,7 +37,7 @@ export const ToggleDrawerHeader = ({ navigation, route }: Props) => {
                             name="home"
                             color={colors.dlsBluePrimary}
                             size={35}
-                        />
+                        /> 
                     </View>
                 }
             </TouchableOpacity>

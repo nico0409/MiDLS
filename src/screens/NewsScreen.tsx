@@ -30,7 +30,7 @@ interface Props extends MaterialTopTabScreenProps <ParamListBase,'PersonaScreen'
      
    }, []) */
 
-   console.log('estado afuera:'+status) 
+   
   return (
    
       <View style={styless.containerWebView}>
