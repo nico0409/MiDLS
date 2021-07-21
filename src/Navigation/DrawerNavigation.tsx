@@ -18,31 +18,31 @@ import { MyProfileScreenDrawer } from '../screens/MyProfileScreenDrawer';
 const Drawer = createDrawerNavigator();
 
 export const DrawerNavigation = () => {
-  const {isConnected}=useNetInfo();
-  
+  const { isConnected } = useNetInfo();
+
 
 
   return (
     <SafeAreaView style={styles.container}>
-     {!isConnected && isConnected!==null?
-      <WhitOutConection/>
-:
-      <Drawer.Navigator
-        
-       // drawerContent={(props: any) => <DrawerMenu {...props} />}
-       drawerContent={(props:any)=><MenuInterno {...props}/>}
-      >
-      
-        <Drawer.Screen name="TopTapNavigator" component={TopTapNavigator} />
-        <Drawer.Screen name="ContactScreen" component={ContactScreen} />
-       <Drawer.Screen name="RrhhScreen" component={RrhhScreen}/>
-       <Drawer.Screen name="NewsScreen" component={NewsScreen}/> 
-       <Drawer.Screen name="MyProfileScreenDrawer" component={MyProfileScreenDrawer}/> 
-       <Drawer.Screen name="PaycheckScreen" component={PaycheckScreen}/>
-      </Drawer.Navigator>
+      {!isConnected && isConnected !== null ?
+        <WhitOutConection />
+        :
+        <Drawer.Navigator
+
+          // drawerContent={(props: any) => <DrawerMenu {...props} />}
+          drawerContent={(props: any) => <MenuInterno {...props} />}
+        >
+
+          <Drawer.Screen name="TopTapNavigator" component={TopTapNavigator} />
+          <Drawer.Screen name="ContactScreen" component={ContactScreen} />
+          <Drawer.Screen name="RrhhScreen" component={RrhhScreen} />
+          <Drawer.Screen name="NewsScreen" component={NewsScreen} />
+          <Drawer.Screen name="MyProfileScreenDrawer" component={MyProfileScreenDrawer} />
+          <Drawer.Screen name="PaycheckScreen" component={PaycheckScreen} />
+        </Drawer.Navigator>
       }
-     
-      
+
+
     </SafeAreaView>
   );
 }
