@@ -4,70 +4,68 @@ import { colors } from '../Themes/DlsTheme';
 export const listRedes: DataRedes[] = [
     {
         id: 1,
-        url: 'https://dls-archer.com/',
+        url:"https://dls-archer.com/",
         props: {
-            type: 'image',
-            nameIcon: '',
-            requireImage: require('../assets/logoDlsOfArcher.png'),
+            type: "icon",
+            nameOrUrl: "logo-youtube",
             color: colors.dlsYellowSecondary,
-            size: 60,
-            descr: 'dls-archer.com'
+            size: 80,
+            descr: "dls-archer.com"
         }
     },
     {
         id: 2,
-        url: 'https://www.archerwell.com/',
+        url:"https://www.archerwell.com/",
         props: {
-            type: 'image',
-            nameIcon: '',
-            requireImage: require('../assets/logoArcher.png'),
+            type: "icon",
+            nameOrUrl: "logo-youtube",
             color: colors.dlsGrayPrimary,
-            size: 60,
-            descr: 'archerwell.com'
+            size: 80,
+            descr: "archerwell.com"
         }
     },
     {
         id: 3,
-        url: 'https://www.youtube.com/channel/UCJO6TVfaFrVdADVbzaK7iaA',
+        url:"https://www.youtube.com/channel/UCJO6TVfaFrVdADVbzaK7iaA",
         props: {
-            type: 'icon',
-            nameIcon: 'logo-youtube',
+            type: "icon",
+            nameOrUrl: "logo-youtube",
             color: colors.dlsYellowSecondary,
-            size: 60,
-            descr: 'DLS Latinoamerica'
+            size: 80,
+            descr: "DLS Latinoamerica"
         }
     },
     {
         id: 4,
-        url: 'https://www.youtube.com/channel/UChtJVbF4sSuBMFLzYgyqe7Q',
+        url:"https://www.youtube.com/channel/UChtJVbF4sSuBMFLzYgyqe7Q",
         props: {
-            type: 'icon',
-            nameIcon: 'logo-youtube',
+            type: "icon",
+            nameOrUrl: "logo-youtube",
             color: colors.dlsGrayPrimary,
-            size: 60,
-            descr: 'Archer Well'
+            size: 80,
+            descr: "Archer Well"
         }
     },
     {
         id: 5,
-        url: 'https://www.linkedin.com/company/dls-archer',
+        url:"https://www.linkedin.com/company/dls-archer",
         props: {
-            type: 'icon',
-            nameIcon: 'logo-linkedin',
+            type: "icon",
+            nameOrUrl: "logo-linkedin",
             color: colors.dlsBluePrimary,
-            size: 60,
-            descr: 'DLS Archer'
+            size: 80,
+            descr: "DLS Archer"
         }
     },
     {
         id: 6,
-        url: 'https://www.linkedin.com/company/dls-argentina',
+        url:"https://www.linkedin.com/company/dls-argentina",
         props: {
-            type: 'icon',
-            nameIcon: 'logo-linkedin',
+            type: "icon",
+            nameOrUrl: "logo-linkedin",
             color: colors.dlsBluePrimary,
-            size: 60,
-            descr: 'DLS Argentina'
+            size: 80,
+            descr: "DLS Argentina"
         }
     },
 ]
