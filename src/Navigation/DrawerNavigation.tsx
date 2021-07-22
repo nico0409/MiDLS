@@ -1,6 +1,7 @@
-import React from 'react'
+import React,{ useEffect }  from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { StackNavigator } from './StackNavigator';
+import SplashScreen from 'react-native-splash-screen'
 
 import { TopTapNavigator } from './TopTapNavigator';
 import { SafeAreaView, StyleSheet, useWindowDimensions } from 'react-native';
@@ -16,12 +17,15 @@ import { PaycheckScreen } from '../screens/PaycheckScreen';
 import { MyProfileScreenDrawer } from '../screens/MyProfileScreenDrawer';
 import { colors } from '../Themes/DlsTheme';
 
+
 const Drawer = createDrawerNavigator();
 
 export const DrawerNavigation = () => {
   const { isConnected } = useNetInfo();
 
-
+ useEffect(() => {
+  SplashScreen.hide();
+}, ) 
 
   return (
     <SafeAreaView style={styles.container}>
