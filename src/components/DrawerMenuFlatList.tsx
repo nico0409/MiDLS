@@ -7,6 +7,7 @@ import { ItemSeparator } from './ItemSeparator';
 import { ScrollView } from 'react-native-gesture-handler';
 import { DrawerMenu } from './DrawerMenu';
 import { colors } from '../Themes/DlsTheme';
+import { Contact } from './Contact';
 
 export const MenuInterno = ({ navigation }: DrawerContentComponentProps<DrawerContentOptions>) => {
 
@@ -35,8 +36,8 @@ export const MenuInterno = ({ navigation }: DrawerContentComponentProps<DrawerCo
         />
       </View>
 
-      <DrawerMenu/>
-
+       <DrawerMenu/> 
+     {/*  <Contact/> */}
     </View>
 
   );
@@ -49,11 +50,14 @@ export const styless = StyleSheet.create({
 
   avatarContainer: {
     width: '100%',
-    height: '13%',
+    height: '20%',
   },
   avatar: {
     width: '100%',
     height: '100%',
+    resizeMode:'stretch',
+    
+    
   },
 
 });
