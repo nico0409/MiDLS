@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { Text, View, TouchableOpacity, StyleSheet, Modal } from 'react-native';
+
 import Icon from 'react-native-vector-icons/Ionicons';
+
 import { colors } from '../Themes/DlsTheme';
 import { RedesContent } from './RedesContent';
 
@@ -14,7 +16,10 @@ export const DrawerMenu = () => {
             <TouchableOpacity
                 style={styles.botonRedes}
                 onPress={() => setIsVisible(true)}>
-                <Text style={styles.textBtn}>Visitanos</Text>
+                <View style={{ marginRight: 5 }}>
+                    <Text style={styles.textBtn}>Visitanos</Text>
+                </View>
+                <Icon name="share-social-sharp" size={30} color={'white'} />
             </TouchableOpacity>
 
             <Modal
@@ -27,18 +32,24 @@ export const DrawerMenu = () => {
 
                         <View style={styles.titleContainer}>
                             <Text style={styles.textModal}>Nuestras Redes!</Text>
-                            <Icon name={'close-outline'} size={40} color={'white'} style={styles.closebtn} />
                         </View>
+
+                        <TouchableOpacity
+                            style={styles.closebtn}
+                            onPress={() => setIsVisible(false)}
+                        >
+                            <Icon name="close-outline" size={30} color={'white'} />
+                        </TouchableOpacity>
 
                         <RedesContent />
 
-                        <View style={styles.footerContainer}>
+                        {/* <View style={styles.footerContainer}>
                             <TouchableOpacity
                                 style={styles.botonRedesClose}
                                 onPress={() => setIsVisible(false)}>
                                 <Text style={styles.textFooterBtn}>Cerrar Ventana</Text>
                             </TouchableOpacity>
-                        </View>
+                        </View> */}
 
                     </View>
                 </View>
@@ -57,6 +68,7 @@ const styles = StyleSheet.create({
         width: '80%',
         alignItems: 'center',
         justifyContent: 'center',
+        flexDirection: 'row'
     },
     modalContainer: {
         flex: 1,
@@ -64,33 +76,30 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     modalBackground: {
-        backgroundColor: '#e9e9e9',
-        height: '90%',
-        width: '90%',
+        backgroundColor: '#f3f3f3',
+        height: '85%',
+        width: '85%',
         borderRadius: 30,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 1,
+            height: 3,
         },
-        shadowOpacity: 0.20,
-        shadowRadius: 1.41,
-        elevation: 2,
+        shadowOpacity: 0.27,
+        shadowRadius: 4.65,
+
+        elevation: 6,
     },
     textBtn: {
         fontFamily: 'Stag-Semibold',
         color: 'white',
         fontSize: 24
     },
-    closebtn:{
-
-        
-    },
     titleContainer: {
-        alignItems: 'center',
-        flexDirection:'row',
+        flexDirection: 'row',
         backgroundColor: colors.dlsGrayPrimary,
         height: '15%',
+        alignItems: 'center',
         justifyContent: 'center',
         borderTopLeftRadius: 28,
         borderTopRightRadius: 28,
@@ -100,27 +109,31 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 26
     },
-    footerContainer: {
+    closebtn: {
+        position: 'absolute',
+        right: 20,
+        top: 20
+    },
+    /* footerContainer: {
         backgroundColor: colors.dlsGrayPrimary,
         height: '10%',
         justifyContent: 'center',
         borderBottomLeftRadius: 28,
         borderBottomRightRadius: 28,
-    },
-    botonRedesClose: {
+    }, */
+    /* botonRedesClose: {
         width: '80%',
         alignSelf: 'center',
         alignItems: 'center',
         justifyContent: 'center',
-        /* marginVertical: 20, */
         borderWidth: 2,
         borderColor: 'white',
         borderRadius: 12,
         paddingVertical: 5
-    },
-    textFooterBtn: {
+    }, */
+    /* textFooterBtn: {
         fontFamily: 'StagSans-Semibold',
         color: 'white',
         fontSize: 20
-    }
+    } */
 })

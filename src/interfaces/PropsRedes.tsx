@@ -1,6 +1,9 @@
+import { ImageSourcePropType } from "react-native";
+
 export interface PropsRedes {
     type: 'icon' | 'image';
-    nameOrUrl: string;
+    nameIcon: string;
+    requireImage?: ImageSourcePropType;
     color?: string;
     size?: number;
     descr?: string;

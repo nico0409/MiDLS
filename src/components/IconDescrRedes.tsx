@@ -1,23 +1,78 @@
 import React from 'react'
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, Image } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { PropsRedes } from '../interfaces/PropsRedes';
 
-export const IconDescrRedes = ({ type, nameOrUrl, color, size, descr }: PropsRedes) => {
+const alternativePath = require('../assets/logoArcher.png');
+
+export const IconDescrRedes = ({ type, nameIcon, requireImage = alternativePath, color, size, descr }: PropsRedes) => {
+
     return (
-            <View style={styles.button}>
-                <Icon name={nameOrUrl} color={color} size={size} />
-                <Text>{descr}</Text>
-            </View>
+        <>
+            {/* <View style={styles.button}> */}
+
+            {type === "image"
+                ?
+                <>
+                    <View style={styles.imageContainer}>
+                        <Image
+                            source={requireImage}
+                            style={{
+                                flex: 1,
+                                width: '70%',
+                                height: '100%',
+                                resizeMode: 'center',
+                            }}
+                        />
+                    </View>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.textDescr}>{descr}</Text>
+                    </View>
+                </>
+                :
+                <>
+                    <View style={styles.imageContainer}>
+                        <Icon name={nameIcon} color={color} size={size} />
+                    </View>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.textDescr}>{descr}</Text>
+                    </View>
+                </>
+            }
+
+            {/* </View> */}
+        </>
     )
 }
 
 const styles = StyleSheet.create({
-    button:{
-        height: 120,
+    /* button: {
+        backgroundColor: 'orange',
+        flexDirection: 'row',
+        height: '100%',
+        width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
+    }, */
+    textDescr: {
+        fontFamily: 'Stag-Semibold',
+        fontSize: 16,
+        color: '#37424a'
+    },
+    imageContainer: {
+        alignItems: 'center',
+        height: '100%',
+        width: '40%',
+        justifyContent: 'center'
+    },
+    textContainer: {
+        marginLeft: 5,
     }
+    /* iconContainer: {
+        alignItems: 'flex-end',
+        height: '100%',
+        width: '40%',
+    } */
 })
