@@ -22,9 +22,9 @@ export const IconDescrRedes = ({ type, nameIcon, requireImage = alternativePath,
                             source={requireImage}
                             style={{
                                 flex: 1,
-                                width: '70%',
-                                height: '100%',
-                                resizeMode: 'center',
+                                width: '80%',
+                                height: '90%',
+                                resizeMode: 'contain',
                             }}
                         />
                     </View>

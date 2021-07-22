@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Text, View, TouchableOpacity, StyleSheet, Modal } from 'react-native';
+import { color } from 'react-native-reanimated';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -16,11 +17,11 @@ export const DrawerMenu = () => {
             <TouchableOpacity
                 style={styles.botonRedes}
                 onPress={() => setIsVisible(true)}>
-                 <Icon name="share-social-sharp" size={25} color={colors.dlsYellowSecondary} />
+                    <Icon name="share-social-sharp" size={30} color={colors.dlsYellowSecondary} />
                 <View style={{ marginRight: 5 }}>
                     <Text style={styles.textBtn}>Visitanos</Text>
                 </View>
-              
+                
             </TouchableOpacity>
 
             <Modal
@@ -31,19 +32,17 @@ export const DrawerMenu = () => {
                 <View style={styles.modalContainer}>
                     <View style={styles.modalBackground}>
 
-                        {/* <View style={styles.titleContainer}>
-                            <Text style={styles.textModal}>Nuestras Redes!</Text>
-                        </View> */}
+                        <View style={styles.titleContainer}>
+                           {/*  <Text style={styles.textModal}>Nuestras Redes!</Text> */}
+                        
 
                         <TouchableOpacity
                             style={styles.closebtn}
-                            onPress={() => (setIsVisible(false))
-                            }
+                            onPress={() => setIsVisible(false)}
                         >
-                            <View style={{height:40,width:40}}>
-                             <Icon name="close-outline" size={30} color={'white'} /> 
-                            </View>
+                            <Icon name="close-outline" size={30} color={'white'} />
                         </TouchableOpacity>
+                        </View>
 
                         <RedesContent />
 
@@ -80,10 +79,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     modalBackground: {
-        //backgroundColor: '#f3f3f3',
-        backgroundColor:colors.dlsGrayPrimary,
-        height: '70%',
-        width: '70%',
+        backgroundColor: colors.dlsGrayPrimary,
+        height: '55%',
+        width: '60%',
         borderRadius: 30,
         shadowColor: "#000",
         shadowOffset: {
@@ -96,14 +94,15 @@ const styles = StyleSheet.create({
         elevation: 6,
     },
     textBtn: {
-        fontFamily: 'StagSans-Light',
+        fontFamily: 'Stagsans-Light',
         color: colors.dlsYellowSecondary,
         fontSize: 20
     },
     titleContainer: {
         flexDirection: 'row',
         backgroundColor: colors.dlsGrayPrimary,
-        height: '10%',
+       //backgroundColor: 'red',
+        height: '7%',
         alignItems: 'center',
         justifyContent: 'center',
         borderTopLeftRadius: 28,

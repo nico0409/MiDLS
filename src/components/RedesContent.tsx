@@ -76,14 +76,14 @@ export const RedesContent = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-       // paddingTop: '5%'
-       paddingTop: '15%'
+        paddingTop: '2%'
+      // paddingTop: '15%'
     },
     cardContainer: {
         alignItems: 'center',
         justifyContent: 'center',
         width: '100%',
-        height: ((height * 0.8) * 0.8) / 6
+        height: ((height * 0.7) * 0.7) / 6
     },
     contentButtons: {
         flexDirection: 'row',
