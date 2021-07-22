@@ -19,15 +19,15 @@ export const RedesContent = () => {
         <View style={styles.container}>
 
             <FlatList
-                horizontal={false}
                 data={listRedes}
-                keyExtractor={({ id }, index) => id.toString()}
-                numColumns={2}
+                keyExtractor={(item) => item.id.toString()}
+                /* keyExtractor={({ id }, index) => id.toString()} 
+                numColumns={2} */
                 renderItem={({ item, index }) => (
 
                     <View style={styles.cardContainer}>
                         <TouchableOpacity
-                            style={{ flex: 1 }}
+                            style={styles.contentButtons}
                             onPress={() => {
                                 setPressedRow(index);
                                 setIsVisible(true);
@@ -35,7 +35,8 @@ export const RedesContent = () => {
                         >
                             <IconDescrRedes
                                 type={item.props.type}
-                                nameOrUrl={item.props.nameOrUrl}
+                                nameIcon={item.props.nameIcon}
+                                requireImage={item.props.requireImage}
                                 color={item.props.color}
                                 size={item.props.size}
                                 descr={item.props.descr}
@@ -56,11 +57,11 @@ export const RedesContent = () => {
                         style={styless.webview}
                         source={{ uri: listRedes[pressedRow].url }}
                     />
-                
+
                     <TouchableOpacity
                         style={styles.closeBtn}
                         onPress={() => setIsVisible(false)}>
-                        <View style={styles.backGIcon}/>
+                        <View style={styles.backGIcon} />
                         <Icon name="close-circle" color={colors.dlsYellowSecondary} size={35} />
                     </TouchableOpacity>
 
@@ -78,14 +79,22 @@ const styles = StyleSheet.create({
         paddingTop: '5%'
     },
     cardContainer: {
-        width: '50%',
-        height: ((height * 0.9) * 0.70) / 3
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
+        height: ((height * 0.8) * 0.8) / 6
+    },
+    contentButtons: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        height: '80%',
+        width: '75%',
     },
     closeBtn: {
         backgroundColor: colors.dlsGrayPrimary,
         //width: 60,
         //height: 60,
-         width: '14.5%',
+        width: '14.5%',
         height: '7%',
         position: 'absolute',
         bottom: '2%',
@@ -94,7 +103,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    backGIcon:{
+    backGIcon: {
         backgroundColor: colors.dlsBluePrimary,
         position: 'absolute',
         borderRadius: 100,
