@@ -4,6 +4,7 @@ import { View, StyleSheet, Text, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { PropsRedes } from '../interfaces/PropsRedes';
+import { colors } from '../Themes/DlsTheme';
 
 const alternativePath = require('../assets/logoArcher.png');
 
@@ -57,9 +58,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     }, */
     textDescr: {
-        fontFamily: 'Stag-Semibold',
-        fontSize: 16,
-        color: '#37424a'
+        fontFamily: 'StagSans-Light',
+        fontSize: 14,
+        //color: '#37424a'
+        color:colors.dlsYellowSecondary
     },
     imageContainer: {
         alignItems: 'center',

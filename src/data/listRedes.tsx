@@ -10,31 +10,31 @@ export const listRedes: DataRedes[] = [
             nameIcon: '',
             requireImage: require('../assets/logoDlsOfArcher.png'),
             color: colors.dlsYellowSecondary,
-            size: 60,
+            size: 40,
             descr: 'dls-archer.com'
         }
     },
     {
         id: 2,
-        url: 'https://www.archerwell.com/',
-        props: {
-            type: 'image',
-            nameIcon: '',
-            requireImage: require('../assets/logoArcher.png'),
-            color: colors.dlsGrayPrimary,
-            size: 60,
-            descr: 'archerwell.com'
-        }
-    },
-    {
-        id: 3,
         url: 'https://www.youtube.com/channel/UCJO6TVfaFrVdADVbzaK7iaA',
         props: {
             type: 'icon',
             nameIcon: 'logo-youtube',
             color: colors.dlsYellowSecondary,
-            size: 60,
+            size: 40,
             descr: 'DLS Latinoamerica'
+        }
+    },
+    {
+        id: 3,
+        url: 'https://www.archerwell.com/',
+        props: {
+            type: 'image',
+            nameIcon: '',
+            requireImage: require('../assets/archer-grey.png'),
+            color: colors.dlsGrayPrimary,
+            size: 40,
+            descr: 'archerwell.com'
         }
     },
     {
@@ -43,8 +43,8 @@ export const listRedes: DataRedes[] = [
         props: {
             type: 'icon',
             nameIcon: 'logo-youtube',
-            color: colors.dlsGrayPrimary,
-            size: 60,
+            color: colors.dlsWhiteBackGround,
+            size: 40,
             descr: 'Archer Well'
         }
     },
@@ -55,7 +55,7 @@ export const listRedes: DataRedes[] = [
             type: 'icon',
             nameIcon: 'logo-linkedin',
             color: colors.dlsBluePrimary,
-            size: 60,
+            size: 40,
             descr: 'DLS Archer'
         }
     },
@@ -66,7 +66,7 @@ export const listRedes: DataRedes[] = [
             type: 'icon',
             nameIcon: 'logo-linkedin',
             color: colors.dlsBluePrimary,
-            size: 60,
+            size: 40,
             descr: 'DLS Argentina'
         }
     },

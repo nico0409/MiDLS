@@ -16,10 +16,11 @@ export const DrawerMenu = () => {
             <TouchableOpacity
                 style={styles.botonRedes}
                 onPress={() => setIsVisible(true)}>
+                 <Icon name="share-social-sharp" size={25} color={colors.dlsYellowSecondary} />
                 <View style={{ marginRight: 5 }}>
                     <Text style={styles.textBtn}>Visitanos</Text>
                 </View>
-                <Icon name="share-social-sharp" size={30} color={'white'} />
+              
             </TouchableOpacity>
 
             <Modal
@@ -30,15 +31,18 @@ export const DrawerMenu = () => {
                 <View style={styles.modalContainer}>
                     <View style={styles.modalBackground}>
 
-                        <View style={styles.titleContainer}>
+                        {/* <View style={styles.titleContainer}>
                             <Text style={styles.textModal}>Nuestras Redes!</Text>
-                        </View>
+                        </View> */}
 
                         <TouchableOpacity
                             style={styles.closebtn}
-                            onPress={() => setIsVisible(false)}
+                            onPress={() => (setIsVisible(false))
+                            }
                         >
-                            <Icon name="close-outline" size={30} color={'white'} />
+                            <View style={{height:40,width:40}}>
+                             <Icon name="close-outline" size={30} color={'white'} /> 
+                            </View>
                         </TouchableOpacity>
 
                         <RedesContent />
@@ -76,9 +80,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     modalBackground: {
-        backgroundColor: '#f3f3f3',
-        height: '85%',
-        width: '85%',
+        //backgroundColor: '#f3f3f3',
+        backgroundColor:colors.dlsGrayPrimary,
+        height: '70%',
+        width: '70%',
         borderRadius: 30,
         shadowColor: "#000",
         shadowOffset: {
@@ -91,14 +96,14 @@ const styles = StyleSheet.create({
         elevation: 6,
     },
     textBtn: {
-        fontFamily: 'Stag-Semibold',
-        color: 'white',
-        fontSize: 24
+        fontFamily: 'StagSans-Light',
+        color: colors.dlsYellowSecondary,
+        fontSize: 20
     },
     titleContainer: {
         flexDirection: 'row',
         backgroundColor: colors.dlsGrayPrimary,
-        height: '15%',
+        height: '10%',
         alignItems: 'center',
         justifyContent: 'center',
         borderTopLeftRadius: 28,
@@ -107,12 +112,12 @@ const styles = StyleSheet.create({
     textModal: {
         fontFamily: 'Stag-Semibold',
         color: 'white',
-        fontSize: 26
+        fontSize: 20
     },
     closebtn: {
         position: 'absolute',
-        right: 20,
-        top: 20
+        right: 10,
+        top: 10
     },
     /* footerContainer: {
         backgroundColor: colors.dlsGrayPrimary,
