@@ -17,6 +17,7 @@
 		846E422526A78CD500BAAECE /* StagSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 599999CBE3D449C796B9A51E /* StagSans-Light.ttf */; };
 		846E422826A78CE000BAAECE /* Stag-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 915A484370C04C7BA7921892 /* Stag-Semibold.ttf */; };
 		846E422B26A78CE900BAAECE /* StagSans-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 488908787892438A86FCA283 /* StagSans-LightItalic.ttf */; };
+		849EFFE726A923C2001EB59F /* web_hi_res_512.png in Resources */ = {isa = PBXBuildFile; fileRef = 849EFFE626A923C1001EB59F /* web_hi_res_512.png */; };
 		D30C4CE3065D86ACEEC8F77B /* libPods-MiDLS-MiDLSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 62EFE18D3C207B2597C9EE36 /* libPods-MiDLS-MiDLSTests.a */; };
 		D3772EE683B6AB6235271765 /* libPods-MiDLS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 241EE8965855C003F2D1E184 /* libPods-MiDLS.a */; };
 /* End PBXBuildFile section */
@@ -58,6 +59,7 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = MiDLS/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		845C5298269F4FCE00921287 /* Ionicons.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = Ionicons.js; path = "../../node_modules/react-native-vector-icons/Ionicons.js"; sourceTree = "<group>"; };
 		846E41D926A76B6D00BAAECE /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
+		849EFFE626A923C1001EB59F /* web_hi_res_512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = web_hi_res_512.png; sourceTree = "<group>"; };
 		915A484370C04C7BA7921892 /* Stag-Semibold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Stag-Semibold.ttf"; path = "../src/assets/fonts/Stag-Semibold.ttf"; sourceTree = "<group>"; };
 		96BC73BED8DD46EF907621C5 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		9ED4E03659CD4DCBA6D4164B /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
+				849EFFE626A923C1001EB59F /* web_hi_res_512.png */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = MiDLS;
@@ -310,6 +313,7 @@
 				846E422B26A78CE900BAAECE /* StagSans-LightItalic.ttf in Resources */,
 				846E422826A78CE000BAAECE /* Stag-Semibold.ttf in Resources */,
 				846E422526A78CD500BAAECE /* StagSans-Light.ttf in Resources */,
+				849EFFE726A923C2001EB59F /* web_hi_res_512.png in Resources */,
 				846E422226A78B3900BAAECE /* StagSans-Semibold.ttf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				845C5299269F4FCE00921287 /* Ionicons.js in Resources */,
