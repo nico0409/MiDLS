@@ -10,7 +10,6 @@ import { MapScreen } from '../screens/MapScreen';
 import { NewsScreen } from '../screens/NewsScreen';
 import { ToggleDrawerHeader } from '../components/ToggleDrawerHeader';
 import { colors } from '../Themes/DlsTheme';
-import { Backgrond } from '../../../pruductosApp/src/components/Backgrond';
 
 
 interface Props extends DrawerScreenProps<any, any> { };

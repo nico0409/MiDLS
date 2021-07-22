@@ -1,6 +1,7 @@
-import React from 'react'
+import React,{ useEffect }  from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { StackNavigator } from './StackNavigator';
+import SplashScreen from 'react-native-splash-screen'
 
 import { TopTapNavigator } from './TopTapNavigator';
 import { SafeAreaView, StyleSheet, useWindowDimensions } from 'react-native';
@@ -14,41 +15,46 @@ import { NewsScreen } from '../screens/NewsScreen';
 import { MyProfileScreen } from '../screens/MyProfileScreen';
 import { PaycheckScreen } from '../screens/PaycheckScreen';
 import { MyProfileScreenDrawer } from '../screens/MyProfileScreenDrawer';
+import { colors } from '../Themes/DlsTheme';
+
 
 const Drawer = createDrawerNavigator();
 
 export const DrawerNavigation = () => {
-  const {isConnected}=useNetInfo();
-  
+  const { isConnected } = useNetInfo();
 
+ useEffect(() => {
+  SplashScreen.hide();
+}, ) 
 
   return (
     <SafeAreaView style={styles.container}>
-     {!isConnected && isConnected!==null?
-      <WhitOutConection/>
-:
-      <Drawer.Navigator
-        
-       // drawerContent={(props: any) => <DrawerMenu {...props} />}
-       drawerContent={(props:any)=><MenuInterno {...props}/>}
-      >
-      
-        <Drawer.Screen name="TopTapNavigator" component={TopTapNavigator} />
-        <Drawer.Screen name="ContactScreen" component={ContactScreen} />
-       <Drawer.Screen name="RrhhScreen" component={RrhhScreen}/>
-       <Drawer.Screen name="NewsScreen" component={NewsScreen}/> 
-       <Drawer.Screen name="MyProfileScreenDrawer" component={MyProfileScreenDrawer}/> 
-       <Drawer.Screen name="PaycheckScreen" component={PaycheckScreen}/>
-      </Drawer.Navigator>
+      {!isConnected && isConnected !== null ?
+        <WhitOutConection />
+        :
+        <Drawer.Navigator
+
+          // drawerContent={(props: any) => <DrawerMenu {...props} />}
+          drawerContent={(props: any) => <MenuInterno {...props} />}
+        >
+
+          <Drawer.Screen name="TopTapNavigator" component={TopTapNavigator} />
+          <Drawer.Screen name="ContactScreen" component={ContactScreen} />
+          <Drawer.Screen name="RrhhScreen" component={RrhhScreen} />
+          <Drawer.Screen name="NewsScreen" component={NewsScreen} />
+          <Drawer.Screen name="MyProfileScreenDrawer" component={MyProfileScreenDrawer} />
+          <Drawer.Screen name="PaycheckScreen" component={PaycheckScreen} />
+        </Drawer.Navigator>
       }
-     
-      
+
+
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor:colors.dlsGrayPrimary,
     flex: 1,
   },
 });
