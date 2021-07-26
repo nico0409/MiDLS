@@ -19,7 +19,7 @@ export const DrawerMenu = () => {
                 onPress={() => setIsVisible(true)}>
                     <Icon name="share-social-sharp" size={30} color={colors.dlsYellowSecondary} />
                 <View style={{ marginRight: 5 }}>
-                    <Text style={styles.textBtn}>Visitanos</Text>
+                    <Text style={styles.textBtn}>Visítanos</Text>
                 </View>
                 
             </TouchableOpacity>

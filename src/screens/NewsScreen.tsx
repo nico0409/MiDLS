@@ -1,6 +1,6 @@
 
 import { MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
-import { ParamListBase } from '@react-navigation/native';
+import { ParamListBase, useNavigation, useRoute } from '@react-navigation/native';
 import React,{useEffect,useContext} from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import { WebView } from 'react-native-webview';
@@ -8,27 +8,36 @@ import { styless } from '../Themes/DlsTheme';
 import { AuthContext } from '../context/AuthContext';
 import { useState } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { NavigationContext } from '../context/NavigateContext';
 
 
 
 
 
-interface Props extends MaterialTopTabScreenProps <ParamListBase,'PersonaScreen'>{
+interface Props extends MaterialTopTabScreenProps <ParamListBase,string>{
 
 }
 
- export const NewsScreen= ({navigation}:Props) => {
+ export const NewsScreen= ({navigation,route}:Props) => {
   const {signIn,status,changeURLNews} = useContext(AuthContext)
   const [load, setLoad] = useState(true)
+  const {state,setNavigator,setstate} = useContext(NavigationContext)
+
   
+
+
+ useEffect(() => {
+   
+   setstate(false)
+ }, [state])
+
+
+
  useEffect(() => {
   if (status==='not-authenticated') setLoad(true)
  }, [status])
 
-  /* useEffect(() => {
-    navigation.addListener('tabPress',()=>console.log('entre a notcias'))
-     
-   }, []) */
+
 
    
   return (

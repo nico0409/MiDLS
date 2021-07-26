@@ -11,6 +11,7 @@ import { Contact } from './Contact';
 
 export const MenuInterno = ({ navigation }: DrawerContentComponentProps<DrawerContentOptions>) => {
 
+ 
   return (
 
 

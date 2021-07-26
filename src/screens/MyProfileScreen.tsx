@@ -10,6 +10,7 @@ import { WhitOutConection } from './WhitOutConection';
 import { MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
 import { ParamListBase } from '@react-navigation/native';
 import { AuthContext } from '../context/AuthContext';
+import { NavigationContext } from '../context/NavigateContext';
 
 
 
@@ -25,31 +26,25 @@ interface Props extends MaterialTopTabScreenProps <ParamListBase,'PersonaScreen'
 
   const {signIn,changeURLProfile,status} = useContext(AuthContext)
   const [load, setLoad] = useState(true)
- 
+  const {state,setNavigator} = useContext(NavigationContext)
+
   useEffect(() => {
     if (status==='not-authenticated') setLoad(true)
    }, [status])
- 
-
-  
-/* useEffect(() => {
-  navigation.addListener('tabPress',()=>console.log('entre a miprofile'))
    
- }, []) */
-
-/*   if (webviewRef.current != null)
-  {
-   //  console.log(webviewRef.current!.props.source.uri);
-   // console.log(webviewRef.current!.startUrl); 
-  }  */
   
 
+ 
+ useEffect(() => {
+  if (state===true){
+    setNavigator(navigation)
+  }
+ }, [state])
+ 
 
   return (
     <View style={styless.containerWebView}>
          <WebView
-            //onNavigationStateChange={navstate=>signIn(navstate.url)} 
-           //onNavigationStateChange={navstate=>console.log(navstate.url)}
            onLoadEnd={()=>{signIn(), setLoad(false)}}
           onNavigationStateChange={navstate=>changeURLProfile(navstate.url)} 
             style={styless.webview}

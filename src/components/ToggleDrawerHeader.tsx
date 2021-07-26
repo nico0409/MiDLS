@@ -8,7 +8,7 @@ import { colors } from '../Themes/DlsTheme';
 interface Props extends DrawerScreenProps<any, any> { };
 
 export const ToggleDrawerHeader = ({ navigation, route }: Props) => {
-    console.log(route.name);
+ 
 
     return (
         <View style={styles.container}>
