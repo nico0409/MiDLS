@@ -19,12 +19,12 @@ export const DrawerMenu = ( ) => {
 
             <TouchableOpacity
                 style={styles.botonRedes}
-                onPress={() => (setIsVisible(true))}>
-                    <Icon name="globe-outline" size={30} color={colors.dlsBluePrimary} />
-                <View style={{ marginLeft: 5 }}>
+                onPress={() => setIsVisible(true)}>
+                <Icon name="share-social-sharp" size={30} color={colors.dlsYellowSecondary} />
+                <View style={{ marginRight: 5 }}>
                     <Text style={styles.textBtn}>Visítanos</Text>
                 </View>
-                
+
             </TouchableOpacity>
 
             <Modal
@@ -36,15 +36,15 @@ export const DrawerMenu = ( ) => {
                     <View style={styles.modalBackground}>
 
                         <View style={styles.titleContainer}>
-                           {/*  <Text style={styles.textModal}>Nuestras Redes!</Text> */}
-                        
+                            {/*  <Text style={styles.textModal}>Nuestras Redes!</Text> */}
 
-                        <TouchableOpacity
-                            style={styles.closebtn}
-                            onPress={() => setIsVisible(false)}
-                        >
-                            <Icon name="close-outline" size={30} color={'white'} />
-                        </TouchableOpacity>
+
+                            <TouchableOpacity
+                                style={styles.closebtn}
+                                onPress={() => setIsVisible(false)}
+                            >
+                                <Icon name="close-outline" size={30} color={'white'} />
+                            </TouchableOpacity>
                         </View>
 
                         <RedesContent />
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     titleContainer: {
         flexDirection: 'row',
         backgroundColor: colors.dlsGrayPrimary,
-       //backgroundColor: 'red',
+        //backgroundColor: 'red',
         height: '7%',
         alignItems: 'center',
         justifyContent: 'center',
