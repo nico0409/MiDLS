@@ -13,7 +13,7 @@ import { RedesContent } from './RedesContent';
 import { color } from 'react-native-reanimated';
 
 const { height } = Dimensions.get('window');
-console.log('height:' + height);
+
 
 
 export const MenuInterno = (DrawerNavigation: DrawerContentComponentProps<DrawerContentOptions>) => {

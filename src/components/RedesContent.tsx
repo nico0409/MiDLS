@@ -17,7 +17,7 @@ export const RedesContent = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [pressedRow, setPressedRow] = useState(0);
 
-    console.log(pressedRow);
+    
     
     return (
         <View style={styles.container}>
