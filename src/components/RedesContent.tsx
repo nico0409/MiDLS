@@ -21,9 +21,9 @@ export const RedesContent = () => {
     
     return (
         <View style={styles.container}>
-            <Text style={styles.textRedes}>DLS Latino America</Text>
+            <Text style={styles.textRedes}>DLS Latino América</Text>
             <FlatListRedes lista={listRedesDLS} setVisible={setIsVisible}  setPressedRow={setPressedRow} owner='DLS'/>
-            <Text style={styles.textRedes}>Archer Well</Text>
+            <Text style={styles.textRedes}>Archer</Text>
             <FlatListRedes lista={listRedesDLS} setVisible={setIsVisible} setPressedRow={setPressedRow} owner='ARCHER' />
              <Modal
                 animationType="fade"
