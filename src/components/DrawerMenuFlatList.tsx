@@ -10,7 +10,7 @@ import { colors } from '../Themes/DlsTheme';
 import { Contact } from './Contact';
 
 const { height } = Dimensions.get('window');
-console.log('height:' + height);
+
 export const MenuInterno = ({ navigation }: DrawerContentComponentProps<DrawerContentOptions>) => {
 
 

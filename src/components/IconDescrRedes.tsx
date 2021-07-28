@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
         fontFamily: 'StagSans-Light',
         fontSize: 14,
         //color: '#37424a'
-        color:colors.dlsYellowSecondary
+        color: colors.dlsYellowSecondary
     },
     imageContainer: {
         alignItems: 'center',
