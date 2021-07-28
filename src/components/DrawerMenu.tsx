@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
 import { Text, View, TouchableOpacity, StyleSheet, Modal } from 'react-native';
-import { color } from 'react-native-reanimated';
+
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { colors } from '../Themes/DlsTheme';
 import { RedesContent } from './RedesContent';
 
-export const DrawerMenu = () => {
+
+
+
+export const DrawerMenu = ( ) => {
 
     const [isVisible, setIsVisible] = useState(false);
 
@@ -16,9 +19,9 @@ export const DrawerMenu = () => {
 
             <TouchableOpacity
                 style={styles.botonRedes}
-                onPress={() => setIsVisible(true)}>
-                    <Icon name="share-social-sharp" size={30} color={colors.dlsYellowSecondary} />
-                <View style={{ marginRight: 5 }}>
+                onPress={() => (setIsVisible(true))}>
+                    <Icon name="globe-outline" size={30} color={colors.dlsBluePrimary} />
+                <View style={{ marginLeft: 5 }}>
                     <Text style={styles.textBtn}>Visítanos</Text>
                 </View>
                 
@@ -76,12 +79,12 @@ const styles = StyleSheet.create({
     modalContainer: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-end',
     },
     modalBackground: {
-        backgroundColor: colors.dlsGrayPrimary,
-        height: '55%',
-        width: '60%',
+        backgroundColor: colors.dlsGrayPrimary,   
+        height: '35%',
+        width: '90%',
         borderRadius: 30,
         shadowColor: "#000",
         shadowOffset: {
@@ -90,8 +93,8 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.27,
         shadowRadius: 4.65,
-
         elevation: 6,
+
     },
     textBtn: {
         fontFamily: 'Stagsans-Light',

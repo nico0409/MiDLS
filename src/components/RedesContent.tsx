@@ -4,9 +4,11 @@ import { Text, View, StyleSheet, FlatList, TouchableOpacity, Modal, Dimensions }
 import WebView from 'react-native-webview';
 
 import { IconDescrRedes } from './IconDescrRedes';
-import { listRedes } from '../data/listRedes';
+import { listRedesDLS } from '../data/listRedes';
 import { colors, styless } from '../Themes/DlsTheme';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { FlatListRedes } from './FlatListRedes';
+import { color } from 'react-native-reanimated';
 
 const { height } = Dimensions.get("window");
 
@@ -15,38 +17,15 @@ export const RedesContent = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [pressedRow, setPressedRow] = useState(0);
 
+    console.log(pressedRow);
+    
     return (
         <View style={styles.container}>
-
-            <FlatList
-                data={listRedes}
-                keyExtractor={(item) => item.id.toString()}
-                /* keyExtractor={({ id }, index) => id.toString()} 
-                numColumns={2} */
-                renderItem={({ item, index }) => (
-
-                    <View style={styles.cardContainer}>
-                        <TouchableOpacity
-                            style={styles.contentButtons}
-                            onPress={() => {
-                                setPressedRow(index);
-                                setIsVisible(true);
-                            }}
-                        >
-                            <IconDescrRedes
-                                type={item.props.type}
-                                nameIcon={item.props.nameIcon}
-                                requireImage={item.props.requireImage}
-                                color={item.props.color}
-                                size={item.props.size}
-                                descr={item.props.descr}
-                            />
-                        </TouchableOpacity>
-                    </View>
-                )}
-            />
-
-            <Modal
+            <Text style={styles.textRedes}>DLS Latino America</Text>
+            <FlatListRedes lista={listRedesDLS} setVisible={setIsVisible}  setPressedRow={setPressedRow} owner='DLS'/>
+            <Text style={styles.textRedes}>Archer Well</Text>
+            <FlatListRedes lista={listRedesDLS} setVisible={setIsVisible} setPressedRow={setPressedRow} owner='ARCHER' />
+             <Modal
                 animationType="fade"
                 visible={isVisible}
                 transparent={true}
@@ -55,7 +34,7 @@ export const RedesContent = () => {
 
                     <WebView
                         style={styless.webview}
-                        source={{ uri: listRedes[pressedRow].url }}
+                        source={{ uri: listRedesDLS[pressedRow].url }}
                     />
 
                     <TouchableOpacity
@@ -67,7 +46,7 @@ export const RedesContent = () => {
 
                 </View>
 
-            </Modal>
+            </Modal> 
 
         </View>
     )
@@ -76,20 +55,34 @@ export const RedesContent = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: '2%'
-      // paddingTop: '15%'
+       // paddingTop: '5%'
+      
+      
+
     },
     cardContainer: {
-        alignItems: 'center',
+        
+       /*  alignItems: 'center',
         justifyContent: 'center',
-        width: '100%',
-        height: ((height * 0.7) * 0.7) / 6
+        width: '40%',
+        height: ((height * 0.5) * 0.5) / 6,
+         */
+        
     },
     contentButtons: {
-        flexDirection: 'row',
+       /*  flexDirection: 'row',
         alignItems: 'center',
         height: '80%',
-        width: '75%',
+        width: '75%', */
+    },textRedes:{
+        fontSize: 18,
+        fontFamily: 'StagSans-Light',
+        color:colors.dlsYellowSecondary,
+        marginLeft:10,
+       
+        
+        
+               
     },
     closeBtn: {
         backgroundColor: colors.dlsGrayPrimary,
