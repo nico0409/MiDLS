@@ -19,7 +19,7 @@ export const FlatListRedes = ({lista,setVisible,setPressedRow,owner}:Props) => {
       
         <FlatList
         horizontal={true}   
-       contentContainerStyle={{justifyContent:'center'}}
+       contentContainerStyle={{}}
        data={  lista.filter((e)=>{return e.props.owner===owner})}
        keyExtractor={(item) => item.id.toString()}
       renderItem={({ item, index }) => {
@@ -37,6 +37,7 @@ export const FlatListRedes = ({lista,setVisible,setPressedRow,owner}:Props) => {
                        color={item.props.color}
                        size={item.props.size}
                        descr={item.props.descr}
+                       index={item.id}
                    />
              </TouchableOpacity> 
            </View>
@@ -49,9 +50,10 @@ export const FlatListRedes = ({lista,setVisible,setPressedRow,owner}:Props) => {
 
 const styles = StyleSheet.create({
     container: {
-        width:80,
+        width:70,
+        
       //  backgroundColor:'red',
-        justifyContent:'space-between'
+      //  justifyContent:'flex-end'
       
       
     }})

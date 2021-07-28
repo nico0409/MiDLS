@@ -8,6 +8,7 @@ export interface PropsRedes {
     color?: string;
     size?: number;
     descr?: string;
+    
 };
 
 export interface DataRedes {

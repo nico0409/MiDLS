@@ -3,18 +3,25 @@ import { View, StyleSheet, Text, Image } from 'react-native';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import { PropsRedes } from '../interfaces/PropsRedes';
+import { PropsRedes, PropsRedespro } from '../interfaces/PropsRedes';
 import { colors } from '../Themes/DlsTheme';
 import { color } from 'react-native-reanimated';
 
 const alternativePath = require('../assets/logoArcher.png');
 
-export const IconDescrRedes = ({ type, nameIcon, requireImage = alternativePath, color, size, descr }: PropsRedes) => {
+export const IconDescrRedes = ({ type, nameIcon, requireImage = alternativePath, color, size, descr ,index}: PropsRedespro) => {
+    let margin
+    if(index===4)
+    {
+        margin= 22}
+else{
+    margin=5
+}
 
 
     return (
-
-        <View style={styles.iconContainer}>
+       
+        <View style={{...styles.iconContainer,marginLeft:margin}}>
             {type === 'image' ?
                 <View style={styles.imageContainer}>
                     <Image
@@ -23,7 +30,7 @@ export const IconDescrRedes = ({ type, nameIcon, requireImage = alternativePath,
                         resizeMode='contain'
                         style={{
 
-                            width: 60,
+                            width: 50,
                             height: 50,
 
                         }}
@@ -63,9 +70,11 @@ const styles = StyleSheet.create({
     imageContainer: {
         alignItems: 'center',
         height: '100%',
-        width: '100%',
+        width: '70%',
         //backgroundColor: 'black',
-        justifyContent: 'center'
+        justifyContent: 'center',
+       
+        
     },
     textContainer: {
         marginLeft: 5,
@@ -74,6 +83,7 @@ const styles = StyleSheet.create({
         // alignItems: 'flex-end',
         height: '100%',
         width: '100%',
+       // marginRight:20
         // alignItems:'center',
         //backgroundColor: 'orange'
     }
