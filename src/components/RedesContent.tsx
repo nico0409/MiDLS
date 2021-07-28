@@ -17,15 +17,23 @@ export const RedesContent = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [pressedRow, setPressedRow] = useState(0);
 
-    
-    
+
+
     return (
         <View style={styles.container}>
-            <Text style={styles.textRedes}>DLS Latino América</Text>
-            <FlatListRedes lista={listRedesDLS} setVisible={setIsVisible}  setPressedRow={setPressedRow} owner='DLS'/>
-            <Text style={styles.textRedes}>Archer</Text>
-            <FlatListRedes lista={listRedesDLS} setVisible={setIsVisible} setPressedRow={setPressedRow} owner='ARCHER' />
-             <Modal
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 12, marginRight: '5%' }}>
+                <Text style={styles.textRedes}>DLS Latino América</Text>
+                <Text style={styles.textRedes}>/</Text>
+                <Text style={styles.textRedes}>DLS Argentina</Text>
+            </View>
+            
+            <FlatListRedes lista={listRedesDLS} setVisible={setIsVisible} setPressedRow={setPressedRow} owner='DLS' />
+
+            <Text style={{...styles.textRedes}}>Archer well company</Text>
+            <View style={{ height: '40%' }}>
+                <FlatListRedes lista={listRedesDLS} setVisible={setIsVisible} setPressedRow={setPressedRow} owner='ARCHER' />
+            </View>
+            <Modal
                 animationType="fade"
                 visible={isVisible}
                 transparent={true}
@@ -46,7 +54,7 @@ export const RedesContent = () => {
 
                 </View>
 
-            </Modal> 
+            </Modal>
 
         </View>
     )
@@ -55,34 +63,35 @@ export const RedesContent = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-       // paddingTop: '5%'
-      
-      
+        // paddingTop: '5%'
+        margin: 5
+
 
     },
     cardContainer: {
-        
-       /*  alignItems: 'center',
-        justifyContent: 'center',
-        width: '40%',
-        height: ((height * 0.5) * 0.5) / 6,
-         */
-        
+
+        /*  alignItems: 'center',
+         justifyContent: 'center',
+         width: '40%',
+         height: ((height * 0.5) * 0.5) / 6,
+          */
+
     },
     contentButtons: {
-       /*  flexDirection: 'row',
-        alignItems: 'center',
-        height: '80%',
-        width: '75%', */
-    },textRedes:{
+        /*  flexDirection: 'row',
+         alignItems: 'center',
+         height: '80%',
+         width: '75%', */
+    }, textRedes: {
         fontSize: 18,
         fontFamily: 'StagSans-Light',
-        color:colors.dlsYellowSecondary,
-        marginLeft:10,
-       
+        color: colors.dlsYellowSecondary,
+        marginLeft: 10,
         
-        
-               
+
+
+
+
     },
     closeBtn: {
         backgroundColor: colors.dlsGrayPrimary,

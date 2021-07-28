@@ -188,8 +188,8 @@ export const styless = StyleSheet.create({
   },
   modalBackground: {
     backgroundColor: colors.dlsGrayPrimary,
-    height: '33%',
-    width: '90%',
+    height: '35%',
+    width: '95%',
     borderRadius: 28,
     shadowColor: "#000",
     shadowOffset: {
