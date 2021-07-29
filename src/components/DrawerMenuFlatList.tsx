@@ -227,7 +227,8 @@ export const styless = StyleSheet.create({
   skewable: {
     backgroundColor: colors.dlsYellowSecondary,
     width: '88%',
-    height: '200%',
+    /* height: '200%', */
+    height: '300%',
     transform: [{ rotate: '15deg' }]
   },
   textSkew: {
