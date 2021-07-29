@@ -129,7 +129,7 @@ export const MenuInterno = (DrawerNavigation: DrawerContentComponentProps<Drawer
                     style={styless.closebtn}
                     onPress={() => setIsVisible(false)}
                   >
-                    <Icon name="close-outline" size={30} color={'white'} />
+                    <Icon name="close-outline" size={30} color={colors.dlsYellowSecondary} />
                   </TouchableOpacity>
                   </View>  
 
@@ -209,7 +209,7 @@ export const styless = StyleSheet.create({
   titleContainer: {
     
     backgroundColor: colors.dlsGrayPrimary,
-    //backgroundColor: 'red',
+    
     height: '10%',
     alignItems: 'center',
     justifyContent: 'center',
