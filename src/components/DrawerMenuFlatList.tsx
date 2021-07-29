@@ -124,14 +124,15 @@ export const MenuInterno = (DrawerNavigation: DrawerContentComponentProps<Drawer
             <View style={styless.modalContainer}>
               <View style={styless.modalBackground}>
 
-                  <View style={styless.titleContainer}>  
+                   <View style={styless.titleContainer}> 
+                   </View>  
                    <TouchableOpacity
                     style={styless.closebtn}
                     onPress={() => setIsVisible(false)}
                   >
                     <Icon name="close-outline" size={30} color={colors.dlsYellowSecondary} />
                   </TouchableOpacity>
-                  </View>  
+                   
 
                 <RedesContent />
 
@@ -279,7 +280,16 @@ export const styless = StyleSheet.create({
   closebtn: {
     position: 'absolute',
     right: 10,
-    top: 10
+    top: 10,
+    height:'15%',
+    width:50,
+    zIndex:9,
+    justifyContent:'center',
+    alignItems:'center'
+    
+    
+    
+    
   },
 
 });
