@@ -10,28 +10,25 @@ import { color } from 'react-native-reanimated';
 const alternativePath = require('../assets/logoArcher.png');
 
 export const IconDescrRedes = ({ type, nameIcon, requireImage = alternativePath, color, size, descr ,index}: PropsRedespro) => {
-    let margin
-    if(index===4)
-    {
-        margin= 22}
-else{
-    margin=5
-}
+  
+ 
+
 
 
     return (
        
-        <View style={{...styles.iconContainer,marginLeft:margin}}>
+        <View style={styles.iconContainer}>
             {type === 'image' ?
                 <View style={styles.imageContainer}>
                     <Image
                         source={requireImage}
                         resizeMethod='auto'
                         resizeMode='contain'
+                        
                         style={{
-
-                            width: 50,
-                            height: 50,
+                            
+                            width: 60,
+                            height:  60,
 
                         }}
                     />
@@ -45,7 +42,12 @@ else{
 
                 </View>
             }
-
+            
+         {   (index==3|| index==4)&& 
+           <View style={styles.textContainer}><Text style={styles.textDescr}>{descr}</Text></View>
+         }
+          
+            
 
         </View>
     )
@@ -54,7 +56,7 @@ else{
 const styles = StyleSheet.create({
 
     /* button: {
-        backgroundColor: 'orange',
+       
         flexDirection: 'row',
         height: '100%',
         width: '100%',
@@ -63,28 +65,24 @@ const styles = StyleSheet.create({
     }, */
     textDescr: {
         fontFamily: 'StagSans-Light',
-        fontSize: 14,
-        //color: '#37424a'
-        color: colors.dlsYellowSecondary
+        fontWeight:'bold',
+        fontSize: 12,
+        color: colors.dlsWhiteBackGround
     },
     imageContainer: {
         alignItems: 'center',
-        height: '100%',
-        width: '70%',
-        //backgroundColor: 'black',
-        justifyContent: 'center',
-       
-        
+       // width: '100%', 
+       backgroundColor:colors.dlsGrayPrimary 
     },
     textContainer: {
-        marginLeft: 5,
+    
+    marginTop:'-5%'
     },
     iconContainer: {
-        // alignItems: 'flex-end',
         height: '100%',
         width: '100%',
-       // marginRight:20
-        // alignItems:'center',
-        //backgroundColor: 'orange'
+         alignItems:'center',
+         justifyContent:'center',
+         backgroundColor:colors.dlsGrayPrimary 
     }
 })

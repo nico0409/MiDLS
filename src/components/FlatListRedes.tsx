@@ -19,7 +19,7 @@ export const FlatListRedes = ({lista,setVisible,setPressedRow,owner}:Props) => {
       
         <FlatList
         horizontal={true}   
-       contentContainerStyle={{}}
+       contentContainerStyle={{width:'100%',justifyContent:'space-around'}}
        data={  lista.filter((e)=>{return e.props.owner===owner})}
        keyExtractor={(item) => item.id.toString()}
       renderItem={({ item, index }) => {
@@ -50,10 +50,9 @@ export const FlatListRedes = ({lista,setVisible,setPressedRow,owner}:Props) => {
 
 const styles = StyleSheet.create({
     container: {
-        width:70,
         
-      //  backgroundColor:'red',
-      //  justifyContent:'flex-end'
+     
+      
       
       
     }})

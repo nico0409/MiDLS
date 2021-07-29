@@ -21,15 +21,9 @@ export const RedesContent = () => {
 
     return (
         <View style={styles.container}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 12, marginRight: '5%' }}>
-                <Text style={styles.textRedes}>DLS Latino América</Text>
-                <Text style={styles.textRedes}>/</Text>
-                <Text style={styles.textRedes}>DLS Argentina</Text>
-            </View>
-            
+            <Text style={styles.textRedes}>DLS Latino América</Text>
             <FlatListRedes lista={listRedesDLS} setVisible={setIsVisible} setPressedRow={setPressedRow} owner='DLS' />
-
-            <Text style={{...styles.textRedes}}>Archer well company</Text>
+            <Text style={{ ...styles.textRedes }}>Archer well company</Text>
             <View style={{ height: '40%' }}>
                 <FlatListRedes lista={listRedesDLS} setVisible={setIsVisible} setPressedRow={setPressedRow} owner='ARCHER' />
             </View>
@@ -87,7 +81,7 @@ const styles = StyleSheet.create({
         fontFamily: 'StagSans-Light',
         color: colors.dlsYellowSecondary,
         marginLeft: 10,
-        
+
 
 
 

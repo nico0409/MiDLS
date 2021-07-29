@@ -7,7 +7,7 @@ export const listRedesDLS: DataRedes[] = [
         url: 'https://dls-archer.com/',
         props: {
             type: 'image',
-            owner:'DLS',
+            owner: 'DLS',
             nameIcon: '',
             requireImage: require('../assets/Logo_DLSNegativo.png'),
             color: colors.dlsYellowSecondary,
@@ -20,7 +20,7 @@ export const listRedesDLS: DataRedes[] = [
         url: 'https://www.youtube.com/channel/UCJO6TVfaFrVdADVbzaK7iaA',
         props: {
             type: 'icon',
-            owner:'DLS',
+            owner: 'DLS',
             nameIcon: 'youtube',
             color: colors.dlsWhiteBackGround,
             size: 40,
@@ -29,33 +29,34 @@ export const listRedesDLS: DataRedes[] = [
     },
     {
         id: 3,
-        url: 'https://www.linkedin.com/company/dls-archer',
+        url: 'https://www.linkedin.com/company/dls-argentina',
         props: {
             type: 'icon',
-            owner:'DLS',
+            owner: 'DLS',
             nameIcon: 'linkedin',
             color: colors.dlsWhiteBackGround,
-            size: 40,
-            descr: 'DLS Archer'
+            size: 35,
+            descr: 'DLS - Argentina'
         }
     },
     {
         id: 4,
-        url: 'https://www.linkedin.com/company/dls-argentina',
+        url: 'https://www.linkedin.com/company/dls-archer',
         props: {
             type: 'icon',
-            owner:'DLS',
+            owner: 'DLS',
             nameIcon: 'linkedin',
             color: colors.dlsWhiteBackGround,
-            size: 40,
-            descr: 'DLS Archer'
+            size: 35,
+            descr: 'DLS - Archer'
         }
-    },{
+    },
+    {
         id: 5,
         url: 'https://www.archerwell.com/',
         props: {
             type: 'image',
-            owner:'ARCHER',
+            owner: 'ARCHER',
             nameIcon: '',
             requireImage: require('../assets/archer-grey.png'),
             color: colors.dlsWhiteBackGround,
@@ -67,25 +68,25 @@ export const listRedesDLS: DataRedes[] = [
         url: 'https://www.youtube.com/channel/UChtJVbF4sSuBMFLzYgyqe7Q',
         props: {
             type: 'icon',
-            owner:'ARCHER',
+            owner: 'ARCHER',
             nameIcon: 'youtube',
             color: colors.dlsWhiteBackGround,
             size: 40,
             descr: 'DLS Latinoamerica'
         }
     },
-    
+
     {
         id: 7,
         url: 'https://www.linkedin.com/company/archer---the-well-company',
         props: {
             type: 'icon',
-            owner:'ARCHER',
+            owner: 'ARCHER',
             nameIcon: 'linkedin',
             color: colors.dlsWhiteBackGround,
-            size: 40,
+            size: 35,
             descr: 'DLS Archer'
         }
     },
-      
+
 ]
