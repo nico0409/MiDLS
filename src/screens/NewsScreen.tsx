@@ -12,6 +12,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { NavigationContext } from '../context/NavigateContext';
 import { dataTest } from '../data/testData';
 import { GetPrompt } from '../components/GetPrompt';
+import { GetAllObserve } from '../components/GetAllObserve';
 
 
 
@@ -44,7 +45,9 @@ export const NewsScreen = ({ navigation, route }: Props) => {
 
   const cargarAsyncDatos = () => {
     
-    GetPrompt();
+    //GetPrompt();
+    
+    GetAllObserve('2020-01-01','B019445');
     /* await AsyncStorage.setItem('datatest', JSON.stringify(dataTest));
     console.log('datos cargados') */
   }

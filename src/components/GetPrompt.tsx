@@ -1,10 +1,12 @@
 import {useEffect} from 'react';
 import axios from 'axios';
+import {parse} from 'fast-xml-parser'
+import { PromptObserve } from '../interfaces/prompInterfaces';
 
 
  export const  GetPrompt = () => {
 
- let respuesta :any
+ let respuesta :PromptObserve
 
     console.log("inicia peticion");
 
@@ -27,8 +29,12 @@ import axios from 'axios';
           SOAPAction: 'DLHR_APP_PROMPT.v1'
         }
       }).then(res => {
-        console.log(res.data);
-        respuesta=res;
+       // console.log(JSON.stringify(parse(res.data)));
+    
+       
+            
+respuesta=parse(res.data);
+console.log(respuesta['soapenv:Envelope']['soapenv:Body'].DLHR_OBSERVE_PROMPT.DLHR_EMPL_BUSSINES_UNIT.DLHR_OBSERVE_EMPLID.NOMBRE);
         console.log("finaliza la peticion");
       }).catch(err => { console.log(err) });
 
