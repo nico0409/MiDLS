@@ -13,6 +13,8 @@ import { NavigationContext } from '../context/NavigateContext';
 import { dataTest } from '../data/testData';
 import { GetPrompt } from '../components/GetPrompt';
 import { GetAllObserve } from '../components/GetAllObserve';
+import { NewObservCard } from '../components/NewObservCard';
+import { EditObservCard } from '../components/EditObserveCard';
 
 
 
@@ -47,7 +49,9 @@ export const NewsScreen = ({ navigation, route }: Props) => {
     
     //GetPrompt();
     
-    GetAllObserve('2020-01-01','B019445');
+   // GetAllObserve('2020-01-01','B019445');
+  // NewObservCard();
+  EditObservCard();
     /* await AsyncStorage.setItem('datatest', JSON.stringify(dataTest));
     console.log('datos cargados') */
   }

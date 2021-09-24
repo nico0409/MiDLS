@@ -36,7 +36,8 @@ import { AllObserve } from '../interfaces/prompInterfaces';
       }).then(res => {
 
         respuesta= parse(res.data)
-console.log(respuesta['soapenv:Envelope']['soapenv:Body'].DLHR_ALL_OBSERVE_COLL.DLHR_ALL_OBSERVE.NroTarjeta);
+         let tarjeta = respuesta['soapenv:Envelope']['soapenv:Body'].DLHR_ALL_OBSERVE_COLL.DLHR_ALL_OBSERVE;
+console.log(Array.isArray(tarjeta)?tarjeta[0].NroTarjeta:tarjeta.NroTarjeta);
         console.log("finaliza la peticion");
       }).catch(err => { console.log(err) }); 
 
