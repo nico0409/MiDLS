@@ -1,8 +1,10 @@
 import { StyleSheet } from "react-native";
+
 export const styless = StyleSheet.create({
   containerWebView: {
     flex: 1,
-    paddingTop: '5%'
+    paddingTop: '5%',
+    justifyContent: 'center',
   },
   webview: {
     flex: 1,
@@ -15,13 +17,10 @@ export const styless = StyleSheet.create({
 })
 
 export const colors = {
-
   dlsBluePrimary: 'rgba(0,183,237,1)',
   dlsYellowSecondary: 'rgba(245,217,47,1)',
   dlsGrayPrimary: 'rgba(66,73,78,1)',
-  dlsWhiteBackGround:'rgba(243,239,239,0.9)'
-
-
+  dlsWhiteBackGround: 'rgba(243,239,239,0.9)'
 }
 
 export const styles = StyleSheet.create({
