@@ -15,6 +15,8 @@ import { GetPrompt } from '../components/GetPrompt';
 import { GetAllObserve } from '../components/GetAllObserve';
 import { NewObservCard } from '../components/NewObservCard';
 import { EditObservCard } from '../components/EditObserveCard';
+import { PromptObserve } from '../interfaces/prompInterfaces';
+import { useNetInfo } from '@react-native-community/netinfo';
 
 
 
@@ -41,28 +43,31 @@ export const NewsScreen = ({ navigation, route }: Props) => {
     if (status === 'not-authenticated') setLoad(true)
   }, [status])
 
+  const { isConnected } = useNetInfo();
   const [isVisible, setisVisible] = useState(false);
 
   const [dataTemp, setDataTemp] = useState<any[]>([]);
 
-  const cargarAsyncDatos = () => {
+  const cargarAsyncDatos = async() => {
     
     //GetPrompt();
-    
-   // GetAllObserve('2020-01-01','B019445');
+    //GetAllObserve('2020-01-01','B019445')
+    let prmompts:PromptObserve={}
+    prmompts =  await GetPrompt();
   // NewObservCard();
-  EditObservCard();
-    /* await AsyncStorage.setItem('datatest', JSON.stringify(dataTest));
-    console.log('datos cargados') */
+  //EditObservCard();
+     await AsyncStorage.setItem('Prompts', JSON.stringify(prmompts));
+    console.log('datos cargados') 
   }
 
   const mostrarAsyncDatos = async() => {
-    const mostrarDatos = await AsyncStorage.getItem('datatest');
+    const mostrarDatos = await AsyncStorage.getItem('Prompts');
     
     
     setisVisible(true);
     setDataTemp(JSON.parse(mostrarDatos!));
-
+    
+      
   }
 
   const renderItem = (item:any) => {

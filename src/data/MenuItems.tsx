@@ -15,6 +15,11 @@ export const menuItems:MenuItem[]=[{
     components:'TopTapNavigator'
 },
 {
+    name:'Tarjeta Observe',
+    icon:'card-outline',
+    components:'StackNavigatorObserve'
+},
+{
     name:'Mi Perfil',
     icon:'person-outline',
     components:'MyProfileScreenDrawer'
