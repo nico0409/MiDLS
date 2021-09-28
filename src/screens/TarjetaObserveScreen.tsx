@@ -1,30 +1,32 @@
-import React,{useState} from 'react'
-import { Text, View, Dimensions, SafeAreaView, Platform, Image, FlatList, ActivityIndicator, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react'
+import { Text, View, Dimensions, SafeAreaView, Platform, Image, FlatList, ActivityIndicator, TouchableOpacity, Button } from 'react-native';
 import { SearchInput } from '../components/SearchInput';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ObserveCard } from '../components/ObserveCard';
 import { styles } from '../Themes/DlsTheme';
 import { GetStorage } from '../components/Storage';
 import { PromptObserve, StorageTypes } from '../interfaces/prompInterfaces';
+import { DrawerScreenProps } from '@react-navigation/drawer';
 
 
+interface Props extends DrawerScreenProps<any, any> { };
 
-export const TarjetaObserveScreen = () => {
-   
+export const TarjetaObserveScreen = ({ navigation }: Props) => {
+
     const ScreenWidt = Dimensions.get('window').width;
     const { top } = useSafeAreaInsets();
     const [visibleSearch, setVisibleSearch] = useState(false)
     const [term, setTerm] = useState('')
 
-    let respuesta :PromptObserve={}
-    const get:StorageTypes={StorageType:'allObserve'};
-   
-    const  datos= GetStorage( get)
-    
-  const  data= datos.then(allobserve=>allobserve?.['soapenv:Envelope']['soapenv:Body'].DLHR_ALL_OBSERVE_COLL.DLHR_ALL_OBSERVE)
+    let respuesta: PromptObserve = {}
+    const get: StorageTypes = { StorageType: 'allObserve' };
+
+    const datos = GetStorage(get)
+
+    const data = datos.then(allobserve => allobserve?.['soapenv:Envelope']['soapenv:Body'].DLHR_ALL_OBSERVE_COLL.DLHR_ALL_OBSERVE)
 
 
-   
+
     return (
         <SafeAreaView>
             {visibleSearch &&
@@ -49,9 +51,13 @@ export const TarjetaObserveScreen = () => {
             }
 
 
+            <Button
+                title="Ir a creacion de tarjeta"
+                onPress={() => navigation.navigate('CreateObserveScreen')}
+            />
 
             <View>
-               {/*  <Image
+                {/*  <Image
                     source={require('../assets/pokebola.png')}
                     style={styles.pokebolaBG}
                 /> */}
@@ -60,7 +66,7 @@ export const TarjetaObserveScreen = () => {
 
                         numColumns={2}
                         showsVerticalScrollIndicator={false}
-                        data={  Array.isArray(data)?data:[]}
+                        data={Array.isArray(data) ? data : []}
                         keyExtractor={(pokemon) => pokemon.id}
                         renderItem={({ item }) => <ObserveCard observe={item} setVisibleSearch={setVisibleSearch} setTerm={setTerm} />
                         }
@@ -80,14 +86,14 @@ export const TarjetaObserveScreen = () => {
                             marginBottom: top + 60,
                             paddingBottom: 10
                         }}><Text>{term}</Text></View>)}
-                       /*  ListFooterComponent={(visibleSearch === false ? <ActivityIndicator
-                            style={{
-                                height: 100,
+                    /*  ListFooterComponent={(visibleSearch === false ? <ActivityIndicator
+                         style={{
+                             height: 100,
 
-                            }}
-                            size={30}
-                            color='green'
-                        /> : <></>)} */
+                         }}
+                         size={30}
+                         color='green'
+                     /> : <></>)} */
 
                     />
                 </View>
@@ -101,7 +107,7 @@ export const TarjetaObserveScreen = () => {
                         <View >
 
 
-                          {/*   <Image
+                            {/*   <Image
                                 source={require('../assets/pngegg.png')}
                                 style={styles.pokebolaIcon}
                             /> */}
