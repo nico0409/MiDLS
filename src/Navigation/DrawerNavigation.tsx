@@ -1,4 +1,4 @@
-import React,{ useEffect }  from 'react'
+import React, { useEffect } from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { StackNavigator } from './StackNavigator';
 import SplashScreen from 'react-native-splash-screen'
@@ -19,60 +19,81 @@ import { colors } from '../Themes/DlsTheme';
 import { MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
 import { ParamListBase } from '@react-navigation/native';
 import { NavigateProvider } from '../context/NavigateContext';
+import { PromptObserve, StorageTypes, TarjetaObserve } from '../interfaces/prompInterfaces';
+import { GetPrompt } from '../components/GetPrompt';
+import { Asingstorage, GetStorage } from '../components/Storage';
+import { TarjetaObserveScreen } from '../screens/TarjetaObserveScreen';
+import { StackNavigatorObserve } from './StackNavigatorObserve';
+import { types } from '@babel/core';
 
 
 const Drawer = createDrawerNavigator();
 
-const NavigateState=({children}:{children:JSX.Element|JSX.Element[]})=>{
-  return(
+const NavigateState = ({ children }: { children: JSX.Element | JSX.Element[] }) => {
+  return (
     <NavigateProvider>
-    {children}
+      {children}
     </NavigateProvider>
   )
 }
 
 
+
+
 export const DrawerNavigation = () => {
   const { isConnected } = useNetInfo();
 
- useEffect(() => {
-  SplashScreen.hide();
-}, ) 
+  useEffect(() => {
+    GetPrompts();
+  }, [])
+
+  const GetPrompts = async () => {
+    const allboserve: StorageTypes = { StorageType: 'allObserve' };
+    const prompts: StorageTypes = { StorageType: 'prompt' };
+    Asingstorage(prompts, await GetPrompt());
+    Asingstorage(allboserve, await GetPrompt());
+  }
+
+  useEffect(() => {
+    SplashScreen.hide();
+  }, [])
 
 
-                                                      
-                           
+
+
 
   return (
     <NavigateState>
-    <SafeAreaView style={styles.container}>
-      {!isConnected && isConnected !== null ?
-        <WhitOutConection />
-        :
-        <Drawer.Navigator
-          
-          // drawerContent={(props: any) => <DrawerMenu {...props} />}
-          drawerContent={(props: any) => <MenuInterno {...props} />}
-        >
+      <SafeAreaView style={styles.container}>
+        {!isConnected && isConnected !== null ?
+          <WhitOutConection />
+          :
+          <Drawer.Navigator
 
-          <Drawer.Screen name="TopTapNavigator" component={TopTapNavigator} />
-          <Drawer.Screen name="ContactScreen" component={ContactScreen} />
-          <Drawer.Screen name="RrhhScreen" component={RrhhScreen} />
-         {/*  <Drawer.Screen name="NewsScreen" component={NewsScreen} /> */}
-          <Drawer.Screen name="MyProfileScreenDrawer" component={MyProfileScreenDrawer} />
-          <Drawer.Screen name="PaycheckScreen" component={PaycheckScreen} />
-        </Drawer.Navigator>
-      }
+            // drawerContent={(props: any) => <DrawerMenu {...props} />}
+            drawerContent={(props: any) => <MenuInterno {...props} />}
+          >
+
+            <Drawer.Screen name="TopTapNavigator" component={TopTapNavigator} />
+            <Drawer.Screen name="ContactScreen" component={ContactScreen} />
+            <Drawer.Screen name="RrhhScreen" component={RrhhScreen} />
+            {/*  <Drawer.Screen name="NewsScreen" component={NewsScreen} /> */}
+            <Drawer.Screen name="MyProfileScreenDrawer" component={MyProfileScreenDrawer} />
+            <Drawer.Screen name="PaycheckScreen" component={PaycheckScreen} />
+            <Drawer.Screen name="StackNavigatorObserve" component={StackNavigatorObserve} />
+          </Drawer.Navigator>
+        }
 
 
-    </SafeAreaView>
+      </SafeAreaView>
     </NavigateState>
   );
 }
 
+
 const styles = StyleSheet.create({
   container: {
-    backgroundColor:colors.dlsGrayPrimary,
+    backgroundColor: colors.dlsGrayPrimary,
     flex: 1,
   },
 });

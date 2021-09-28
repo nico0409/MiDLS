@@ -5,7 +5,7 @@ import { AllObserve } from '../interfaces/prompInterfaces';
 
 
 
- export const  GetAllObserve = (fecha:string,emplid:string) => {
+ export const  GetAllObserve = async(fecha:string,emplid:string) => {
 
   let respuesta:AllObserve
 
@@ -25,7 +25,7 @@ import { AllObserve } from '../interfaces/prompInterfaces';
 
 
  
-    axios.post('http://www.dls-tst-peoplesoft.com:27600/PSIGW/PeopleSoftServiceListeningConnector/DLHR_APP_MIDLS_PROMP.1.wsdl',
+  await  axios.post('http://www.dls-tst-peoplesoft.com:27600/PSIGW/PeopleSoftServiceListeningConnector/DLHR_APP_MIDLS_PROMP.1.wsdl',
       xmls,
       {
         headers:
@@ -35,9 +35,10 @@ import { AllObserve } from '../interfaces/prompInterfaces';
         }
       }).then(res => {
 
-        respuesta= parse(res.data)
-console.log(respuesta['soapenv:Envelope']['soapenv:Body'].DLHR_ALL_OBSERVE_COLL.DLHR_ALL_OBSERVE.NroTarjeta);
-        console.log("finaliza la peticion");
+      /*   respuesta= parse(res.data)
+         let tarjeta = respuesta['soapenv:Envelope']['soapenv:Body'].DLHR_ALL_OBSERVE_COLL.DLHR_ALL_OBSERVE;
+console.log(Array.isArray(tarjeta)?tarjeta[0].NroTarjeta:tarjeta.NroTarjeta);
+        console.log("finaliza la peticion"); */
       }).catch(err => { console.log(err) }); 
 
 }
