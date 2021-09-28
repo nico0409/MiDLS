@@ -1,55 +1,62 @@
 import React from 'react'
 import { View, StyleSheet, Text, Image } from 'react-native';
 
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-import { PropsRedes } from '../interfaces/PropsRedes';
+import { PropsRedes, PropsRedespro } from '../interfaces/PropsRedes';
+import { colors } from '../Themes/DlsTheme';
+import { color } from 'react-native-reanimated';
 
 const alternativePath = require('../assets/logoArcher.png');
 
-export const IconDescrRedes = ({ type, nameIcon, requireImage = alternativePath, color, size, descr }: PropsRedes) => {
+export const IconDescrRedes = ({ type, nameIcon, requireImage = alternativePath, color, size, descr ,index}: PropsRedespro) => {
+  
+ 
+
+
 
     return (
-        <>
-            {/* <View style={styles.button}> */}
+       
+        <View style={styles.iconContainer}>
+            {type === 'image' ?
+                <View style={styles.imageContainer}>
+                    <Image
+                        source={requireImage}
+                        resizeMethod='auto'
+                        resizeMode='contain'
+                        
+                        style={{
+                            
+                            width: 60,
+                            height:  60,
 
-            {type === "image"
-                ?
-                <>
-                    <View style={styles.imageContainer}>
-                        <Image
-                            source={requireImage}
-                            style={{
-                                flex: 1,
-                                width: '70%',
-                                height: '100%',
-                                resizeMode: 'center',
-                            }}
-                        />
-                    </View>
-                    <View style={styles.textContainer}>
-                        <Text style={styles.textDescr}>{descr}</Text>
-                    </View>
-                </>
-                :
-                <>
-                    <View style={styles.imageContainer}>
-                        <Icon name={nameIcon} color={color} size={size} />
-                    </View>
-                    <View style={styles.textContainer}>
-                        <Text style={styles.textDescr}>{descr}</Text>
-                    </View>
-                </>
+                        }}
+                    />
+                </View> :
+                <View style={styles.imageContainer}>
+                    <Icon
+                        name={nameIcon}
+                        size={size}
+                        color={color}
+                    />
+
+                </View>
             }
+            
+         {   (index==3|| index==4)&& 
+           <View style={styles.textContainer}><Text style={styles.textDescr}>{descr}</Text></View>
+         }
+          
+            
 
-            {/* </View> */}
-        </>
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
+
     /* button: {
-        backgroundColor: 'orange',
+       
         flexDirection: 'row',
         height: '100%',
         width: '100%',
@@ -57,22 +64,24 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     }, */
     textDescr: {
-        fontFamily: 'Stag-Semibold',
-        fontSize: 16,
-        color: '#37424a'
+        fontFamily: 'StagSans-Light',
+        fontWeight:'bold',
+        fontSize: 12,
+        color: colors.dlsWhiteBackGround
     },
     imageContainer: {
         alignItems: 'center',
-        height: '100%',
-        width: '40%',
-        justifyContent: 'center'
+       // width: '100%', 
+       backgroundColor:colors.dlsGrayPrimary 
     },
     textContainer: {
-        marginLeft: 5,
-    }
-    /* iconContainer: {
-        alignItems: 'flex-end',
+    
+    },
+    iconContainer: {
         height: '100%',
-        width: '40%',
-    } */
+        width: '100%',
+         alignItems:'center',
+         justifyContent:'center',
+         backgroundColor:colors.dlsGrayPrimary 
+    }
 })

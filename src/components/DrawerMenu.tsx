@@ -1,12 +1,16 @@
 import React, { useState } from 'react'
 import { Text, View, TouchableOpacity, StyleSheet, Modal } from 'react-native';
 
+
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { colors } from '../Themes/DlsTheme';
 import { RedesContent } from './RedesContent';
 
-export const DrawerMenu = () => {
+
+
+
+export const DrawerMenu = ( ) => {
 
     const [isVisible, setIsVisible] = useState(false);
 
@@ -16,10 +20,11 @@ export const DrawerMenu = () => {
             <TouchableOpacity
                 style={styles.botonRedes}
                 onPress={() => setIsVisible(true)}>
+                <Icon name="share-social-sharp" size={30} color={colors.dlsYellowSecondary} />
                 <View style={{ marginRight: 5 }}>
-                    <Text style={styles.textBtn}>Visitanos</Text>
+                    <Text style={styles.textBtn}>Visítanos</Text>
                 </View>
-                <Icon name="share-social-sharp" size={30} color={'white'} />
+
             </TouchableOpacity>
 
             <Modal
@@ -31,15 +36,16 @@ export const DrawerMenu = () => {
                     <View style={styles.modalBackground}>
 
                         <View style={styles.titleContainer}>
-                            <Text style={styles.textModal}>Nuestras Redes!</Text>
-                        </View>
+                            {/*  <Text style={styles.textModal}>Nuestras Redes!</Text> */}
 
-                        <TouchableOpacity
-                            style={styles.closebtn}
-                            onPress={() => setIsVisible(false)}
-                        >
-                            <Icon name="close-outline" size={30} color={'white'} />
-                        </TouchableOpacity>
+
+                            <TouchableOpacity
+                                style={styles.closebtn}
+                                onPress={() => setIsVisible(false)}
+                            >
+                                <Icon name="close-outline" size={30} color={'white'} />
+                            </TouchableOpacity>
+                        </View>
 
                         <RedesContent />
 
@@ -73,12 +79,12 @@ const styles = StyleSheet.create({
     modalContainer: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-end',
     },
     modalBackground: {
-        backgroundColor: '#f3f3f3',
-        height: '85%',
-        width: '85%',
+        backgroundColor: colors.dlsGrayPrimary,   
+        height: '35%',
+        width: '90%',
         borderRadius: 30,
         shadowColor: "#000",
         shadowOffset: {
@@ -87,18 +93,19 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.27,
         shadowRadius: 4.65,
-
         elevation: 6,
+
     },
     textBtn: {
-        fontFamily: 'Stag-Semibold',
-        color: 'white',
-        fontSize: 24
+        fontFamily: 'Stagsans-Light',
+        color: colors.dlsYellowSecondary,
+        fontSize: 20
     },
     titleContainer: {
         flexDirection: 'row',
         backgroundColor: colors.dlsGrayPrimary,
-        height: '15%',
+        //backgroundColor: 'red',
+        height: '7%',
         alignItems: 'center',
         justifyContent: 'center',
         borderTopLeftRadius: 28,
@@ -107,12 +114,12 @@ const styles = StyleSheet.create({
     textModal: {
         fontFamily: 'Stag-Semibold',
         color: 'white',
-        fontSize: 26
+        fontSize: 20
     },
     closebtn: {
         position: 'absolute',
-        right: 20,
-        top: 20
+        right: 10,
+        top: 10
     },
     /* footerContainer: {
         backgroundColor: colors.dlsGrayPrimary,

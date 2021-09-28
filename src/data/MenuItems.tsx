@@ -10,16 +10,15 @@ export const menuItems:MenuItem[]=[{
     components:'PaycheckScreen'
 },
 {
+    name:'Noticias',
+    icon:'newspaper-outline',
+    components:'TopTapNavigator'
+},
+{
     name:'Mi Perfil',
     icon:'person-outline',
     components:'MyProfileScreenDrawer'
 },
-{
-    name:'Noticias',
-    icon:'newspaper-outline',
-    components:'TopTapNavigator'
-}
-
 
 
 
