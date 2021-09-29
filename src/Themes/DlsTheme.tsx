@@ -11,7 +11,7 @@ export const styless = StyleSheet.create({
 
   },
   title: {
-    fontSize: 35,
+    fontSize: 25,
     fontWeight: 'bold'
   }
 })
@@ -27,6 +27,18 @@ export const styles = StyleSheet.create({
    
   globalMargin:{
       marginHorizontal:20,
+      
+  },
+  header:{
+ marginVertical:10,
+marginRight:20 ,
+
+flexDirection:'row',
+justifyContent:'space-between',
+alignItems:'center'
+ 
+
+
   },
   pokebolaBG:{
       position:'absolute',
@@ -42,16 +54,24 @@ export const styles = StyleSheet.create({
       fontSize:35,
       fontWeight:'bold'
   },pokebolaIcon:{
-       width:70,
-      height:70,
+      width:60,
+      height:60,
       opacity:0.9, 
+      backgroundColor:'white',
+      borderRadius:100,
+      alignItems:'center',
+      justifyContent:'center',
+      
   },pokebolaContainer:{
       position:'absolute',
-      width:70,
-      height:70,
-      bottom:20,
-      right:20,
-      
+      width:60,
+      height:60,
+      bottom:50,
+      right:10,
+      alignItems:'center',
+      justifyContent:'center',
+      backgroundColor:'red',
+      borderRadius:100,
 
   }
 

@@ -1,37 +1,49 @@
-import React,{useState,useEffect } from 'react'
-import { View, StyleSheet, Text, Platform, StyleProp, ViewStyle } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
+import React, { useState, useEffect } from 'react'
+import { View, StyleSheet, Text, Platform, StyleProp, ViewStyle, TextInput, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import IconAwesome from 'react-native-vector-icons/FontAwesome';
 import { useDebouncedValue } from '../hooks/useDebouncedValue';
 
 
 
 
-interface Props{
-    onDebounce:(value:string)=>void
-    style?:StyleProp<ViewStyle>
+
+
+interface Props {
+    onDebounce: (value: string) => void
+    style?: StyleProp<ViewStyle>
+    setisVisible:React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export const SearchInput = ({style,onDebounce}:Props) => {
+export const SearchInput = ({ style, onDebounce,setisVisible }: Props) => {
 
     const [textValue, setTextValue] = useState('')
-    const debouncedValue=useDebouncedValue(textValue)
-
+    const debouncedValue = useDebouncedValue(textValue)
+    
     useEffect(() => {
         onDebounce(debouncedValue)
-     
+
     }, [debouncedValue])
     return (
         <View style={{
             ...styles.container,
             ...style as any
-            }}>
+        }}>
+            <TouchableOpacity
+            onPress={()=>{setisVisible(true)}}>
+            <IconAwesome
+                name="filter"
+                color='white'
+                size={25}
+            />
+            </TouchableOpacity>
             <View style={styles.textBackground}>
                 <TextInput
-                    placeholder='Pokemon Search'
+                    placeholder='Numero tarjeta'
                     style={{
                         ...styles.textInput,
-                    top: (Platform.OS ==='ios'?0:2)}}
+                        top: (Platform.OS === 'ios' ? 0 : 2)
+                    }}
                     autoCapitalize="none"
                     autoCorrect={false}
                     value={textValue}
@@ -49,13 +61,18 @@ export const SearchInput = ({style,onDebounce}:Props) => {
 
 const styles = StyleSheet.create({
     container: {
-        
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+
     },
     textBackground: {
         backgroundColor: '#F3F1F3',
         borderRadius: 50,
         height: 40,
+        width: 270,
         paddingHorizontal: 20,
+        marginHorizontal: 10,
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
@@ -73,6 +90,6 @@ const styles = StyleSheet.create({
     textInput: {
         flex: 1,
         fontSize: 18,
-        
+
     }
 });
