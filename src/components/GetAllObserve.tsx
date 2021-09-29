@@ -7,9 +7,9 @@ import { AllObserve } from '../interfaces/prompInterfaces';
 
  export const  GetAllObserve = async(fecha:string,emplid:string) => {
 
-  let respuesta:AllObserve
+  let respuesta:AllObserve={}
 
-     console.log("inicia peticion");
+     
 
     let xmls = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dlhr="http://xmlns.oracle.com/Enterprise/Tools/schemas/DLHR_MI_DLS.DLHR_REQUEST_ALL_OBSERVE.v1">\
     <soapenv:Header/>\
@@ -24,6 +24,7 @@ import { AllObserve } from '../interfaces/prompInterfaces';
  </soapenv:Envelope>`;
 
 
+
  
   await  axios.post('http://www.dls-tst-peoplesoft.com:27600/PSIGW/PeopleSoftServiceListeningConnector/DLHR_APP_MIDLS_PROMP.1.wsdl',
       xmls,
@@ -35,10 +36,11 @@ import { AllObserve } from '../interfaces/prompInterfaces';
         }
       }).then(res => {
 
-      /*   respuesta= parse(res.data)
-         let tarjeta = respuesta['soapenv:Envelope']['soapenv:Body'].DLHR_ALL_OBSERVE_COLL.DLHR_ALL_OBSERVE;
-console.log(Array.isArray(tarjeta)?tarjeta[0].NroTarjeta:tarjeta.NroTarjeta);
-        console.log("finaliza la peticion"); */
-      }).catch(err => { console.log(err) }); 
 
+         respuesta= parse(res.data)
+         let tarjeta = respuesta['soapenv:Envelope']?.['soapenv:Body'].DLHR_ALL_OBSERVE_COLL.DLHR_ALL_OBSERVE;
+//console.log(Array.isArray(tarjeta)?tarjeta[0].NroTarjeta:tarjeta?.NroTarjeta);
+        
+      }).catch(err => { console.log(err) }); 
+return respuesta;
 }

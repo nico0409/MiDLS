@@ -48,10 +48,10 @@ export const DrawerNavigation = () => {
   }, [])
 
   const GetPrompts = async () => {
-    const allboserve: StorageTypes = { StorageType: 'allObserve' };
+    
     const prompts: StorageTypes = { StorageType: 'prompt' };
-    Asingstorage(prompts, await GetPrompt());
-    Asingstorage(allboserve, await GetPrompt());
+    //Asingstorage(prompts, await GetPrompt());
+    
   }
 
   useEffect(() => {
