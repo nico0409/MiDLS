@@ -6,13 +6,15 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { colors } from '../Themes/DlsTheme';
 import { PickerSelect } from './PickerSelect';
+import CheckBox from '@react-native-community/checkbox';
+
 
 export const CreateObservePageOne = () => {
 
-/*     const [state, setstate] = useState({
-        label: 'Unidad de negocio',
-        value: null,
-    }) */
+    /*     const [state, setstate] = useState({
+            label: 'Unidad de negocio',
+            value: null,
+        }) */
 
     const [date, setDate] = useState('--/--/----');
 
@@ -23,6 +25,7 @@ export const CreateObservePageOne = () => {
         { label: 'Basket', value: 'basket' },
     ]
 
+    //datePicker
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
     const showDatePicker = () => {
@@ -38,10 +41,13 @@ export const CreateObservePageOne = () => {
         hideDatePicker();
     };
 
+    //CheckBox
+    const [toggleCheckBox, setToggleCheckBox] = useState(false)
+
     return (
         <View>
 
-            <PickerSelect placeholder="Unidad de negocio" item={deportes}/>
+            <PickerSelect placeholder="Unidad de negocio" item={deportes} />
 
             <View style={{ flexDirection: 'row' }}>
                 <Text style={{ color: 'white', fontSize: 20 }}>{date}</Text>
@@ -51,9 +57,18 @@ export const CreateObservePageOne = () => {
                 </TouchableOpacity>
             </View>
 
-            <PickerSelect placeholder="Origen" item={deportes}/>
-            
-            <PickerSelect placeholder="Turno" item={deportes}/>
+            <PickerSelect placeholder="Origen" item={deportes} />
+
+            <PickerSelect placeholder="Turno" item={deportes} />
+
+            <View style={{ flexDirection: 'row' , alignItems: 'center'}}>
+            <CheckBox
+                disabled={false}
+                value={toggleCheckBox}
+                onValueChange={(newValue) => setToggleCheckBox(newValue)}
+            />
+            <Text>A destacar</Text>
+            </View>
 
             <DateTimePickerModal
                 isVisible={isDatePickerVisible}
