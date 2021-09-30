@@ -1,12 +1,12 @@
 import React from 'react';
 import { parse } from 'fast-xml-parser'
-import { PromptObserve, DlhrObserveEmplid } from '../interfaces/prompInterfaces';
+import { PromptObserve, DlhrObserveEmplid, PromptObserveType } from '../interfaces/prompInterfaces';
 import PSDB from '../api/PSDB';
 
 
 export const GetPrompt = async () => {
 
-   let respuesta: PromptObserve = {}
+   let respuesta: PromptObserveType = {}
 
 
 
@@ -33,10 +33,13 @@ export const GetPrompt = async () => {
 
 
 
-         respuesta = parse(res.data);
+         respuesta = {
+            PromptObserve:parse(res.data),
+         type:'PromptObserveType'
+         };
 
 
-         let empleado = respuesta['soapenv:Envelope']!['soapenv:Body']!.DLHR_OBSERVE_PROMPT!.DLHR_OBSERVE_EMPLID;
+         let empleado = respuesta.PromptObserve?.['soapenv:Envelope']!['soapenv:Body']!.DLHR_OBSERVE_PROMPT!.DLHR_OBSERVE_EMPLID;
 
          /* (Array.isArray(empleado))?
            console.log(empleado[0].NOMBRE):

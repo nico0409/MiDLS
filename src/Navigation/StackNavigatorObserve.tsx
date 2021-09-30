@@ -4,6 +4,8 @@ import { TarjetaObserveScreen } from '../screens/TarjetaObserveScreen';
 import { CreateObserveScreen } from '../screens/CreateObserveScreen';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import { colors } from '../Themes/DlsTheme';
+import { EmplidObserveScreen } from '../screens/EmplidObserveScreen';
+import { testobserve } from '../screens/test';
 
 const Stack = createStackNavigator();
 
@@ -18,9 +20,11 @@ export const StackNavigatorObserve = () => {
           }
         }}
       >
+       {/*  <Stack.Screen name="testobserve" component={testobserve} />  */}
+         <Stack.Screen name="EmplidObserveScreen" component={EmplidObserveScreen}/>  
         <Stack.Screen name="TarjetaObserveScreen" component={TarjetaObserveScreen} />
         <Stack.Screen name="CreateObserveScreen" component={CreateObserveScreen} />
-
+        
       </Stack.Navigator>
     </SafeAreaView>
   );
