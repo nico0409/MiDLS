@@ -21,8 +21,6 @@ interface Props {
 export const ModalPrompt = ({ isVisible, setisVisible, data,field1,field2}: Props) => {
     const [state, setstate] = useState(0)
     
-    const  empelados: DlhrObserveEmplid[]=data;
-    const equipos:DlhrEquipTbl[]=data;
 
     return (
         <View>
@@ -50,15 +48,7 @@ export const ModalPrompt = ({ isVisible, setisVisible, data,field1,field2}: Prop
                         justifyContent: 'center',
                         alignItems: 'center',
                     }}>
-                         {/* <TouchableOpacity
-                            style={{
-                                width: '100%',
-                                height: 400,
-                            }}
-                            activeOpacity={1}
-                            onPressOut={() => { }} */}
                          
-                            {/* contenido del modal */}
                             <View style={{
                                 backgroundColor: 'white',
                                 width: '100%',
@@ -77,23 +67,11 @@ export const ModalPrompt = ({ isVisible, setisVisible, data,field1,field2}: Prop
 
                             }}>
 
-                                {/* <FlatList
-                                    data={empelados}
-                                    renderItem={({ item }) =>
-                                        <View>
-                                            <Text style={{}}>
-                                                 { item[field1.empleado!]} 
-                                            </Text>
-                                            <Text style={{}}>
-                                                {item[field2.empleado!]}
-                                            </Text>
-                                        </View>}
-                                    keyExtractor={item => item[field1.empleado!]!}
-                                /> */}
+                            
                                 <FlatlistPrompt data={data} field1={field1} field2={field2}/>
 
                             </View>
-                        {/*  </TouchableOpacity> */}
+                      
                     </View>
             </Modal>
         </View>

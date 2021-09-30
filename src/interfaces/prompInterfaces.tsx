@@ -11,6 +11,11 @@ export type Fields={
   equipo?:'DL_EQUIPEMENT_ID'|'DESCR',
 
 }
+export type promptType={
+
+  type?:'DLHR_EMPL_BUSSINES_UNIT'|'DLHR_ORIGEN'  |'DLHR_CUSTOMER' |'DLHR_EQUIP_TBL'|'DLHR_OBSERVE_EMPLID'|'DLHR_PUESTO'|'DLHR_SECTOR'|'DLHR_APS'|'DLHR_TURNO'
+  
+}
 export interface PromptObserveType {
   PromptObserve ?: PromptObserve;
   type?:'PromptObserveType'|'AllObserveType'|'ObserveType';

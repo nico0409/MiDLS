@@ -12,7 +12,7 @@ interface Props {
 }
 export const Prompt = ({data,placeHolder,field1,field2}:Props) => {
     const [isVisible, setisVisible] = useState(false)
-console.log("pantalla prompt");
+
 
     return (
         <View>
@@ -23,6 +23,8 @@ console.log("pantalla prompt");
             </View>
             </TouchableOpacity>
             <ModalPrompt data={data} isVisible={isVisible} setisVisible={setisVisible}  field1={field1} field2={field2}/>
+        
+        
         </View>
     )
 }
