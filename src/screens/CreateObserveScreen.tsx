@@ -1,17 +1,20 @@
 import React, { useRef, useState } from 'react'
-import { SafeAreaView, Dimensions, View, Text, TouchableOpacity } from 'react-native';
+import { SafeAreaView, Dimensions, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import Carousel from 'react-native-snap-carousel';
 import StepIndicator from 'react-native-step-indicator';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { colors } from '../Themes/DlsTheme';
+import { CreateObservePageOne } from '../components/CreateObservePageOne';
+import { CreateObservePageTwo } from '../components/CreateObservePageTwo';
 
 interface DataTemp {
     namepage: string;
-    background: string;
 }
 
 interface Props extends StackScreenProps<any, any> { };
+
+const windowWidth = Dimensions.get('window').width;
 
 export const CreateObserveScreen = ({ navigation }: Props) => {
 
@@ -19,15 +22,13 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
 
     const [activeIndex, setActiveIndex] = useState(0);
 
-    const windowWidth = Dimensions.get('window').width;
+    const [backButton, setBackButton] = useState(false);
 
     const dataTemp: DataTemp[] = [{
         namepage: 'pagina1',
-        background: 'red'
     },
     {
         namepage: 'pagina2',
-        background: 'blue'
     }]
 
     const firstIndicatorStyles = {
@@ -56,9 +57,11 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
     const renderItem = (item: DataTemp, index: number) => {
         return (
             <>
-                <View style={{ flex: 1, backgroundColor: item.background }}>
-
-                </View>
+                {index === 0 ?
+                    <CreateObservePageOne />
+                    :
+                    <CreateObservePageTwo />
+                }
             </>
         )
     }
@@ -79,7 +82,7 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
 
                 <View style={{ paddingBottom: 10, marginHorizontal: 20 }}>
                     <StepIndicator
-                        stepCount={dataTemp.length}
+                        stepCount={5}
                         customStyles={firstIndicatorStyles}
                         currentPosition={activeIndex}
                         labels={['Paso 1', 'Paso 2']}
@@ -87,20 +90,6 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
                     /* onPress={onStepPress} */
                     />
                 </View>
-
-                {/* <Pagination
-                    dotsLength={dataTemp.length}
-                    activeDotIndex={activeIndex}
-                    containerStyle={{paddingVertical: 10}}
-                    dotStyle={{
-                        width: 10,
-                        height: 10,
-                        borderRadius: 10,
-                        backgroundColor: colors.dlsYellowSecondary,
-                        margin: 0,
-                        padding: 0
-                    }}
-                /> */}
 
                 <Carousel
                     data={dataTemp}
@@ -114,21 +103,37 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
                     }}
                 />
 
-                <View style={{ flexDirection: 'row' }}>
-                    <TouchableOpacity
-                        style={{ height: 70, width: windowWidth * 0.5 }}
-                        // @ts-ignore
-                        onPress={() => { carouselRef.current.snapToPrev() }}
-                    >
-                        <Text>Anterior</Text>
-                    </TouchableOpacity>
+                <View style={{
+                    flexDirection: 'row',
+                    justifyContent: (!backButton ? 'flex-end' : 'center')
+                }}>
+
+                    {backButton &&
+                        <TouchableOpacity
+                            style={styles.prevPage}
+                            onPress={() => {
+                                setBackButton(false);
+                                // @ts-ignore
+                                carouselRef.current.snapToPrev();
+                            }}
+                        >
+                            <Text style={{ color: 'white', fontSize: 20 }}>Anterior</Text>
+                        </TouchableOpacity>
+                    }
 
                     <TouchableOpacity
-                        style={{ height: 70, width: windowWidth * 0.5 }}
-                        // @ts-ignore
-                        onPress={() => { carouselRef.current.snapToNext() }}
+                        style={styles.nextPage}
+                        onPress={() => {
+                            if (activeIndex === 1){
+                                navigation.navigate('CreateObserveQuestionsPage');
+                            }else{
+                                setBackButton(true);
+                                // @ts-ignore
+                                carouselRef.current.snapToNext();
+                            }
+                        }}
                     >
-                        <Text>Siguiente</Text>
+                        <Text style={{ color: 'white', fontSize: 20 }}>Siguiente</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -136,3 +141,18 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
         </SafeAreaView>
     )
 }
+
+const styles = StyleSheet.create({
+    prevPage: {
+        height: 70,
+        width: windowWidth * 0.5,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    nextPage: {
+        height: 70,
+        width: windowWidth * 0.5,
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
+})
