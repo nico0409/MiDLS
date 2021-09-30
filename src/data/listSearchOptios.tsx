@@ -7,6 +7,12 @@ export const listSearchOptions = [
          
     ]
 
-
+    export const listSearchOptions2 = [
+        {
+            //title: "Main dishes",
+            data: ["Pizza", "Burger", "Risotto","French Fries", "Onion Rings", "Fried Shrimps"]
+          }
+         
+        ]
 
 

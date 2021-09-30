@@ -1,13 +1,13 @@
 import React from 'react';
 import { parse } from 'fast-xml-parser';
-import { AllObserve } from '../interfaces/prompInterfaces';
+import { AllObserve, AllObserveType } from '../interfaces/prompInterfaces';
 import PSDB from '../api/PSDB';
 
 
 
 export const GetAllObserve = async (fecha: string, emplid: string) => {
 
-  let respuesta:AllObserve={}
+  let respuesta:AllObserveType={}
 
      
 
@@ -36,7 +36,8 @@ export const GetAllObserve = async (fecha: string, emplid: string) => {
       }).then(res => {
 
 
-         respuesta= parse(res.data)
+         respuesta={AllObserve: parse(res.data),
+         type:'AllObserveType'}
       }).catch(err => { console.log(err) }); 
 return respuesta;
 }

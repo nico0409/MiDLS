@@ -50,7 +50,7 @@ export const DrawerNavigation = () => {
   const GetPrompts = async () => {
     
     const prompts: StorageTypes = { StorageType: 'prompt' };
-    //Asingstorage(prompts, await GetPrompt());
+    Asingstorage(prompts, await GetPrompt());
     
   }
 
