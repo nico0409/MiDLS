@@ -19,7 +19,7 @@ export const PostNewObservCard = (bodyRequest: string) => {
     </soapenv:Body>\
  </soapenv:Envelope>`;
 
-  PSDB.post('http://www.dls-tst-peoplesoft.com:27600/PSIGW/PeopleSoftServiceListeningConnector/CI_DLHR_TA_OBSERV_CI.1.wsdl',
+  PSDB.post('/CI_DLHR_TA_OBSERV_CI.1.wsdl',
     xmls,
     {
       headers:
