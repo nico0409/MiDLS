@@ -1,13 +1,20 @@
 import React, { useState } from 'react'
-import { View, Text } from 'react-native';
+import { View, Text, Button } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import Icon from 'react-native-vector-icons/Ionicons';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { colors } from '../Themes/DlsTheme';
+import { PickerSelect } from './PickerSelect';
 
 export const CreateObservePageOne = () => {
 
-    const [state, setstate] = useState({
+/*     const [state, setstate] = useState({
         label: 'Unidad de negocio',
         value: null,
-    })
+    }) */
+
+    const [date, setDate] = useState('--/--/----');
 
     const deportes = [
         { label: 'Football', value: 'football' },
@@ -15,20 +22,46 @@ export const CreateObservePageOne = () => {
         { label: 'Hockey', value: 'hockey' },
         { label: 'Basket', value: 'basket' },
     ]
-    console.log(state.label);
-    
+
+    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+    const showDatePicker = () => {
+        setDatePickerVisibility(true);
+    };
+
+    const hideDatePicker = () => {
+        setDatePickerVisibility(false);
+    };
+
+    const handleConfirm = (date: any) => {
+        setDate(date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear());
+        hideDatePicker();
+    };
+
     return (
         <View>
-            <RNPickerSelect
-                onValueChange={(value) => setstate({
-                    ...state,
-                    value,
-                    label: deportes.find(element => { return element.value === value })?.label!
-                })}
-                placeholder={state}
-                items={deportes}
+
+            <PickerSelect placeholder="Unidad de negocio" item={deportes}/>
+
+            <View style={{ flexDirection: 'row' }}>
+                <Text style={{ color: 'white', fontSize: 20 }}>{date}</Text>
+                <TouchableOpacity
+                    onPress={showDatePicker}>
+                    <Icon name="calendar" size={30} color={colors.dlsYellowSecondary} />
+                </TouchableOpacity>
+            </View>
+
+            <PickerSelect placeholder="Origen" item={deportes}/>
+            
+            <PickerSelect placeholder="Turno" item={deportes}/>
+
+            <DateTimePickerModal
+                isVisible={isDatePickerVisible}
+                mode="date"
+                onConfirm={handleConfirm}
+                onCancel={hideDatePicker}
             />
-            <Text style={{ width: '100%', height: 60, position: 'absolute', bottom: 0, left: 0 }}>{' '}</Text>
+
         </View>
     )
 }

@@ -87,20 +87,6 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
                     />
                 </View>
 
-                {/* <Pagination
-                    dotsLength={dataTemp.length}
-                    activeDotIndex={activeIndex}
-                    containerStyle={{paddingVertical: 10}}
-                    dotStyle={{
-                        width: 10,
-                        height: 10,
-                        borderRadius: 10,
-                        backgroundColor: colors.dlsYellowSecondary,
-                        margin: 0,
-                        padding: 0
-                    }}
-                /> */}
-
                 <Carousel
                     data={dataTemp}
                     renderItem={({ item, index }) => renderItem(item, index)}
