@@ -5,6 +5,7 @@ import Carousel from 'react-native-snap-carousel';
 import StepIndicator from 'react-native-step-indicator';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { colors } from '../Themes/DlsTheme';
+import { CreateObservePageOne } from '../components/CreateObservePageOne';
 
 interface DataTemp {
     namepage: string;
@@ -56,9 +57,7 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
     const renderItem = (item: DataTemp, index: number) => {
         return (
             <>
-                <View style={{ flex: 1, backgroundColor: item.background }}>
-
-                </View>
+                <CreateObservePageOne/>
             </>
         )
     }
