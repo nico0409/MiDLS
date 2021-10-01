@@ -17,6 +17,7 @@ import { Loading } from '../components/Loading';
 import { ModalSearch } from '../components/ModalSearch';
 
 
+interface Props extends DrawerScreenProps<any, any> { };
 
 
 
@@ -102,6 +103,10 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
                         width: ScreenWidt - 40,
                         top: (Platform.OS === 'ios') ? top : top + 10
 
+         /*   <Button
+                title="Ir a creacion de tarjeta"
+                onPress={() => navigation.navigate('CreateObserveScreen')}
+            />  */
 
                     }
                     }
@@ -139,7 +144,7 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
                 <TouchableOpacity
                     activeOpacity={0.6}
                     style={{ zIndex: 999, ...styles.pokebolaContainer }}
-                    onPress={() => { }}
+                    onPress={() => { navigation.navigate('CreateObserveScreen') }}
                 >
 
                     <View style={styles.pokebolaIcon} >
