@@ -8,24 +8,33 @@ import { colors } from '../Themes/DlsTheme';
 import { EmplidObserveScreen } from '../screens/EmplidObserveScreen';
 import { testobserve } from '../screens/test';
 
+export type RoutstackParams={
+    TarjetaObserveScreen:{emplid:string,name:string}
+  
+  }
+
 const Stack = createStackNavigator();
 
 export const StackNavigatorObserve = () => {
-  return (
-    <SafeAreaView style={styles.container}>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-          cardStyle: {
-            backgroundColor: 'white'
-          }
-        }}
-      >
-        <Stack.Screen name="TarjetaObserveScreen" component={TarjetaObserveScreen} />
-        <Stack.Screen name="CreateObserveScreen" component={CreateObserveScreen} />
-        <Stack.Screen name="CreateObserveQuestionsPage" component={CreateObserveQuestionsPage} />
-                {/*    <Stack.Screen name="testobserve" component={testobserve} />  */}
+  
+    
+    return (
+        <SafeAreaView style={styles.container}>
+            <Stack.Navigator
+                screenOptions={{
+                    headerShown: false,
+                    cardStyle: {
+                        backgroundColor: 'white'
+                    }
+                }}
+            >
+                {/*  <Stack.Screen name="testobserve" component={testobserve} />  */}
                 <Stack.Screen name="EmplidObserveScreen" component={EmplidObserveScreen} />
+                <Stack.Screen name="TarjetaObserveScreen" component={TarjetaObserveScreen} />
+                <Stack.Screen name="CreateObserveScreen" component={CreateObserveScreen} />
+                <Stack.Screen name="CreateObserveQuestionsPage" component={CreateObserveQuestionsPage} />
+                {/*    */}
+
 
             </Stack.Navigator>
         </SafeAreaView>

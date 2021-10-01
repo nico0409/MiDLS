@@ -6,7 +6,7 @@ import { Asingstorage } from '../components/Storage';
 
 
 
-export const useAllObserve = () => {
+export const useAllObserve = (emplid:string) => {
 
     const [isloading, setIsloading] = useState(true)
     const [allObserveList, setObserveList] = useState<DlhrAllObserve[]>([])
@@ -14,7 +14,7 @@ export const useAllObserve = () => {
 
     const loadAllObserve = async () => {
         setIsloading(true);
-        const resp = await GetAllObserve('2020-01-01', 'C021523')
+        const resp = await GetAllObserve('2020-01-01', emplid)
         const arrayObserve = resp.AllObserve?.['soapenv:Envelope']?.['soapenv:Body'].DLHR_ALL_OBSERVE_COLL.DLHR_ALL_OBSERVE;
         const oneObserve: DlhrAllObserve[] = [];
         const observe: DlhrAllObserve = {}

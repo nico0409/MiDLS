@@ -12,10 +12,11 @@ import { useDebouncedValue } from '../hooks/useDebouncedValue';
 interface Props {
     onDebounce: (value: string) => void
     style?: StyleProp<ViewStyle>
-    setisVisible:React.Dispatch<React.SetStateAction<boolean>>
+    setisVisible?:React.Dispatch<React.SetStateAction<boolean>>
+    placeholder?:string
 }
 
-export const SearchInput = ({ style, onDebounce,setisVisible }: Props) => {
+export const SearchInput = ({ style, onDebounce,setisVisible,placeholder }: Props) => {
 
     const [textValue, setTextValue] = useState('')
     const debouncedValue = useDebouncedValue(textValue)
@@ -29,17 +30,17 @@ export const SearchInput = ({ style, onDebounce,setisVisible }: Props) => {
             ...styles.container,
             ...style as any
         }}>
-            <TouchableOpacity
+          {/*   <TouchableOpacity
             onPress={()=>{setisVisible(true)}}>
             <IconAwesome
                 name="filter"
                 color='white'
                 size={25}
             />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <View style={styles.textBackground}>
                 <TextInput
-                    placeholder='Numero tarjeta'
+                    placeholder={placeholder?placeholder:''}
                     style={{
                         ...styles.textInput,
                         top: (Platform.OS === 'ios' ? 0 : 2)
