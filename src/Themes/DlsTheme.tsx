@@ -53,26 +53,32 @@ alignItems:'center'
 
       fontSize:35,
       fontWeight:'bold'
-  },pokebolaIcon:{
-      width:60,
-      height:60,
+  },addButton :{
+      width:65,
+      height:65,
       opacity:0.9, 
-      backgroundColor:'white',
+      //backgroundColor:'white',
       borderRadius:100,
-      alignItems:'center',
-      justifyContent:'center',
+     
       
-  },pokebolaContainer:{
-      position:'absolute',
-      width:60,
-      height:60,
-      bottom:50,
-      right:10,
       alignItems:'center',
       justifyContent:'center',
-      backgroundColor:'red',
-      borderRadius:100,
 
+      
+      
+  },addButtonContainer :{
+      position:'absolute',
+      width:65,
+      height:65,
+      bottom:20,
+      right:25,
+      
+     // alignItems:'center',
+     // justifyContent:'center',
+      //backgroundColor:'red',
+      borderRadius:100,
+      
+      
   }
 
 

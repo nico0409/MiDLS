@@ -13,8 +13,8 @@ export const GetPromptArray = (promptypedata:promptType ) => {
     
     let prompt: PromptObserveType | AllObserveType | DlhrAllObserve | undefined = {}
 
-    const [PromptObserveList, setPromptObserveList] = useState<PromptObserve>({})
-
+   /*  const [PromptObserveList, setPromptObserveList] = useState<PromptObserve>({}) */
+    const [PromptObArray, setPromptArray] = useState<any[]>([])
     const dataLoad = async () => {
         prompt = await GetStorage(promptype)
 
@@ -24,17 +24,23 @@ export const GetPromptArray = (promptypedata:promptType ) => {
         }
 
         if (isPromptObserve(prompt)) {
-            setPromptObserveList({ ...PromptObserveList, ...prompt.PromptObserve! });
+           /*  setPromptObserveList({ ...PromptObserveList, ...prompt.PromptObserve! }); */
+            const ArrayEquip = prompt.PromptObserve!['soapenv:Envelope']?.['soapenv:Body']?.DLHR_OBSERVE_PROMPT![promptypedata.type!];
+            const oneEquip: any[] = [ !Array.isArray(ArrayEquip) ? ArrayEquip:[]];
+            setPromptArray( Array.isArray(ArrayEquip) ? ArrayEquip:oneEquip )
         }
     }
+ 
+useEffect(() => {
+  
+    dataLoad()
+}, [])
+    
 
-    useEffect(() => {
-        dataLoad();
-    }, []);
-
-    const ArrayEquip = PromptObserveList['soapenv:Envelope']?.['soapenv:Body']?.DLHR_OBSERVE_PROMPT![promptypedata.type!];
-    const oneEquip: any[] = [ !Array.isArray(ArrayEquip) ? ArrayEquip:[]];
-   return Array.isArray(ArrayEquip) ? ArrayEquip:oneEquip 
+  
+   // const oneEquip: any[] = [ !Array.isArray(ArrayEquip) ? ArrayEquip:[]];
+//   return Array.isArray(ArrayEquip) ? ArrayEquip:oneEquip 
+return {PromptObArray}
 
 
 }

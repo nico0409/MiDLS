@@ -9,6 +9,7 @@ export type Fields={
 
   empleado?:'EMPLID'|'NOMBRE',
   equipo?:'DL_EQUIPEMENT_ID'|'DESCR',
+  turno?: 'DL_TURNO' |'DESCR' 
 
 }
 export type promptType={

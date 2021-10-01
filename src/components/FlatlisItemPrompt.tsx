@@ -25,9 +25,11 @@ export const FlatListItemPrompt = ({ field1, field2, closePrompt, setValueSelect
             onPress={() => {
                 closePrompt(false),
                     setValueSelect({
-                        fieldValue1: '',
-                        fieldValue2: ''
+                        fieldValue1: field1,
+                        fieldValue2: field2,
                     })
+                  
+                    
             }}
         >
             <View style={styles.container}>

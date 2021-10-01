@@ -1,24 +1,31 @@
-import React,{useState,useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { View } from 'react-native'
 import { FlatlistPrompt } from '../components/FlatlistPrompt'
 import { Fields, StorageTypes, PromptObserveType, AllObserveType, DlhrAllObserve, PromptObserve, DlhrEquipTbl, promptType } from '../interfaces/prompInterfaces';
 import { GetStorage } from '../components/Storage';
 import { GetPromptArray } from '../components/GetPromptArrayy';
+import { Prompt } from '../components/Prompt';
 
 
 
 export const testobserve = () => {
+    const [emplid, setemplid] = useState({ fieldValue1: '', fieldValue2: '' })
+   
+    const Fieldemplid:Fields={empleado:'NOMBRE'}
+    const Fieldnombre:Fields={empleado:'EMPLID'}
 
-    const emplid:Fields={equipo:'DL_EQUIPEMENT_ID'}
-    const nombre:Fields={equipo:'DESCR'}
-    
-    
-    const promptType:promptType={type:'DLHR_EMPL_BUSSINES_UNIT'}
-    const data = GetPromptArray(promptType)
-    
+    const promptType: promptType = { type: 'DLHR_EMPL_BUSSINES_UNIT' }
+    const {PromptObArray } = GetPromptArray(promptType)
+    const empleados = PromptObArray.map(item => { return item.DLHR_OBSERVE_EMPLID });
     return (
-        <View style={{flex:1}}>
-            {/*  <FlatlistPrompt field1={emplid} field2={nombre} data={data}/>  */}
+        <View style={{ flex: 1 }}>
+             <Prompt
+                data={empleados}
+                placeHolder={'Empleado'}
+                field1={Fieldemplid}
+                field2={Fieldnombre}
+                setValueSelect={setemplid}
+            /> 
         </View>
     )
 }
