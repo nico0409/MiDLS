@@ -10,22 +10,23 @@ import { Prompt } from '../components/Prompt';
 
 export const testobserve = () => {
     const [emplid, setemplid] = useState({ fieldValue1: '', fieldValue2: '' })
-   
-    const Fieldemplid:Fields={empleado:'NOMBRE'}
-    const Fieldnombre:Fields={empleado:'EMPLID'}
 
+    const Fieldemplid: Fields = { empleado: 'EMPLID' }
+    const Fieldnombre: Fields = { empleado: 'NOMBRE' }
+    /*seleccionar tipo de prompt*/
     const promptType: promptType = { type: 'DLHR_EMPL_BUSSINES_UNIT' }
-    const {PromptObArray } = GetPromptArray(promptType)
+    const { PromptObArray } = GetPromptArray(promptType)
+    /*obtiene array de dato */ 
     const empleados = PromptObArray.map(item => { return item.DLHR_OBSERVE_EMPLID });
     return (
         <View style={{ flex: 1 }}>
-             <Prompt
+            <Prompt
                 data={empleados}
                 placeHolder={'Empleado'}
                 field1={Fieldemplid}
                 field2={Fieldnombre}
                 setValueSelect={setemplid}
-            /> 
+            />
         </View>
     )
 }
