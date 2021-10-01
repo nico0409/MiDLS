@@ -17,10 +17,6 @@ import { Loading } from '../components/Loading';
 import { ModalSearch } from '../components/ModalSearch';
 
 
-interface Props extends DrawerScreenProps<any, any> { };
-
-
-
 
 interface Props extends DrawerScreenProps<any, any> { };
 export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
@@ -102,12 +98,6 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
                         zIndex: 998,
                         width: ScreenWidt - 40,
                         top: (Platform.OS === 'ios') ? top : top + 10
-
-         /*   <Button
-                title="Ir a creacion de tarjeta"
-                onPress={() => navigation.navigate('CreateObserveScreen')}
-            />  */
-
                     }
                     }
                     setisVisible={setisVisible}

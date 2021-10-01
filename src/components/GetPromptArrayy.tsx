@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { StorageTypes, PromptObserveType, AllObserveType, DlhrAllObserve, PromptObserve, promptType } from '../interfaces/prompInterfaces';
-import { GetStorage } from '../components/Storage';
+import { GetStorage } from './Storage';
 
 
 
-export const GetPrompt = (promptypedata:promptType ) => {
+export const GetPromptArray = (promptypedata:promptType ) => {
 
-    console.log(promptypedata);
+    
+    
     
     const promptype: StorageTypes = { StorageType: 'prompt' };
     
@@ -16,6 +17,7 @@ export const GetPrompt = (promptypedata:promptType ) => {
 
     const dataLoad = async () => {
         prompt = await GetStorage(promptype)
+
 
         function isPromptObserve(object: any): object is PromptObserveType {
             return 'PromptObserve' in object;
