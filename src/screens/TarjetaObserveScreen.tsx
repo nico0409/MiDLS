@@ -5,7 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ObserveCard } from '../components/ObserveCard';
 import { colors, styles } from '../Themes/DlsTheme';
 import { GetStorage, Asingstorage } from '../components/Storage';
-import { PromptObserve, StorageTypes, DlhrAllObserve } from '../interfaces/prompInterfaces';
+import { PromptObserve, StorageTypes, DlhrAllObserve, fieldSearchType } from '../interfaces/prompInterfaces';
 import { GetPrompt } from '../components/GetPrompt';
 import { GetAllObserve } from '../components/GetAllObserve';
 import { useAllObserve } from '../hooks/useAllObserve';
@@ -36,25 +36,63 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
 
     const [isVisible, setisVisible] = useState(false)
     const [term, setTerm] = useState('')
-
+    const [placeHolder, setPlaceHolder] = useState<fieldSearchType>({ label: 'Numero de tarjeta' })
     const { allObserveList, isloading, loadAllObserve } = useAllObserve(route.params!.emplid)
     const [observeFiltered, setObserveFiltred] = useState<DlhrAllObserve[]>([])
-
+    /* const [searchValue, setsearchValue] = useState(0)
+    const [typeSearh, setTypeSearch] = useState<fieldSearchType>({ type: 'DLHR_NTARJETA' })
+     */
     useEffect(() => {
         if (term.length === 0) {
 
             return setObserveFiltred(allObserveList)
 
         }
-       
-            setObserveFiltred(
-                allObserveList.filter(
-                    observe => observe.NroTarjeta!.toLocaleLowerCase()
-                        .includes(term.toLocaleLowerCase())
+        switch (placeHolder.type) {
+            case 'DLHR_NTARJETA':
+                setObserveFiltred(
+                    allObserveList.filter(
+                        observe => observe.NroTarjeta?.toLocaleLowerCase()
+                            .includes(term.toLocaleLowerCase())
+                    )
                 )
-            )
-        
-        
+                break;
+            case 'DLHR_BUSSINES':
+                setObserveFiltred(
+                    allObserveList.filter(
+                        observe => observe.BUSINESS_UNIT?.toLocaleLowerCase()
+                            .includes(term.toLocaleLowerCase())
+                    )
+                )
+                break;
+            case 'DLHR_EQUIPO':
+                setObserveFiltred(
+                    allObserveList.filter(
+                        observe => observe.IDEquipo?.toString()
+                            .includes(term.toLocaleLowerCase())
+                    )
+                )
+                break;
+            case 'DLHR_FECHA':
+                setObserveFiltred(
+                    allObserveList.filter(
+                        observe => observe.DL_IDENTIF_DT?.toString()
+                            .includes(term.toLocaleLowerCase())
+                    )
+                )
+                break;
+            case 'DLHR_TURNO':
+                setObserveFiltred(
+                    allObserveList.filter(
+                        observe => observe.DL_TURNO?.toString()
+                            .includes(term.toLocaleLowerCase())
+                    )
+                )
+                break;
+            default:
+                break;
+        }
+
 
 
     }, [term])
@@ -66,7 +104,12 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
         )
     }
 
-
+    /* useEffect(() => {
+       console.log('entre');
+       
+    }, [typeSearh])
+ */
+    console.log('valoe', term);
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: colors.dlsGrayPrimary }}>
@@ -109,38 +152,40 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
                         top: (Platform.OS === 'ios') ? top : top + 10
                     }
                     }
-                    
+                    term={term}
+                    placeholder={placeHolder.label}
+
                 />
                 <View style={{
-                        zIndex: 999,
-                        height: 50,
-                        width: 40,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        position: 'absolute',
-                        left: -10,
-                        top: 6,
-                    }}>
-                <TouchableOpacity
+                    zIndex: 999,
+                    height: 50,
+                    width: 40,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    position: 'absolute',
+                    left: -10,
+                    top: 6,
+                }}>
+                    <TouchableOpacity
 
-                    onPress={() => {setisVisible(true)}}
-                    
-                    style={{
-                        width:'100%',
-                        height:'100%',
-                        
-                        justifyContent: 'center',
-                        alignItems: 'center'
-                    }}
-                >
-                    
+                        onPress={() => { setisVisible(true) }}
+
+                        style={{
+                            width: '100%',
+                            height: '100%',
+
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}
+                    >
+
                         <IconAwesome
                             name="filter"
                             color={colors.dlsBtonColosWhite}
                             size={25}
                         />
-                    
-                </TouchableOpacity>
+
+                    </TouchableOpacity>
                 </View>
             </View>
 
@@ -190,7 +235,12 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
 
                 </View>
             </TouchableOpacity>
-            <ModalSearch isVisible={isVisible} setisVisible={setisVisible} />
+            <ModalSearch
+                isVisible={isVisible}
+                setisVisible={setisVisible}
+                setTerm={setTerm}
+                setPlaceHolder={setPlaceHolder}
+            />
         </SafeAreaView>
 
     )

@@ -33,7 +33,7 @@ export const ObserveCard = ({ observe ,setTerm}: props) => {
         
             activeOpacity={0.9}
             onPress={
-                () =>( navigation.navigate('PokemonScreen' as never, { }as never),setTerm(''))
+                () =>( navigation.navigate('EditObvservCard'),setTerm(''))
             }
         >
             <View style={{

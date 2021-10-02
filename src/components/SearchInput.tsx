@@ -15,9 +15,10 @@ interface Props {
     style?: StyleProp<ViewStyle>
     //setisVisible?:React.Dispatch<React.SetStateAction<boolean>>
     placeholder?:string
+    term?:string
 }
 
-export const SearchInput = ({ style, onDebounce,placeholder }: Props) => {
+export const SearchInput = ({ style, onDebounce,placeholder ,term}: Props) => {
 
     const [textValue, setTextValue] = useState('')
     const debouncedValue = useDebouncedValue(textValue)
@@ -26,6 +27,11 @@ export const SearchInput = ({ style, onDebounce,placeholder }: Props) => {
         onDebounce(debouncedValue)
 
     }, [debouncedValue])
+
+    useEffect(() => {
+        setTextValue(term!)
+       
+    }, [term])
     return (
         <View style={{
             ...styles.container,

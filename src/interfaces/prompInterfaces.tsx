@@ -17,6 +17,12 @@ export type promptType={
   type?:'DLHR_EMPL_BUSSINES_UNIT'|'DLHR_ORIGEN'  |'DLHR_CUSTOMER' |'DLHR_EQUIP_TBL'|'DLHR_OBSERVE_EMPLID'|'DLHR_PUESTO'|'DLHR_SECTOR'|'DLHR_APS'|'DLHR_TURNO'
   
 }
+export type fieldSearchType={
+
+  type?:'DLHR_BUSSINES'|'DLHR_NTARJETA'  |'DLHR_ORIGEN' |'DLHR_EQUIPO'|'DLHR_FECHA'|'DLHR_PUESTO'|'DLHR_TURNO'
+  label?:'Unidadad de negocio'|'Numero de tarjeta'  |'Origen' |'Equipo'|'Fecha'|'Puesto'|'Turno'
+  
+}
 export interface PromptObserveType {
   PromptObserve ?: PromptObserve;
   type?:'PromptObserveType'|'AllObserveType'|'ObserveType';

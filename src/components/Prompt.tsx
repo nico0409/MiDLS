@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { View, StyleSheet, Text, TouchableOpacity,  useWindowDimensions } from 'react-native';
 
 import { ModalPrompt } from './ModalPrompt';
-import { DlhrEmplBussinesUnit, Fields, StorageTypes } from '../interfaces/prompInterfaces';
+import { DlhrEmplBussinesUnit, Fields, promptType, StorageTypes } from '../interfaces/prompInterfaces';
 import { colors } from '../Themes/DlsTheme';
 
 
@@ -15,8 +15,9 @@ interface Props {
         fieldValue1: string;
         fieldValue2: string;
     }>>
+    promptType:promptType
 }
-export const Prompt = ({ data, placeHolder, field1, field2 ,setValueSelect}: Props) => {
+export const Prompt = ({ data, placeHolder, field1, field2 ,setValueSelect,promptType}: Props) => {
     const [isVisible, setisVisible] = useState(false)
 const{width}=useWindowDimensions()
 
@@ -36,6 +37,7 @@ const{width}=useWindowDimensions()
                 field2={field2}
                 placeholder={placeHolder} 
                 setValueSelect={setValueSelect}
+               promptType={promptType}
                 />
 
 
