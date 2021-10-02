@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity,  useWindowDimensions } from 'react-native';
 
 import { ModalPrompt } from './ModalPrompt';
 import { DlhrEmplBussinesUnit, Fields, StorageTypes } from '../interfaces/prompInterfaces';
+import { colors } from '../Themes/DlsTheme';
+
 
 interface Props {
     data: any[],
@@ -16,14 +18,15 @@ interface Props {
 }
 export const Prompt = ({ data, placeHolder, field1, field2 ,setValueSelect}: Props) => {
     const [isVisible, setisVisible] = useState(false)
-
+const{width}=useWindowDimensions()
 
     return (
-        <View>
+        <View style={{}} >
             <TouchableOpacity
+            activeOpacity={0.8}
                 onPress={() => { setisVisible(true) }}>
                 <View style={styles.btnContainer}>
-                    <Text>{placeHolder}</Text>
+                    <Text style={styles.textBtn}>{placeHolder}</Text>
                 </View>
             </TouchableOpacity>
             <ModalPrompt data={data}
@@ -43,10 +46,29 @@ const styles = StyleSheet.create({
 
     btnContainer: {
         height: 50,
-        width: 400,
-        borderWidth: 1
+        width: 250,
+        borderWidth: 1,
+        borderRadius:10,
+        backgroundColor:colors.dlsBtonColosWhite,
+        justifyContent:'center',
+        alignItems:'center',
+        
+      
+        
+        shadowColor: 'rgba(0,0,0,0.5)',
+        shadowOffset: {
+            width: 0,
+            height: 3,
+        },
+        shadowOpacity: 0.27,
+        shadowRadius: 4.65,
+         
+       elevation:15
+    },
+   
+    textBtn:{
+fontSize:20
     }
-
 
 
 

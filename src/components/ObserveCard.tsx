@@ -6,6 +6,7 @@ import { Text, TouchableOpacity, View, StyleSheet, Dimensions, Image, Button } f
 
 import { useNavigation } from '@react-navigation/native';
 import { DlhrAllObserve } from '../interfaces/prompInterfaces';
+import { colors } from '../Themes/DlsTheme';
 
 
 
@@ -39,7 +40,7 @@ export const ObserveCard = ({ observe ,setTerm}: props) => {
                 ...styles.cardContainer,
                 width: windowWhidth * 0.8,
                 height:height*0.25,
-                backgroundColor: 'white'
+                backgroundColor: colors.dlsGrayPrimary
 
             }}>
                 <View>

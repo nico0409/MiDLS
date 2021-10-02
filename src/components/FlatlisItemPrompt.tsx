@@ -28,18 +28,21 @@ export const FlatListItemPrompt = ({ field1, field2, closePrompt, setValueSelect
                         fieldValue1: field1,
                         fieldValue2: field2,
                     })
-                  
-                    
+
+
             }}
         >
             <View style={styles.container}>
-
-                <Text style={styles.itemText}>
-                    {field1}
-                </Text>
-                <Text style={styles.itemText}>
-                    {field2}
-                </Text>
+                <View>
+                    <Text style={styles.itemText}>
+                        {field1}
+                    </Text>
+                </View>
+                <View>
+                    <Text style={styles.itemText}>
+                        {field2}
+                    </Text>
+                </View>
             </View>
         </TouchableOpacity>
     )
@@ -47,14 +50,16 @@ export const FlatListItemPrompt = ({ field1, field2, closePrompt, setValueSelect
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        height: 40
+
     },
     itemText: {
         marginLeft: 10,
-        fontSize: 18,
+        fontSize: 20,
         fontFamily: 'StagSans-Light',
 
-        color: colors.dlsYellowSecondary,
+        color: colors.dlsTextwhite,
         /* fontStyle: 'italic',*/
     },
 });

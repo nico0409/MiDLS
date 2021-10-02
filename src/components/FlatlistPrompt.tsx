@@ -21,44 +21,22 @@ interface Props {
 
 export const FlatlistPrompt = ({ field1, field2, data, closePrompt, setValueSelect }: Props) => {
 
-    //   console.log(data.filter((item)=>{return item.EMPLID?.includes('C0208')}));
-
     return (
-        <View>
+        <View style={{}}>
 
             <FlatList
+                style={{}}
                 data={data}
                 renderItem={({ item }) =>
-                    /*  <View>
-                        <Text style={{}}>
-                            {
-                             field1.empleado?item[field1.empleado!]:item[field1.equipo!]        
-                             //  item.EMPLID
-                             // item.DL_EQUIPEMENT_ID
-                            }
-                        </Text>
-                        <Text style={{}}>
-                            {
-                             field2.empleado?item[field2.empleado!]:item[field2.equipo!] 
-                            // item[field2.equipo!]
-                           // item.NOMBRE
-                          // item.DESCR
-                            }
-                        </Text>
-                    </View> */
+
                     <FlatListItemPrompt
                         field1={field1.empleado ? item[field1.empleado!] : item[field1.equipo!]}
                         field2={field2.empleado ? item[field2.empleado!] : item[field2.equipo!]}
                         closePrompt={closePrompt}
-                        setValueSelect={ setValueSelect}
+                        setValueSelect={setValueSelect}
                     />
-
-
                 }
-
                 keyExtractor={(item, index) => item[field1.empleado ? item[field1.empleado!] : item[field1.equipo!]] + index.toString()}
-
-                //keyExtractor={(item,index) =>item.EMPLID!+index.toString()}
                 showsVerticalScrollIndicator={false}
 
             />

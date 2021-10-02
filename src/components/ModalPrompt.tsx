@@ -21,14 +21,14 @@ interface Props {
     field1: Fields
     field2: Fields
     placeholder?: string
-    setValueSelect:React.Dispatch<React.SetStateAction<{
+    setValueSelect: React.Dispatch<React.SetStateAction<{
         fieldValue1: string;
         fieldValue2: string;
     }>>
 }
 
 
-export const ModalPrompt = ({ isVisible, setisVisible, data, field1, field2, placeholder,setValueSelect }: Props) => {
+export const ModalPrompt = ({ isVisible, setisVisible, data, field1, field2, placeholder, setValueSelect }: Props) => {
     const [state, setstate] = useState(0)
     const height = useWindowDimensions().height
     const width = useWindowDimensions().width
@@ -48,7 +48,7 @@ export const ModalPrompt = ({ isVisible, setisVisible, data, field1, field2, pla
                 }}
             >
                 <TouchableOpacity
-                    style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.3)', }}
+                    style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.4)', }}
                     activeOpacity={1}
                     onPressOut={() => { setisVisible(false) }}
                 >
@@ -66,27 +66,34 @@ export const ModalPrompt = ({ isVisible, setisVisible, data, field1, field2, pla
                         ...styles.cardPrompt,
                         height: height * 0.5,
                         width: width * 0.8,
+                        backgroundColor: colors.dlsGrayPrimary
                     }}>
 
                         <SearchInput
                             onDebounce={(value) => setTerm(value)}
                             placeholder={placeholder ? placeholder : ''}
-                            style={{...styles.SearchInput,
+                            style={{
+                                ...styles.SearchInput,
                                 width: width - 40,
                                 top: (Platform.OS === 'ios') ? top : top + 10
                             }
                             }
 
                         />
-
-                        <FlatlistPrompt 
-                        data={data} 
-                        field1={field1} 
-                        field2={field2} 
-                        closePrompt={setisVisible} 
-                        setValueSelect={setValueSelect}
-                        />
-
+                        <View style={{
+                        top:25,
+                        height: height * 0.4,
+                        
+                        backgroundColor: colors.dlsGrayPrimary
+                    }}>
+                            <FlatlistPrompt
+                                data={data}
+                                field1={field1}
+                                field2={field2}
+                                closePrompt={setisVisible}
+                                setValueSelect={setValueSelect}
+                            />
+                        </View>
                     </View>
 
                 </View>
@@ -117,6 +124,6 @@ const styles = StyleSheet.create({
     SearchInput: {
         position: 'absolute',
         zIndex: 998,
-        
+
     }
 })
