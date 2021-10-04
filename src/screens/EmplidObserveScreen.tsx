@@ -33,7 +33,9 @@ export const EmplidObserveScreen = ({ navigation, route }: Props) => {
 
     const { PromptObArray } = GetPromptArray(promptType)
     const empleados = PromptObArray.map(item => { return item.DLHR_OBSERVE_EMPLID });
-   // const [term, setTerm] = useState('')
+  
+   
+    // const [term, setTerm] = useState('')
     //const [observeFiltered, setObserveFiltred] = useState<any[]>([])
 
      useEffect(() => {

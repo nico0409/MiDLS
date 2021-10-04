@@ -747,6 +747,11 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@freakycoder/react-native-single-select@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@freakycoder/react-native-single-select/-/react-native-single-select-0.4.0.tgz#472e5fd41a7910739fd8aa1ed4444644640a4fd7"
+  integrity sha512-3QX24aRKALs6XT0kZKieFQGfehOJpUFu3GHvxVRimMbKGodpdtwCRcb6KzUpZZYA06muA2KJDV2L8xayNvL4Hw==
+
 "@hapi/hoek@^9.0.0":
   version "9.2.0"
   resolved "https://registry.npmjs.org/@hapi/hoek/-/hoek-9.2.0.tgz"
@@ -5481,7 +5486,7 @@ prompts@^2.0.1, prompts@^2.4.0:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@^15.6.1, prop-types@^15.7.2:
+prop-types@^15.5.8, prop-types@^15.6.1, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.npmjs.org/prop-types/-/prop-types-15.7.2.tgz"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -5644,6 +5649,13 @@ react-native-snap-carousel@^3.9.1:
   dependencies:
     prop-types "^15.6.1"
     react-addons-shallow-compare "15.6.2"
+
+react-native-spinkit@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/react-native-spinkit/-/react-native-spinkit-1.5.1.tgz#5b770ce93e1f892b3d1983fd3ce2d7375335eb6b"
+  integrity sha512-XkTgP4e+/MZpbI1GdZTIEQ+6WeMWQT4duWnSiXaaVW7py0rtaBLswtAEA6uXQGUhnxMnPWZhbLz7QponpH3ciQ==
+  dependencies:
+    prop-types "^15.5.8"
 
 react-native-splash-screen@^3.2.0:
   version "3.2.0"

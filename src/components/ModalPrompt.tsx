@@ -58,8 +58,7 @@ export const ModalPrompt = ({ isVisible, setisVisible, data, field1, field2, pla
                 )
                 break;
             case 'DLHR_EQUIP_TBL':
-                console.log(data);
-
+                
                 setObserveFiltred(
                     data.filter(
                         observe => observe[field1.equipo!].toString()

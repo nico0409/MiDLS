@@ -10,6 +10,7 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
+    "@freakycoder/react-native-single-select": "^0.4.0",
     "@react-native-async-storage/async-storage": "^1.15.8",
     "@react-native-community/checkbox": "^0.5.8",
     "@react-native-community/datetimepicker": "^3.5.2",
@@ -36,6 +37,7 @@
     "react-native-screens": "^3.4.0",
     "react-native-simple-radio-button": "^2.7.4",
     "react-native-snap-carousel": "^3.9.1",
+    "react-native-spinkit": "^1.5.1",
     "react-native-splash-screen": "^3.2.0",
     "react-native-step-indicator": "^1.0.3",
     "react-native-tab-view": "^2.16.0",
