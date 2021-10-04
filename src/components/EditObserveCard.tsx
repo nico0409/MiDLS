@@ -66,7 +66,7 @@ export const EditObservCard=()=>{
      var parser = new j2xParser (defaultOptions);
     
      var xml = parser.parse(newcard);
-     console.log(xml);
+     /* console.log(xml); */
      PostEditObservCard(xml);
      
 }

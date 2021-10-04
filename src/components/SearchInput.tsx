@@ -3,6 +3,7 @@ import { View, StyleSheet, Text, Platform, StyleProp, ViewStyle, TextInput, Touc
 import Icon from 'react-native-vector-icons/Ionicons';
 import IconAwesome from 'react-native-vector-icons/FontAwesome';
 import { useDebouncedValue } from '../hooks/useDebouncedValue';
+import { colors } from '../Themes/DlsTheme';
 
 
 
@@ -12,11 +13,12 @@ import { useDebouncedValue } from '../hooks/useDebouncedValue';
 interface Props {
     onDebounce: (value: string) => void
     style?: StyleProp<ViewStyle>
-    setisVisible?:React.Dispatch<React.SetStateAction<boolean>>
+    //setisVisible?:React.Dispatch<React.SetStateAction<boolean>>
     placeholder?:string
+    term?:string
 }
 
-export const SearchInput = ({ style, onDebounce,setisVisible,placeholder }: Props) => {
+export const SearchInput = ({ style, onDebounce,placeholder ,term}: Props) => {
 
     const [textValue, setTextValue] = useState('')
     const debouncedValue = useDebouncedValue(textValue)
@@ -25,6 +27,11 @@ export const SearchInput = ({ style, onDebounce,setisVisible,placeholder }: Prop
         onDebounce(debouncedValue)
 
     }, [debouncedValue])
+
+    useEffect(() => {
+        setTextValue(term!)
+       
+    }, [term])
     return (
         <View style={{
             ...styles.container,
@@ -62,16 +69,25 @@ export const SearchInput = ({ style, onDebounce,setisVisible,placeholder }: Prop
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: 'row',
+        
         justifyContent: 'center',
         alignItems: 'center',
+        shadowColor: 'rgba(0,0,0,0.5)',
+        shadowOffset: {
+            width: 0,
+            height: 3,
+        },
+        shadowOpacity: 0.27,
+        shadowRadius: 4.65,
+         
+       elevation:15
 
     },
     textBackground: {
-        backgroundColor: '#F3F1F3',
+        backgroundColor: colors.dlsBtonColosWhite,
         borderRadius: 50,
         height: 40,
-        width: 270,
+        width: 280,
         paddingHorizontal: 20,
         marginHorizontal: 10,
         justifyContent: 'center',

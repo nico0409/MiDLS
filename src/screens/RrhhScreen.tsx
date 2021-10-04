@@ -1,5 +1,4 @@
-import { MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
-import { ParamListBase } from '@react-navigation/native';
+
 import React, { useEffect, useContext } from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import { WebView } from 'react-native-webview';

@@ -5,58 +5,92 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ObserveCard } from '../components/ObserveCard';
 import { colors, styles } from '../Themes/DlsTheme';
 import { GetStorage, Asingstorage } from '../components/Storage';
-import { PromptObserve, StorageTypes, DlhrAllObserve } from '../interfaces/prompInterfaces';
+import { PromptObserve, StorageTypes, DlhrAllObserve, fieldSearchType } from '../interfaces/prompInterfaces';
 import { GetPrompt } from '../components/GetPrompt';
 import { GetAllObserve } from '../components/GetAllObserve';
 import { useAllObserve } from '../hooks/useAllObserve';
 import { ToggleDrawerHeader } from '../components/ToggleDrawerHeader';
 import { DrawerScreenProps } from '@react-navigation/drawer';
-import AwesomeIcon from 'react-native-vector-icons/FontAwesome';
+
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Loading } from '../components/Loading';
 import { ModalSearch } from '../components/ModalSearch';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RoutstackParams } from '../Navigation/StackNavigatorObserve';
+import IconAwesome from 'react-native-vector-icons/FontAwesome';
+
 
 
 
 interface Props extends DrawerScreenProps<any, any> { };
-interface Propstack extends StackScreenProps <RoutstackParams,'TarjetaObserveScreen'>{
 
-}
 export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
-      
-     
-     
+
+
+
 
     const ScreenWidt = Dimensions.get('window').width;
     const { top } = useSafeAreaInsets();
 
     const [isVisible, setisVisible] = useState(false)
     const [term, setTerm] = useState('')
-
+    const [placeHolder, setPlaceHolder] = useState<fieldSearchType>({ label: 'Numero de tarjeta' })
     const { allObserveList, isloading, loadAllObserve } = useAllObserve(route.params!.emplid)
     const [observeFiltered, setObserveFiltred] = useState<DlhrAllObserve[]>([])
-
+    /* const [searchValue, setsearchValue] = useState(0)
+    const [typeSearh, setTypeSearch] = useState<fieldSearchType>({ type: 'DLHR_NTARJETA' })
+     */
     useEffect(() => {
         if (term.length === 0) {
 
             return setObserveFiltred(allObserveList)
 
         }
-        if (isNaN(Number(term))) {
-            setObserveFiltred(
-                allObserveList.filter(
-                    observe => observe.NroTarjeta!.toLocaleLowerCase()
-                        .includes(term.toLocaleLowerCase())
+        switch (placeHolder.type) {
+            case 'DLHR_NTARJETA':
+                setObserveFiltred(
+                    allObserveList.filter(
+                        observe => observe.NroTarjeta?.toLocaleLowerCase()
+                            .includes(term.toLocaleLowerCase())
+                    )
                 )
-            )
-        } else {
-            const NroTarjeta = allObserveList.find((observe) => observe.NroTarjeta === term)
-            setObserveFiltred(
-                (NroTarjeta) ? [NroTarjeta] : []
-            )
+                break;
+            case 'DLHR_BUSSINES':
+                setObserveFiltred(
+                    allObserveList.filter(
+                        observe => observe.BUSINESS_UNIT?.toLocaleLowerCase()
+                            .includes(term.toLocaleLowerCase())
+                    )
+                )
+                break;
+            case 'DLHR_EQUIPO':
+                setObserveFiltred(
+                    allObserveList.filter(
+                        observe => observe.IDEquipo?.toString()
+                            .includes(term.toLocaleLowerCase())
+                    )
+                )
+                break;
+            case 'DLHR_FECHA':
+                setObserveFiltred(
+                    allObserveList.filter(
+                        observe => observe.DL_IDENTIF_DT?.toString()
+                            .includes(term.toLocaleLowerCase())
+                    )
+                )
+                break;
+            case 'DLHR_TURNO':
+                setObserveFiltred(
+                    allObserveList.filter(
+                        observe => observe.DL_TURNO?.toString()
+                            .includes(term.toLocaleLowerCase())
+                    )
+                )
+                break;
+            default:
+                break;
         }
+
 
 
     }, [term])
@@ -68,13 +102,14 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
         )
     }
 
-
+  
+   
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: colors.dlsGrayPrimary }}>
 
             <View style={styles.header}>
-                <TouchableOpacity onPress={()=>navigation.goBack()}>
+                <TouchableOpacity onPress={() => navigation.goBack()} >
                     <Icon name="caret-back-outline"
                         color={colors.dlsYellowSecondary}
                         size={35} />
@@ -104,13 +139,48 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
                     onDebounce={(value) => setTerm(value)}
                     style={{
                         position: 'absolute',
-                        zIndex: 998,
-                        width: ScreenWidt - 40,
+                        zIndex: 997,
+                        width: ScreenWidt - 80,
+                        left: 30,
+                        borderRadius: 100,
                         top: (Platform.OS === 'ios') ? top : top + 10
                     }
                     }
-                    setisVisible={setisVisible}
+                    term={term}
+                    placeholder={placeHolder.label}
+
                 />
+                <View style={{
+                    zIndex: 999,
+                    height: 50,
+                    width: 40,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    position: 'absolute',
+                    left: -10,
+                    top: 6,
+                }}>
+                    <TouchableOpacity
+
+                        onPress={() => { setisVisible(true) }}
+
+                        style={{
+                            width: '100%',
+                            height: '100%',
+
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}
+                    >
+
+                        <IconAwesome
+                            name="filter"
+                            color={colors.dlsBtonColosWhite}
+                            size={25}
+                        />
+
+                    </TouchableOpacity>
+                </View>
             </View>
 
 
@@ -119,47 +189,52 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
             <View >
 
                 <View style={{ alignItems: 'center' }}>
-                   
-                    {allObserveList[0].NroTarjeta!==undefined?
+
+                    {allObserveList[0].NroTarjeta !== undefined ?
                         <FlatList
 
-                        numColumns={1}
-                        showsVerticalScrollIndicator={false}
-                        data={(term.length !== 0) ? observeFiltered : allObserveList}
-                        keyExtractor={(observe,index) => observe.NroTarjeta!+index.toString()}
-                        renderItem={({ item }) => <ObserveCard observe={item} setTerm={setTerm} />
-                        }
+                            numColumns={1}
+                            showsVerticalScrollIndicator={false}
+                            data={(term.length !== 0) ? observeFiltered : allObserveList}
+                            keyExtractor={(observe, index) => observe.NroTarjeta! + index.toString()}
+                            renderItem={({ item }) => <ObserveCard observe={item} setTerm={setTerm} />
+                            }
 
-                        //onEndReached={loadPokemons}
-                        onEndReachedThreshold={0.4}
-                        ListHeaderComponent={<Text style={{
-                            ...styles.globalMargin,
-                            ...styles.title,
-                            top: top + 20,
-                            marginBottom: top + 10,
-                            paddingBottom: 10
-                        }}></Text>}
-                    />:<View></View>}
+                            //onEndReached={loadPokemons}
+                            onEndReachedThreshold={0.4}
+                            ListHeaderComponent={<Text style={{
+                                ...styles.globalMargin,
+                                ...styles.title,
+                                top: top + 20,
+                                marginBottom: top + 10,
+                                paddingBottom: 10
+                            }}></Text>}
+                        /> : <View></View>}
                 </View>
 
-               
+
 
 
             </View>
             <TouchableOpacity
-                    activeOpacity={0.6}
-                    style={{ zIndex: 999, ...styles.addButtonContainer }}
-                    onPress={() => { navigation.navigate('CreateObserveScreen') }}
-                >
+                activeOpacity={0.6}
+                style={{ zIndex: 999, ...styles.addButtonContainer }}
+                onPress={() => { navigation.navigate('CreateObserveScreen') }}
+            >
 
-                    <View style={styles.addButton} >
-                       
-                        <Icon name="add-circle" size={65} color={colors.dlsBluePrimary} />
-                        
-                        
-                    </View>
-                </TouchableOpacity>
-            <ModalSearch isVisible={isVisible} setisVisible={setisVisible} />
+                <View style={styles.addButton} >
+
+                    <Icon name="add-circle" size={65} color={colors.dlsBluePrimary} />
+
+
+                </View>
+            </TouchableOpacity>
+            <ModalSearch
+                isVisible={isVisible}
+                setisVisible={setisVisible}
+                setTerm={setTerm}
+                setPlaceHolder={setPlaceHolder}
+            />
         </SafeAreaView>
 
     )

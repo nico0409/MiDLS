@@ -1,15 +1,16 @@
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { View, Modal, Text, Button, SectionList, TouchableOpacity, FlatList, useWindowDimensions, StyleSheet, Platform } from 'react-native';
 import { listSearchOptions, listSearchOptions2 } from '../data/listSearchOptios';
 import { HeaderTitle } from './HeaderTitle';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 import { colors } from '../Themes/DlsTheme';
-import { DlhrEmplBussinesUnit, DlhrObserveEmplid, DlhrEquipTbl, Fields } from '../interfaces/prompInterfaces';
+import { DlhrEmplBussinesUnit, DlhrObserveEmplid, DlhrEquipTbl, Fields, promptType } from '../interfaces/prompInterfaces';
 import { FlatlistPrompt } from './FlatlistPrompt';
 import { SearchInput } from './SearchInput';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
 
 
 
@@ -21,20 +22,60 @@ interface Props {
     field1: Fields
     field2: Fields
     placeholder?: string
-    setValueSelect:React.Dispatch<React.SetStateAction<{
+    setValueSelect: React.Dispatch<React.SetStateAction<{
         fieldValue1: string;
         fieldValue2: string;
     }>>
+    promptType: promptType
 }
 
 
-export const ModalPrompt = ({ isVisible, setisVisible, data, field1, field2, placeholder,setValueSelect }: Props) => {
+export const ModalPrompt = ({ isVisible, setisVisible, data, field1, field2, placeholder, setValueSelect, promptType }: Props) => {
     const [state, setstate] = useState(0)
     const height = useWindowDimensions().height
     const width = useWindowDimensions().width
     const { top } = useSafeAreaInsets();
 
     const [term, setTerm] = useState('')
+
+    const [observeFiltered, setObserveFiltred] = useState<any[]>([])
+
+
+    useEffect(() => {
+        if (term.length === 0) {
+
+            return setObserveFiltred(data)
+
+        }
+        switch (promptType.type) {
+            case 'DLHR_EMPL_BUSSINES_UNIT':
+
+                setObserveFiltred(
+                    data.filter(
+                        observe => observe[field1.empleado!].toLocaleLowerCase()
+                            .includes(term.toLocaleLowerCase())
+                    )
+                )
+                break;
+            case 'DLHR_EQUIP_TBL':
+                
+                setObserveFiltred(
+                    data.filter(
+                        observe => observe[field1.equipo!].toString()
+                            .includes(term.toLocaleLowerCase())
+                    )
+                )
+                break;
+
+            default:
+                break;
+        }
+
+
+    }, [term])
+
+
+
 
     return (
         <View style={{}}>
@@ -48,7 +89,7 @@ export const ModalPrompt = ({ isVisible, setisVisible, data, field1, field2, pla
                 }}
             >
                 <TouchableOpacity
-                    style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.3)', }}
+                    style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.4)', }}
                     activeOpacity={1}
                     onPressOut={() => { setisVisible(false) }}
                 >
@@ -66,27 +107,34 @@ export const ModalPrompt = ({ isVisible, setisVisible, data, field1, field2, pla
                         ...styles.cardPrompt,
                         height: height * 0.5,
                         width: width * 0.8,
+                        backgroundColor: colors.dlsGrayPrimary
                     }}>
 
                         <SearchInput
                             onDebounce={(value) => setTerm(value)}
                             placeholder={placeholder ? placeholder : ''}
-                            style={{...styles.SearchInput,
+                            style={{
+                                ...styles.SearchInput,
                                 width: width - 40,
                                 top: (Platform.OS === 'ios') ? top : top + 10
                             }
                             }
 
                         />
+                        <View style={{
+                            top: 25,
+                            height: height * 0.4,
 
-                        <FlatlistPrompt 
-                        data={data} 
-                        field1={field1} 
-                        field2={field2} 
-                        closePrompt={setisVisible} 
-                        setValueSelect={setValueSelect}
-                        />
-
+                            backgroundColor: colors.dlsGrayPrimary
+                        }}>
+                            <FlatlistPrompt
+                                data={(term.length === 0) ? data : observeFiltered}
+                                field1={field1}
+                                field2={field2}
+                                closePrompt={setisVisible}
+                                setValueSelect={setValueSelect}
+                            />
+                        </View>
                     </View>
 
                 </View>
@@ -117,6 +165,6 @@ const styles = StyleSheet.create({
     SearchInput: {
         position: 'absolute',
         zIndex: 998,
-        
+
     }
 })
