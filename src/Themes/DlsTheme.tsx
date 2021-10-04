@@ -17,10 +17,15 @@ export const styless = StyleSheet.create({
 })
 
 export const colors = {
-  dlsBluePrimary: 'rgba(0,183,237,1)',
-  dlsYellowSecondary: 'rgba(245,217,47,1)',
+  //dlsBluePrimary: 'rgba(0,183,237,1)',
+  dlsBluePrimary:'#0087ba',
+  //dlsYellowSecondary: 'rgba(245,217,47,1)',
+  dlsYellowSecondary: '#beaa00',
   dlsGrayPrimary: 'rgba(66,73,78,1)',
-  dlsWhiteBackGround: 'rgba(243,239,239,0.9)'
+  dlsWhiteBackGround: 'rgba(243,239,239,0.9)',
+  dlsBtonColosWhite:'rgba(243,239,239,0.6)',
+  dlsTextwhite:'#ffffff',
+  dlsTextBlack:'#000000'
 }
 
 export const styles = StyleSheet.create({
@@ -42,37 +47,44 @@ alignItems:'center'
   },
   pokebolaBG:{
       position:'absolute',
-      top:-100,
-      right:-100,
+      top:100,
+      right:30,
       width:300,
-      height:300,
-      opacity:0.2
+      height:400,
+      opacity:0.1,
+      resizeMode:'cover'
       
   },
   title:{
 
       fontSize:35,
       fontWeight:'bold'
-  },pokebolaIcon:{
-      width:60,
-      height:60,
+  },addButton :{
+      width:65,
+      height:65,
       opacity:0.9, 
-      backgroundColor:'white',
+      //backgroundColor:'white',
       borderRadius:100,
-      alignItems:'center',
-      justifyContent:'center',
+     
       
-  },pokebolaContainer:{
-      position:'absolute',
-      width:60,
-      height:60,
-      bottom:50,
-      right:10,
       alignItems:'center',
       justifyContent:'center',
-      backgroundColor:'red',
-      borderRadius:100,
 
+      
+      
+  },addButtonContainer :{
+      position:'absolute',
+      width:65,
+      height:65,
+      bottom:20,
+      right:25,
+      
+     // alignItems:'center',
+     // justifyContent:'center',
+      //backgroundColor:'red',
+      borderRadius:100,
+      
+      
   }
 
 
