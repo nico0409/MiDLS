@@ -9,7 +9,7 @@ interface Props {
     onChange: (value: string, field: keyof M38GetCompIntfcDLHRTAOBSERVCIResponse) => void;
 }
 
-export const CustomSwitch = ({title,onChange,switchType}:Props) => {
+export const CustomSwitchObserve = ({title,onChange,switchType}:Props) => {
 
     const [isEnabled, setIsEnabled] = useState(false);
 

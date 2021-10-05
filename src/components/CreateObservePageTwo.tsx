@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View } from 'react-native';
 import { M38GetCompIntfcDLHRTAOBSERVCIResponse } from '../interfaces/prompInterfaces';
-import { CustomSwitch } from './CustomSwitch';
+import { CustomSwitchObserve } from './CustomSwitchObserve';
 import { PickerSelect } from './PickerSelect';
 
 interface Props {
@@ -15,9 +15,9 @@ export const CreateObservePageTwo = ({ form, onChange }: Props) => {
         <View>
             <PickerSelect placeholder="Puesto" type={"DLHR_PUESTO"} onChange={onChange} />
 
-            <CustomSwitch title="¿Aplico interrupción de tareas?" onChange={onChange} switchType="m38:DL_POLITINTERTAREA"/>
-            <CustomSwitch title="Requiere APS de seguimiento" onChange={onChange} switchType="m38:DL_REQAPSSEG"/>
-            <CustomSwitch title="Cuasi accidente" onChange={onChange} switchType="m38:DL_CUASIACC"/>
+            <CustomSwitchObserve title="¿Aplico interrupción de tareas?" onChange={onChange} switchType="m38:DL_POLITINTERTAREA"/>
+            <CustomSwitchObserve title="Requiere APS de seguimiento" onChange={onChange} switchType="m38:DL_REQAPSSEG"/>
+            <CustomSwitchObserve title="Cuasi accidente" onChange={onChange} switchType="m38:DL_CUASIACC"/>
 
         </View>
     )
