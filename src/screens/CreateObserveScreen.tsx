@@ -7,6 +7,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { colors } from '../Themes/DlsTheme';
 import { CreateObservePageOne } from '../components/CreateObservePageOne';
 import { CreateObservePageTwo } from '../components/CreateObservePageTwo';
+import { useForm } from '../hooks/UseForm';
+import { M38GetCompIntfcDLHRTAOBSERVCIResponse } from '../interfaces/prompInterfaces';
 
 interface DataTemp {
     namepage: string;
@@ -54,17 +56,64 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
         currentStepLabelColor: '#4aae4f',
     };
 
+    const { form, onChange } = useForm<M38GetCompIntfcDLHRTAOBSERVCIResponse>({
+        "m38:BUSINESS_UNIT": " ",
+        "m38:DL_NTARJETA": " ",
+        "m38:DL_EQUIPMENT_ID": 0,
+        "m38:DL_IDENTIF_DT": " ",
+        "m38:DL_ORIGEN": " ",
+        "m38:DL_OBSERVADOR": " ",
+        "m38:DL_TURNO": 0,
+        "m38:DL_CUSTOMER_ID": 0,
+        "m38:DL_SECTOR_ID": " ",
+        "m38:DL_PUESTO": " ",
+        "m38:DL_ADESTACAR": "N",
+        "m38:DL_POLITINTERTAREA": "N",
+        "m38:DL_REQAPSSEG": "N",
+        "m38:DL_CUASIACC": "N",
+        "m38:DL_NUM_APS": " ",
+        "m38:DL_RESPSEGAPS": " ",
+        "m38:DL_EQPROTPER": " ",
+        "m38:DL_PROCTRAB": " ",
+        "m38:DL_EQYHERR": " ",
+        "m38:DL_REACCPERS": " ",
+        "m38:DL_POSIPERS": " ",
+        "m38:DL_CONTYPER": " ",
+        "m38:DL_ORDYLIMPIE": " ",
+        "m38:DL_MEDIOAMB": " ",
+        "m38:DL_ACCION": " ",
+        "m38:PTLT_DETAILS": " ",
+        "m38:DL_DESCACTO": " ",
+        "m38:DL_ACCEVITREIT": " ",
+        "m38:DL_SEG_VIAL": " ",
+        "m38:DL_TRBJ_ALT": " ",
+        "m38:DL_LN_FUEGO": " ",
+        "m38:DL_ESPAC_CONFIN": " ",
+        "m38:DL_HER_EQUIP": " ",
+        "m38:DL_AIS_ENERG": " ",
+        "m38:DL_OP_IZADO": " ",
+        "m38:DL_PERM_TRABAJO": " ",
+        "m38:DL_MAN_CAMBIO": " ",
+        "m38:CREATEDTTM": " ",
+        "m38:CREATEOPRID": " ",
+        "m38:LASTUPDDTTM": " ",
+        "m38:LASTUPDOPRID": " ",
+    })
+    console.log("form: ");
+    console.log(form);
+
     const renderItem = (item: DataTemp, index: number) => {
         return (
             <>
                 {index === 0 ?
-                    <CreateObservePageOne />
+                    <CreateObservePageOne form={form} onChange={onChange} />
                     :
-                    <CreateObservePageTwo />
+                    <CreateObservePageTwo form={form} onChange={onChange} />
                 }
             </>
         )
     }
+
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -124,9 +173,9 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
                     <TouchableOpacity
                         style={styles.nextPage}
                         onPress={() => {
-                            if (activeIndex === 1){
+                            if (activeIndex === 1) {
                                 navigation.navigate('CreateObserveQuestionsPage');
-                            }else{
+                            } else {
                                 setBackButton(true);
                                 // @ts-ignore
                                 carouselRef.current.snapToNext();

@@ -6,11 +6,14 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { colors } from '../Themes/DlsTheme';
 import { PickerSelect } from './PickerSelect';
 import CheckBox from '@react-native-community/checkbox';
+import { M38GetCompIntfcDLHRTAOBSERVCIResponse } from '../interfaces/prompInterfaces';
 
+interface Props{
+    form: M38GetCompIntfcDLHRTAOBSERVCIResponse;
+    onChange: (value: string, field: keyof M38GetCompIntfcDLHRTAOBSERVCIResponse) => void;
+}
 
-const { width: ScreenWidth } = Dimensions.get("window");
-
-export const CreateObservePageOne = () => {
+export const CreateObservePageOne = ({form,onChange}:Props) => {
 
     //datePicker
     const [date, setDate] = useState('--/--/----');
@@ -26,8 +29,12 @@ export const CreateObservePageOne = () => {
     };
 
     const handleConfirm = (date: any) => {
+
         setDate(date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear());
+        onChange(date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear(),'m38:DL_IDENTIF_DT');
         hideDatePicker();
+        console.log("form p1: ");
+        console.log(form);
     };
 
     //CheckBox
@@ -36,7 +43,7 @@ export const CreateObservePageOne = () => {
     return (
         <View>
 
-            <PickerSelect placeholder="Unidad de negocio" type="DLHR_EMPL_BUSSINES_UNIT" />
+            <PickerSelect placeholder="Unidad de negocio" type="DLHR_EMPL_BUSSINES_UNIT" onChange={onChange} />
 
             <View style={{ flexDirection: 'row' }}>
                 <Text style={{ color: 'white', fontSize: 20 }}>{date}</Text>
@@ -46,14 +53,17 @@ export const CreateObservePageOne = () => {
                 </TouchableOpacity>
             </View>
 
-            <PickerSelect placeholder="Origen" type="DLHR_ORIGEN" />
-            <PickerSelect placeholder="Turno" type="DLHR_TURNO" />
+            <PickerSelect placeholder="Origen" type="DLHR_ORIGEN" onChange={onChange} />
+            <PickerSelect placeholder="Turno" type="DLHR_TURNO" onChange={onChange} />
 
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <CheckBox
                     disabled={false}
                     value={toggleCheckBox}
-                    onValueChange={(newValue) => setToggleCheckBox(newValue)}
+                    onValueChange={(newValue) => {
+                        setToggleCheckBox(newValue);
+                        onChange(newValue ? 'Y': 'N',"m38:DL_ADESTACAR");
+                    }}
                 />
                 <Text>A destacar</Text>
             </View>
