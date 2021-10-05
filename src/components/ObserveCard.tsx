@@ -12,34 +12,39 @@ import { colors } from '../Themes/DlsTheme';
 
 
 const windowWhidth = Dimensions.get('window').width
-const height= Dimensions.get('window').height
+const height = Dimensions.get('window').height
 
 interface props {
     observe: DlhrAllObserve
- setTerm:(string:string)=>void
+    setTerm: (string: string) => void
 }
 
-export const ObserveCard = ({ observe ,setTerm}: props) => {
+export const ObserveCard = ({ observe, setTerm }: props) => {
 
-  
+
     const isMounted = useRef(true)
-    const  navigation=useNavigation();
-  
-  
-  
-   
+    const navigation = useNavigation();
+
+
+
+
     return (
         <TouchableOpacity
-        
+
             activeOpacity={0.9}
             onPress={
-                () =>( navigation.navigate('EditObvservCard'),setTerm(''))
+                () => (navigation.navigate('EditObvservCardScreen' ,
+                    {
+                        busineesUnit: observe.BUSINESS_UNIT,
+                        IdentifDt: observe.DL_IDENTIF_DT,
+                        Ntarjeta: observe.NroTarjeta
+                    } ), setTerm(''))
             }
         >
             <View style={{
                 ...styles.cardContainer,
                 width: windowWhidth * 0.8,
-                height:height*0.25,
+                height: height * 0.25,
                 backgroundColor: colors.dlsGrayPrimary
 
             }}>
@@ -50,13 +55,8 @@ export const ObserveCard = ({ observe ,setTerm}: props) => {
                     </Text>
                 </View>
 
-                <View style={styles.pokebolaContainer}>
-                  {/*   <Image
-                        source={require('../assets/pokebola-blanca.png')}
-                        style={styles.pokebola}
-                    /> */}
-                </View>
-                
+
+
             </View>
 
 
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
 
         marginHorizontal: 10,
         height: 160,
-       // width: 160,
+        // width: 160,
         marginBottom: 25,
         borderRadius: 10,
         shadowColor: "#000",
@@ -89,32 +89,7 @@ const styles = StyleSheet.create({
         left: 10
 
     },
-    pokebola: {
-        width: 100,
-        height: 100,
-        position: 'absolute',
-        right: -25,
-        bottom: -25
 
 
-    },
-    pokemonImage: {
-        width: 120,
-        height: 120,
-        position: 'absolute',
-        right: -10,
-        bottom: -5
 
-    },
-    pokebolaContainer: {
-
-
-        width: 100,
-        height: 100,
-        position: 'absolute',
-        bottom: 0,
-        right: 0,
-        overflow: 'hidden',
-        opacity: 0.5
-    }
 });

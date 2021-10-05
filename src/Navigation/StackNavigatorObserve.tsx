@@ -7,10 +7,13 @@ import { CreateObserveQuestionsPage } from '../components/CreateObserveQuestions
 import { colors } from '../Themes/DlsTheme';
 import { EmplidObserveScreen } from '../screens/EmplidObserveScreen';
 import { testobserve } from '../screens/test';
-import { EditObvservCard } from '../screens/EditObvservCard';
+import { EditObvservCardScreen} from '../screens/EditObvservCardScreen';
+import { InterfGetOnesCard } from '../interfaces/prompInterfaces';
 
 export type RoutstackParams={
-    TarjetaObserveScreen:{emplid:string,name:string}
+    
+    EditObvservCardScreen:InterfGetOnesCard
+    TarjetaObserveScreen:{name:string,emplid:string}
   
   }
 
@@ -29,12 +32,13 @@ export const StackNavigatorObserve = () => {
                     }
                 }}
             >
-                 {/*  <Stack.Screen name="testobserve" component={testobserve} />  */} 
+                
+                  {/* <Stack.Screen name="testobserve" component={testobserve} />   */}   
                 <Stack.Screen name="EmplidObserveScreen" component={EmplidObserveScreen} />
                 <Stack.Screen name="TarjetaObserveScreen" component={TarjetaObserveScreen} />
                 <Stack.Screen name="CreateObserveScreen" component={CreateObserveScreen} />
                 <Stack.Screen name="CreateObserveQuestionsPage" component={CreateObserveQuestionsPage} />
-                <Stack.Screen name="EditObvservCard" component={EditObvservCard} />
+                <Stack.Screen name="EditObvservCardScreen" component={EditObvservCardScreen} />
 
 
             </Stack.Navigator>

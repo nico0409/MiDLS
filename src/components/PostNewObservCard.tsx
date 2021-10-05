@@ -7,9 +7,6 @@ import PSDB from '../api/PSDB';
 export const PostNewObservCard = (bodyRequest: string) => {
 
 
-
-  console.log("inicia peticion");
-
   let xmls = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:m38="http://xmlns.oracle.com/Enterprise/Tools/schemas/M558814.V1">\
     <soapenv:Header/>\
     <soapenv:Body>\
@@ -31,7 +28,7 @@ export const PostNewObservCard = (bodyRequest: string) => {
 
       console.log(JSON.stringify(parse(res.data)));
 
-      console.log("finaliza la peticion");
+     
     }).catch(err => { console.log(err) });
 
 }

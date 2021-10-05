@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Image, StyleSheet, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { colors } from '../Themes/DlsTheme';
-import { Backgrond } from '../../../pruductosApp/src/components/Backgrond';
+
 
 export const Contact = () => {
     return (

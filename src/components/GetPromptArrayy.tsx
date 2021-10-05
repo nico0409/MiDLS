@@ -6,8 +6,8 @@ import { GetStorage } from './Storage';
 
 export const GetPromptArray = (promptypedata:promptType ) => {
 
-    
-    
+   
+   
     
     const promptype: StorageTypes = { StorageType: 'prompt' };
     
@@ -40,6 +40,8 @@ useEffect(() => {
   
    // const oneEquip: any[] = [ !Array.isArray(ArrayEquip) ? ArrayEquip:[]];
 //   return Array.isArray(ArrayEquip) ? ArrayEquip:oneEquip 
+
+
 return {PromptObArray}
 
 

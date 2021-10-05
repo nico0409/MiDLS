@@ -23,9 +23,7 @@ import IconAwesome from 'react-native-vector-icons/FontAwesome';
 
 
 interface Props extends DrawerScreenProps<any, any> { };
-interface Propstack extends StackScreenProps<RoutstackParams, 'TarjetaObserveScreen'> {
 
-}
 export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
 
 
@@ -104,12 +102,8 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
         )
     }
 
-    /* useEffect(() => {
-       console.log('entre');
-       
-    }, [typeSearh])
- */
-    console.log('valoe', term);
+  
+   
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: colors.dlsGrayPrimary }}>
