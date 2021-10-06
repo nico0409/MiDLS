@@ -1,8 +1,10 @@
-import React from "react";
+import React,{useState} from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { DlhrEmplBussinesUnit, MeuItemType, promptType, M38GetCompIntfcDLHRTAOBSERVCIResponse, DlhrBussinesUnit } from '../../interfaces/prompInterfaces';
+import { DlhrEmplBussinesUnit, MeuItemType, promptType, M38GetCompIntfcDLHRTAOBSERVCIResponse, DlhrBussinesUnit, Fields } from '../../interfaces/prompInterfaces';
 import { PickerSelect } from "../PickerSelect";
 import { GetPromptArray } from '../GetPromptArrayy';
+import { Prompt } from '../Prompt';
+
 
 
 export const LIST_ITEM_HEIGHT = 300;
@@ -25,17 +27,16 @@ export default ({ item, isLast, MeuItemType, observeCard }: ListItemProps) => {
 
   let businessUSelect: DlhrBussinesUnit | undefined = { UNIDAD_DE_NEGOCIO: '', DESCR: '' }
   let businessUARRAY: { label: string, value: string }[] = [{ label: '', value: '' }]
-  const deportes = [
-    { label: 'Football', value: 'football' },
-    { label: 'Baseball', value: 'baseball' },
-    { label: 'Hockey', value: 'hockey' },
-    { label: 'Basket', value: 'basket' }, 
-  ]
-
-  switch (MeuItemType.MeuItemType) {
+  
+ 
+    const promptType: promptType = { type: 'DLHR_CUSTOMER' };
+    const [emplid, setemplid] = useState({ fieldValue1: '', fieldValue2: '' })
+  
+  
+    switch (MeuItemType.MeuItemType) {
     case 'Registro':
-      const promptType: promptType = { type: 'DLHR_EMPL_BUSSINES_UNIT' }
-      const { PromptObArray } = GetPromptArray(promptType)
+    
+     /*  const { PromptObArray } = GetPromptArray(promptType)
       const busineesUEArray: DlhrEmplBussinesUnit[] = PromptObArray;
 
       if (busineesUEArray[0] !== undefined) {
@@ -53,21 +54,9 @@ export default ({ item, isLast, MeuItemType, observeCard }: ListItemProps) => {
 
           businessUARRAY = businessUArrayC!.map((item, index) => { return { label: item.DESCR, value: item.DESCR} })
 
-          console.log(businessUARRAY);
-
+        
         }
-
-
-
-
-
-
-
-      }
-
-
-
-
+    } */
 
       break;
     case 'Comentarios':
@@ -98,7 +87,23 @@ export default ({ item, isLast, MeuItemType, observeCard }: ListItemProps) => {
           ]}
         >
           <View style={{ height: 200, width: 300 }}>
-            <PickerSelect /*  placeholder={ "Unidad de Negocio"} item={deportes} */ />
+          {/*   <PickerSelect /*  placeholder={ "Unidad de Negocio"} item={deportes} */}
+          <Prompt
+                    setValueSelect={setemplid}
+                    promptType={{ type: 'DLHR_SECTOR' }}
+                />
+                <Prompt
+                    setValueSelect={setemplid}
+                    promptType={{ type: 'DLHR_EQUIP_TBL' }}
+                />
+                  <Prompt
+                    setValueSelect={setemplid}
+                    promptType={{ type: 'DLHR_CUSTOMER' }}
+                />
+                 <Prompt
+                    setValueSelect={setemplid}
+                    promptType={{ type: 'DLHR_OBSERVE_EMPLID' }}
+                />
           </View>
 
         </View>
@@ -115,6 +120,7 @@ export default ({ item, isLast, MeuItemType, observeCard }: ListItemProps) => {
         >
           <View style={{ height: 40, width: 300 }}>
             {/*  <PickerSelect placeholder="Unidad de negocio" item={deportes} /> */}
+             
           </View>
 
         </View>

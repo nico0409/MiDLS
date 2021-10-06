@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { Text, TouchableOpacity, View, StyleSheet, Dimensions, Image, Button } from 'react-native';
+import { Text, TouchableOpacity, View, StyleSheet, Dimensions, Image, Button ,Animated} from 'react-native';
 
 
 
@@ -7,6 +7,9 @@ import { Text, TouchableOpacity, View, StyleSheet, Dimensions, Image, Button } f
 import { useNavigation } from '@react-navigation/native';
 import { DlhrAllObserve } from '../interfaces/prompInterfaces';
 import { colors } from '../Themes/DlsTheme';
+import { transform } from '@babel/core';
+import { Extrapolate } from 'react-native-reanimated';
+
 
 
 
@@ -15,17 +18,23 @@ const windowWhidth = Dimensions.get('window').width
 const height = Dimensions.get('window').height
 
 interface props {
+    y:Animated.Value
     observe: DlhrAllObserve
     setTerm: (string: string) => void
+    index:number
 }
 
-export const ObserveCard = ({ observe, setTerm }: props) => {
+export const ObserveCard = ({ observe, setTerm, y,index }: props) => {
 
 
     const isMounted = useRef(true)
     const navigation = useNavigation();
 
-
+const translateY=  Animated.add(y,y.interpolate({
+    inputRange:[0,0.00001+index * (height * 0.25)],
+    outputRange:[0,index * (height * 0.25)] ,
+    extrapolateRight:"clamp",
+}))  
 
 
     return (
@@ -41,13 +50,14 @@ export const ObserveCard = ({ observe, setTerm }: props) => {
                     } ), setTerm(''))
             }
         >
-            <View style={{
-                ...styles.cardContainer,
-                width: windowWhidth * 0.8,
-                height: height * 0.25,
-                backgroundColor: colors.dlsGrayPrimary
-
-            }}>
+            <Animated.View style={
+                [ {...styles.cardContainer,
+                    width: windowWhidth * 0.8,
+                    height: height * 0.25,
+                    backgroundColor: colors.dlsGrayPrimary,
+                },
+                 { transform : [{translateY}]}]
+            }>
                 <View>
                     <Text style={styles.name}>
                         {observe.BUSINESS_UNIT}
@@ -57,7 +67,7 @@ export const ObserveCard = ({ observe, setTerm }: props) => {
 
 
 
-            </View>
+            </Animated.View>
 
 
         </TouchableOpacity>

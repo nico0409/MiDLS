@@ -15,14 +15,16 @@ interface Props {
         fieldValue1: string;
         fieldValue2: string;
     }>>
+    setplaceHolder:React.Dispatch<React.SetStateAction<string>>
 }
 
 
-export const FlatListItemPrompt = ({ field1, field2, closePrompt, setValueSelect }: Props) => {
+export const FlatListItemPrompt = ({ setplaceHolder,field1, field2, closePrompt, setValueSelect }: Props) => {
 
     return (
         <TouchableOpacity activeOpacity={0.5}
             onPress={() => {
+                setplaceHolder(field2),
                 closePrompt(false),
                     setValueSelect({
                         fieldValue1: field1,
