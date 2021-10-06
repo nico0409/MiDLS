@@ -7,13 +7,14 @@ import { colors } from '../Themes/DlsTheme';
 import { PickerSelect } from './PickerSelect';
 import CheckBox from '@react-native-community/checkbox';
 import { M38GetCompIntfcDLHRTAOBSERVCIResponse, objUseForm } from '../interfaces/prompInterfaces';
+import { Prompt } from './Prompt';
 
-interface Props{
+interface Props {
     form: objUseForm;
     onChange: (value: string, field: keyof objUseForm) => void;
 }
 
-export const CreateObservePageOne = ({form,onChange}:Props) => {
+export const CreateObservePageOne = ({ form, onChange }: Props) => {
 
     //datePicker
     const [date, setDate] = useState('--/--/----');
@@ -31,7 +32,7 @@ export const CreateObservePageOne = ({form,onChange}:Props) => {
     const handleConfirm = (date: any) => {
 
         setDate(date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear());
-        onChange(date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear(),'fecha');
+        onChange(date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear(), 'm38:DL_IDENTIF_DT');
         hideDatePicker();
         console.log("form p1: ");
         console.log(form);
@@ -54,6 +55,9 @@ export const CreateObservePageOne = ({form,onChange}:Props) => {
             </View>
 
             <PickerSelect placeholder="Origen" type="DLHR_ORIGEN" onChange={onChange} />
+
+            <Prompt onChange={onChange} promptType={{ type: 'DLHR_EQUIP_TBL' }} />
+
             <PickerSelect placeholder="Turno" type="DLHR_TURNO" onChange={onChange} />
 
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -62,7 +66,7 @@ export const CreateObservePageOne = ({form,onChange}:Props) => {
                     value={toggleCheckBox}
                     onValueChange={(newValue) => {
                         setToggleCheckBox(newValue);
-                        onChange(newValue ? 'Y': 'N','destacar');
+                        onChange(newValue ? 'Y' : 'N', 'm38:DL_ADESTACAR');
                     }}
                 />
                 <Text>A destacar</Text>

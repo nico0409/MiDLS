@@ -5,7 +5,7 @@ import { M38GetCompIntfcDLHRTAOBSERVCIResponse, objUseForm } from '../interfaces
 
 interface Props {
     title: string;
-    switchType: "InterupcionTarea" | "RequiereAps" | "cuasiAccidente";
+    switchType: "m38:DL_POLITINTERTAREA" | "m38:DL_REQAPSSEG" | "m38:DL_CUASIACC";
     onChange: (value: string, field: keyof objUseForm) => void;
 }
 
