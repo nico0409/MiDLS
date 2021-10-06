@@ -13,25 +13,28 @@ interface Props {
     field2: string
     closePrompt: React.Dispatch<React.SetStateAction<boolean>>
     onChange?: (value: string, field: keyof objUseForm) => void;
-    setplaceHolder:React.Dispatch<React.SetStateAction<string>>
+    setplaceHolder: React.Dispatch<React.SetStateAction<string>>
     fieldtype: keyof objUseForm
     setemplid?: React.Dispatch<React.SetStateAction<{
         fieldValue1: string;
         fieldValue2: string;
     }>>
-    promptType:promptType
+    promptType: promptType
 }
 
 
-export const FlatListItemPrompt = ({ setemplid, promptType,fieldtype, setplaceHolder,field1, field2, closePrompt, onChange }: Props) => {
+export const FlatListItemPrompt = ({ setemplid, promptType, fieldtype, setplaceHolder, field1, field2, closePrompt, onChange }: Props) => {
 
     return (
         <TouchableOpacity activeOpacity={0.5}
             onPress={() => {
                 setplaceHolder(field2),
-                closePrompt(false),
-                 promptType.type==='DLHR_OBSERVE_EMPLID'? 
-                
+                    closePrompt(false),
+                    (setemplid !== undefined ? 
+                       setemplid({ fieldValue1: field1, fieldValue2: field2 }) 
+                                            :
+                        (onChange !== undefined ? onChange(field1, fieldtype) : {}) )
+
 
 
             }}
