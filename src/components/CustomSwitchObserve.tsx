@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Switch, Text, View, Platform } from 'react-native';
 import { colors } from '../Themes/DlsTheme';
-import { M38GetCompIntfcDLHRTAOBSERVCIResponse } from '../interfaces/prompInterfaces';
+import { M38GetCompIntfcDLHRTAOBSERVCIResponse, objUseForm } from '../interfaces/prompInterfaces';
 
 interface Props {
     title: string;
-    switchType: "m38:DL_POLITINTERTAREA" | "m38:DL_REQAPSSEG" | "m38:DL_CUASIACC";
-    onChange: (value: string, field: keyof M38GetCompIntfcDLHRTAOBSERVCIResponse) => void;
+    switchType: "InterupcionTarea" | "RequiereAps" | "cuasiAccidente";
+    onChange: (value: string, field: keyof objUseForm) => void;
 }
 
 export const CustomSwitchObserve = ({title,onChange,switchType}:Props) => {

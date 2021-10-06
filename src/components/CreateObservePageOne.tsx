@@ -6,11 +6,11 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { colors } from '../Themes/DlsTheme';
 import { PickerSelect } from './PickerSelect';
 import CheckBox from '@react-native-community/checkbox';
-import { M38GetCompIntfcDLHRTAOBSERVCIResponse } from '../interfaces/prompInterfaces';
+import { M38GetCompIntfcDLHRTAOBSERVCIResponse, objUseForm } from '../interfaces/prompInterfaces';
 
 interface Props{
-    form: M38GetCompIntfcDLHRTAOBSERVCIResponse;
-    onChange: (value: string, field: keyof M38GetCompIntfcDLHRTAOBSERVCIResponse) => void;
+    form: objUseForm;
+    onChange: (value: string, field: keyof objUseForm) => void;
 }
 
 export const CreateObservePageOne = ({form,onChange}:Props) => {
@@ -31,7 +31,7 @@ export const CreateObservePageOne = ({form,onChange}:Props) => {
     const handleConfirm = (date: any) => {
 
         setDate(date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear());
-        onChange(date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear(),'m38:DL_IDENTIF_DT');
+        onChange(date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear(),'fecha');
         hideDatePicker();
         console.log("form p1: ");
         console.log(form);
@@ -62,7 +62,7 @@ export const CreateObservePageOne = ({form,onChange}:Props) => {
                     value={toggleCheckBox}
                     onValueChange={(newValue) => {
                         setToggleCheckBox(newValue);
-                        onChange(newValue ? 'Y': 'N',"m38:DL_ADESTACAR");
+                        onChange(newValue ? 'Y': 'N','destacar');
                     }}
                 />
                 <Text>A destacar</Text>
