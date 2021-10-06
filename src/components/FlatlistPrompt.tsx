@@ -2,7 +2,7 @@ import React from 'react'
 import { FlatList, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { initialWindowMetrics } from 'react-native-safe-area-context';
-import { Fields, DlhrEquipTbl, DlhrObserveEmplid } from '../interfaces/prompInterfaces';
+import { Fields, DlhrEquipTbl, DlhrObserveEmplid, promptType, promptField } from '../interfaces/prompInterfaces';
 import { FlatListItemPrompt } from './FlatlisItemPrompt';
 
 
@@ -10,17 +10,20 @@ import { FlatListItemPrompt } from './FlatlisItemPrompt';
 interface Props {
     //data: DlhrObserveEmplid[],
     data: any[]
-    field1: Fields
-    field2: Fields
+     field1: string
+    field2: string
+   
     closePrompt: React.Dispatch<React.SetStateAction<boolean>>
     setValueSelect: React.Dispatch<React.SetStateAction<{
         fieldValue1: string;
         fieldValue2: string;
     }>>
+    setplaceHolder:React.Dispatch<React.SetStateAction<string>>
 }
 
-export const FlatlistPrompt = ({ field1, field2, data, closePrompt, setValueSelect }: Props) => {
+export const FlatlistPrompt = ({  field1, field2, data, closePrompt, setValueSelect,setplaceHolder }: Props) => {
 
+  
     return (
         <View style={{}}>
 
@@ -30,13 +33,14 @@ export const FlatlistPrompt = ({ field1, field2, data, closePrompt, setValueSele
                 renderItem={({ item }) =>
 
                     <FlatListItemPrompt
-                        field1={field1.empleado ? item[field1.empleado!] : item[field1.equipo!]}
-                        field2={field2.empleado ? item[field2.empleado!] : item[field2.equipo!]}
+                    setplaceHolder={setplaceHolder}
+                        field1={item[field1]}
+                        field2={item[field2]}
                         closePrompt={closePrompt}
                         setValueSelect={setValueSelect}
                     />
                 }
-                keyExtractor={(item, index) => item[field1.empleado ? item[field1.empleado!] : item[field1.equipo!]] + index.toString()}
+                keyExtractor={(item, index) =>item[field1] + index.toString()}
                 showsVerticalScrollIndicator={false}
 
             />

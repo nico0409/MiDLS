@@ -1,44 +1,59 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, Text, TouchableOpacity,  useWindowDimensions } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, useWindowDimensions } from 'react-native';
 
 import { ModalPrompt } from './ModalPrompt';
-import { DlhrEmplBussinesUnit, Fields, promptType, StorageTypes } from '../interfaces/prompInterfaces';
+import { DlhrEmplBussinesUnit, Fields, promptType, StorageTypes, promptField } from '../interfaces/prompInterfaces';
 import { colors } from '../Themes/DlsTheme';
 
 
+
 interface Props {
-    data: any[],
-    placeHolder: string
-    field1: Fields
-    field2: Fields
-    setValueSelect:React.Dispatch<React.SetStateAction<{
+ 
+    setValueSelect: React.Dispatch<React.SetStateAction<{
         fieldValue1: string;
         fieldValue2: string;
     }>>
-    promptType:promptType
+    promptType: promptType
 }
-export const Prompt = ({ data, placeHolder, field1, field2 ,setValueSelect,promptType}: Props) => {
+export const Prompt = ({ setValueSelect, promptType }: Props) => {
     const [isVisible, setisVisible] = useState(false)
-const{width}=useWindowDimensions()
 
+    let strPLaceHolder = ''
+    switch (promptType.type) {
+        case 'DLHR_EQUIP_TBL':
+            strPLaceHolder = 'Equipos'
+            break;
+        case 'DLHR_CUSTOMER':
+            strPLaceHolder = 'Clientes'
+            break;
+        case 'DLHR_SECTOR':
+            strPLaceHolder = 'Sector'
+            break;
+            case 'DLHR_OBSERVE_EMPLID':
+            strPLaceHolder = 'Observador'
+            break;
+
+    }
+
+    const [placeHolder, setplaceHolder] = useState(strPLaceHolder)
     return (
         <View style={{}} >
             <TouchableOpacity
-            activeOpacity={0.8}
+                activeOpacity={0.8}
                 onPress={() => { setisVisible(true) }}>
                 <View style={styles.btnContainer}>
                     <Text style={styles.textBtn}>{placeHolder}</Text>
                 </View>
             </TouchableOpacity>
-            <ModalPrompt data={data}
+            <ModalPrompt /* data={data} */
                 isVisible={isVisible}
                 setisVisible={setisVisible}
-                field1={field1}
-                field2={field2}
-                placeholder={placeHolder} 
+                setplaceHolder={setplaceHolder}
                 setValueSelect={setValueSelect}
-               promptType={promptType}
-                />
+                promptType={promptType}
+
+
+            />
 
 
         </View>
@@ -50,13 +65,13 @@ const styles = StyleSheet.create({
         height: 50,
         width: 250,
         borderWidth: 1,
-        borderRadius:10,
-        backgroundColor:colors.dlsBtonColosWhite,
-        justifyContent:'center',
-        alignItems:'center',
-        
-      
-        
+        borderRadius: 10,
+        backgroundColor: colors.dlsBtonColosWhite,
+        justifyContent: 'center',
+        alignItems: 'center',
+
+
+
         shadowColor: 'rgba(0,0,0,0.5)',
         shadowOffset: {
             width: 0,
@@ -64,17 +79,12 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.27,
         shadowRadius: 4.65,
-         
-       elevation:15
+
+        elevation: 15
     },
-   
-    textBtn:{
-fontSize:20
+
+    textBtn: {
+        fontSize: 20
     }
-
-
-
-
-
 
 });

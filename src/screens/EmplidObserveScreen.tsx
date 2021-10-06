@@ -31,10 +31,6 @@ export const EmplidObserveScreen = ({ navigation, route }: Props) => {
     let placeHolder = 'Emplid'
     let prompt: PromptObserveType | AllObserveType | DlhrAllObserve | undefined = {}
 
-    const { PromptObArray } = GetPromptArray(promptType)
-    const empleados = PromptObArray.map(item => { return item.DLHR_OBSERVE_EMPLID });
-  
-   
     // const [term, setTerm] = useState('')
     //const [observeFiltered, setObserveFiltred] = useState<any[]>([])
 
@@ -66,7 +62,6 @@ export const EmplidObserveScreen = ({ navigation, route }: Props) => {
             </TouchableOpacity>
             <View style={{ top: 600 }}>
                 <Prompt
-                    data={empleados }
                     placeHolder={placeHolder}
                     field1={Fieldemplid}
                     field2={Fieldnombre}

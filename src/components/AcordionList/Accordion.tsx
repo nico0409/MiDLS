@@ -76,10 +76,10 @@ export default ({ observeCard }: Props) => {
           <Text style={styles.title}>{`Tarjeta Número:`}</Text>
           <Text style={styles.title}>{`${observeCard!["m38:DL_NTARJETA"]}`}</Text>
         </View>
-        <List {...{ list }} MeuItemType={menus[0]}  observeCard={observeCard}/>
-        <List {...{ list: list2 }} MeuItemType={menus[1]}  />
-        <List {...{ list: list3 }} MeuItemType={menus[2]} />
-        <List {...{ list: list4 }} MeuItemType={menus[3]} /> 
+         <List {...{ list }} MeuItemType={menus[0]}  observeCard={observeCard}/> 
+         <List {...{ list: list2 }} MeuItemType={menus[1]}  /> 
+         <List {...{ list: list3 }} MeuItemType={menus[2]} />
+        <List {...{ list: list4 }} MeuItemType={menus[3]} />  
 
       </View>
     

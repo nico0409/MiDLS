@@ -12,10 +12,12 @@ import RNSingleSelect, {
 
 import {  StatusBar, SafeAreaView, Dimensions } from "react-native";
 import { height } from '../../../../can-it-be-done-in-react-native-master/src/Menu/Content';
+import Wallet from '../components/Wallet';
+import { EditObvservCardScreen } from './EditObvservCardScreen';
 
 
 
-const { width: ScreenWidth } = Dimensions.get("window");
+/* const { width: ScreenWidth } = Dimensions.get("window");
 
 const staticData: Array<ISingleSelectDataType> = [
   {
@@ -43,7 +45,7 @@ const staticData: Array<ISingleSelectDataType> = [
     value: "Ligula Amet",
     imageSource: require("../assets/guitar.png"),
   },
-];
+]; */
 export const testobserve = () => {
     /*  const [emplid, setemplid] = useState({ fieldValue1: '', fieldValue2: '' })
 
@@ -60,7 +62,7 @@ export const testobserve = () => {
         { id: 3, value: "Lorem Nibh" },
         { id: 4, value: "Ligula Amet" },
     ]; */
-    const [dynamicData, setDynamicData] = React.useState<
+  /*   const [dynamicData, setDynamicData] = React.useState<
     Array<ISingleSelectDataType>
   >([]);
 
@@ -68,7 +70,7 @@ export const testobserve = () => {
     setTimeout(() => {
       setDynamicData(staticData);
     }, 2000);
-  });
+  }); */
     return (
         <View style={{ flex: 1 }}>
             {/*  <Prompt
@@ -90,8 +92,8 @@ export const testobserve = () => {
 
                 }
             /> */}
-             <StatusBar barStyle="light-content" />
-      <SafeAreaView
+            {/*  <StatusBar barStyle="light-content" /> */}
+     {/*  <SafeAreaView
         style={{
           height:200,
           backgroundColor: "red",
@@ -122,7 +124,9 @@ export const testobserve = () => {
             }
           />
         </View>
-      </SafeAreaView>
+      </SafeAreaView> */}
+     {/*  <Wallet/> */}
+     <EditObvservCardScreen /> 
         </View>
     )
 }

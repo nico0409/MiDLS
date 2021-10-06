@@ -15,11 +15,13 @@ interface Props extends StackScreenProps <RoutstackParams,'EditObvservCardScreen
 
 }
 
-export const EditObvservCardScreen = ({ navigation, route }: Props) => {
+export const EditObvservCardScreen = (/* { navigation, route }: Props */) => {
 
 
- const {observeCard,isloading,loadObserveCard,form}=UseOneGetObserve(route.params)
+ const {observeCard,isloading,loadObserveCard,form}=UseOneGetObserve({IdentifDt:'2020-05-31',
+busineesUnit:'CDR',Ntarjeta:'2020-4070-039506'}/* route.params */)
    
+/* console.log(form,isloading); */
 
  if (isloading) {
     return (
@@ -29,7 +31,7 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
 
     return (
         < View style={{ flex: 1 }}>
-          <Accordion observeCard={form!} /> 
+           <Accordion observeCard={form!} />  
         </View>
     )
 }
