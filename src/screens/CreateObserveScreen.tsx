@@ -7,6 +7,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { colors } from '../Themes/DlsTheme';
 import { CreateObservePageOne } from '../components/CreateObservePageOne';
 import { CreateObservePageTwo } from '../components/CreateObservePageTwo';
+import { useForm } from '../hooks/UseForm';
+import { M38GetCompIntfcDLHRTAOBSERVCIResponse, objUseForm } from '../interfaces/prompInterfaces';
 
 interface DataTemp {
     namepage: string;
@@ -54,17 +56,60 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
         currentStepLabelColor: '#4aae4f',
     };
 
+    const { form, onChange } = useForm<objUseForm>({
+        BussineesUnit: ' ',
+        NTarjeta: ' ',
+        fecha: ' ',
+        origen: ' ',
+        equipo: ' ',
+        turno: ' ',
+        cliente: ' ',
+        sector: ' ',
+        destacar: 'N',
+        observador: ' ',
+        puesto: ' ',
+        acto: ' ',
+        accion: ' ',
+        InterupcionTarea: 'N',
+        RequiereAps: 'N',
+        NumAps: ' ',
+        RespAps: ' ',
+        cuasiAccidente: 'N',
+        masDetalles: ' ',
+        Action: ' ',
+        questProtecionP: ' ',
+        questProcedimientoT: ' ',
+        questHerrEquip: ' ',
+        questReaccionP: ' ',
+        questUbicacionP: ' ',
+        questControlP: ' ',
+        questOrdenL: ' ',
+        questmedioA: ' ',
+        goldRule1: ' ',
+        goldRule2: ' ',
+        goldRule3: ' ',
+        goldRule4: ' ',
+        goldRule5: ' ',
+        goldRule6: ' ',
+        goldRule7: ' ',
+        goldRule8: ' ',
+        goldRule9: ' '
+        })
+    console.log("form: ");
+    console.log(form);
+
     const renderItem = (item: DataTemp, index: number) => {
         return (
             <>
                 {index === 0 ?
-                    <CreateObservePageOne />
+                    <CreateObservePageOne form={form} onChange={onChange} />
                     :
-                    <CreateObservePageTwo />
+                    <CreateObservePageTwo form={form} onChange={onChange} />
                 }
             </>
         )
     }
+
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -124,9 +169,9 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
                     <TouchableOpacity
                         style={styles.nextPage}
                         onPress={() => {
-                            if (activeIndex === 1){
+                            if (activeIndex === 1) {
                                 navigation.navigate('CreateObserveQuestionsPage');
-                            }else{
+                            } else {
                                 setBackButton(true);
                                 // @ts-ignore
                                 carouselRef.current.snapToNext();

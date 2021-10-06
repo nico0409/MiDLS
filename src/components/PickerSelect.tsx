@@ -3,12 +3,13 @@ import RNSingleSelect, {
     ISingleSelectDataType,
 } from "@freakycoder/react-native-single-select";
 import { Dimensions, View } from 'react-native';
-import { promptType, DlhrBussinesUnit, DlhrOrigen, DlhrPuesto, DlhrTurno } from '../interfaces/prompInterfaces';
+import { promptType, DlhrBussinesUnit, DlhrOrigen, DlhrPuesto, DlhrTurno, M38GetCompIntfcDLHRTAOBSERVCIResponse, objUseForm } from '../interfaces/prompInterfaces';
 import { GetPromptArray } from './GetPromptArrayy';
 
 interface Props {
     placeholder: string;
     type: "DLHR_EMPL_BUSSINES_UNIT" | "DLHR_TURNO" | "DLHR_ORIGEN" | "DLHR_PUESTO";
+    onChange: (value: string, field: keyof objUseForm) => void;
     itemSelect?: number;
 }
 
@@ -16,7 +17,7 @@ interface DlhrPromptsDet extends DlhrOrigen, DlhrPuesto, DlhrTurno, DlhrBussines
 
 const { width: ScreenWidth } = Dimensions.get("window");
 
-export const PickerSelect = ({ placeholder, type }: Props) => {
+export const PickerSelect = ({ placeholder, type, onChange }: Props) => {
 
     const [selectedItem, setSelectedItem] = useState<ISingleSelectDataType>()
 
@@ -25,6 +26,7 @@ export const PickerSelect = ({ placeholder, type }: Props) => {
     const { PromptObArray } = GetPromptArray(promptType);
 
     let data: ISingleSelectDataType[];
+    let fieldData: keyof objUseForm;
 
     if (PromptObArray[0] !== undefined) {
 
@@ -46,18 +48,22 @@ export const PickerSelect = ({ placeholder, type }: Props) => {
                 switch (type) {
                     case "DLHR_ORIGEN":
                         dataItem = item.ORIGEN;
+                        fieldData = "origen";
                         break;
                     case "DLHR_PUESTO":
                         dataItem = item.DL_PUESTO;
+                        fieldData = "puesto";
                         break;
                     case "DLHR_TURNO":
                         dataItem = item.DL_TURNO;
+                        fieldData = "turno";
                         break;
                     case "DLHR_EMPL_BUSSINES_UNIT":
                         dataItem = item.UNIDAD_DE_NEGOCIO;
+                        fieldData = "BussineesUnit";
                         break;
                 }
-                return { id: index, value: item.DESCR, data: dataItem }
+                return { id: index, value: item.DESCR, data: { dataItem, fieldData } }
             }
         )
 
@@ -77,6 +83,7 @@ export const PickerSelect = ({ placeholder, type }: Props) => {
                 menuBarContainerWidth={ScreenWidth * 0.9}
                 onSelect={(selectedItem: ISingleSelectDataType) => {
                     console.log("SelectedItem: ", selectedItem);
+                    onChange(selectedItem.data.dataItem, selectedItem.data.fieldData);
                     setSelectedItem(selectedItem);
                 }}
             />

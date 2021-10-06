@@ -1,25 +1,24 @@
 import React, { useState } from 'react'
-import { View, Switch, Platform } from 'react-native';
-import { colors } from '../Themes/DlsTheme';
+import { View } from 'react-native';
+import { M38GetCompIntfcDLHRTAOBSERVCIResponse, objUseForm } from '../interfaces/prompInterfaces';
+import { CustomSwitchObserve } from './CustomSwitchObserve';
 import { PickerSelect } from './PickerSelect';
 
-export const CreateObservePageTwo = () => {
-    const [isEnabled, setIsEnabled] = useState(false);
+interface Props {
+    form: objUseForm;
+    onChange: (value: string, field: keyof objUseForm) => void;
+}
 
-    const toggleSwitch = () => {
-        setIsEnabled(!isEnabled);
-        //onChange( !isEnabled );
-    };
+export const CreateObservePageTwo = ({ form, onChange }: Props) => {
 
     return (
         <View>
-            <PickerSelect placeholder="Puesto" type={"DLHR_PUESTO"} />
-            <Switch
-                trackColor={{ false: 'gray', true: colors.dlsYellowSecondary }}
-                thumbColor={(Platform.OS === 'android') ? colors.dlsYellowSecondary : ''}
-                onValueChange={toggleSwitch}
-                value={isEnabled}
-            />
+            <PickerSelect placeholder="Puesto" type={"DLHR_PUESTO"} onChange={onChange} />
+
+            <CustomSwitchObserve title="¿Aplico interrupción de tareas?" onChange={onChange} switchType="InterupcionTarea"/>
+            <CustomSwitchObserve title="Requiere APS de seguimiento" onChange={onChange} switchType="RequiereAps"/>
+            <CustomSwitchObserve title="Cuasi accidente" onChange={onChange} switchType="cuasiAccidente"/>
+
         </View>
     )
 }
