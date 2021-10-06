@@ -2,20 +2,22 @@ import React, { useState } from 'react'
 import { View, StyleSheet, Text, TouchableOpacity, useWindowDimensions } from 'react-native';
 
 import { ModalPrompt } from './ModalPrompt';
-import { DlhrEmplBussinesUnit, Fields, promptType, StorageTypes, promptField } from '../interfaces/prompInterfaces';
+import { DlhrEmplBussinesUnit, Fields, promptType, StorageTypes, promptField, objUseForm } from '../interfaces/prompInterfaces';
 import { colors } from '../Themes/DlsTheme';
+import { onChange } from 'react-native-reanimated';
 
 
 
 interface Props {
  
-    setValueSelect: React.Dispatch<React.SetStateAction<{
+    /* setValueSelect?: React.Dispatch<React.SetStateAction<{
         fieldValue1: string;
         fieldValue2: string;
-    }>>
+    }> */
+    onChange: (value: string, field: keyof objUseForm) => void;
     promptType: promptType
 }
-export const Prompt = ({ setValueSelect, promptType }: Props) => {
+export const Prompt = ({ onChange, promptType }: Props) => {
     const [isVisible, setisVisible] = useState(false)
 
     let strPLaceHolder = ''
@@ -49,7 +51,7 @@ export const Prompt = ({ setValueSelect, promptType }: Props) => {
                 isVisible={isVisible}
                 setisVisible={setisVisible}
                 setplaceHolder={setplaceHolder}
-                setValueSelect={setValueSelect}
+                onChange={onChange}
                 promptType={promptType}
 
 

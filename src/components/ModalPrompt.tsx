@@ -6,7 +6,7 @@ import { listSearchOptions, listSearchOptions2 } from '../data/listSearchOptios'
 import { HeaderTitle } from './HeaderTitle';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 import { colors } from '../Themes/DlsTheme';
-import { DlhrEmplBussinesUnit, DlhrObserveEmplid, DlhrEquipTbl, Fields, promptType, promptField } from '../interfaces/prompInterfaces';
+import { DlhrEmplBussinesUnit, DlhrObserveEmplid, DlhrEquipTbl, Fields, promptType, promptField, objUseForm } from '../interfaces/prompInterfaces';
 import { FlatlistPrompt } from './FlatlistPrompt';
 import { SearchInput } from './SearchInput';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -21,16 +21,13 @@ interface Props {
     isVisible: boolean
     setisVisible: React.Dispatch<React.SetStateAction<boolean>>
   
-    setValueSelect: React.Dispatch<React.SetStateAction<{
-        fieldValue1: string;
-        fieldValue2: string;
-    }>>
+    onChange: (value: string, field: keyof objUseForm) => void;
     promptType: promptType
     setplaceHolder:React.Dispatch<React.SetStateAction<string>>
 }
 
 
-export const ModalPrompt = ({setplaceHolder,isVisible, setisVisible, setValueSelect, promptType }: Props) => {
+export const ModalPrompt = ({setplaceHolder,isVisible, setisVisible, onChange, promptType }: Props) => {
     
     const height = useWindowDimensions().height
     const width = useWindowDimensions().width
@@ -46,7 +43,7 @@ export const ModalPrompt = ({setplaceHolder,isVisible, setisVisible, setValueSel
     let strField1 = '';
     let strField2 = ''
     let placeHolderSrch=''
-
+    let fieldType: keyof objUseForm='m38:BUSINESS_UNIT'
 
     switch (promptType.type) {
         case 'DLHR_EQUIP_TBL':
@@ -60,6 +57,7 @@ export const ModalPrompt = ({setplaceHolder,isVisible, setisVisible, setValueSel
             strField1 = fieldEquip.DLHR_EQUIP_TBL?.field1.equipo!
             strField2 = fieldEquip.DLHR_EQUIP_TBL?.field2.equipo!
             placeHolderSrch='Equipo'
+            fieldType='m38:DL_EQUIPMENT_ID'
             break;
         case 'DLHR_EMPL_BUSSINES_UNIT':
             const fieldBussineU: promptField = {
@@ -73,8 +71,10 @@ export const ModalPrompt = ({setplaceHolder,isVisible, setisVisible, setValueSel
             }
             strField1 = fieldBussineU.DLHR_EMPL_BUSSINES_UNIT?.field1.empleado!;
             strField2 = fieldBussineU.DLHR_EMPL_BUSSINES_UNIT?.field2.empleado!;
-            break;
             placeHolderSrch='Empleado'
+            fieldType='m38:BUSINESS_UNIT'
+            break;
+            
         case 'DLHR_CUSTOMER':
             const fieldCustomer: promptField = {
                 DLHR_CUSTOMER:
@@ -86,6 +86,7 @@ export const ModalPrompt = ({setplaceHolder,isVisible, setisVisible, setValueSel
             strField1 = fieldCustomer.DLHR_CUSTOMER?.field1.customer!;
             strField2 = fieldCustomer.DLHR_CUSTOMER?.field2.customer!;
             placeHolderSrch='Cliente'
+            fieldType='m38:DL_CUSTOMER_ID'
             break;
         case 'DLHR_SECTOR':
             const fieldSector: promptField = {
@@ -98,6 +99,7 @@ export const ModalPrompt = ({setplaceHolder,isVisible, setisVisible, setValueSel
             strField1 = fieldSector.DLHR_SECTOR?.field1.sector!;
             strField2 = fieldSector.DLHR_SECTOR?.field2.sector!;
             placeHolderSrch='Sector'
+            fieldType='m38:DL_SECTOR_ID'
             break;
         case 'DLHR_OBSERVE_EMPLID':
             const fieldObserveEmpl: promptField = {
@@ -110,14 +112,12 @@ export const ModalPrompt = ({setplaceHolder,isVisible, setisVisible, setValueSel
             strField1 = fieldObserveEmpl.DLHR_OBSERVE_EMPLID?.field1.observador!;
             strField2 = fieldObserveEmpl.DLHR_OBSERVE_EMPLID?.field2.observador!;
             placeHolderSrch='Observador'
+            fieldType='m38:DL_OBSERVADOR'
             break;
         /* case 'DLHR_APS':
             strField1 = field1.EncargadoAPS!;
             strField2 = field2.EncargadoAPS!
             break; */
-
-
-
 
     }
     
@@ -232,8 +232,8 @@ export const ModalPrompt = ({setplaceHolder,isVisible, setisVisible, setValueSel
                                 field1={strField1}
                                 field2={strField2}
                                 closePrompt={setisVisible}
-                                setValueSelect={setValueSelect}
-                                
+                                onChange={onChange}
+                                fieldtype={fieldType}
                                 setplaceHolder={setplaceHolder}
                                 
                             />

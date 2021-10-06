@@ -2,7 +2,7 @@ import React from 'react'
 import { FlatList, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { initialWindowMetrics } from 'react-native-safe-area-context';
-import { Fields, DlhrEquipTbl, DlhrObserveEmplid, promptType, promptField } from '../interfaces/prompInterfaces';
+import { Fields, DlhrEquipTbl, DlhrObserveEmplid, promptType, promptField, objUseForm } from '../interfaces/prompInterfaces';
 import { FlatListItemPrompt } from './FlatlisItemPrompt';
 
 
@@ -14,14 +14,12 @@ interface Props {
     field2: string
    
     closePrompt: React.Dispatch<React.SetStateAction<boolean>>
-    setValueSelect: React.Dispatch<React.SetStateAction<{
-        fieldValue1: string;
-        fieldValue2: string;
-    }>>
+    onChange: (value: string, field: keyof objUseForm) => void;
     setplaceHolder:React.Dispatch<React.SetStateAction<string>>
+    fieldtype: keyof objUseForm
 }
 
-export const FlatlistPrompt = ({  field1, field2, data, closePrompt, setValueSelect,setplaceHolder }: Props) => {
+export const FlatlistPrompt = ({ fieldtype, field1, field2, data, closePrompt, onChange,setplaceHolder }: Props) => {
 
   
     return (
@@ -37,7 +35,8 @@ export const FlatlistPrompt = ({  field1, field2, data, closePrompt, setValueSel
                         field1={item[field1]}
                         field2={item[field2]}
                         closePrompt={closePrompt}
-                        setValueSelect={setValueSelect}
+                        onChange={onChange}
+                        fieldtype={fieldtype}
                     />
                 }
                 keyExtractor={(item, index) =>item[field1] + index.toString()}
