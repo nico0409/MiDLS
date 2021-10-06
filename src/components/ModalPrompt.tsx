@@ -21,13 +21,17 @@ interface Props {
     isVisible: boolean
     setisVisible: React.Dispatch<React.SetStateAction<boolean>>
   
-    onChange: (value: string, field: keyof objUseForm) => void;
+    onChange?: (value: string, field: keyof objUseForm) => void;
     promptType: promptType
     setplaceHolder:React.Dispatch<React.SetStateAction<string>>
+    setemplid?: React.Dispatch<React.SetStateAction<{
+        fieldValue1: string;
+        fieldValue2: string;
+    }>>
 }
 
 
-export const ModalPrompt = ({setplaceHolder,isVisible, setisVisible, onChange, promptType }: Props) => {
+export const ModalPrompt = ({setemplid,setplaceHolder,isVisible, setisVisible, onChange, promptType }: Props) => {
     
     const height = useWindowDimensions().height
     const width = useWindowDimensions().width
@@ -232,7 +236,9 @@ export const ModalPrompt = ({setplaceHolder,isVisible, setisVisible, onChange, p
                                 field1={strField1}
                                 field2={strField2}
                                 closePrompt={setisVisible}
-                                onChange={onChange}
+                                onChange={onChange!}
+                                setemplid={setemplid}
+                                promptType={promptType}
                                 fieldtype={fieldType}
                                 setplaceHolder={setplaceHolder}
                                 

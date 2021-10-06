@@ -14,10 +14,15 @@ interface Props {
         fieldValue1: string;
         fieldValue2: string;
     }> */
-    onChange: (value: string, field: keyof objUseForm) => void;
-    promptType: promptType
+   
+    onChange?: (value: string, field: keyof objUseForm) => void;
+    promptType: promptType;
+    setemplid: React.Dispatch<React.SetStateAction<{
+        fieldValue1: string;
+        fieldValue2: string;
+    }>>
 }
-export const Prompt = ({ onChange, promptType }: Props) => {
+export const Prompt = ({ setemplid,onChange, promptType }: Props) => {
     const [isVisible, setisVisible] = useState(false)
 
     let strPLaceHolder = ''
@@ -51,7 +56,8 @@ export const Prompt = ({ onChange, promptType }: Props) => {
                 isVisible={isVisible}
                 setisVisible={setisVisible}
                 setplaceHolder={setplaceHolder}
-                onChange={onChange}
+                onChange={onChange!}
+                setemplid={setemplid}
                 promptType={promptType}
 
 

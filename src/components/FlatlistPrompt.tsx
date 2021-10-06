@@ -12,14 +12,18 @@ interface Props {
     data: any[]
      field1: string
     field2: string
-   
+    setemplid?: React.Dispatch<React.SetStateAction<{
+        fieldValue1: string;
+        fieldValue2: string;
+    }>>
+    promptType: promptType
     closePrompt: React.Dispatch<React.SetStateAction<boolean>>
-    onChange: (value: string, field: keyof objUseForm) => void;
+    onChange?: (value: string, field: keyof objUseForm) => void;
     setplaceHolder:React.Dispatch<React.SetStateAction<string>>
     fieldtype: keyof objUseForm
 }
 
-export const FlatlistPrompt = ({ fieldtype, field1, field2, data, closePrompt, onChange,setplaceHolder }: Props) => {
+export const FlatlistPrompt = ({ fieldtype, field1, field2, data, closePrompt, onChange,setplaceHolder ,setemplid,promptType}: Props) => {
 
   
     return (
@@ -35,8 +39,10 @@ export const FlatlistPrompt = ({ fieldtype, field1, field2, data, closePrompt, o
                         field1={item[field1]}
                         field2={item[field2]}
                         closePrompt={closePrompt}
-                        onChange={onChange}
+                        onChange={onChange!}
                         fieldtype={fieldtype}
+                        setemplid={setemplid}
+                        promptType={promptType}
                     />
                 }
                 keyExtractor={(item, index) =>item[field1] + index.toString()}
