@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Text, View, Dimensions, SafeAreaView, Platform, Image, FlatList, ActivityIndicator, TouchableOpacity, Modal, Button } from 'react-native';
+import { Text, View, Dimensions, SafeAreaView, Platform, Image, FlatList, ActivityIndicator, TouchableOpacity, Modal, Button, Animated } from 'react-native';
 import { SearchInput } from '../components/SearchInput';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ObserveCard } from '../components/ObserveCard';
@@ -18,8 +18,11 @@ import { ModalSearch } from '../components/ModalSearch';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RoutstackParams } from '../Navigation/StackNavigatorObserve';
 import IconAwesome from 'react-native-vector-icons/FontAwesome';
+import Wallet from '../components/Wallet';
 
 
+
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
 
 
 interface Props extends DrawerScreenProps<any, any> { };
@@ -40,6 +43,10 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
     /* const [searchValue, setsearchValue] = useState(0)
     const [typeSearh, setTypeSearch] = useState<fieldSearchType>({ type: 'DLHR_NTARJETA' })
      */
+
+    const y = new Animated.Value(0);
+    const onScroll = Animated.event([{ nativeEvent: { contentOffset: { y } } }],
+        { useNativeDriver: true })
     useEffect(() => {
         if (term.length === 0) {
 
@@ -102,8 +109,8 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
         )
     }
 
-  
-   
+
+
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: colors.dlsGrayPrimary }}>
@@ -187,17 +194,21 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
 
 
             <View >
+                <View style ={{marginVertical:50}}>
 
-                <View style={{ alignItems: 'center' }}>
+                    <Wallet />
+                </View>
+                {/* <View style={{ alignItems: 'center' }}>
 
                     {allObserveList[0].NroTarjeta !== undefined ?
-                        <FlatList
-
+                        <AnimatedFlatList
+                            scrollEventThrottle={16}
                             numColumns={1}
+                            {...{onScroll}}
                             showsVerticalScrollIndicator={false}
                             data={(term.length !== 0) ? observeFiltered : allObserveList}
                             keyExtractor={(observe, index) => observe.NroTarjeta! + index.toString()}
-                            renderItem={({ item }) => <ObserveCard observe={item} setTerm={setTerm} />
+                            renderItem={({ item,index }) => <ObserveCard observe={item} index={index}  y={y} setTerm={setTerm} />
                             }
 
                             //onEndReached={loadPokemons}
@@ -209,8 +220,10 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
                                 marginBottom: top + 10,
                                 paddingBottom: 10
                             }}></Text>}
-                        /> : <View></View>}
-                </View>
+                        /> 
+                        : <View>
+                        </View>}
+                </View> */}
 
 
 

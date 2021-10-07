@@ -59,7 +59,7 @@ export default ({ list ,MeuItemType,observeCard}: ListProps) => {
           <Chevron {...{ transition }} />
         </Animated.View>
       </TapGestureHandler>
-      <Animated.View style={[styles.items, { height }]}>
+       <Animated.View style={[styles.items, { height }]}>
         {list.items.map((item, key) => (
           <Item
             key={key}
@@ -69,7 +69,7 @@ export default ({ list ,MeuItemType,observeCard}: ListProps) => {
             observeCard={observeCard}
           />
         ))}
-      </Animated.View>
+      </Animated.View> 
     </>
   );
 };

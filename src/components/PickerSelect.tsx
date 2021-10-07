@@ -48,19 +48,19 @@ export const PickerSelect = ({ placeholder, type, onChange }: Props) => {
                 switch (type) {
                     case "DLHR_ORIGEN":
                         dataItem = item.ORIGEN;
-                        fieldData = "origen";
+                        fieldData = "m38:DL_ORIGEN";
                         break;
                     case "DLHR_PUESTO":
                         dataItem = item.DL_PUESTO;
-                        fieldData = "puesto";
+                        fieldData = "m38:DL_PUESTO";
                         break;
                     case "DLHR_TURNO":
                         dataItem = item.DL_TURNO;
-                        fieldData = "turno";
+                        fieldData = "m38:DL_TURNO";
                         break;
                     case "DLHR_EMPL_BUSSINES_UNIT":
                         dataItem = item.UNIDAD_DE_NEGOCIO;
-                        fieldData = "BussineesUnit";
+                        fieldData = "m38:BUSINESS_UNIT";
                         break;
                 }
                 return { id: index, value: item.DESCR, data: { dataItem, fieldData } }

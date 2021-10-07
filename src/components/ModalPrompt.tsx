@@ -6,32 +6,33 @@ import { listSearchOptions, listSearchOptions2 } from '../data/listSearchOptios'
 import { HeaderTitle } from './HeaderTitle';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 import { colors } from '../Themes/DlsTheme';
-import { DlhrEmplBussinesUnit, DlhrObserveEmplid, DlhrEquipTbl, Fields, promptType } from '../interfaces/prompInterfaces';
+import { DlhrEmplBussinesUnit, DlhrObserveEmplid, DlhrEquipTbl, Fields, promptType, promptField, objUseForm } from '../interfaces/prompInterfaces';
 import { FlatlistPrompt } from './FlatlistPrompt';
 import { SearchInput } from './SearchInput';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { GetPromptArray } from './GetPromptArrayy';
 
 
 
 
 
 interface Props {
-    data: any[],
+    /* data: any[], */
     isVisible: boolean
     setisVisible: React.Dispatch<React.SetStateAction<boolean>>
-    field1: Fields
-    field2: Fields
-    placeholder?: string
-    setValueSelect: React.Dispatch<React.SetStateAction<{
+  
+    onChange?: (value: string, field: keyof objUseForm) => void;
+    promptType: promptType
+    setplaceHolder:React.Dispatch<React.SetStateAction<string>>
+    setemplid?: React.Dispatch<React.SetStateAction<{
         fieldValue1: string;
         fieldValue2: string;
     }>>
-    promptType: promptType
 }
 
 
-export const ModalPrompt = ({ isVisible, setisVisible, data, field1, field2, placeholder, setValueSelect, promptType }: Props) => {
-    const [state, setstate] = useState(0)
+export const ModalPrompt = ({setemplid,setplaceHolder,isVisible, setisVisible, onChange, promptType }: Props) => {
+    
     const height = useWindowDimensions().height
     const width = useWindowDimensions().width
     const { top } = useSafeAreaInsets();
@@ -40,7 +41,108 @@ export const ModalPrompt = ({ isVisible, setisVisible, data, field1, field2, pla
 
     const [observeFiltered, setObserveFiltred] = useState<any[]>([])
 
+    const { PromptObArray } = GetPromptArray(promptType)
+   
+   
+    let strField1 = '';
+    let strField2 = ''
+    let placeHolderSrch=''
+    let fieldType: keyof objUseForm='m38:BUSINESS_UNIT'
 
+    switch (promptType.type) {
+        case 'DLHR_EQUIP_TBL':
+            const fieldEquip: promptField = {
+                DLHR_EQUIP_TBL:
+                {
+                    field1: { equipo: 'DL_EQUIPEMENT_ID' },
+                    field2: { equipo: 'DESCR' }
+                }
+            }
+            strField1 = fieldEquip.DLHR_EQUIP_TBL?.field1.equipo!
+            strField2 = fieldEquip.DLHR_EQUIP_TBL?.field2.equipo!
+            placeHolderSrch='Equipo'
+            fieldType='m38:DL_EQUIPMENT_ID'
+            break;
+        case 'DLHR_EMPL_BUSSINES_UNIT':
+            const fieldBussineU: promptField = {
+                DLHR_EMPL_BUSSINES_UNIT:
+                {
+                    field1:
+                        { empleado: 'EMPLID' },
+                    field2:
+                        { empleado: 'NOMBRE' }
+                }
+            }
+            strField1 = fieldBussineU.DLHR_EMPL_BUSSINES_UNIT?.field1.empleado!;
+            strField2 = fieldBussineU.DLHR_EMPL_BUSSINES_UNIT?.field2.empleado!;
+            placeHolderSrch='Empleado'
+            fieldType='m38:BUSINESS_UNIT'
+            break;
+            
+        case 'DLHR_CUSTOMER':
+            const fieldCustomer: promptField = {
+                DLHR_CUSTOMER:
+                {
+                    field1: { customer: 'DL_CUSTOMER_ID' },
+                    field2: { customer: 'DESCR' }
+                }
+            }
+            strField1 = fieldCustomer.DLHR_CUSTOMER?.field1.customer!;
+            strField2 = fieldCustomer.DLHR_CUSTOMER?.field2.customer!;
+            placeHolderSrch='Cliente'
+            fieldType='m38:DL_CUSTOMER_ID'
+            break;
+        case 'DLHR_SECTOR':
+            const fieldSector: promptField = {
+                DLHR_SECTOR:
+                {
+                    field1: { sector: 'DL_SECTOR_ID' },
+                    field2: { sector: 'DESCR' }
+                }
+            }
+            strField1 = fieldSector.DLHR_SECTOR?.field1.sector!;
+            strField2 = fieldSector.DLHR_SECTOR?.field2.sector!;
+            placeHolderSrch='Sector'
+            fieldType='m38:DL_SECTOR_ID'
+            break;
+        case 'DLHR_OBSERVE_EMPLID':
+            const fieldObserveEmpl: promptField = {
+                DLHR_OBSERVE_EMPLID:
+                {
+                    field1: { observador: 'EMPLID' },
+                    field2: { observador: 'NOMBRE' }
+                }
+            }
+            strField1 = fieldObserveEmpl.DLHR_OBSERVE_EMPLID?.field1.observador!;
+            strField2 = fieldObserveEmpl.DLHR_OBSERVE_EMPLID?.field2.observador!;
+            placeHolderSrch='Observador'
+            fieldType='m38:DL_OBSERVADOR'
+            break;
+        /* case 'DLHR_APS':
+            strField1 = field1.EncargadoAPS!;
+            strField2 = field2.EncargadoAPS!
+            break; */
+
+    }
+    
+
+
+
+    let data:any[]=[];
+   switch (promptType.type) {
+       case 'DLHR_EMPL_BUSSINES_UNIT':
+           data= PromptObArray.map(item => { return item.DLHR_OBSERVE_EMPLID }); 
+          break;
+
+         default:
+         data = PromptObArray;
+              
+   }
+     
+   
+  
+   
+   
     useEffect(() => {
         if (term.length === 0) {
 
@@ -52,7 +154,7 @@ export const ModalPrompt = ({ isVisible, setisVisible, data, field1, field2, pla
 
                 setObserveFiltred(
                     data.filter(
-                        observe => observe[field1.empleado!].toLocaleLowerCase()
+                        observe => observe[strField1].toLocaleLowerCase()
                             .includes(term.toLocaleLowerCase())
                     )
                 )
@@ -61,7 +163,7 @@ export const ModalPrompt = ({ isVisible, setisVisible, data, field1, field2, pla
                 
                 setObserveFiltred(
                     data.filter(
-                        observe => observe[field1.equipo!].toString()
+                        observe => observe[strField1].toString()
                             .includes(term.toLocaleLowerCase())
                     )
                 )
@@ -73,6 +175,8 @@ export const ModalPrompt = ({ isVisible, setisVisible, data, field1, field2, pla
 
 
     }, [term])
+
+
 
 
 
@@ -112,7 +216,7 @@ export const ModalPrompt = ({ isVisible, setisVisible, data, field1, field2, pla
 
                         <SearchInput
                             onDebounce={(value) => setTerm(value)}
-                            placeholder={placeholder ? placeholder : ''}
+                            placeholder={placeHolderSrch }
                             style={{
                                 ...styles.SearchInput,
                                 width: width - 40,
@@ -129,10 +233,15 @@ export const ModalPrompt = ({ isVisible, setisVisible, data, field1, field2, pla
                         }}>
                             <FlatlistPrompt
                                 data={(term.length === 0) ? data : observeFiltered}
-                                field1={field1}
-                                field2={field2}
+                                field1={strField1}
+                                field2={strField2}
                                 closePrompt={setisVisible}
-                                setValueSelect={setValueSelect}
+                                onChange={onChange!}
+                                setemplid={setemplid}
+                                promptType={promptType}
+                                fieldtype={fieldType}
+                                setplaceHolder={setplaceHolder}
+                                
                             />
                         </View>
                     </View>

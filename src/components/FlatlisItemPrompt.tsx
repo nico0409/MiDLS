@@ -3,6 +3,7 @@
 import React from 'react'
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { colors } from '../Themes/DlsTheme';
+import { objUseForm, promptType } from '../interfaces/prompInterfaces';
 
 
 
@@ -11,23 +12,29 @@ interface Props {
     field1: string
     field2: string
     closePrompt: React.Dispatch<React.SetStateAction<boolean>>
-    setValueSelect: React.Dispatch<React.SetStateAction<{
+    onChange?: (value: string, field: keyof objUseForm) => void;
+    setplaceHolder: React.Dispatch<React.SetStateAction<string>>
+    fieldtype: keyof objUseForm
+    setemplid?: React.Dispatch<React.SetStateAction<{
         fieldValue1: string;
         fieldValue2: string;
     }>>
+    promptType: promptType
 }
 
 
-export const FlatListItemPrompt = ({ field1, field2, closePrompt, setValueSelect }: Props) => {
+export const FlatListItemPrompt = ({ setemplid, promptType, fieldtype, setplaceHolder, field1, field2, closePrompt, onChange }: Props) => {
 
     return (
         <TouchableOpacity activeOpacity={0.5}
             onPress={() => {
-                closePrompt(false),
-                    setValueSelect({
-                        fieldValue1: field1,
-                        fieldValue2: field2,
-                    })
+                setplaceHolder(field2),
+                    closePrompt(false),
+                    (setemplid !== undefined ? 
+                       setemplid({ fieldValue1: field1, fieldValue2: field2 }) 
+                                            :
+                        (onChange !== undefined ? onChange(field1, fieldtype) : {}) )
+
 
 
             }}
