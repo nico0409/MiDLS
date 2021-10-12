@@ -196,7 +196,7 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
             <View >
                 <View style ={{marginVertical:50}}>
 
-                    <Wallet />
+                    <Wallet term={term} observeFiltered={observeFiltered}  allObserveList={ allObserveList} setTerm={setTerm} />
                 </View>
                 {/* <View style={{ alignItems: 'center' }}>
 

@@ -11,6 +11,7 @@ import { FlatlistPrompt } from './FlatlistPrompt';
 import { SearchInput } from './SearchInput';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { GetPromptArray } from './GetPromptArrayy';
+import { FlatListItemPrompt } from './FlatlisItemPrompt';
 
 
 
@@ -20,10 +21,10 @@ interface Props {
     /* data: any[], */
     isVisible: boolean
     setisVisible: React.Dispatch<React.SetStateAction<boolean>>
-  
+
     onChange?: (value: string, field: keyof objUseForm) => void;
     promptType: promptType
-    setplaceHolder:React.Dispatch<React.SetStateAction<string>>
+    setplaceHolder: React.Dispatch<React.SetStateAction<string>>
     setemplid?: React.Dispatch<React.SetStateAction<{
         fieldValue1: string;
         fieldValue2: string;
@@ -31,8 +32,8 @@ interface Props {
 }
 
 
-export const ModalPrompt = ({setemplid,setplaceHolder,isVisible, setisVisible, onChange, promptType }: Props) => {
-    
+export const ModalPrompt = ({ setemplid, setplaceHolder, isVisible, setisVisible, onChange, promptType }: Props) => {
+
     const height = useWindowDimensions().height
     const width = useWindowDimensions().width
     const { top } = useSafeAreaInsets();
@@ -42,12 +43,12 @@ export const ModalPrompt = ({setemplid,setplaceHolder,isVisible, setisVisible, o
     const [observeFiltered, setObserveFiltred] = useState<any[]>([])
 
     const { PromptObArray } = GetPromptArray(promptType)
-   
-   
+
+
     let strField1 = '';
     let strField2 = ''
-    let placeHolderSrch=''
-    let fieldType: keyof objUseForm='m38:BUSINESS_UNIT'
+    let placeHolderSrch = ''
+    let fieldType: keyof objUseForm = 'm38:BUSINESS_UNIT'
 
     switch (promptType.type) {
         case 'DLHR_EQUIP_TBL':
@@ -60,8 +61,8 @@ export const ModalPrompt = ({setemplid,setplaceHolder,isVisible, setisVisible, o
             }
             strField1 = fieldEquip.DLHR_EQUIP_TBL?.field1.equipo!
             strField2 = fieldEquip.DLHR_EQUIP_TBL?.field2.equipo!
-            placeHolderSrch='Equipo'
-            fieldType='m38:DL_EQUIPMENT_ID'
+            placeHolderSrch = 'Equipo'
+            fieldType = 'm38:DL_EQUIPMENT_ID'
             break;
         case 'DLHR_EMPL_BUSSINES_UNIT':
             const fieldBussineU: promptField = {
@@ -75,10 +76,10 @@ export const ModalPrompt = ({setemplid,setplaceHolder,isVisible, setisVisible, o
             }
             strField1 = fieldBussineU.DLHR_EMPL_BUSSINES_UNIT?.field1.empleado!;
             strField2 = fieldBussineU.DLHR_EMPL_BUSSINES_UNIT?.field2.empleado!;
-            placeHolderSrch='Empleado'
-            fieldType='m38:BUSINESS_UNIT'
+            placeHolderSrch = 'Empleado'
+            fieldType = 'm38:BUSINESS_UNIT'
             break;
-            
+
         case 'DLHR_CUSTOMER':
             const fieldCustomer: promptField = {
                 DLHR_CUSTOMER:
@@ -89,8 +90,8 @@ export const ModalPrompt = ({setemplid,setplaceHolder,isVisible, setisVisible, o
             }
             strField1 = fieldCustomer.DLHR_CUSTOMER?.field1.customer!;
             strField2 = fieldCustomer.DLHR_CUSTOMER?.field2.customer!;
-            placeHolderSrch='Cliente'
-            fieldType='m38:DL_CUSTOMER_ID'
+            placeHolderSrch = 'Cliente'
+            fieldType = 'm38:DL_CUSTOMER_ID'
             break;
         case 'DLHR_SECTOR':
             const fieldSector: promptField = {
@@ -102,8 +103,8 @@ export const ModalPrompt = ({setemplid,setplaceHolder,isVisible, setisVisible, o
             }
             strField1 = fieldSector.DLHR_SECTOR?.field1.sector!;
             strField2 = fieldSector.DLHR_SECTOR?.field2.sector!;
-            placeHolderSrch='Sector'
-            fieldType='m38:DL_SECTOR_ID'
+            placeHolderSrch = 'Sector'
+            fieldType = 'm38:DL_SECTOR_ID'
             break;
         case 'DLHR_OBSERVE_EMPLID':
             const fieldObserveEmpl: promptField = {
@@ -115,8 +116,8 @@ export const ModalPrompt = ({setemplid,setplaceHolder,isVisible, setisVisible, o
             }
             strField1 = fieldObserveEmpl.DLHR_OBSERVE_EMPLID?.field1.observador!;
             strField2 = fieldObserveEmpl.DLHR_OBSERVE_EMPLID?.field2.observador!;
-            placeHolderSrch='Observador'
-            fieldType='m38:DL_OBSERVADOR'
+            placeHolderSrch = 'Observador'
+            fieldType = 'm38:DL_OBSERVADOR'
             break;
         /* case 'DLHR_APS':
             strField1 = field1.EncargadoAPS!;
@@ -124,25 +125,25 @@ export const ModalPrompt = ({setemplid,setplaceHolder,isVisible, setisVisible, o
             break; */
 
     }
-    
 
 
 
-    let data:any[]=[];
-   switch (promptType.type) {
-       case 'DLHR_EMPL_BUSSINES_UNIT':
-           data= PromptObArray.map(item => { return item.DLHR_OBSERVE_EMPLID }); 
-          break;
 
-         default:
-         data = PromptObArray;
-              
-   }
-     
-   
-  
-   
-   
+    let data: any[] = [];
+    switch (promptType.type) {
+        case 'DLHR_EMPL_BUSSINES_UNIT':
+            data = PromptObArray.map(item => { return item.DLHR_OBSERVE_EMPLID });
+            break;
+
+        default:
+            data = PromptObArray;
+
+    }
+
+
+
+
+
     useEffect(() => {
         if (term.length === 0) {
 
@@ -160,7 +161,7 @@ export const ModalPrompt = ({setemplid,setplaceHolder,isVisible, setisVisible, o
                 )
                 break;
             case 'DLHR_EQUIP_TBL':
-                
+
                 setObserveFiltred(
                     data.filter(
                         observe => observe[strField1].toString()
@@ -216,7 +217,7 @@ export const ModalPrompt = ({setemplid,setplaceHolder,isVisible, setisVisible, o
 
                         <SearchInput
                             onDebounce={(value) => setTerm(value)}
-                            placeholder={placeHolderSrch }
+                            placeholder={placeHolderSrch}
                             style={{
                                 ...styles.SearchInput,
                                 width: width - 40,
@@ -231,7 +232,7 @@ export const ModalPrompt = ({setemplid,setplaceHolder,isVisible, setisVisible, o
 
                             backgroundColor: colors.dlsGrayPrimary
                         }}>
-                            <FlatlistPrompt
+                            {/*  <FlatlistPrompt
                                 data={(term.length === 0) ? data : observeFiltered}
                                 field1={strField1}
                                 field2={strField2}
@@ -241,7 +242,27 @@ export const ModalPrompt = ({setemplid,setplaceHolder,isVisible, setisVisible, o
                                 promptType={promptType}
                                 fieldtype={fieldType}
                                 setplaceHolder={setplaceHolder}
-                                
+
+                            /> */}
+                            <FlatList
+                                style={{}}
+                                data={term.length===0?data:observeFiltered}
+                                renderItem={({ item }) =>
+
+                                    <FlatListItemPrompt
+                                        setplaceHolder={setplaceHolder}
+                                        field1={item[strField1]}
+                                        field2={item[strField2]}
+                                        closePrompt={setisVisible}
+                                        onChange={onChange}
+                                        fieldtype={fieldType}
+                                        setemplid={setemplid}
+                                        promptType={promptType}
+                                    />
+                                }
+                                keyExtractor={(item, index) => item[strField1] + index.toString()}
+                                showsVerticalScrollIndicator={false}
+
                             />
                         </View>
                     </View>

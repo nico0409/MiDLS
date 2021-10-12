@@ -1,7 +1,9 @@
 import React from "react";
 import { Animated, Dimensions, StyleSheet, View } from "react-native";
+import { ObserveCard } from '../ObserveCard';
+import { DlhrAllObserve } from '../../interfaces/prompInterfaces';
+
 import Card, {
-  Cards,
   CARD_HEIGHT as DEFAULT_CARD_HEIGHT,
 } from "../Transformations/components/Card";
 
@@ -19,10 +21,12 @@ const styles = StyleSheet.create({
 interface WalletCardProps {
   y: Animated.Value;
   index: number;
-  type: Cards;
+ item:unknown;
+  setTerm:React.Dispatch<React.SetStateAction<string>>,
+
 }
 
-const WalletCard = ({ type, y, index }: WalletCardProps) => {
+const WalletCard = ({y, index,item, setTerm}: WalletCardProps) => {
   const position = Animated.subtract(index * CARD_HEIGHT, y);
   const isDisappearing = -CARD_HEIGHT;
   const isTop = 0;
@@ -57,7 +61,8 @@ const WalletCard = ({ type, y, index }: WalletCardProps) => {
       style={[styles.card, { opacity, transform: [{ translateY }, { scale }] }]}
       key={index}
     >
-      <Card {...{ type }} />
+    {/*  <ObserveCard observe={item} index={index}  y={y} setTerm={setTerm} /> */}
+    <Card setTerm={setTerm} item={item}/>
     </Animated.View>
   );
 };

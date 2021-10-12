@@ -12,16 +12,15 @@ import { useForm } from './UseForm';
 export const UseOneGetObserve = (observeCardSrch: InterfGetOnesCard) => {
 
     const [isloading, setIsloading] = useState(true)
-    const [observeCard, setObserveCard] = useState<M38GetCompIntfcDLHRTAOBSERVCIResponse>()
-    const {form,setFormValue,onChange}= useForm<M38GetCompIntfcDLHRTAOBSERVCIResponse>({})
+    const {form,setFormValue,onChange,stateSend }= useForm<M38GetCompIntfcDLHRTAOBSERVCIResponse>({})
+
 
     
-    /* const {form,onChange,setFormValue}=useFormCmp(observeCard!); */
+    
 
     const loadObserveCard = async () => {
         setIsloading(true);
         const resp = await GetOneCard(observeCardSrch);
-        setObserveCard(resp);
         setFormValue(resp!);
         setIsloading(false)
     }
@@ -34,11 +33,13 @@ export const UseOneGetObserve = (observeCardSrch: InterfGetOnesCard) => {
         , [])
 
     return {
-        observeCard,
+        
+         stateSend, 
         isloading,
         loadObserveCard,
         form,
         setFormValue,
         onChange,
+       
     }
 }

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { StackNavigator } from './StackNavigator';
+
 import SplashScreen from 'react-native-splash-screen'
 
 import { TopTapNavigator } from './TopTapNavigator';
@@ -51,12 +51,12 @@ export const DrawerNavigation = () => {
     
     const prompts: StorageTypes = { StorageType: 'prompt' };
     Asingstorage(prompts, await GetPrompt());
-    
+    SplashScreen.hide();
   }
 
-  useEffect(() => {
-    SplashScreen.hide();
-  }, [])
+ /*  useEffect(() => {
+    
+  }, []) */
 
 
 

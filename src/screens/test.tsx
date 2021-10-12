@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { View } from 'react-native'
+
+/* import {MultipleChoice} from 'react-native-multiple-choice-picker' ; */
 import { FlatlistPrompt } from '../components/FlatlistPrompt'
 import { Fields, StorageTypes, PromptObserveType, AllObserveType, DlhrAllObserve, PromptObserve, DlhrEquipTbl, promptType } from '../interfaces/prompInterfaces';
 import { GetStorage } from '../components/Storage';
@@ -10,10 +11,11 @@ import RNSingleSelect, {
     ISingleSelectDataType,
 } from "@freakycoder/react-native-single-select";
 
-import {  StatusBar, SafeAreaView, Dimensions } from "react-native";
+import {  StatusBar, SafeAreaView, Dimensions, View } from "react-native";
 import { height } from '../../../../can-it-be-done-in-react-native-master/src/Menu/Content';
 import Wallet from '../components/Wallet';
 import { EditObvservCardScreen } from './EditObvservCardScreen';
+
 
 
 
@@ -46,7 +48,12 @@ const staticData: Array<ISingleSelectDataType> = [
     imageSource: require("../assets/guitar.png"),
   },
 ]; */
+
+ 
+const fruits = ["Apples", "Oranges", "Pears"];
 export const testobserve = () => {
+
+  const [friuts, setfriuts] = useState('')
     /*  const [emplid, setemplid] = useState({ fieldValue1: '', fieldValue2: '' })
 
     const Fieldemplid: Fields = { equipo: 'DL_EQUIPEMENT_ID' }
@@ -126,7 +133,10 @@ export const testobserve = () => {
         </View>
       </SafeAreaView> */}
      {/*  <Wallet/> */}
-     <EditObvservCardScreen /> 
+    {/*  <EditObvservCardScreen />  */}
+   {/*  <MultipleChoice
+  direction={'column'}
+  choices={['Football', 'Badminton', 'Basketball', 'Tennis']}/> */}
         </View>
     )
 }

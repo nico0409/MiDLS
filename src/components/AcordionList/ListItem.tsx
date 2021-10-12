@@ -4,6 +4,7 @@ import { DlhrEmplBussinesUnit, MeuItemType, promptType, M38GetCompIntfcDLHRTAOBS
 import { PickerSelect } from "../PickerSelect";
 import { GetPromptArray } from '../GetPromptArrayy';
 import { Prompt } from '../Prompt';
+import { onChange } from 'react-native-reanimated';
 
 
 
@@ -20,60 +21,18 @@ interface ListItemProps {
   isLast: boolean;
   MeuItemType: MeuItemType
   observeCard?: M38GetCompIntfcDLHRTAOBSERVCIResponse
+  form: M38GetCompIntfcDLHRTAOBSERVCIResponse
+  onChange: (value: string, field: keyof M38GetCompIntfcDLHRTAOBSERVCIResponse) => void
 }
 
-export default ({ item, isLast, MeuItemType, observeCard }: ListItemProps) => {
+export default ({ item, isLast, MeuItemType, form,onChange}: ListItemProps) => {
   const bottomRadius = isLast ? 8 : 0;
 
-  let businessUSelect: DlhrBussinesUnit | undefined = { UNIDAD_DE_NEGOCIO: '', DESCR: '' }
-  let businessUARRAY: { label: string, value: string }[] = [{ label: '', value: '' }]
-  
- 
     const promptType: promptType = { type: 'DLHR_CUSTOMER' };
-    const [emplid, setemplid] = useState({ fieldValue1: '', fieldValue2: '' })
-  
-  
-    switch (MeuItemType.MeuItemType) {
-    case 'Registro':
     
-     /*  const { PromptObArray } = GetPromptArray(promptType)
-      const busineesUEArray: DlhrEmplBussinesUnit[] = PromptObArray;
-
-      if (busineesUEArray[0] !== undefined) {
-
-
-        const busineesUArray = busineesUEArray.filter(
-          item =>
-            item.DLHR_OBSERVE_EMPLID?.EMPLID == 'C020513')[0].
-          DLHR_BUSSINES_UNIT
-        if (busineesUArray !== undefined) {
-          const businessUArrayC = Array.isArray(busineesUArray) ? busineesUArray : [busineesUArray]
-
-
-          businessUSelect = businessUArrayC.find(item => item!.UNIDAD_DE_NEGOCIO === observeCard?.["m38:BUSINESS_UNIT"])
-
-          businessUARRAY = businessUArrayC!.map((item, index) => { return { label: item.DESCR, value: item.DESCR} })
-
-        
-        }
-    } */
-
-      break;
-    case 'Comentarios':
-
-      break;
-
-    case 'Preguntas':
-
-      break;
-
-    case 'ReglasOro':
-
-      break;
-
-    default:
-      break;
-  }
+  
+  
+   
   return (
     <View>
       {(MeuItemType.MeuItemType === 'Registro') &&
@@ -89,21 +48,21 @@ export default ({ item, isLast, MeuItemType, observeCard }: ListItemProps) => {
           <View style={{ height: 200, width: 300 }}>
           {/*   <PickerSelect /*  placeholder={ "Unidad de Negocio"} item={deportes} */}
           <Prompt
-                    setValueSelect={setemplid}
+                    onChange={onChange}
                     promptType={{ type: 'DLHR_SECTOR' }}
                 />
-                <Prompt
-                    setValueSelect={setemplid}
+                 <Prompt
+                    onChange={onChange}
                     promptType={{ type: 'DLHR_EQUIP_TBL' }}
                 />
                   <Prompt
-                    setValueSelect={setemplid}
+                    onChange={onChange}
                     promptType={{ type: 'DLHR_CUSTOMER' }}
                 />
                  <Prompt
-                    setValueSelect={setemplid}
+                    onChange={onChange}
                     promptType={{ type: 'DLHR_OBSERVE_EMPLID' }}
-                />
+                /> 
           </View>
 
         </View>
