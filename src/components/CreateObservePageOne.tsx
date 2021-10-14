@@ -9,6 +9,7 @@ import CheckBox from '@react-native-community/checkbox';
 import { M38GetCompIntfcDLHRTAOBSERVCIResponse, objUseForm } from '../interfaces/prompInterfaces';
 import { Prompt } from './Prompt';
 
+
 interface Props {
     form: objUseForm;
     onChange: (value: string, field: keyof objUseForm) => void;

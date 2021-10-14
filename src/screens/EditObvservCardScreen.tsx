@@ -30,7 +30,7 @@ const list2: ListModel = {
     name: "Comentarios",
     items: [
         { name: "Nathaniel Fitzgerald", points: "$3.45" },
-      
+
     ],
 };
 
@@ -59,15 +59,16 @@ interface Props extends StackScreenProps<RoutstackParams, 'EditObvservCardScreen
 
 }
 
-export const EditObvservCardScreen = ( { navigation, route }: Props ) => {
+export const EditObvservCardScreen = ({ navigation, route }: Props) => {
 
 
-    const { isloading, loadObserveCard, form, onChange } = UseOneGetObserve(/* {
+    const { isloading, loadObserveCard, form, onChange,stateSend } = UseOneGetObserve(/* {
         IdentifDt: '2020-05-31',
         busineesUnit: 'CDR', Ntarjeta: '2020-4070-039506'
-    }*/  route.params )
+    }*/  route.params)
 
-    /* console.log(stateSend); */
+
+
 
     const { height, width } = useWindowDimensions();
     form['m38:DL_NTARJETA']
@@ -88,22 +89,24 @@ export const EditObvservCardScreen = ( { navigation, route }: Props ) => {
 
 
     return (
-        
+
         < View style={{ flex: 1 }}>
             <View style={{ ...styles.container, height: height }}>
                 <View style={styles.containerTitle}>
                     <Text style={styles.title}>{`Tarjeta Número:`}</Text>
                     <Text style={styles.title}>{`${form['m38:DL_NTARJETA']}`}</Text>
                 </View>
-                 <List {...{ list }} MeuItemType={menus[0]} form={form} onChange={onChange} /> 
-                  <List {...{ list: list2 }} MeuItemType={menus[1]} form={form} onChange={onChange} /> 
-         <List {...{ list: list3 }} MeuItemType={menus[2]} form={form} onChange={onChange} />
-        <List {...{ list: list4 }} MeuItemType={menus[3]}form={form} onChange={onChange} />  
 
+                <ScrollView >
+                    <List {...{ list }} MeuItemType={menus[0]} form={form} onChange={onChange} />
+                    <List {...{ list: list2 }} MeuItemType={menus[1]} form={form} onChange={onChange} />
+                    <List {...{ list: list3 }} MeuItemType={menus[2]} form={form} onChange={onChange} />
+                    <List {...{ list: list4 }} MeuItemType={menus[3]} form={form} onChange={onChange} />
+                </ScrollView>
             </View>
-            
+
         </View>
-        
+
     )
 }
 const styles = StyleSheet.create({

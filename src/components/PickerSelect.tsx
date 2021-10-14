@@ -19,12 +19,12 @@ const { width: ScreenWidth } = Dimensions.get("window");
 
 export const PickerSelect = ({ placeholder, type, onChange, form }: Props) => {
 
-    const [selectedItem, setSelectedItem] = useState<ISingleSelectDataType>()
+    
 
     const promptType: promptType = { type };
-
+    const [selectedItem, setSelectedItem] = useState<ISingleSelectDataType>()
     const { PromptObArray } = GetPromptArray(promptType);
-    let itemselect: ISingleSelectDataType = {}
+    let itemselect: ISingleSelectDataType = {id:0,value:''}
     let data: ISingleSelectDataType[];
     let fieldData: keyof objUseForm;
 
@@ -68,6 +68,8 @@ export const PickerSelect = ({ placeholder, type, onChange, form }: Props) => {
                     case "DLHR_TURNO":
                         dataItem = item.DL_TURNO;
                         fieldData = "m38:DL_TURNO";
+                        
+                        
                         if (form?.['m38:DL_TURNO'] === item.DL_TURNO) {
                             itemselect = { id: index, value: item.DESCR, data: { dataItem, fieldData } }
                         }
@@ -77,7 +79,7 @@ export const PickerSelect = ({ placeholder, type, onChange, form }: Props) => {
                         
                         dataItem = item.UNIDAD_DE_NEGOCIO;
                         fieldData = "m38:BUSINESS_UNIT";
-                        itemselect = { id: index, value: item.DESCR, data: { dataItem, fieldData } }
+                    
                        
                         
                         if (form?.['m38:BUSINESS_UNIT'] === item.UNIDAD_DE_NEGOCIO) {
@@ -91,22 +93,20 @@ export const PickerSelect = ({ placeholder, type, onChange, form }: Props) => {
             }
         )
 
-
-       /*  useEffect(() => {
-            setSelectedItem(itemselect)  
-        }, []) */
+       
     } else {
         data = [];
     }
+    useEffect(() => {
+        form!==undefined&& setSelectedItem(itemselect)
 
+    }, [PromptObArray])
     
-    
-    console.log("select item",selectedItem);
-    console.log("item select",itemselect);
     return (
         <View>
             <RNSingleSelect
                 darkMode
+                disableAbsolute={false}
                 
                 initialValue={selectedItem}  
                 placeholder={placeholder}
@@ -115,7 +115,6 @@ export const PickerSelect = ({ placeholder, type, onChange, form }: Props) => {
                 searchEnabled={false}
                 menuBarContainerWidth={ScreenWidth * 0.9}
                 onSelect={(selectedItem: ISingleSelectDataType) => {
-                    console.log("SelectedItem: ", selectedItem);
                     onChange(selectedItem.data.dataItem, selectedItem.data.fieldData);
                     setSelectedItem(selectedItem);
                 }}

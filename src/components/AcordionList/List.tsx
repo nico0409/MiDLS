@@ -1,15 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, TouchableWithoutFeedback, View, TouchableOpacity } from 'react-native';
 
 import Animated from "react-native-reanimated";
 import { mix, useTransition } from "react-native-redash/src/v1/";
 
 import Chevron from "./Chevron";
-import Item, { ListItem } from "./ListItem";
-import { withTransition, onGestureEvent } from 'react-native-redash/src/v1';
-import { TapGestureHandler, State } from 'react-native-gesture-handler';
+import { ListItem } from "./ListItem";
 
-import { set, eq, cond, not, useCode, Value } from 'react-native-reanimated';
 import { MeuItemType, M38GetCompIntfcDLHRTAOBSERVCIResponse } from '../../interfaces/prompInterfaces';
 import { Prompt } from '../Prompt';
 import { PickerSelect } from '../PickerSelect';
@@ -19,6 +16,11 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { CustomSwitchObserve } from '../CustomSwitchObserve';
 import CheckBox from "@react-native-community/checkbox";
 import { InputModal } from "../InputModal";
+import { QuestionsCmp } from "../Questions";
+import { ScrollView } from "react-native-gesture-handler";
+import { onChange } from 'react-native-reanimated';
+
+
 
 const { interpolateNode } = Animated;
 
@@ -36,6 +38,7 @@ interface ListProps {
 
 export default ({ form, onChange, list, MeuItemType }: ListProps) => {
 
+  const dateInit: string = form["m38:DL_IDENTIF_DT"] ? form["m38:DL_IDENTIF_DT"] : new Date().toISOString().split('T')[0]
   const LIST_ITEM_HEIGHT = 500;
   const { interpolateNode } = Animated;
   const [open, setOpen] = useState(false);
@@ -53,18 +56,25 @@ export default ({ form, onChange, list, MeuItemType }: ListProps) => {
   const hideDatePicker = () => {
     setDatePickerVisibility(false);
   };
-  const [date, setDate] = useState('--/--/----');
+  const [date, setDate] = useState(form["m38:DL_IDENTIF_DT"]);
 
-  const handleConfirm = (date: any) => {
+  const handleConfirm = (date: Date) => {
 
-    setDate(date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear());
-    onChange(date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear(), 'm38:DL_IDENTIF_DT');
     hideDatePicker();
+    setDate(date.toISOString().split('T')[0]);
+    /*onChange(date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear(), 'm38:DL_IDENTIF_DT'); */
+    onChange(date.toISOString().split('T')[0], 'm38:DL_IDENTIF_DT');
+    console.log(date.toISOString().split('T')[0]);
+
+
 
   };
   const [toggleCheckBox, setToggleCheckBox] = useState(false)
- 
-  
+  useEffect(() => {
+    if (form !== undefined)
+      setToggleCheckBox(form["m38:DL_ADESTACAR"] === 'Y' ? true : false)
+  }, [])
+
   return (
     <>
       <TouchableWithoutFeedback onPress={() => setOpen((prev) => !prev)}>
@@ -92,72 +102,76 @@ export default ({ form, onChange, list, MeuItemType }: ListProps) => {
         >
           {MeuItemType.MeuItemType === 'Registro' && (
             <>
-              <PickerSelect 
-              form={form}
-              placeholder="Unidad de negocio"
-               type="DLHR_EMPL_BUSSINES_UNIT"
-                onChange={onChange} 
-                />
+              <PickerSelect
+                form={form}
+                placeholder="Unidad de negocio"
+                type="DLHR_EMPL_BUSSINES_UNIT"
+                onChange={onChange}
+              />
               <View style={{ flexDirection: 'row' }}>
-                <Text style={{ color: 'white', fontSize: 20 }}>{date}</Text>
+                <Text style={{ color: 'red', fontSize: 20 }}>{date}</Text>
                 <TouchableOpacity
                   onPress={showDatePicker}>
                   <Icon name="calendar" size={30} color={colors.dlsYellowSecondary} />
                 </TouchableOpacity>
               </View>
-              <PickerSelect 
-              form={form}
-              placeholder="Origen" 
-              type="DLHR_ORIGEN" 
-              onChange={onChange} />
+              <PickerSelect
+                form={form}
+                placeholder="Origen"
+                type="DLHR_ORIGEN"
+                onChange={onChange} />
               <Prompt
+                form={form}
                 onChange={onChange}
                 promptType={{ type: 'DLHR_EQUIP_TBL' }}
               />
-              <PickerSelect 
-              form={form}
-              placeholder="Turno"
-               type="DLHR_TURNO" 
-               onChange={onChange} />
+              <PickerSelect
+                form={form}
+                placeholder="Turno"
+                type="DLHR_TURNO"
+                onChange={onChange} />
               <Prompt
+                form={form}
                 onChange={onChange}
                 promptType={{ type: 'DLHR_CUSTOMER' }}
               />
               <Prompt
+                form={form}
                 onChange={onChange}
                 promptType={{ type: 'DLHR_SECTOR' }}
               />
 
               <Prompt
+                form={form}
                 onChange={onChange}
                 promptType={{ type: 'DLHR_OBSERVE_EMPLID' }}
               />
               <PickerSelect
-              form={form}
-              placeholder="Puesto"
-               type={"DLHR_PUESTO"} 
-               onChange={onChange} />
+                form={form}
+                placeholder="Puesto"
+                type={"DLHR_PUESTO"}
+                onChange={onChange} />
             </>
           )}
           {MeuItemType.MeuItemType === 'Comentarios' && (
             <>
-              <CustomSwitchObserve title="¿Aplico interrupción de tareas?" onChange={onChange} switchType="m38:DL_POLITINTERTAREA" />
-              <CustomSwitchObserve title="Requiere APS de seguimiento" onChange={onChange} switchType="m38:DL_REQAPSSEG" />
-             <View>
-              <CustomSwitchObserve title="Cuasi accidente" onChange={onChange} switchType="m38:DL_CUASIACC" />
-              <InputModal 
-              placeholder={"Más Detalles"}
-              
-              type={'PTLT_DETAILS'}
-              onChange={onChange} 
-              form={form}   
+              <CustomSwitchObserve title="¿Aplico interrupción de tareas?" onChange={onChange} switchType="m38:DL_POLITINTERTAREA" form={form} />
+              <CustomSwitchObserve title="Requiere APS de seguimiento" onChange={onChange} switchType="m38:DL_REQAPSSEG" form={form} />
+              <View>
+                <CustomSwitchObserve title="Cuasi accidente" onChange={onChange} switchType="m38:DL_CUASIACC" form={form} />
+                <InputModal
+                  placeholder={"Más Detalles"}
+
+                  type={'PTLT_DETAILS'}
+                  onChange={onChange}
+                  form={form}
                 />
-                 <InputModal 
-              placeholder={"Accion"}
-              
-              type={'DL_ACCION'}
-              onChange={onChange} 
-              form={form}   
+                <InputModal
+                  placeholder={"Accion"}
+
+                  type={'DL_ACCION'}
+                  onChange={onChange}
+                  form={form}
                 />
               </View>
               <View style={{ flexDirection: 'row', alignItems: 'center', height: 80, width: 100, backgroundColor: 'red' }}>
@@ -170,32 +184,48 @@ export default ({ form, onChange, list, MeuItemType }: ListProps) => {
                     onChange(newValue ? 'Y' : 'N', 'm38:DL_ADESTACAR');
                   }}
                 />
-               
+
               </View>
-              <InputModal 
-              placeholder={"Descripción del Acto / Condición / Incidente"}
-              textSelect={""}
-              type={'DL_DESCACTO'}
-              onChange={onChange} 
-              form={form}   
-                />
               <InputModal
-              placeholder={"Acción para evitar reiteración"}
-              textSelect={"gtyty"}
-              type={'DL_ACCEVITREIT'}
-              onChange={onChange}
-              form={form}
-               />
+                placeholder={"Descripción del Acto / Condición / Incidente"}
+                textSelect={""}
+                type={'DL_DESCACTO'}
+                onChange={onChange}
+                form={form}
+              />
+              <InputModal
+                placeholder={"Acción para evitar reiteración"}
+                textSelect={"gtyty"}
+                type={'DL_ACCEVITREIT'}
+                onChange={onChange}
+                form={form}
+              />
             </>
           )}
+          {MeuItemType.MeuItemType === 'Preguntas' && (
+            <>
+              <ScrollView>
+                <QuestionsCmp form={form} questiontType={{ type: '1' }} onChange={onChange} />
+                <QuestionsCmp form={form} questiontType={{ type: '2' }} onChange={onChange} />
+                <QuestionsCmp form={form} questiontType={{ type: '3' }} onChange={onChange} />
+                <QuestionsCmp form={form} questiontType={{ type: '4' }} onChange={onChange} />
+                <QuestionsCmp form={form} questiontType={{ type: '5' }} onChange={onChange} />
+                <QuestionsCmp form={form} questiontType={{ type: '6' }} onChange={onChange} />
+                <QuestionsCmp form={form} questiontType={{ type: '7' }} onChange={onChange} />
+                <QuestionsCmp form={form} questiontType={{ type: '8' }} onChange={onChange} />
+              </ScrollView>
+            </>
+          )}
+
 
         </View>
       </Animated.View>
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
         mode="date"
-        onConfirm={handleConfirm}
+        onConfirm={date => handleConfirm(date)}
         onCancel={hideDatePicker}
+        date={new Date(dateInit)}
       />
     </>
   );
