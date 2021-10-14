@@ -8,7 +8,7 @@ import { colors } from '../Themes/DlsTheme';
 import { EmplidObserveScreen } from '../screens/EmplidObserveScreen';
 import { testobserve } from '../screens/test';
 import { EditObvservCardScreen} from '../screens/EditObvservCardScreen';
-import { InterfGetOnesCard } from '../interfaces/prompInterfaces';
+import { InterfGetOnesCard, objUseForm } from '../interfaces/prompInterfaces';
 
 export type RoutstackParams={
     

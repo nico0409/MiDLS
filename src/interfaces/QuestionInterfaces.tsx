@@ -25,3 +25,15 @@ import { objUseForm } from './prompInterfaces';
   export type questionType={ 
 type: '1' | '2' | '3'|'4'|'5'|'6'|'7'|'8'
   }
+
+
+  export type ruleType={
+    type: '1' | '2' | '3'|'4'|'5'|'6'|'7'|'8'|'9'
+  }
+
+  export  interface ruleGold{
+
+    type:ruleType
+    text:string
+    field: keyof objUseForm;
+  }
