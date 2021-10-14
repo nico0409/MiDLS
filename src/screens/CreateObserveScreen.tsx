@@ -9,6 +9,8 @@ import { CreateObservePageOne } from '../components/CreateObservePageOne';
 import { CreateObservePageTwo } from '../components/CreateObservePageTwo';
 import { useForm } from '../hooks/UseForm';
 import { M38GetCompIntfcDLHRTAOBSERVCIResponse, objUseForm } from '../interfaces/prompInterfaces';
+import { onChange } from 'react-native-reanimated';
+import { initialObsFormData } from '../data/initialObsFormData';
 
 interface DataTemp {
     namepage: string;
@@ -56,50 +58,7 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
         currentStepLabelColor: '#4aae4f',
     };
 
-    const { form, onChange } = useForm<objUseForm>({
-        "m38:BUSINESS_UNIT": ' ',
-        "m38:DL_NTARJETA": ' ',
-        "m38:DL_EQUIPMENT_ID": ' ',
-        "m38:DL_IDENTIF_DT": ' ',
-        "m38:DL_ORIGEN": ' ',
-        "m38:DL_OBSERVADOR": ' ',
-        "m38:DL_TURNO": ' ',
-        "m38:DL_CUSTOMER_ID": ' ',
-        "m38:DL_SECTOR_ID": ' ',
-        "m38:DL_PUESTO": ' ',
-        "m38:DL_ADESTACAR": ' ',
-        "m38:DL_POLITINTERTAREA": ' ',
-        "m38:DL_REQAPSSEG": ' ',
-        "m38:DL_CUASIACC": ' ',
-        "m38:DL_NUM_APS": ' ',
-        "m38:DL_RESPSEGAPS": ' ',
-        "m38:DL_EQPROTPER": ' ',
-        "m38:DL_PROCTRAB": ' ',
-        "m38:DL_EQYHERR": ' ',
-        "m38:DL_REACCPERS": ' ',
-        "m38:DL_POSIPERS": ' ',
-        "m38:DL_CONTYPER": ' ',
-        "m38:DL_ORDYLIMPIE": ' ',
-        "m38:DL_MEDIOAMB": ' ',
-        "m38:DL_ACCION": ' ',
-        "m38:PTLT_DETAILS": ' ',
-        "m38:DL_DESCACTO": ' ',
-        "m38:DL_ACCEVITREIT": ' ',
-        /* Regla de oro */
-        "m38:DL_SEG_VIAL": ' ',
-        "m38:DL_TRBJ_ALT": ' ',
-        "m38:DL_LN_FUEGO": ' ',
-        "m38:DL_ESPAC_CONFIN": ' ',
-        "m38:DL_HER_EQUIP": ' ',
-        "m38:DL_AIS_ENERG": ' ',
-        "m38:DL_OP_IZADO": ' ',
-        "m38:DL_PERM_TRABAJO": ' ',
-        "m38:DL_MAN_CAMBIO": ' ',
-        "m38:CREATEDTTM": ' ',
-        "m38:CREATEOPRID": ' ',
-        "m38:LASTUPDDTTM": ' ',
-        "m38:LASTUPDOPRID": ' '
-      })
+    const { form, onChange } = useForm<objUseForm>(initialObsFormData);
     console.log("form: ");
     console.log(form);
 
