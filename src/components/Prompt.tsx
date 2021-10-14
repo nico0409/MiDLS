@@ -17,7 +17,7 @@ interface Props {
    
     onChange?: (value: string, field: keyof objUseForm) => void;
     promptType: promptType;
-    setemplid: React.Dispatch<React.SetStateAction<{
+    setemplid?: React.Dispatch<React.SetStateAction<{
         fieldValue1: string;
         fieldValue2: string;
     }>>

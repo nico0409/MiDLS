@@ -34,8 +34,8 @@ export const StackNavigatorObserve = () => {
             >
                 
                      {/* <Stack.Screen name="testobserve" component={testobserve} />  */}     
-                <Stack.Screen name="EmplidObserveScreen" component={EmplidObserveScreen} />
-                <Stack.Screen name="TarjetaObserveScreen" component={TarjetaObserveScreen} />
+                {/* <Stack.Screen name="EmplidObserveScreen" component={EmplidObserveScreen} />
+                <Stack.Screen name="TarjetaObserveScreen" component={TarjetaObserveScreen} /> */}
                 <Stack.Screen name="CreateObserveScreen" component={CreateObserveScreen} />
                 <Stack.Screen name="CreateObserveQuestionsPage" component={CreateObserveQuestionsPage} />
                 <Stack.Screen name="EditObvservCardScreen" component={EditObvservCardScreen} />
