@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, Dimensions } from 'react-native';
+import { View, Text, Dimensions, ScrollView, StyleSheet } from 'react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Icon from 'react-native-vector-icons/Ionicons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -43,43 +43,71 @@ export const CreateObservePageOne = ({ form, onChange }: Props) => {
     const [toggleCheckBox, setToggleCheckBox] = useState(false)
 
     return (
-        <View>
+        <ScrollView>
 
-            <PickerSelect placeholder="Unidad de negocio" type="DLHR_EMPL_BUSSINES_UNIT" onChange={onChange} />
+            <View style={{ alignItems: 'center' }}>
 
-            <View style={{ flexDirection: 'row' }}>
-                <Text style={{ color: 'white', fontSize: 20 }}>{date}</Text>
-                <TouchableOpacity
-                    onPress={showDatePicker}>
-                    <Icon name="calendar" size={30} color={colors.dlsYellowSecondary} />
-                </TouchableOpacity>
-            </View>
+                <View style={styles.marginField}>
+                    <PickerSelect placeholder="Unidad de negocio" type="DLHR_EMPL_BUSSINES_UNIT" onChange={onChange} />
+                </View>
 
-            <PickerSelect placeholder="Origen" type="DLHR_ORIGEN" onChange={onChange} />
+                <View style={{ flexDirection: 'row', marginBottom: 20 }}>
+                    <Text style={{ color: 'white', fontSize: 20 }}>{date}</Text>
+                    <TouchableOpacity
+                        onPress={showDatePicker}>
+                        <Icon name="calendar" size={30} color={colors.dlsYellowSecondary} />
+                    </TouchableOpacity>
+                </View>
 
-            <Prompt onChange={onChange} promptType={{ type: 'DLHR_EQUIP_TBL' }} />
+                <View style={styles.marginField}>
+                    <PickerSelect placeholder="Origen" type="DLHR_ORIGEN" onChange={onChange} />
+                </View>
 
-            <PickerSelect placeholder="Turno" type="DLHR_TURNO" onChange={onChange} />
+                <View style={styles.marginField}>
+                    <Prompt onChange={onChange} promptType={{ type: 'DLHR_EQUIP_TBL' }} />
+                </View>
 
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <CheckBox
-                    disabled={false}
-                    value={toggleCheckBox}
-                    onValueChange={(newValue) => {
-                        setToggleCheckBox(newValue);
-                        onChange(newValue ? 'Y' : 'N', 'm38:DL_ADESTACAR');
-                    }}
+                <View style={styles.marginField}>
+                    <PickerSelect placeholder="Turno" type="DLHR_TURNO" onChange={onChange} />
+                </View>
+
+                <View style={styles.marginField}>
+                    <Prompt onChange={onChange} promptType={{ type: 'DLHR_CUSTOMER' }} />
+                </View>
+
+                <View style={styles.marginField}>
+                    <Prompt onChange={onChange} promptType={{ type: 'DLHR_SECTOR' }} />
+                </View>
+
+                <View style={[{ ...styles.marginField },
+                { flexDirection: 'row', alignItems: 'center' }]
+                }>
+                    <CheckBox
+                        disabled={false}
+                        value={toggleCheckBox}
+                        onValueChange={(newValue) => {
+                            setToggleCheckBox(newValue);
+                            onChange(newValue ? 'Y' : 'N', 'm38:DL_ADESTACAR');
+                        }}
+                    />
+                    <Text>A destacar</Text>
+                </View>
+
+                <DateTimePickerModal
+                    isVisible={isDatePickerVisible}
+                    mode="date"
+                    onConfirm={handleConfirm}
+                    onCancel={hideDatePicker}
                 />
-                <Text>A destacar</Text>
+
             </View>
 
-            <DateTimePickerModal
-                isVisible={isDatePickerVisible}
-                mode="date"
-                onConfirm={handleConfirm}
-                onCancel={hideDatePicker}
-            />
-
-        </View>
+        </ScrollView>
     )
 }
+
+const styles = StyleSheet.create({
+    marginField: {
+        marginVertical: 12
+    }
+});
