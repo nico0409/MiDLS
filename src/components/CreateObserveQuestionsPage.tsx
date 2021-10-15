@@ -1,4 +1,4 @@
-import React, { useState, useRef,useEffect ,useContext } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import { SafeAreaView, View, StyleSheet, Animated } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -12,29 +12,16 @@ import { stepIndicatorStyles } from '../data/stepIndicatorStyles';
 import { QuestionCarousel } from '../interfaces/QuestionInterfaces';
 import { AuthContext } from '../context/formContext/AuthContext';
 
-
 interface Props extends StackScreenProps<any, any> { };
-
-/* interface RouteParams {
-    form: objUseForm;
-    toParent?: boolean;
-} */
 
 const duration = 750;
 
 export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
 
-
-    const {form,onChange} = useContext(AuthContext );
+    const { form, onChange, } = useContext(AuthContext);
 
     console.log(form);
-    
-    /* const {form:initialForm} = route.params as RouteParams; */
 
-    /* const { form, onChange } = useForm<objUseForm>(initialForm); */
-
-    /* console.log("route.params form:");
-    console.log(form); */
 
     const [activeIndex, setActiveIndex] = useState(2);
 
@@ -93,68 +80,48 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
             useNativeDriver: false,
         });
 
-    const animationOpacity = (toValue: number,duration: number) =>
+    const animationOpacity = (toValue: number, duration: number) =>
         Animated.timing(animatedValue4, {
             toValue,
             duration: duration,
             useNativeDriver: false,
         });
 
+    const [moveCarousel, setMoveCarousel] = useState(1);
+
     const onPress = () => {
-        if (activeIndex < 4) {
-            setBackgroundColor(backgroundColorRange);
-            setBackgroundBtnColor(dotBgColorRange);
-            setCurrentColor(currentColor === colors.dlsGrayPrimary ? colors.dlsYellowSecondary : colors.dlsGrayPrimary);
 
-            animatedValue.setValue(0);
-            animatedValue2.setValue(0);
-            animatedValue3.setValue(0);
-            animatedValue4.setValue(0);
-            /* animationTranslate(activeIndex - 1).start(()=>animationCircle(1).start()); */
-            /* animationCircle(1).start(()=>animationTranslate(activeIndex - 1).start()); */
-            animationOpacity(1,800).start(() => {
-                animationTranslate(activeIndex - 1).start(() =>{
-                    animationCircle(1).start(() =>{
-                        animatedValue4.setValue(1);
-                        animationOpacity(0,350).start()
+        console.log("dataCarousel.find(item => item.index === activeIndex). : ----------");
+        console.log(dataCarousel.find(item => {if(item.index === activeIndex)return item}));
+        console.log("activeIndex: " + activeIndex);
+        console.log("moveCarousel: " + moveCarousel);
+
+        if (moveCarousel === dataCarousel.find(item => item.index === activeIndex)?.questions.length) {
+            if (activeIndex < 4) {
+                setBackgroundColor(backgroundColorRange);
+                setBackgroundBtnColor(dotBgColorRange);
+                setCurrentColor(currentColor === colors.dlsGrayPrimary ? colors.dlsYellowSecondary : colors.dlsGrayPrimary);
+
+                animatedValue.setValue(0);
+                animatedValue2.setValue(0);
+                animatedValue3.setValue(0);
+                animatedValue4.setValue(0);
+                setMoveCarousel(1);
+                animationOpacity(1, 800).start(() => {
+                    animationTranslate(activeIndex - 1).start(() => {
+                        animationCircle(1).start(() => {
+                            animatedValue4.setValue(1);
+                            animationOpacity(0, 350).start()
+                        })
                     })
-                })
-            });
+                });
 
-            setActiveIndex(activeIndex + 1)
+                setActiveIndex(activeIndex + 1)
+            }
+        } else {
+            setMoveCarousel(moveCarousel + 1);
         }
-    }
 
-    console.log("activeIndex");
-    console.log(activeIndex);
-    const backBtn = () => {
-        if (activeIndex > 2) {
-            setBackgroundColor(dotBgColorRange);
-            setBackgroundBtnColor(backgroundColorRange);
-            setCurrentColor(currentColor === colors.dlsGrayPrimary ? colors.dlsYellowSecondary : colors.dlsGrayPrimary);
-
-            animatedValue.setValue(1);
-            animatedValue2.setValue(1);
-            animatedValue3.setValue(2);
-            animatedValue4.setValue(0);
-            /* animationCircle(0).start();
-            animationTranslate(activeIndex - 3).start();
- */
-
-            
-            animationOpacity(1,800).start(() => {
-                animationTranslate(activeIndex - 3).start(() =>{
-                    animationCircle(0).start(() =>{
-                        animatedValue4.setValue(1);
-                        animationOpacity(0,350).start()
-                    })
-                })
-            });
-
-            setActiveIndex(activeIndex - 1);
-
-            /* fadeOut(1); */
-        }
     }
 
     const dataCarousel: QuestionCarousel[] = [{
@@ -167,7 +134,36 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
         index: 4,
         questions: [{ type: '3' }, { type: '2' }]
     }];
+    
+    const backBtn = () => {
+        if (moveCarousel === 1) {
+            if (activeIndex > 2) {
+                setBackgroundColor(dotBgColorRange);
+                setBackgroundBtnColor(backgroundColorRange);
+                setCurrentColor(currentColor === colors.dlsGrayPrimary ? colors.dlsYellowSecondary : colors.dlsGrayPrimary);
 
+                animatedValue.setValue(1);
+                animatedValue2.setValue(1);
+                animatedValue3.setValue(2);
+                animatedValue4.setValue(0);
+                //animationCircle(0).start();
+                //animationTranslate(activeIndex - 3).start();
+
+                animationOpacity(1, 800).start(() => {
+                    animationTranslate(activeIndex - 3).start(() => {
+                        animationCircle(0).start(() => {
+                            animatedValue4.setValue(1);
+                            animationOpacity(0, 350).start()
+                        })
+                    })
+                });
+
+                setActiveIndex(activeIndex - 1);
+            }
+        } else {
+            setMoveCarousel(moveCarousel - 1);
+        }
+    }
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -206,7 +202,7 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
                 {/* margin bottom es lo que ocupa el circulo de animación - no quitar */}
                 <View style={{ flex: 1, marginBottom: 200 }}>
 
-                    <FadeQuestionsScreen animatedValueOp={animatedValue4} animatedValue={animatedValue3} dataCarousel={dataCarousel} />
+                    <FadeQuestionsScreen animatedValueOp={animatedValue4} animatedValue={animatedValue3} dataCarousel={dataCarousel} moveCarousel={moveCarousel} />
 
                 </View>
 
