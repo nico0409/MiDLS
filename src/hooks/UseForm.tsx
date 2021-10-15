@@ -30,6 +30,7 @@ export const useForm = <T extends Object>( initState: T ) => {
         onChange,
         setFormValue,
          stateSend, 
+         setStateSend,
         
     }
 

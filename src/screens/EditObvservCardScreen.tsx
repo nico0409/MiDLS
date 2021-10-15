@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, useWindowDimensions, StyleSheet, Text } from 'react-native';
+import { View, useWindowDimensions, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import Accordion from '../components/AcordionList';
 
 import { useForm } from '../hooks/UseForm';
@@ -16,6 +16,8 @@ import { colors } from '../Themes/DlsTheme';
 import { onChange } from 'react-native-reanimated';
 import { Prompt } from '../components/Prompt';
 import { ScrollView } from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { EditObservCard } from '../components/EditObserveCard';
 
 
 
@@ -62,10 +64,11 @@ interface Props extends StackScreenProps<RoutstackParams, 'EditObvservCardScreen
 export const EditObvservCardScreen = ({ navigation, route }: Props) => {
 
 
-    const { isloading, loadObserveCard, form, onChange,stateSend } = UseOneGetObserve(/* {
+    const { isloading, loadObserveCard, form, onChange, stateSend } = UseOneGetObserve(/* {
         IdentifDt: '2020-05-31',
         busineesUnit: 'CDR', Ntarjeta: '2020-4070-039506'
     }*/  route.params)
+
 
 
 
@@ -92,6 +95,20 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
 
         < View style={{ flex: 1 }}>
             <View style={{ ...styles.container, height: height }}>
+                <View style={{ height: 60, width: '100%', flexDirection: 'row', alignItems: 'center',justifyContent:'space-between'}}>
+
+                    <TouchableOpacity
+                        onPress={() => navigation.pop()}
+                    >
+                        <Icon name="chevron-back-outline" size={40} color={colors.dlsYellowSecondary} />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => EditObservCard(stateSend!)}
+                    >
+                        <Icon name="save-outline" size={30} color={colors.dlsYellowSecondary} />
+                    </TouchableOpacity>
+                    
+                </View>
                 <View style={styles.containerTitle}>
                     <Text style={styles.title}>{`Tarjeta Número:`}</Text>
                     <Text style={styles.title}>{`${form['m38:DL_NTARJETA']}`}</Text>

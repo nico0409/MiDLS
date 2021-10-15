@@ -70,7 +70,10 @@ export const PickerSelect = ({ placeholder, type, onChange, form }: Props) => {
                         fieldData = "m38:DL_TURNO";
                         
                         
-                        if (form?.['m38:DL_TURNO'] === item.DL_TURNO.toString()) {
+                        
+                        
+                        if (form?.['m38:DL_TURNO'] == item.DL_TURNO.toString()) {
+                           
                             itemselect = { id: index, value: item.DESCR, data: { dataItem, fieldData } }
                         }
 

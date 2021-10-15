@@ -12,6 +12,7 @@
   "dependencies": {
     "@freakycoder/react-native-multiple-select": "^0.3.0",
     "@freakycoder/react-native-single-select": "^0.4.0",
+    "@freakycoder/react-native-text-area": "^0.1.4",
     "@react-native-async-storage/async-storage": "^1.15.8",
     "@react-native-community/checkbox": "^0.5.8",
     "@react-native-community/datetimepicker": "^3.5.2",
@@ -25,6 +26,7 @@
     "@types/react-native-snap-carousel": "^3.8.4",
     "axios": "^0.21.4",
     "fast-xml-parser": "^3.20.0",
+    "i": "^0.3.7",
     "radio-buttons-react-native": "^1.0.4",
     "react": "^17.0.1",
     "react-native": "0.64.1",

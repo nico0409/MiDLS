@@ -3,57 +3,58 @@ import { View, TouchableOpacity, Text, StyleSheet, Modal, useWindowDimensions, T
 import { colors } from '../Themes/DlsTheme';
 import { objUseForm, M38GetCompIntfcDLHRTAOBSERVCIResponse } from '../interfaces/prompInterfaces';
 import { onChange, Value } from 'react-native-reanimated';
+import RNTextArea from "@freakycoder/react-native-text-area";
 
 interface Props {
     placeholder: string;
     type: "PTLT_DETAILS" | "DL_ACCION" | "DL_DESCACTO" | "DL_ACCEVITREIT";
     onChange: (value: string, field: keyof objUseForm) => void;
-    form:M38GetCompIntfcDLHRTAOBSERVCIResponse
+    form: M38GetCompIntfcDLHRTAOBSERVCIResponse
     textSelect?: string;
 }
 
-export const InputModal = ({ placeholder, type, onChange,textSelect,form }: Props) => {
+export const InputModal = ({ placeholder, type, onChange, textSelect, form }: Props) => {
     const height = useWindowDimensions().height
     const width = useWindowDimensions().width
     const [isVisible, setisVisible] = useState(false)
 
-    let str=''
-    const setText=(value:string)=>{
+    let str = ''
+    const setText = (value: string) => {
 
-     switch (type) {
-         case 'DL_DESCACTO':
-             onChange(value,'m38:DL_DESCACTO')
-            str= form['m38:DL_DESCACTO']!
-             break;
-             case 'DL_ACCEVITREIT':
-                onChange(value,'m38:DL_ACCEVITREIT')
+        switch (type) {
+            case 'DL_DESCACTO':
+                onChange(value, 'm38:DL_DESCACTO')
+                str = form['m38:DL_DESCACTO']!
                 break;
-                case 'PTLT_DETAILS':
-             onChange(value,'m38:PTLT_DETAILS')
-             break;
-             case 'DL_ACCION':
-             onChange(value,'m38:DL_ACCION')
-             break;
-        
-     }   
+            case 'DL_ACCEVITREIT':
+                onChange(value, 'm38:DL_ACCEVITREIT')
+                break;
+            case 'PTLT_DETAILS':
+                onChange(value, 'm38:PTLT_DETAILS')
+                break;
+            case 'DL_ACCION':
+                onChange(value, 'm38:DL_ACCION')
+                break;
+
+        }
     }
     switch (type) {
         case 'DL_DESCACTO':
-        
-           str= form['m38:DL_DESCACTO']!
+
+            str = form['m38:DL_DESCACTO']!
             break;
-            case 'DL_ACCEVITREIT':
-                str= form['m38:DL_ACCEVITREIT']! 
-               break;
-               case 'PTLT_DETAILS':
-                str= form['m38:PTLT_DETAILS']!
+        case 'DL_ACCEVITREIT':
+            str = form['m38:DL_ACCEVITREIT']!
             break;
-            case 'DL_ACCION':
-                str= form['m38:DL_ACCION']!
+        case 'PTLT_DETAILS':
+            str = form['m38:PTLT_DETAILS']!
             break;
-       
+        case 'DL_ACCION':
+            str = form['m38:DL_ACCION']!
+            break;
+
     }
-    
+
 
 
     return (
@@ -91,24 +92,32 @@ export const InputModal = ({ placeholder, type, onChange,textSelect,form }: Prop
 
                     <View style={{
                         ...styles.cardPrompt,
-                        height: height * 0.5,
+                        height: height * 0.4,
                         width: width * 0.8,
                         backgroundColor: colors.dlsGrayPrimary
                     }}>
 
 
-                        <View style={{
-                            top: 25,
-                            height: height * 0.4,
+                      
 
-                            backgroundColor: colors.dlsGrayPrimary
-                        }}>
-                            <TextInput
+
+                            <RNTextArea
+                            defaultCharCount={str.length}
+                            textInputStyle={{fontSize:20,color:colors.dlsTextwhite}}
+                            style={{  borderRadius: 12 ,
+                                top: 25,
+                                height: height * 0.3,
+                                 backgroundColor: colors.dlsGrayPrimary}}
                             value={str}
-                                keyboardType="name-phone-pad"
+                                maxCharLimit={150}
+                                placeholderTextColor="black"
+                                exceedCharCountColor="#990606"
+                                placeholder={"Write your review..."}
+                                
                                 onChangeText={(text)=>{setText(text)}}
                             />
-                        </View>
+                             
+                       
                     </View>
 
                 </View>

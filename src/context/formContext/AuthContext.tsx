@@ -8,6 +8,7 @@ import { initialObsFormData } from '../../data/initialObsFormData';
 export interface  AuthState{
     form: objUseForm;
     onChange: (value: string, field: keyof objUseForm) => void;
+    setFormValue:(form: M38GetCompIntfcDLHRTAOBSERVCIResponse) => void
 }
 
 
@@ -17,11 +18,11 @@ export const AuthContext=createContext({} as AuthState );
 //componente proveedor del estado
 
 export const AuthProvider=({children}: {children:JSX.Element[]|JSX.Element})=>{
-   const {form,onChange}= useForm<M38GetCompIntfcDLHRTAOBSERVCIResponse>(initialObsFormData) 
+   const {form,onChange,setFormValue}= useForm<M38GetCompIntfcDLHRTAOBSERVCIResponse>(initialObsFormData) 
     return(
 
         <AuthContext.Provider value ={{
-           form,onChange
+           form,onChange,setFormValue
         }}>
             {children}
         </AuthContext.Provider>
