@@ -15,7 +15,7 @@ import { Questions, questionType } from "../interfaces/QuestionInterfaces";
 interface Props {
   form?: M38GetCompIntfcDLHRTAOBSERVCIResponse
   questiontType: questionType
-  onChange: (value: string, field: keyof objUseForm) => void;
+  onChange?: (value: string, field: keyof objUseForm) => void;
 }
 export const QuestionsCmp = ({ form, questiontType, onChange }: Props) => {
 
@@ -97,7 +97,7 @@ let initialValue=0
               style={{ flexDirection: "column" }}
               initial={initialValue}
               onChange={(selectedItem: ICheckboxButton) => {
-                onChange(mapIndexToValue(selectedItem.id),data[0].field)
+                /* onChange(mapIndexToValue(selectedItem.id),data[0].field) */
               }}
             />
           </View>

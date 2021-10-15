@@ -11,6 +11,7 @@ import { useForm } from '../hooks/UseForm';
 import { M38GetCompIntfcDLHRTAOBSERVCIResponse, objUseForm } from '../interfaces/prompInterfaces';
 import { onChange } from 'react-native-reanimated';
 import { initialObsFormData } from '../data/initialObsFormData';
+import { stepIndicatorStyles } from '../data/stepIndicatorStyles';
 
 interface DataTemp {
     namepage: string;
@@ -34,29 +35,6 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
     {
         namepage: 'pagina2',
     }]
-
-    const firstIndicatorStyles = {
-        stepIndicatorSize: 30,
-        currentStepIndicatorSize: 40,
-        separatorStrokeWidth: 3,
-        separatorStrokeUnfinishedWidth: 3,
-        separatorStrokeFinishedWidth: 3,
-        currentStepStrokeWidth: 5,
-        stepStrokeWidth: 3,
-        separatorFinishedColor: '#4aae4f',
-        separatorUnFinishedColor: '#a4d4a5',
-        stepIndicatorFinishedColor: '#4aae4f',
-        stepIndicatorUnFinishedColor: '#a4d4a5',
-        stepIndicatorCurrentColor: '#ffffff',
-        stepIndicatorLabelFontSize: 15,
-        currentStepIndicatorLabelFontSize: 15,
-        stepIndicatorLabelCurrentColor: '#000000',
-        stepIndicatorLabelFinishedColor: '#ffffff',
-        stepIndicatorLabelUnFinishedColor: 'rgba(255,255,255,0.5)',
-        labelColor: '#666666',
-        labelSize: 12,
-        currentStepLabelColor: '#4aae4f',
-    };
 
     const { form, onChange } = useForm<objUseForm>(initialObsFormData);
     console.log("form: ");
@@ -92,7 +70,7 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
                 <View style={{ paddingBottom: 10, marginHorizontal: 20 }}>
                     <StepIndicator
                         stepCount={5}
-                        customStyles={firstIndicatorStyles}
+                        customStyles={stepIndicatorStyles}
                         currentPosition={activeIndex}
                         labels={['Paso 1', 'Paso 2']}
                     /* renderLabel={renderLabel} */

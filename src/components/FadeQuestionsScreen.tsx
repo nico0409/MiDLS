@@ -1,119 +1,148 @@
-import React, { useEffect, useRef, useState, } from 'react'
-import { Animated, Dimensions, Text, View } from 'react-native';
-import { useFade } from '../hooks/UseFade';
-import Carousel from 'react-native-snap-carousel';
+import React, { useRef } from 'react';
+import { Animated, Dimensions, SafeAreaView, ScrollView, View } from 'react-native';
+import { CarouselForQuestions } from './CarouselForQuestions';
+import { QuestionCarousel, questionType } from '../interfaces/QuestionInterfaces';
+import { transform } from '@babel/core';
+import { FlatList } from 'react-native-gesture-handler';
 
 interface Props {
-    opacity: Animated.Value;
-    index: number;
+    animatedValueOp: Animated.Value;
+    animatedValue: Animated.Value;
+    dataCarousel: QuestionCarousel[],
+    carouselRef?: React.MutableRefObject<null>
 }
 
-type Props2 = {
+/* type Props2 = {
     children: React.ReactElement;
     waitBeforeShow?: number;
 };
+ */
 
 const windowWidth = Dimensions.get('window').width;
 
-export const FadeQuestionsScreen = ({ opacity, index }: Props) => {
+export const FadeQuestionsScreen = ({ animatedValueOp,animatedValue, dataCarousel, carouselRef }: Props) => {
 
 
-    const ScreensCarousel = (index: number) => {
+    /* const ScreensCarousel = (indexSI: number) => {
 
-        const dataTemp = [{}, {}];
-
-        const [activeIndex, setActiveIndex] = useState(0);
-        const [activeIndex2, setActiveIndex2] = useState(0);
-        const [activeIndex3, setActiveIndex3] = useState(0);
-
-        const renderItem = (item: any, index: number) => {
-
-            return (
-                <View style={{/* backgroundColor:'red' */}}>
-                    <Text style={{ color: 'white' }}>Holaaa</Text>
-                    <Text style={{ color: 'white' }}>Holaaa</Text>
-                </View>
-            )
-        }
-
-
-        switch (index) {
+        switch (indexSI) {
             case 2:
                 return (
                     <View >
-
-                        <Carousel
-                            data={dataTemp}
-                            renderItem={({ item, index }) => renderItem(item, index)}
-                            sliderWidth={windowWidth}
-                            itemWidth={windowWidth}
-                            onSnapToItem={(index) => {
-                                setActiveIndex(index)
-                            }}
-                        />
-                       {/*  <Text style={{ color: 'white' }}>Holaaa</Text> */}
-
+                        <CarouselForQuestions data={dataCarousel.find(({ index }) => index === indexSI)!.questions} />
                     </View>
                 )
             case 3:
                 return (
                     <View >
-
-                        <Carousel
-                            data={dataTemp}
-                            renderItem={({ item, index }) => renderItem(item, index)}
-                            sliderWidth={windowWidth}
-                            itemWidth={windowWidth}
-                            onSnapToItem={(index) => {
-                                setActiveIndex2(index)
-                            }}
-                        />
-                       {/*  <Text style={{ color: 'white' }}>Holaaa</Text> */}
-
+                        <CarouselForQuestions data={dataCarousel.find(({ index }) => index === indexSI)!.questions} />
                     </View>
                 )
             case 4:
                 return (
                     <View >
-
-                        <Carousel
-                            data={dataTemp}
-                            renderItem={({ item, index }) => renderItem(item, index)}
-                            sliderWidth={windowWidth}
-                            itemWidth={windowWidth}
-                            onSnapToItem={(index) => {
-                                setActiveIndex3(index)
-                            }}
-                        />
-                       {/*  <Text style={{ color: 'white' }}>Holaaa</Text> */}
-
+                        <CarouselForQuestions data={dataCarousel.find(({ index }) => index === indexSI)!.questions} />
                     </View>
                 )
         }
-    };
-
-/*     const Delayed = ({ children, waitBeforeShow = 100 }: Props2) => {
-        const [isShown, setIsShown] = useState(false);
-
-        useEffect(() => {
-            console.log("se ejecuta delayed");
-            console.log(waitBeforeShow);
-            setTimeout(() => {
-                setIsShown(true);
-            }, waitBeforeShow);
-        }, []);
-
-        return isShown ? children : null;
     }; */
+
+    /*     const Delayed = ({ children, waitBeforeShow = 100 }: Props2) => {
+            const [isShown, setIsShown] = useState(false);
+    
+            useEffect(() => {
+                console.log("se ejecuta delayed");
+                console.log(waitBeforeShow);
+                setTimeout(() => {
+                    setIsShown(true);
+                }, waitBeforeShow);
+            }, []);
+    
+            return isShown ? children : null;
+        }; */
+
+
+    /* const scrollX = useRef(new Animated.Value(0)).current; */
+
+    const CarouselList = () => {
+
+        return (<>
+            {
+                dataCarousel.map(element => {
+                    return (
+                        <View
+                            style={{ width: windowWidth }}
+                            key={element.index}
+                        >
+                            <CarouselForQuestions data={element.questions} />
+                        </View>
+                    )
+                })
+            }
+        </>)
+
+
+    }
 
     return (
         <>
-            <Animated.View style={{ flex: 1, opacity }}>
-                {/* <Delayed> */}
-                    <>
-                        {ScreensCarousel(index)}
-                    </>
-                {/* </Delayed> */}
+            <Animated.View style={{
+                 flex: 1,
+                 flexDirection: 'row',
+                 width: windowWidth * 3,
+                 transform:[
+                     {translateX: animatedValue.interpolate({
+                         inputRange:[0,1,2],
+                         outputRange:[0,-windowWidth,-windowWidth*2]
+                     })}
+                 ],
+                 opacity: animatedValueOp.interpolate({
+                    inputRange:[0,1],
+                    outputRange:[1,0]
+                })
+                }}>
+                {
+                    dataCarousel.map(element => {
+                        return (
+                            <View
+                                style={{ width: windowWidth}}
+                            >
+                                <CarouselForQuestions data={element.questions} />
+                            </View>
+                        )
+                    })
+                }
+                {/* <ScrollView
+                    horizontal={false}
+                    pagingEnabled
+                    scrollEnabled={false}
+                    showsHorizontalScrollIndicator={false}
+                    
+                    onScroll={Animated.event([
+                        {
+                            nativeEvent: {
+                                contentOffset: {
+                                    x: scrollX
+                                }
+                            }
+                        }
+                    ],
+                        { useNativeDriver: false })}
+                    scrollEventThrottle={1}
+                >
+                    {dataCarousel.map(element => {
+                        return (
+                            <View
+                                style={{flex:1, width: windowWidth }}
+                                key={element.index}
+                            >
+                                <CarouselForQuestions data={element.questions} />
+                            </View>
+                        )
+                    })}
+                </ScrollView> */}
+
+                {/* {ScreensCarousel(index)} */}
             </Animated.View>
         </>
     )

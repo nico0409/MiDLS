@@ -1,30 +1,24 @@
-import React, { useState, useRef,useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
-import { SafeAreaView, View, StyleSheet, Animated, useColorScheme, Dimensions, Text } from 'react-native';
+import { SafeAreaView, View, StyleSheet, Animated } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { colors } from '../Themes/DlsTheme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import StepIndicator from 'react-native-step-indicator';
 import { AnimatedCircle } from './AnimatedCircle';
-import { objUseForm } from '../interfaces/prompInterfaces';
-import { onChange } from 'react-native-reanimated';
-import { useForm } from '../hooks/UseForm';
-import Carousel from 'react-native-snap-carousel';
 import { useFade } from '../hooks/UseFade';
 import { FadeQuestionsScreen } from './FadeQuestionsScreen';
+import { stepIndicatorStyles } from '../data/stepIndicatorStyles';
+import { QuestionCarousel } from '../interfaces/QuestionInterfaces';
 
 interface Props extends StackScreenProps<any, any> { };
 
-interface Props2 {
-    form: objUseForm;
-    onChange: (value: string, field: keyof objUseForm) => void;
-}
 /* interface RouteParams {
     form: objUseForm;
     toParent?: boolean;
 } */
 
-const duration = 1000;
+const duration = 750;
 
 export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
 
@@ -37,33 +31,15 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
 
     const [activeIndex, setActiveIndex] = useState(2);
 
-    const firstIndicatorStyles = {
-        stepIndicatorSize: 30,
-        currentStepIndicatorSize: 40,
-        separatorStrokeWidth: 3,
-        separatorStrokeUnfinishedWidth: 3,
-        separatorStrokeFinishedWidth: 3,
-        currentStepStrokeWidth: 5,
-        stepStrokeWidth: 3,
-        separatorFinishedColor: '#4aae4f',
-        separatorUnFinishedColor: '#a4d4a5',
-        stepIndicatorFinishedColor: '#4aae4f',
-        stepIndicatorUnFinishedColor: '#a4d4a5',
-        stepIndicatorCurrentColor: '#ffffff',
-        stepIndicatorLabelFontSize: 15,
-        currentStepIndicatorLabelFontSize: 15,
-        stepIndicatorLabelCurrentColor: '#000000',
-        stepIndicatorLabelFinishedColor: '#ffffff',
-        stepIndicatorLabelUnFinishedColor: 'rgba(255,255,255,0.5)',
-        labelColor: '#666666',
-        labelSize: 12,
-        currentStepLabelColor: '#4aae4f',
-    };
-
     //animacion de fondo
     const animatedValue = useRef(new Animated.Value(0)).current;
     const animatedValue2 = useRef(new Animated.Value(0)).current;
-    /* const [index, setIndex] = useState(0); */
+
+    //animación al cambiar screen
+    const animatedValue3 = useRef(new Animated.Value(0)).current;
+    const animatedValue4 = useRef(new Animated.Value(0)).current;
+    /* const { opacity: opacityScreen, fadeIn, fadeOut } = useFade(0); */
+
     //es necesario inicializar los fondos en un estado para que se visualize bien con el primer render
     const [backgroundColor, setBackgroundColor] = useState<string | Animated.AnimatedInterpolation>(colors.dlsGrayPrimary);
     const [backgroundBtnColor, setBackgroundBtnColor] = useState<string | Animated.AnimatedInterpolation>(colors.dlsYellowSecondary);
@@ -78,6 +54,7 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
             (currentColor === colors.dlsGrayPrimary ? colors.dlsYellowSecondary : colors.dlsGrayPrimary),
         ],
     });
+
     const dotBgColorRange = animatedValue2.interpolate({
         inputRange: [0, 0.5, 0.501, 1],
         outputRange: [
@@ -88,7 +65,7 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
         ],
     });
 
-    const animation = (toValue: number) =>
+    const animationCircle = (toValue: number) =>
         Animated.parallel([
             Animated.timing(animatedValue, {
                 toValue,
@@ -99,11 +76,24 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
                 toValue,
                 duration: duration,
                 useNativeDriver: false,
-            }),
+            })
         ]);
 
-    const onPress = () => {
+    const animationTranslate = (toValue: number) =>
+        Animated.timing(animatedValue3, {
+            toValue,
+            duration: 1,
+            useNativeDriver: false,
+        });
 
+    const animationOpacity = (toValue: number,duration: number) =>
+        Animated.timing(animatedValue4, {
+            toValue,
+            duration: duration,
+            useNativeDriver: false,
+        });
+
+    const onPress = () => {
         if (activeIndex < 4) {
             setBackgroundColor(backgroundColorRange);
             setBackgroundBtnColor(dotBgColorRange);
@@ -111,14 +101,25 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
 
             animatedValue.setValue(0);
             animatedValue2.setValue(0);
-            animation(1).start();
-            setActiveIndex(activeIndex + 1);
+            animatedValue3.setValue(0);
+            animatedValue4.setValue(0);
+            /* animationTranslate(activeIndex - 1).start(()=>animationCircle(1).start()); */
+            /* animationCircle(1).start(()=>animationTranslate(activeIndex - 1).start()); */
+            animationOpacity(1,800).start(() => {
+                animationTranslate(activeIndex - 1).start(() =>{
+                    animationCircle(1).start(() =>{
+                        animatedValue4.setValue(1);
+                        animationOpacity(0,350).start()
+                    })
+                })
+            });
 
-            fadeOut(1);
+            setActiveIndex(activeIndex + 1)
         }
-
     }
 
+    console.log("activeIndex");
+    console.log(activeIndex);
     const backBtn = () => {
         if (activeIndex > 2) {
             setBackgroundColor(dotBgColorRange);
@@ -127,24 +128,39 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
 
             animatedValue.setValue(1);
             animatedValue2.setValue(1);
-            animation(0).start();
+            animatedValue3.setValue(2);
+            animatedValue4.setValue(0);
+            /* animationCircle(0).start();
+            animationTranslate(activeIndex - 3).start();
+ */
+
+            
+            animationOpacity(1,800).start(() => {
+                animationTranslate(activeIndex - 3).start(() =>{
+                    animationCircle(0).start(() =>{
+                        animatedValue4.setValue(1);
+                        animationOpacity(0,350).start()
+                    })
+                })
+            });
+
             setActiveIndex(activeIndex - 1);
 
-            fadeOut(1);
+            /* fadeOut(1); */
         }
-
     }
 
-    //cambiar de screens
-    const { opacity: opacityScreen, fadeIn, fadeOut } = useFade(0);
+    const dataCarousel: QuestionCarousel[] = [{
+        index: 2,
+        questions: [{ type: '1' }, { type: '2' }, { type: '3' }, { type: '4' }]
+    }, {
+        index: 3,
+        questions: [{ type: '5' }, { type: '6' }, { type: '7' }, { type: '8' }]
+    }, {
+        index: 4,
+        questions: [{ type: '3' }, { type: '2' }]
+    }];
 
-    useEffect(
-        () => 
-        {setTimeout(() => {
-            fadeIn(500)
-        }, 500); }
-        ,[activeIndex]
-    )
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -172,7 +188,7 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
                 <View style={{ paddingBottom: 10, marginHorizontal: 20 }}>
                     <StepIndicator
                         stepCount={5}
-                        customStyles={firstIndicatorStyles}
+                        customStyles={stepIndicatorStyles}
                         currentPosition={activeIndex}
                         labels={['Paso 1', 'Paso 2']}
                     //renderLabel={renderLabel} 
@@ -183,7 +199,7 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
                 {/* margin bottom es lo que ocupa el circulo de animación - no quitar */}
                 <View style={{ flex: 1, marginBottom: 200 }}>
 
-                    <FadeQuestionsScreen index={activeIndex} opacity={opacityScreen}/>
+                    <FadeQuestionsScreen animatedValueOp={animatedValue4} animatedValue={animatedValue3} dataCarousel={dataCarousel} />
 
                 </View>
 

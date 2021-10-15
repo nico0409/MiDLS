@@ -25,3 +25,8 @@ import { objUseForm } from './prompInterfaces';
   export type questionType={ 
 type: '1' | '2' | '3'|'4'|'5'|'6'|'7'|'8'
   }
+
+  export interface QuestionCarousel {
+    index:number;
+    questions: questionType[];
+}
