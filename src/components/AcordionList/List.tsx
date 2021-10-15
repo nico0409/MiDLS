@@ -19,6 +19,7 @@ import { InputModal } from "../InputModal";
 import { QuestionsCmp } from "../Questions";
 import { ScrollView } from "react-native-gesture-handler";
 import { onChange } from 'react-native-reanimated';
+import { Rulegold } from '../Rulegold';
 
 
 
@@ -216,6 +217,20 @@ export default ({ form, onChange, list, MeuItemType }: ListProps) => {
               </ScrollView>
             </>
           )}
+{MeuItemType.MeuItemType === 'ReglasOro' && (
+<>
+<Rulegold  form={form} onChange={onChange} questiontType={{type:'1'}} />
+<Rulegold  form={form} onChange={onChange} questiontType={{type:'2'}} />
+<Rulegold  form={form} onChange={onChange} questiontType={{type:'3'}} />
+<Rulegold  form={form} onChange={onChange} questiontType={{type:'4'}} />
+<Rulegold  form={form} onChange={onChange} questiontType={{type:'5'}} />
+<Rulegold  form={form} onChange={onChange} questiontType={{type:'6'}} />
+<Rulegold  form={form} onChange={onChange} questiontType={{type:'7'}} />
+<Rulegold  form={form} onChange={onChange} questiontType={{type:'8'}} />
+<Rulegold  form={form} onChange={onChange} questiontType={{type:'9'}} />
+</>
+)}
+
 
 
         </View>

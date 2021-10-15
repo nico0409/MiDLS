@@ -1,4 +1,4 @@
-import { QuestionData } from '../interfaces/QuestionInterfaces';
+import { QuestionData, ruleGold } from '../interfaces/QuestionInterfaces';
 
 const _iconStyle = (borderColor: string) => ({
     height: 50,
@@ -421,16 +421,43 @@ export const QuestionsData: QuestionData =
 }
 
 
-export const goldRules = {
-    choice1: 'Seguridad Vial',
-    choice2: 'Trabajo en Altura',
-    choice3: 'Línea de Fuego',
-    choice4: 'Espacios Confinados',
-    choice5: 'Herramientas y Equipos',
-    choice6: 'Aislamiento de Energías',
-    choice7: 'Operaciones de Izadoo',
-    choice8: 'Permisos de Trabajo',
-    choice9: 'Manejo del Cambio',
+export const goldRuleData :ruleGold[] = [
+ {type:{type:'1'},
+text:'Seguridad Vial' ,
+field:'m38:DL_SEG_VIAL'   
+} ,  
+{type:{type:'2'},
+ text:'Trabajo en Altura',  
+ field:'m38:DL_TRBJ_ALT'  
+} ,  
+{type:{type:'3'},
+ text:'Línea de Fuego',  
+ field:'m38:DL_LN_FUEGO'    
+} ,  
+{type:{type:'4'},
+ text:'Espacios Confinados',  
+ field:'m38:DL_ESPAC_CONFIN'
+} ,  
+{type:{type:'5'},
+ text:'Herramientas y Equipos'  
+ ,  
+ field:'m38:DL_HER_EQUIP'  
+} ,  
+{type:{type:'6'},
+ text:'Aislamiento de Energías',  
+ field:'m38:DL_AIS_ENERG'    
+} ,  
+{type:{type:'7'},
+ text:'Operaciones de Izadoo',  
+ field:'m38:DL_OP_IZADO'    
+} ,  {type:{type:'8'},
+text:'Permisos de Trabajo'  ,  
+ field:'m38:DL_PERM_TRABAJO'  
+} ,  
+{type:{type:'9'},
+ text:'Manejo del Cambiol' ,  
+ field:'m38:DL_MAN_CAMBIO'  
+} ,  
+]
 
 
-}

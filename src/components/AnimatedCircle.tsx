@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, Animated, View } from 'react-native';
+import { StyleSheet, Animated, View, useWindowDimensions, Dimensions } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { colors } from '../Themes/DlsTheme';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -16,8 +16,11 @@ interface Props {
     currentColorString: string;
 }
 
+const{height}=Dimensions.get('window');
 export const AnimatedCircle = ({ onPress, animatedValue, animatedValue2, backgroundColorRange, dotBgColorRange, currentColorString }: Props) => {
 
+    console.log(height);
+    
     return (
         <Animated.View style={[StyleSheet.absoluteFillObject,
             styles.circleCointainer,
@@ -95,7 +98,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'center',
         padding: 8,
-        paddingBottom: 100,
+        paddingBottom:(height*0.09),
     },
     circle: {
         width: circleSize,
