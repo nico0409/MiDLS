@@ -25,13 +25,20 @@ export const Rulegold = ({form,questiontType,onChange}:Props) => {
     }
     return (
         <BouncyCheckbox
+       useNativeDriver={true}
+       bounceFriction={7}
         isChecked={push}
         size={25}
-        fillColor="red"
-        unfillColor="#FFFFFF"
+        fillColor= "#ff7473"
+        unfillColor= "#fbbfbb"
         text={data[0].text}
-        iconStyle={{ borderColor: "red" }}
-        textStyle={{ fontFamily: "JosefinSans-Regular" }}
+        iconStyle= {{
+            height: 50,
+            width: 50,
+            borderRadius: 25,
+            borderColor: "#fbbfbb",}}
+        textStyle={{ fontFamily: "JosefinSans-Regular" ,textDecorationLine: "none" }}
+        iconImageStyle={{height: 20, width: 20 } }
         onPress={(isChecked: boolean) => {onChange(isChecked?'Y':'N',data[0].field)}}
       />
     )

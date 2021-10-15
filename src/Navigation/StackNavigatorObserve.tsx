@@ -9,6 +9,7 @@ import { EmplidObserveScreen } from '../screens/EmplidObserveScreen';
 import { testobserve } from '../screens/test';
 import { EditObvservCardScreen} from '../screens/EditObvservCardScreen';
 import { InterfGetOnesCard, objUseForm } from '../interfaces/prompInterfaces';
+import { AuthProvider } from '../context/formContext/AuthContext';
 
 export type RoutstackParams={
     
@@ -17,12 +18,22 @@ export type RoutstackParams={
   
   }
 
+  const FormContext = ({ children }: { children: JSX.Element | JSX.Element[] }) => {
+    return (
+      <AuthProvider>
+        {children}
+      </AuthProvider>
+    )
+  }
+  
+
 const Stack = createStackNavigator();
 
 export const StackNavigatorObserve = () => {
   
     
     return (
+        <FormContext>
         <SafeAreaView style={styles.container}>
             <Stack.Navigator
                 screenOptions={{
@@ -43,6 +54,7 @@ export const StackNavigatorObserve = () => {
 
             </Stack.Navigator>
         </SafeAreaView>
+        </FormContext>
     );
 }
 

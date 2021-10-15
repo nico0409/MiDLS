@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState,useContext  } from 'react'
 import { SafeAreaView, Dimensions, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import Carousel from 'react-native-snap-carousel';
@@ -11,16 +11,22 @@ import { useForm } from '../hooks/UseForm';
 import { M38GetCompIntfcDLHRTAOBSERVCIResponse, objUseForm } from '../interfaces/prompInterfaces';
 import { onChange } from 'react-native-reanimated';
 import { initialObsFormData } from '../data/initialObsFormData';
+import { RoutstackParams } from '../Navigation/StackNavigatorObserve';
+import { AuthContext } from '../context/formContext/AuthContext';
+
 
 interface DataTemp {
     namepage: string;
 }
 
-interface Props extends StackScreenProps<any, any> { };
+interface Props extends StackScreenProps<any,any > { };
 
 const windowWidth = Dimensions.get('window').width;
 
 export const CreateObserveScreen = ({ navigation }: Props) => {
+
+
+    const {form,onChange} = useContext(AuthContext);
 
     const carouselRef = useRef(null);
 
@@ -58,9 +64,8 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
         currentStepLabelColor: '#4aae4f',
     };
 
-    const { form, onChange } = useForm<objUseForm>(initialObsFormData);
-    console.log("form: ");
-    console.log(form);
+    /* const { form, onChange } = useForm<objUseForm>(initialObsFormData); */
+    
 
     const renderItem = (item: DataTemp, index: number) => {
         return (

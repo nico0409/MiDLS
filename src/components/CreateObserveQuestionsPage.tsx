@@ -1,4 +1,4 @@
-import React, { useState, useRef,useEffect } from 'react';
+import React, { useState, useRef,useEffect ,useContext } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import { SafeAreaView, View, StyleSheet, Animated, useColorScheme, Dimensions, Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -12,6 +12,8 @@ import { useForm } from '../hooks/UseForm';
 import Carousel from 'react-native-snap-carousel';
 import { useFade } from '../hooks/UseFade';
 import { FadeQuestionsScreen } from './FadeQuestionsScreen';
+import { AuthContext } from '../context/formContext/AuthContext';
+
 
 interface Props extends StackScreenProps<any, any> { };
 
@@ -28,6 +30,11 @@ const duration = 1000;
 
 export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
 
+
+    const {form,onChange} = useContext(AuthContext );
+
+    console.log(form);
+    
     /* const {form:initialForm} = route.params as RouteParams; */
 
     /* const { form, onChange } = useForm<objUseForm>(initialForm); */
