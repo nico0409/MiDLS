@@ -14,6 +14,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 
 
+
 interface Props extends DrawerScreenProps<RoutstackParams, 'TarjetaObserveScreen'> { };
 export const EmplidObserveScreen = ({ navigation, route }: Props) => {
 

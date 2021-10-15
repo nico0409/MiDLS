@@ -52,10 +52,12 @@ const list4: ListModel = {
 
 
 interface Props {
-  observeCard?: M38GetCompIntfcDLHRTAOBSERVCIResponse
+  
+  form: M38GetCompIntfcDLHRTAOBSERVCIResponse
+  onChange: (value: string, field: keyof M38GetCompIntfcDLHRTAOBSERVCIResponse) => void
 }
 
-export default ({ observeCard }: Props) => {
+export default ({ form,onChange }: Props) => {
 
 
   const menus: MeuItemType[] = [
@@ -74,12 +76,12 @@ export default ({ observeCard }: Props) => {
       <View style={{ ...styles.container, height: height }}>
         <View style={styles.containerTitle}>
           <Text style={styles.title}>{`Tarjeta Número:`}</Text>
-          <Text style={styles.title}>{`${observeCard!["m38:DL_NTARJETA"]}`}</Text>
+          <Text style={styles.title}>{`${form["m38:DL_NTARJETA"]}`}</Text>
         </View>
-         <List {...{ list }} MeuItemType={menus[0]}  observeCard={observeCard}/> 
-         <List {...{ list: list2 }} MeuItemType={menus[1]}  /> 
+         <List {...{ list }} MeuItemType={menus[0]}  form={form} onChange={onChange}/> 
+         {/* <List {...{ list: list2 }} MeuItemType={menus[1]}  /> 
          <List {...{ list: list3 }} MeuItemType={menus[2]} />
-        <List {...{ list: list4 }} MeuItemType={menus[3]} />  
+        <List {...{ list: list4 }} MeuItemType={menus[3]} />   */}
 
       </View>
     

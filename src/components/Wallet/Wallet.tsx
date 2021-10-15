@@ -1,10 +1,11 @@
 import React, { useRef, useState } from "react";
-import { Animated, Dimensions, FlatList } from "react-native";
+import { Animated, Dimensions, FlatList, View } from "react-native";
 
 import { PanGestureHandler } from "react-native-gesture-handler";
 
 import { CARD_HEIGHT, Cards } from "../Transformations/components/Card";
 import WalletCard from "./WalletCard";
+import { DlhrAllObserve } from '../../interfaces/prompInterfaces';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 const useLazyRef = <T extends object>(initializer: () => T) => {
@@ -44,7 +45,14 @@ const cards = [
   },
 ];
 
-const Wallet = () => {
+
+interface Props {
+  term: string,
+  observeFiltered: DlhrAllObserve[],
+  allObserveList: DlhrAllObserve[],
+  setTerm:React.Dispatch<React.SetStateAction<string>>,
+}
+const Wallet = ({ term, observeFiltered, allObserveList ,setTerm}: Props) => {
   const y = useLazyRef(() => new Animated.Value(0));
   const onScroll = useLazyRef(() =>
     Animated.event(
@@ -58,18 +66,23 @@ const Wallet = () => {
       { useNativeDriver: true }
     )
   );
-  return (
-    <AnimatedFlatList
-      scrollEventThrottle={16}
-      bounces={false}
-      {...{ onScroll }}
-      data={cards}
-      renderItem={({ index, item: { type } }) => (
-        <WalletCard {...{ index, y, type }} />
-      )}
-      keyExtractor={(item) => `${item.index}`}
-    />
-  );
+  console.log(allObserveList[0].NroTarjeta);
+  
+  return  ( allObserveList[0].NroTarjeta !== undefined ? 
+      <AnimatedFlatList
+        scrollEventThrottle={16}
+        bounces={false}
+        {...{ onScroll }}
+        data={(term.length !== 0) ? observeFiltered : allObserveList}
+        renderItem={({ index ,item}) => (
+          <WalletCard {...{ index, y,item,setTerm}} />
+        )}
+        keyExtractor={(item) => `${item.NroTarjeta}`}
+      />
+      : <View></View> )
+  
+  
+  
 };
 
 export default Wallet;

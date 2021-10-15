@@ -219,12 +219,12 @@ export interface SoapenvBody {
 export interface M38GetCompIntfcDLHRTAOBSERVCIResponse {
   "m38:BUSINESS_UNIT"?: string;
   "m38:DL_NTARJETA"?: string;
-  "m38:DL_EQUIPMENT_ID"?: number;
+  "m38:DL_EQUIPMENT_ID"?: string;
   "m38:DL_IDENTIF_DT"?: string;
   "m38:DL_ORIGEN"?: string;
   "m38:DL_OBSERVADOR"?: string;
-  "m38:DL_TURNO"?: number;
-  "m38:DL_CUSTOMER_ID"?: number;
+  "m38:DL_TURNO"?: string;
+  "m38:DL_CUSTOMER_ID"?: string;
   "m38:DL_SECTOR_ID"?: string;
   "m38:DL_PUESTO"?: string;
   "m38:DL_ADESTACAR"?: string;

@@ -25,15 +25,19 @@ interface Props {
 
 export const FlatListItemPrompt = ({ setemplid, promptType, fieldtype, setplaceHolder, field1, field2, closePrompt, onChange }: Props) => {
 
+   
+    
     return (
         <TouchableOpacity activeOpacity={0.5}
             onPress={() => {
                 setplaceHolder(field2),
-                    closePrompt(false),
-                    (setemplid !== undefined ? 
-                       setemplid({ fieldValue1: field1, fieldValue2: field2 }) 
-                                            :
-                        (onChange !== undefined ? onChange(field1, fieldtype) : {}) )
+                    closePrompt(false)
+                   /*  ,onChange!(field1, fieldtype) */
+                   
+                   , (setemplid !== undefined ?
+                        setemplid({ fieldValue1: field1, fieldValue2: field2 })
+                        :
+                        (onChange !== undefined ? onChange(field1, fieldtype) : {})) 
 
 
 
