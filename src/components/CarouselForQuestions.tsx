@@ -10,9 +10,12 @@ const windowWidth = Dimensions.get('window').width;
 interface Props {
     data: questionType[];
     moveCarousel: number;
+    moveCarousel2: number;
+    moveCarousel3: number;
+    index: number
 }
 
-export const CarouselForQuestions = ({ data, moveCarousel }: Props) => {
+export const CarouselForQuestions = ({ data, moveCarousel, moveCarousel2, moveCarousel3, index }: Props) => {
 
     const [activeIndex, setActiveIndex] = useState(0);
 
@@ -21,11 +24,22 @@ export const CarouselForQuestions = ({ data, moveCarousel }: Props) => {
     const { form, onChange } = useContext(AuthContext);
 
     useEffect(() => {
-        // @ts-ignore
-        carouselRef.current.snapToItem(moveCarousel - 1, true);
-    }, [moveCarousel])
+        if (index === 2) {
+            // @ts-ignore
+            carouselRef.current.snapToItem(moveCarousel - 1, true);
+        } else
+            if (index === 3) {
+                // @ts-ignore
+                carouselRef.current.snapToItem(moveCarousel2 - 1, true);
+            } else
+                if (index === 4) {
+                    // @ts-ignore
+                    carouselRef.current.snapToItem(moveCarousel3 - 1, true);
+                }
 
-    console.log(moveCarousel);
+    }, [moveCarousel, moveCarousel2, moveCarousel3])
+
+   /*  console.log(moveCarousel, moveCarousel2, moveCarousel3); */
 
     const renderItem = (item: questionType, index: number) => {
 

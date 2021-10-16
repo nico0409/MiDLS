@@ -10,11 +10,13 @@ interface Props {
     animatedValue: Animated.Value;
     dataCarousel: QuestionCarousel[];
     moveCarousel: number;
+    moveCarousel2: number;
+    moveCarousel3: number;
 }
 
 const windowWidth = Dimensions.get('window').width;
 
-export const FadeQuestionsScreen = ({ animatedValueOp, animatedValue, dataCarousel, moveCarousel }: Props) => {
+export const FadeQuestionsScreen = ({ animatedValueOp, animatedValue, dataCarousel, moveCarousel, moveCarousel2, moveCarousel3 }: Props) => {
 
     return (
         <>
@@ -42,7 +44,13 @@ export const FadeQuestionsScreen = ({ animatedValueOp, animatedValue, dataCarous
                                 style={{ width: windowWidth }}
                                 key={element.index}
                             >
-                                <CarouselForQuestions data={element.questions} moveCarousel={moveCarousel} />
+                                <CarouselForQuestions
+                                    data={element.questions}
+                                    moveCarousel={moveCarousel}
+                                    moveCarousel2={moveCarousel2}
+                                    moveCarousel3={moveCarousel3}
+                                    index={element.index}
+                                />
                             </View>
                         )
                     })

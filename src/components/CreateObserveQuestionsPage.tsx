@@ -20,7 +20,7 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
 
     const { form, onChange, } = useContext(AuthContext);
 
-    console.log(form);
+    /* console.log(form); */
 
 
     const [activeIndex, setActiveIndex] = useState(2);
@@ -88,16 +88,27 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
         });
 
     const [moveCarousel, setMoveCarousel] = useState(1);
-
+    const [moveCarousel2, setMoveCarousel2] = useState(1);
+    const [moveCarousel3, setMoveCarousel3] = useState(1);
+   
     const onPress = () => {
 
-        console.log("dataCarousel.find(item => item.index === activeIndex). : ----------");
-        console.log(dataCarousel.find(item => {if(item.index === activeIndex)return item}));
+       /*  console.log("dataCarousel.find(item => item.index === activeIndex). : ----------");
+ // console.log(dataCarousel.find(item => {if(item.index === activeIndex)return item}));
         console.log("activeIndex: " + activeIndex);
-        console.log("moveCarousel: " + moveCarousel);
+        console.log("moveCarousel: " + moveCarousel); */
 
-        if (moveCarousel === dataCarousel.find(item => item.index === activeIndex)?.questions.length) {
+        if ((moveCarousel === dataCarousel.find(item => item.index === activeIndex)?.questions.length
+        && moveCarousel2===1 && activeIndex!==3)
+        || ( moveCarousel2 === dataCarousel.find(item => item.index === activeIndex)?.questions.length)) {
             if (activeIndex < 4) {
+                /* if (activeIndex===2){
+                    setMoveCarousel(1);   
+                }else
+                if (activeIndex===3)
+                {
+                    setMoveCarousel2(1) 
+                } */
                 setBackgroundColor(backgroundColorRange);
                 setBackgroundBtnColor(dotBgColorRange);
                 setCurrentColor(currentColor === colors.dlsGrayPrimary ? colors.dlsYellowSecondary : colors.dlsGrayPrimary);
@@ -106,7 +117,7 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
                 animatedValue2.setValue(0);
                 animatedValue3.setValue(0);
                 animatedValue4.setValue(0);
-                setMoveCarousel(1);
+                
                 animationOpacity(1, 800).start(() => {
                     animationTranslate(activeIndex - 1).start(() => {
                         animationCircle(1).start(() => {
@@ -119,7 +130,17 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
                 setActiveIndex(activeIndex + 1)
             }
         } else {
-            setMoveCarousel(moveCarousel + 1);
+            if (activeIndex===2){
+                setMoveCarousel(moveCarousel + 1);   
+            }else
+            if (activeIndex===3)
+            {
+                setMoveCarousel2(moveCarousel2 + 1) 
+            }else
+            if(activeIndex===4){
+                setMoveCarousel3(moveCarousel3 + 1) 
+            }
+           
         }
 
     }
@@ -136,7 +157,10 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
     }];
     
     const backBtn = () => {
-        if (moveCarousel === 1) {
+        console.log(moveCarousel,moveCarousel2,moveCarousel3);
+        if ( moveCarousel2 === 1 && activeIndex===3||moveCarousel3===1&& activeIndex===4) {
+         
+         
             if (activeIndex > 2) {
                 setBackgroundColor(dotBgColorRange);
                 setBackgroundBtnColor(backgroundColorRange);
@@ -161,7 +185,16 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
                 setActiveIndex(activeIndex - 1);
             }
         } else {
-            setMoveCarousel(moveCarousel - 1);
+            if (activeIndex===2){
+                setMoveCarousel(moveCarousel -1);   
+            }else
+            if (activeIndex===3)
+            {
+                setMoveCarousel2(moveCarousel2 - 1) 
+            }else
+            if(activeIndex===4){
+                setMoveCarousel3(moveCarousel3 - 1) 
+            }
         }
     }
 
@@ -202,7 +235,13 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
                 {/* margin bottom es lo que ocupa el circulo de animación - no quitar */}
                 <View style={{ flex: 1, marginBottom: 200 }}>
 
-                    <FadeQuestionsScreen animatedValueOp={animatedValue4} animatedValue={animatedValue3} dataCarousel={dataCarousel} moveCarousel={moveCarousel} />
+                    <FadeQuestionsScreen 
+                    animatedValueOp={animatedValue4}
+                     animatedValue={animatedValue3}
+                      dataCarousel={dataCarousel}
+                       moveCarousel={moveCarousel}
+                       moveCarousel2={moveCarousel2}
+                       moveCarousel3={moveCarousel3} />
 
                 </View>
 
