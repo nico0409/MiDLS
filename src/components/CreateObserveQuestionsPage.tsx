@@ -18,10 +18,21 @@ const duration = 750;
 
 export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
 
-    const { form, onChange, } = useContext(AuthContext);
 
-    /* console.log(form); */
+    const dataCarousel: QuestionCarousel[] = [{
+        index: 2,
+        questions: [{ type: '1' }, { type: '2' }, { type: '3' }, { type: '4' }]
+    }, {
+        index: 3,
+        questions: [{ type: '5' }, { type: '6' }, { type: '7' }, { type: '8' }]
+    }, {
+        index: 4,
+        questions: [{ type: '3' }, { type: '2' }]
+    }];
 
+    const { form, onChange } = useContext(AuthContext);
+
+    console.log(form);
 
     const [activeIndex, setActiveIndex] = useState(2);
 
@@ -39,25 +50,49 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
     const [backgroundBtnColor, setBackgroundBtnColor] = useState<string | Animated.AnimatedInterpolation>(colors.dlsYellowSecondary);
     const [currentColor, setCurrentColor] = useState(colors.dlsGrayPrimary);
 
+
     const backgroundColorRange = animatedValue2.interpolate({
         inputRange: [0, 0.5, 0.501, 1],
         outputRange: [
-            (currentColor === colors.dlsGrayPrimary ? colors.dlsGrayPrimary : colors.dlsYellowSecondary),
-            (currentColor === colors.dlsGrayPrimary ? colors.dlsGrayPrimary : colors.dlsYellowSecondary),
-            (currentColor === colors.dlsGrayPrimary ? colors.dlsYellowSecondary : colors.dlsGrayPrimary),
-            (currentColor === colors.dlsGrayPrimary ? colors.dlsYellowSecondary : colors.dlsGrayPrimary),
+            ((activeIndex % 2) === 0 ? colors.dlsGrayPrimary : colors.dlsYellowSecondary),
+            ((activeIndex % 2) === 0 ? colors.dlsGrayPrimary : colors.dlsYellowSecondary),
+            ((activeIndex % 2) === 0 ? colors.dlsYellowSecondary : colors.dlsGrayPrimary),
+            ((activeIndex % 2) === 0 ? colors.dlsYellowSecondary : colors.dlsGrayPrimary),
         ],
     });
 
     const dotBgColorRange = animatedValue2.interpolate({
         inputRange: [0, 0.5, 0.501, 1],
         outputRange: [
-            (currentColor === colors.dlsGrayPrimary ? colors.dlsYellowSecondary : colors.dlsGrayPrimary),
-            (currentColor === colors.dlsGrayPrimary ? colors.dlsYellowSecondary : colors.dlsGrayPrimary),
-            (currentColor === colors.dlsGrayPrimary ? colors.dlsGrayPrimary : colors.dlsYellowSecondary),
-            (currentColor === colors.dlsGrayPrimary ? colors.dlsGrayPrimary : colors.dlsYellowSecondary),
+            ((activeIndex % 2) === 0 ? colors.dlsYellowSecondary : colors.dlsGrayPrimary),
+            ((activeIndex % 2) === 0 ? colors.dlsYellowSecondary : colors.dlsGrayPrimary),
+            ((activeIndex % 2) === 0 ? colors.dlsGrayPrimary : colors.dlsYellowSecondary),
+            ((activeIndex % 2) === 0 ? colors.dlsGrayPrimary : colors.dlsYellowSecondary),
         ],
     });
+
+    /*    const backgroundColorRange = animatedValue2.interpolate({
+           inputRange: [0, 0.5, 0.501, 1],
+           outputRange: [
+               (currentColor === colors.dlsGrayPrimary ? colors.dlsGrayPrimary : colors.dlsYellowSecondary),
+               (currentColor === colors.dlsGrayPrimary ? colors.dlsGrayPrimary : colors.dlsYellowSecondary),
+               (currentColor === colors.dlsGrayPrimary ? colors.dlsYellowSecondary : colors.dlsGrayPrimary),
+               (currentColor === colors.dlsGrayPrimary ? colors.dlsYellowSecondary : colors.dlsGrayPrimary),
+           ],
+       });
+   
+       const dotBgColorRange = animatedValue2.interpolate({
+           inputRange: [0, 0.5, 0.501, 1],
+           outputRange: [
+               (currentColor === colors.dlsGrayPrimary ? colors.dlsYellowSecondary : colors.dlsGrayPrimary),
+               (currentColor === colors.dlsGrayPrimary ? colors.dlsYellowSecondary : colors.dlsGrayPrimary),
+               (currentColor === colors.dlsGrayPrimary ? colors.dlsGrayPrimary : colors.dlsYellowSecondary),
+               (currentColor === colors.dlsGrayPrimary ? colors.dlsGrayPrimary : colors.dlsYellowSecondary),
+           ],
+       }); */
+
+    console.log("backgroundColor:" + JSON.stringify(backgroundColor));
+    console.log("backgroundColorRange:" + JSON.stringify(backgroundColorRange));
 
     const animationCircle = (toValue: number) =>
         Animated.parallel([
@@ -90,44 +125,67 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
     const [moveCarousel, setMoveCarousel] = useState(1);
     const [moveCarousel2, setMoveCarousel2] = useState(1);
     const [moveCarousel3, setMoveCarousel3] = useState(1);
-   
+
+    const runAnimation = (nextPrev: 'next' | 'prev') => {
+
+        console.log("nextPrev: " + nextPrev);
+
+        //para iconos
+        setCurrentColor(currentColor === colors.dlsGrayPrimary ? colors.dlsYellowSecondary : colors.dlsGrayPrimary);
+
+        setBackgroundColor(nextPrev === 'next' ? backgroundColorRange : dotBgColorRange);
+        setBackgroundBtnColor(nextPrev === 'next' ? dotBgColorRange : backgroundColorRange);
+
+
+        animatedValue.setValue(nextPrev === 'next' ? 0 : 1);
+        animatedValue2.setValue(nextPrev === 'next' ? 0 : 1);
+        animatedValue3.setValue(nextPrev === 'next' ? 0 : 2);
+        animatedValue4.setValue(0);
+
+        animationOpacity(1, 800).start(() => {
+            animationTranslate(activeIndex - (nextPrev === 'next' ? 1 : 3)).start(() => {
+                animationCircle(nextPrev === 'next' ? 1 : 0).start(() => {
+                    animatedValue4.setValue(1);
+                    animationOpacity(0, 350).start();
+                })
+            })
+        });
+
+        setActiveIndex(nextPrev === 'next' ? activeIndex + 1 : activeIndex - 1);
+    }
+
     const onPress = () => {
 
-       /*  console.log("dataCarousel.find(item => item.index === activeIndex). : ----------");
- // console.log(dataCarousel.find(item => {if(item.index === activeIndex)return item}));
-        console.log("activeIndex: " + activeIndex);
-        console.log("moveCarousel: " + moveCarousel); */
 
-        if ((moveCarousel === dataCarousel.find(item => item.index === activeIndex)?.questions.length
+        switch (activeIndex) {
+            case 2:
+                if (moveCarousel === dataCarousel.find(item => item.index === activeIndex)?.questions.length) {
+                    runAnimation('next');
+                } else {
+                    setMoveCarousel(moveCarousel + 1);
+                }
+                break;
+            case 3:
+                if (moveCarousel2 === dataCarousel.find(item => item.index === activeIndex)?.questions.length) {
+                    runAnimation('next');
+                } else {
+                    setMoveCarousel2(moveCarousel2 + 1)
+                }
+                break;
+            case 4:
+                if (moveCarousel3 === dataCarousel.find(item => item.index === activeIndex)?.questions.length) {
+                    runAnimation('next');
+                } else {
+                    setMoveCarousel3(moveCarousel3 + 1)
+                }
+                break;
+        }
+
+        /* if ((moveCarousel === dataCarousel.find(item => item.index === activeIndex)?.questions.length
         && moveCarousel2===1 && activeIndex!==3)
         || ( moveCarousel2 === dataCarousel.find(item => item.index === activeIndex)?.questions.length)) {
             if (activeIndex < 4) {
-                /* if (activeIndex===2){
-                    setMoveCarousel(1);   
-                }else
-                if (activeIndex===3)
-                {
-                    setMoveCarousel2(1) 
-                } */
-                setBackgroundColor(backgroundColorRange);
-                setBackgroundBtnColor(dotBgColorRange);
-                setCurrentColor(currentColor === colors.dlsGrayPrimary ? colors.dlsYellowSecondary : colors.dlsGrayPrimary);
-
-                animatedValue.setValue(0);
-                animatedValue2.setValue(0);
-                animatedValue3.setValue(0);
-                animatedValue4.setValue(0);
-                
-                animationOpacity(1, 800).start(() => {
-                    animationTranslate(activeIndex - 1).start(() => {
-                        animationCircle(1).start(() => {
-                            animatedValue4.setValue(1);
-                            animationOpacity(0, 350).start()
-                        })
-                    })
-                });
-
-                setActiveIndex(activeIndex + 1)
+                runAnimation('next');
             }
         } else {
             if (activeIndex===2){
@@ -141,60 +199,28 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
                 setMoveCarousel3(moveCarousel3 + 1) 
             }
            
-        }
+        } */
 
     }
 
-    const dataCarousel: QuestionCarousel[] = [{
-        index: 2,
-        questions: [{ type: '1' }, { type: '2' }, { type: '3' }, { type: '4' }]
-    }, {
-        index: 3,
-        questions: [{ type: '5' }, { type: '6' }, { type: '7' }, { type: '8' }]
-    }, {
-        index: 4,
-        questions: [{ type: '3' }, { type: '2' }]
-    }];
-    
     const backBtn = () => {
-        console.log(moveCarousel,moveCarousel2,moveCarousel3);
-        if ( moveCarousel2 === 1 && activeIndex===3||moveCarousel3===1&& activeIndex===4) {
-         
-         
+        console.log(moveCarousel, moveCarousel2, moveCarousel3);
+        if (moveCarousel2 === 1 && activeIndex === 3 || moveCarousel3 === 1 && activeIndex === 4) {
+
             if (activeIndex > 2) {
-                setBackgroundColor(dotBgColorRange);
-                setBackgroundBtnColor(backgroundColorRange);
-                setCurrentColor(currentColor === colors.dlsGrayPrimary ? colors.dlsYellowSecondary : colors.dlsGrayPrimary);
 
-                animatedValue.setValue(1);
-                animatedValue2.setValue(1);
-                animatedValue3.setValue(2);
-                animatedValue4.setValue(0);
-                //animationCircle(0).start();
-                //animationTranslate(activeIndex - 3).start();
-
-                animationOpacity(1, 800).start(() => {
-                    animationTranslate(activeIndex - 3).start(() => {
-                        animationCircle(0).start(() => {
-                            animatedValue4.setValue(1);
-                            animationOpacity(0, 350).start()
-                        })
-                    })
-                });
-
-                setActiveIndex(activeIndex - 1);
+                runAnimation('prev');
             }
         } else {
-            if (activeIndex===2){
-                setMoveCarousel(moveCarousel -1);   
-            }else
-            if (activeIndex===3)
-            {
-                setMoveCarousel2(moveCarousel2 - 1) 
-            }else
-            if(activeIndex===4){
-                setMoveCarousel3(moveCarousel3 - 1) 
-            }
+            if (activeIndex === 2) {
+                setMoveCarousel(moveCarousel - 1);
+            } else
+                if (activeIndex === 3) {
+                    setMoveCarousel2(moveCarousel2 - 1)
+                } else
+                    if (activeIndex === 4) {
+                        setMoveCarousel3(moveCarousel3 - 1)
+                    }
         }
     }
 
@@ -235,13 +261,13 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
                 {/* margin bottom es lo que ocupa el circulo de animación - no quitar */}
                 <View style={{ flex: 1, marginBottom: 200 }}>
 
-                    <FadeQuestionsScreen 
-                    animatedValueOp={animatedValue4}
-                     animatedValue={animatedValue3}
-                      dataCarousel={dataCarousel}
-                       moveCarousel={moveCarousel}
-                       moveCarousel2={moveCarousel2}
-                       moveCarousel3={moveCarousel3} />
+                    <FadeQuestionsScreen
+                        animatedValueOp={animatedValue4}
+                        animatedValue={animatedValue3}
+                        dataCarousel={dataCarousel}
+                        moveCarousel={moveCarousel}
+                        moveCarousel2={moveCarousel2}
+                        moveCarousel3={moveCarousel3} />
 
                 </View>
 

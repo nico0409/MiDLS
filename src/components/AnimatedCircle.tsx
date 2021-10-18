@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'center',
         padding: 8,
-        paddingBottom:(height*0.07),
+        paddingBottom:100,
     },
     circle: {
         width: circleSize,

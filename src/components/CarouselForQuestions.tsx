@@ -45,7 +45,7 @@ export const CarouselForQuestions = ({ data, moveCarousel, moveCarousel2, moveCa
 
         return (
             <View >
-                <QuestionsCmp questiontType={item} onChange={onChange} />
+                <QuestionsCmp questiontType={item} form={form} onChange={onChange} />
             </View>
         )
     }
