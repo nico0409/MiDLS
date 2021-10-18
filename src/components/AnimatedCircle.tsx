@@ -19,7 +19,7 @@ interface Props {
 const{height}=Dimensions.get('window');
 export const AnimatedCircle = ({ onPress, animatedValue, animatedValue2, backgroundColorRange, dotBgColorRange, currentColorString }: Props) => {
 
-    console.log(height);
+   
     
     return (
         <Animated.View style={[StyleSheet.absoluteFillObject,
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'center',
         padding: 8,
-        paddingBottom:(height*0.09),
+        paddingBottom:100,
     },
     circle: {
         width: circleSize,
