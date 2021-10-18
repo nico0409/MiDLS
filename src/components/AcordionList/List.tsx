@@ -35,9 +35,12 @@ interface ListProps {
   MeuItemType: MeuItemType
   form: M38GetCompIntfcDLHRTAOBSERVCIResponse
   onChange: (value: string, field: keyof M38GetCompIntfcDLHRTAOBSERVCIResponse) => void
+  scrollViewRef?: React.RefObject<ScrollView>
 }
 
-export default ({ form, onChange, list, MeuItemType }: ListProps) => {
+export default ({ form, onChange, list, MeuItemType, scrollViewRef }: ListProps) => {
+
+
 
   const dateInit: string = form["m38:DL_IDENTIF_DT"] ? form["m38:DL_IDENTIF_DT"] : new Date().toISOString().split('T')[0]
   const LIST_ITEM_HEIGHT = 500;
@@ -65,9 +68,6 @@ export default ({ form, onChange, list, MeuItemType }: ListProps) => {
     setDate(date.toISOString().split('T')[0]);
     /*onChange(date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear(), 'm38:DL_IDENTIF_DT'); */
     onChange(date.toISOString().split('T')[0], 'm38:DL_IDENTIF_DT');
-    console.log(date.toISOString().split('T')[0]);
-
-
 
   };
   const [toggleCheckBox, setToggleCheckBox] = useState(false)
@@ -76,9 +76,29 @@ export default ({ form, onChange, list, MeuItemType }: ListProps) => {
       setToggleCheckBox(form["m38:DL_ADESTACAR"] === 'Y' ? true : false)
   }, [])
 
+  const scrollto = () => {
+    switch (MeuItemType.MeuItemType) {
+      case 'Registro':
+        scrollViewRef?.current?.scrollTo({ y: 40, animated: true })
+        break;
+      case 'Comentarios':
+        scrollViewRef?.current?.scrollTo({ y: 140, animated: true })
+        break;
+      case 'Preguntas':
+        scrollViewRef?.current?.scrollTo({ y: 270, animated: true })
+        break;
+      case 'ReglasOro':
+        scrollViewRef?.current?.scrollTo({ y: 390, animated: true })
+        break;
+
+    }
+  }
+
+
+
   return (
     <>
-      <TouchableWithoutFeedback onPress={() => setOpen((prev) => !prev)}>
+      <TouchableWithoutFeedback onPress={() => { setOpen((prev) => !prev), scrollto() }}>
         <Animated.View
           style={[
             styles.container,
@@ -97,20 +117,21 @@ export default ({ form, onChange, list, MeuItemType }: ListProps) => {
           style={{
             borderBottomLeftRadius: 8,
             borderBottomRightRadius: 8,
-            height: 500, width: 300,
-            backgroundColor: 'white'
+            height: 500, width: 350,
           }}
         >
           {MeuItemType.MeuItemType === 'Registro' && (
-            <>
+            <View style={{ left: '2%' }}>
+
               <PickerSelect
                 form={form}
                 placeholder="Unidad de negocio"
                 type="DLHR_EMPL_BUSSINES_UNIT"
                 onChange={onChange}
               />
-              <View style={{ flexDirection: 'row' }}>
-                <Text style={{ color: 'red', fontSize: 20 }}>{date}</Text>
+
+              <View style={{ flexDirection: 'row', marginVertical: 10 }}>
+                <Text style={{ color: colors.dlsTextwhite, fontSize: 20 }}>{date}</Text>
                 <TouchableOpacity
                   onPress={showDatePicker}>
                   <Icon name="calendar" size={30} color={colors.dlsYellowSecondary} />
@@ -152,12 +173,18 @@ export default ({ form, onChange, list, MeuItemType }: ListProps) => {
                 placeholder="Puesto"
                 type={"DLHR_PUESTO"}
                 onChange={onChange} />
-            </>
+            </View>
           )}
           {MeuItemType.MeuItemType === 'Comentarios' && (
             <>
               <CustomSwitchObserve title="¿Aplico interrupción de tareas?" onChange={onChange} switchType="m38:DL_POLITINTERTAREA" form={form} />
               <CustomSwitchObserve title="Requiere APS de seguimiento" onChange={onChange} switchType="m38:DL_REQAPSSEG" form={form} />
+              {/*  <PickerSelect
+                form={form}
+                placeholder="APS"
+                type={"DLHR_APS"}
+                onChange={onChange} />   */}
+
               <View>
                 <CustomSwitchObserve title="Cuasi accidente" onChange={onChange} switchType="m38:DL_CUASIACC" form={form} />
                 <InputModal
@@ -175,7 +202,7 @@ export default ({ form, onChange, list, MeuItemType }: ListProps) => {
                   form={form}
                 />
               </View>
-              <View style={{ flexDirection: 'row', alignItems: 'center', height: 80, width: 100, backgroundColor: 'red' }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', height: 80, width: 100 }}>
                 <Text>A destacar</Text>
                 <CheckBox
                   disabled={false}
@@ -217,19 +244,19 @@ export default ({ form, onChange, list, MeuItemType }: ListProps) => {
               </ScrollView>
             </>
           )}
-{MeuItemType.MeuItemType === 'ReglasOro' && (
-<>
-<Rulegold  form={form} onChange={onChange} questiontType={{type:'1'}} />
-<Rulegold  form={form} onChange={onChange} questiontType={{type:'2'}} />
-<Rulegold  form={form} onChange={onChange} questiontType={{type:'3'}} />
-<Rulegold  form={form} onChange={onChange} questiontType={{type:'4'}} />
-<Rulegold  form={form} onChange={onChange} questiontType={{type:'5'}} />
-<Rulegold  form={form} onChange={onChange} questiontType={{type:'6'}} />
-<Rulegold  form={form} onChange={onChange} questiontType={{type:'7'}} />
-<Rulegold  form={form} onChange={onChange} questiontType={{type:'8'}} />
-<Rulegold  form={form} onChange={onChange} questiontType={{type:'9'}} />
-</>
-)}
+          {MeuItemType.MeuItemType === 'ReglasOro' && (
+            <>
+              <Rulegold form={form} onChange={onChange} questiontType={{ type: '1' }} />
+              <Rulegold form={form} onChange={onChange} questiontType={{ type: '2' }} />
+              <Rulegold form={form} onChange={onChange} questiontType={{ type: '3' }} />
+              <Rulegold form={form} onChange={onChange} questiontType={{ type: '4' }} />
+              <Rulegold form={form} onChange={onChange} questiontType={{ type: '5' }} />
+              <Rulegold form={form} onChange={onChange} questiontType={{ type: '6' }} />
+              <Rulegold form={form} onChange={onChange} questiontType={{ type: '7' }} />
+              <Rulegold form={form} onChange={onChange} questiontType={{ type: '8' }} />
+              <Rulegold form={form} onChange={onChange} questiontType={{ type: '9' }} />
+            </>
+          )}
 
 
 
@@ -248,8 +275,8 @@ export default ({ form, onChange, list, MeuItemType }: ListProps) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 16,
-    backgroundColor: "white",
+    marginTop: 50,
+    backgroundColor: colors.dlsBotonBlack,
     padding: 16,
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
@@ -262,6 +289,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     fontWeight: "bold",
+    color: colors.dlsTextwhite
   },
   items: {
     overflow: "hidden",

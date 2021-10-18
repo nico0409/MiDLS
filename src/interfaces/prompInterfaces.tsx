@@ -152,15 +152,23 @@ export interface DlhrAllObserveColl {
 
 export interface DlhrAllObserve {
   BUSINESS_UNIT?: string;
+  BUSINES_DESCR?:string;
   DL_IDENTIF_DT?: string;
   NroTarjeta?: string;
   IDEquipo?: number;
+  ID_EQUIPO_DESCR?:string;
   DL_ORIGEN?: string;
+  ORIGEN_DESCR?:string;
   DL_OBSERVADOR?: string;
+  OBSERVADOR_DESCR?:string;
   DL_TURNO?: number;
+  TURNO_DESCR?:string;
   DL_CUSTOMER_ID?: number;
+  CUSTOMER_DESCR?:string;
   DL_SECTOR_ID?: string;
+  SECTOR_DESCR?:string;
   DL_PUESTO?: string;
+  PUESTO_DESCR?:string;
   DL_ADESTACAR?: string;
 }
 

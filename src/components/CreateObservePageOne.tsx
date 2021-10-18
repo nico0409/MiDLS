@@ -47,11 +47,11 @@ export const CreateObservePageOne = ({ form, onChange }: Props) => {
 
             <View style={{ alignItems: 'center' }}>
 
-                <View style={styles.marginField}>
+                
                     <PickerSelect placeholder="Unidad de negocio" type="DLHR_EMPL_BUSSINES_UNIT" onChange={onChange} />
-                </View>
+             
 
-                <View style={{ flexDirection: 'row', marginBottom: 20 }}>
+                <View style={{ flexDirection: 'row' }}>
                     <Text style={{ color: 'white', fontSize: 20 }}>{date}</Text>
                     <TouchableOpacity
                         onPress={showDatePicker}>
@@ -59,28 +59,27 @@ export const CreateObservePageOne = ({ form, onChange }: Props) => {
                     </TouchableOpacity>
                 </View>
 
-                <View style={styles.marginField}>
+               
                     <PickerSelect placeholder="Origen" type="DLHR_ORIGEN" onChange={onChange} />
-                </View>
+               
 
-                <View style={styles.marginField}>
+              
                     <Prompt onChange={onChange} promptType={{ type: 'DLHR_EQUIP_TBL' }} />
-                </View>
+                
 
-                <View style={styles.marginField}>
+               
                     <PickerSelect placeholder="Turno" type="DLHR_TURNO" onChange={onChange} />
-                </View>
+               
 
-                <View style={styles.marginField}>
+               
                     <Prompt onChange={onChange} promptType={{ type: 'DLHR_CUSTOMER' }} />
-                </View>
+             
 
-                <View style={styles.marginField}>
+              
                     <Prompt onChange={onChange} promptType={{ type: 'DLHR_SECTOR' }} />
-                </View>
+              
 
-                <View style={[{ ...styles.marginField },
-                { flexDirection: 'row', alignItems: 'center' }]
+                <View style={[ { flexDirection: 'row', alignItems: 'center' }]
                 }>
                     <CheckBox
                         disabled={false}

@@ -2,6 +2,7 @@ import React from "react";
 import { Animated, Dimensions, StyleSheet, View } from "react-native";
 import { ObserveCard } from '../ObserveCard';
 import { DlhrAllObserve } from '../../interfaces/prompInterfaces';
+import { Shadow } from 'react-native-shadow-2';
 
 import Card, {
   CARD_HEIGHT as DEFAULT_CARD_HEIGHT,
@@ -15,6 +16,7 @@ const styles = StyleSheet.create({
   card: {
     marginVertical: MARGIN,
     alignSelf: "center",
+    
   },
 });
 
@@ -57,13 +59,19 @@ const WalletCard = ({y, index,item, setTerm}: WalletCardProps) => {
     outputRange: [0.5, 1, 1, 0.5],
   });
   return (
+    
     <Animated.View
       style={[styles.card, { opacity, transform: [{ translateY }, { scale }] }]}
       key={index}
+      
     >
     {/*  <ObserveCard observe={item} index={index}  y={y} setTerm={setTerm} /> */}
-    <Card setTerm={setTerm} item={item}/>
+     <Shadow distance={5} startColor={'#ffffff33'} radius={20} offset={[1, 2]} > 
+    <Card setTerm={setTerm} item={item} index={index}/>
+     </Shadow> 
     </Animated.View>
+    
+    
   );
 };
 

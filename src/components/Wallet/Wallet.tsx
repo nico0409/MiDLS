@@ -3,7 +3,7 @@ import { Animated, Dimensions, FlatList, View } from "react-native";
 
 import { PanGestureHandler } from "react-native-gesture-handler";
 
-import { CARD_HEIGHT, Cards } from "../Transformations/components/Card";
+import { CARD_HEIGHT} from "../Transformations/components/Card";
 import WalletCard from "./WalletCard";
 import { DlhrAllObserve } from '../../interfaces/prompInterfaces';
 
@@ -18,33 +18,6 @@ const useLazyRef = <T extends object>(initializer: () => T) => {
 const { height } = Dimensions.get("window");
 const MARGIN = 16;
 const HEIGHT = CARD_HEIGHT + MARGIN * 2;
-const cards = [
-  {
-    index: 1,
-    type: Cards.Card1,
-  },
-  {
-    index: 2,
-    type: Cards.Card2,
-  },
-  {
-    index: 3,
-    type: Cards.Card3,
-  },
-  {
-    index: 4,
-    type: Cards.Card4,
-  },
-  {
-    index: 5,
-    type: Cards.Card5,
-  },
-  {
-    index: 7,
-    type: Cards.Card6,
-  },
-];
-
 
 interface Props {
   term: string,
@@ -70,6 +43,7 @@ const Wallet = ({ term, observeFiltered, allObserveList ,setTerm}: Props) => {
   
   return  ( allObserveList[0].NroTarjeta !== undefined ? 
       <AnimatedFlatList
+      
         scrollEventThrottle={16}
         bounces={false}
         {...{ onScroll }}
@@ -77,7 +51,7 @@ const Wallet = ({ term, observeFiltered, allObserveList ,setTerm}: Props) => {
         renderItem={({ index ,item}) => (
           <WalletCard {...{ index, y,item,setTerm}} />
         )}
-        keyExtractor={(item) => `${item.NroTarjeta}`}
+        keyExtractor={(item,index) => index.toString()}
       />
       : <View></View> )
   

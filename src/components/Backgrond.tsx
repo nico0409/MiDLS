@@ -32,8 +32,7 @@ export const Backgrond = ({srcImg}:Props) => {
             
         >
          <Image 
-         source={require('../assets/collage50pn.png')
-         } 
+         source={require('../assets/collage50pn.png')} 
             style={{
                 
                 width:width,

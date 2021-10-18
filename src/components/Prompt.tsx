@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react'
 
-import { View, Modal, Text, Button, SectionList, TouchableOpacity, FlatList, useWindowDimensions, StyleSheet, Platform } from 'react-native';
+import { View, Modal, Text, Button, SectionList, TouchableOpacity, FlatList, useWindowDimensions, StyleSheet, Platform, Dimensions } from 'react-native';
 
 import { HeaderTitle } from './HeaderTitle';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
@@ -12,6 +12,7 @@ import { SearchInput } from './SearchInput';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { GetPromptArray } from './GetPromptArrayy';
 import { FlatListItemPrompt } from './FlatlisItemPrompt';
+import  Icon  from 'react-native-vector-icons/Ionicons';
 
 
 
@@ -32,7 +33,7 @@ interface Props {
     form?: M38GetCompIntfcDLHRTAOBSERVCIResponse
 }
 
-
+const { width: ScreenWidth } = Dimensions.get("window");
 export const Prompt = ({ setemplid, /* setplaceHolder, */ /* isVisible, setisVisible, */ onChange, promptType, form }: Props) => {
 
     const height = useWindowDimensions().height
@@ -252,13 +253,15 @@ export const Prompt = ({ setemplid, /* setplaceHolder, */ /* isVisible, setisVis
 
 
     return (
-        <View style={{}}>
+        <View style={{marginVertical:10}}>
 
             <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={() => { setisVisible(true) }}>
                 <View style={styles.btnContainer}>
                     <Text style={styles.textBtn}>{placeHolder}</Text>
+                <Icon name="radio-button-on"   size={25} color='white' style={{right:13}}/>
+               
                 </View>
             </TouchableOpacity>
             <Modal animationType='fade'
@@ -365,12 +368,14 @@ const styles = StyleSheet.create({
     },
     btnContainer: {
         height: 50,
-        width: 250,
-        borderWidth: 1,
-        borderRadius: 10,
-        backgroundColor: colors.dlsBtonColosWhite,
-        justifyContent: 'center',
-        alignItems: 'center',
+        width: ScreenWidth * 0.87,
+      
+        borderRadius: 15,
+        backgroundColor: '#2b2c32',
+        justifyContent: 'space-between',
+        paddingLeft:15,
+        flexDirection:'row',
+        alignItems:'center',
 
 
 
@@ -386,6 +391,9 @@ const styles = StyleSheet.create({
     },
 
     textBtn: {
-        fontSize: 20
+        fontSize: 15,
+        fontWeight:'bold',
+        color:'#fff'
+        
     }
 })

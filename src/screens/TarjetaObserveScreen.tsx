@@ -113,7 +113,7 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
 
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: colors.dlsGrayPrimary }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor:colors.dlsGrayPrimary}}>
 
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()} >
@@ -194,39 +194,15 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
 
 
             <View >
-                <View style ={{marginVertical:50}}>
+                <View style ={{marginVertical:50 }}>
 
-                    <Wallet term={term} observeFiltered={observeFiltered}  allObserveList={ allObserveList} setTerm={setTerm} />
+                    <Wallet term={term} 
+                    observeFiltered={observeFiltered} 
+                     allObserveList={ allObserveList} 
+                     setTerm={setTerm} 
+                     />
                 </View>
-                {/* <View style={{ alignItems: 'center' }}>
-
-                    {allObserveList[0].NroTarjeta !== undefined ?
-                        <AnimatedFlatList
-                            scrollEventThrottle={16}
-                            numColumns={1}
-                            {...{onScroll}}
-                            showsVerticalScrollIndicator={false}
-                            data={(term.length !== 0) ? observeFiltered : allObserveList}
-                            keyExtractor={(observe, index) => observe.NroTarjeta! + index.toString()}
-                            renderItem={({ item,index }) => <ObserveCard observe={item} index={index}  y={y} setTerm={setTerm} />
-                            }
-
-                            //onEndReached={loadPokemons}
-                            onEndReachedThreshold={0.4}
-                            ListHeaderComponent={<Text style={{
-                                ...styles.globalMargin,
-                                ...styles.title,
-                                top: top + 20,
-                                marginBottom: top + 10,
-                                paddingBottom: 10
-                            }}></Text>}
-                        /> 
-                        : <View>
-                        </View>}
-                </View> */}
-
-
-
+            
 
             </View>
             <TouchableOpacity

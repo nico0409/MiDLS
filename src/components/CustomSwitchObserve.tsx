@@ -45,9 +45,10 @@ export const CustomSwitchObserve = ({ title, onChange, switchType, form }: Props
     }, [])
 
     return (
-        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-            <Text style={{ color: 'red' }}>{title}</Text>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center',marginVertical:10 }}>
+            <Text style={{ color: colors.dlsTextwhite,fontSize:15 }}>{title}</Text>
             <Switch
+            style={{ transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }] }}
                 trackColor={{ false: 'gray', true: colors.dlsYellowSecondary }}
                 thumbColor={(Platform.OS === 'android') ? colors.dlsYellowSecondary : ''}
                 onValueChange={toggleSwitch}

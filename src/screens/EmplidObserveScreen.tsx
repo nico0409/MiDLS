@@ -48,7 +48,7 @@ export const EmplidObserveScreen = ({ navigation, route }: Props) => {
         <View style={{ alignItems: 'center', flex: 1, backgroundColor: colors.dlsGrayPrimary }}>
             <Image
                 source={require('../assets/Logo_DLSNegativo.png')}
-                style={styles.pokebolaBG}
+                style={styles.DLSLogoBG}
             />
 
             <TouchableOpacity

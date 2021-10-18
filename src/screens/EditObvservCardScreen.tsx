@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useRef } from 'react';
 import { View, useWindowDimensions, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import Accordion from '../components/AcordionList';
 
@@ -17,7 +17,9 @@ import { onChange } from 'react-native-reanimated';
 import { Prompt } from '../components/Prompt';
 import { ScrollView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
+import AwesomeIcon from 'react-native-vector-icons/FontAwesome'
 import { EditObservCard } from '../components/EditObserveCard';
+
 
 
 
@@ -40,10 +42,7 @@ const list3: ListModel = {
     name: "Preguntas",
     items: [
         { name: "Nathaniel Fitzgerald", points: "$3.45" },
-        { name: "Lawrence Fullter Fitzgerald", points: "$3.45" },
-        { name: "Jacob Mullins", points: "$3.45" },
-        { name: "Jesus Lewis", points: "$3.45" },
-        { name: "Johnny Marr", points: "$2.56" },
+        
     ],
 };
 
@@ -51,14 +50,11 @@ const list4: ListModel = {
     name: "Reglas de oro",
     items: [
         { name: "Nathaniel Fitzgerald", points: "0" },
-        { name: "Lawrence Fullter Fitzgerald", points: "0" },
-        { name: "Jacob Mullins", points: "0" },
-        { name: "Jesus Lewis", points: "0" },
-        { name: "Johnny Marr", points: "0" },
+     
     ],
 };
 interface Props extends StackScreenProps<RoutstackParams, 'EditObvservCardScreen'> {
-
+ 
 }
 
 export const EditObvservCardScreen = ({ navigation, route }: Props) => {
@@ -69,7 +65,7 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
         busineesUnit: 'CDR', Ntarjeta: '2020-4070-039506'
     }*/  route.params)
 
-
+const scrollViewRef = useRef<ScrollView>(null)
 
 
 
@@ -105,7 +101,7 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
                     <TouchableOpacity
                         onPress={() => EditObservCard(stateSend!)}
                     >
-                        <Icon name="save-outline" size={30} color={colors.dlsYellowSecondary} />
+                        <AwesomeIcon name="edit" size={30} color={colors.dlsYellowSecondary} />
                     </TouchableOpacity>
                     
                 </View>
@@ -114,11 +110,12 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
                     <Text style={styles.title}>{`${form['m38:DL_NTARJETA']}`}</Text>
                 </View>
 
-                <ScrollView >
-                    <List {...{ list }} MeuItemType={menus[0]} form={form} onChange={onChange} />
-                    <List {...{ list: list2 }} MeuItemType={menus[1]} form={form} onChange={onChange} />
-                    <List {...{ list: list3 }} MeuItemType={menus[2]} form={form} onChange={onChange} />
-                    <List {...{ list: list4 }} MeuItemType={menus[3]} form={form} onChange={onChange} />
+                <ScrollView  style={{marginTop:30}} ref={scrollViewRef} >
+                    
+                    <List {...{ list }} MeuItemType={menus[0]} form={form} onChange={onChange} scrollViewRef={scrollViewRef} />
+                    <List {...{ list: list2 }} MeuItemType={menus[1]} form={form} onChange={onChange} scrollViewRef={scrollViewRef}  />
+                    <List {...{ list: list3 }} MeuItemType={menus[2]} form={form} onChange={onChange}   scrollViewRef={scrollViewRef}/>
+                    <List {...{ list: list4 }} MeuItemType={menus[3]} form={form} onChange={onChange}   scrollViewRef={scrollViewRef}/>
                 </ScrollView>
             </View>
 
@@ -141,5 +138,6 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 25,
         fontWeight: "bold",
+        color:colors.dlsTextwhite
     },
 });
