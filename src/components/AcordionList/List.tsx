@@ -245,7 +245,7 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef }: ListProps)
             </>
           )}
           {MeuItemType.MeuItemType === 'ReglasOro' && (
-            <>
+            <View style={{marginTop:10}}>
               <Rulegold form={form} onChange={onChange} questiontType={{ type: '1' }} />
               <Rulegold form={form} onChange={onChange} questiontType={{ type: '2' }} />
               <Rulegold form={form} onChange={onChange} questiontType={{ type: '3' }} />
@@ -255,7 +255,7 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef }: ListProps)
               <Rulegold form={form} onChange={onChange} questiontType={{ type: '7' }} />
               <Rulegold form={form} onChange={onChange} questiontType={{ type: '8' }} />
               <Rulegold form={form} onChange={onChange} questiontType={{ type: '9' }} />
-            </>
+            </View>
           )}
 
 

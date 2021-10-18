@@ -3,6 +3,7 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { goldRuleData } from '../data/QuestionsData';
 import { M38GetCompIntfcDLHRTAOBSERVCIResponse, objUseForm } from '../interfaces/prompInterfaces';
 import { ruleGold, ruleType } from '../interfaces/QuestionInterfaces';
+import { fillColorBtn, unfillColorBtn, colors } from '../Themes/DlsTheme';
 
 
 interface Props{
@@ -29,14 +30,15 @@ export const Rulegold = ({form,questiontType,onChange}:Props) => {
        bounceFriction={7}
         isChecked={push}
         size={25}
-        fillColor= "#ff7473"
-        unfillColor= "#fbbfbb"
+        fillColor= {fillColorBtn}
+        unfillColor= {unfillColorBtn}
         text={data[0].text}
         iconStyle= {{
             height: 50,
             width: 50,
             borderRadius: 25,
-            borderColor: "#fbbfbb",}}
+            borderColor:colors.dlsGrayPrimary  }}
+            style={{marginVertical:10}}
         textStyle={{ fontFamily: "JosefinSans-Regular" ,textDecorationLine: "none" }}
         iconImageStyle={{height: 20, width: 20 } }
         onPress={(isChecked: boolean) => {onChange(isChecked?'Y':'N',data[0].field)}}
