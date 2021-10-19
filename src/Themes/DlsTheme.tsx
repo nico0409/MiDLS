@@ -20,7 +20,7 @@ export const colors = {
   //dlsBluePrimary: 'rgba(0,183,237,1)',
   //dlsBluePrimary: '#0087ba',
   dlsBluePrimary:'rgba(0,183,237,0.6)',
-  dlsYellowSecondary: 'rgba(245,217,47,0.7)',
+  dlsYellowSecondary: 'rgba(245,217,47,1)',
   //dlsYellowSecondary: 'rgba(190, 170, 0, 0.6)',
   //dlsGrayPrimary: 'rgba(66,73,78,1)',
   dlsGrayPrimary:'#08111c',

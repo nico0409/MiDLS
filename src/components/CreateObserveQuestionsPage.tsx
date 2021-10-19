@@ -14,7 +14,7 @@ import { AuthContext } from '../context/formContext/AuthContext';
 
 interface Props extends StackScreenProps<any, any> { };
 
-const duration = 750;
+const duration = 1500;
 
 export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
 
@@ -111,7 +111,7 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
     const animationTranslate = (toValue: number) =>
         Animated.timing(animatedValue3, {
             toValue,
-            duration: 1,
+            duration:100,
             useNativeDriver: false,
         });
 
@@ -142,14 +142,13 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
         animatedValue3.setValue(nextPrev === 'next' ? 0 : 2);
         animatedValue4.setValue(0);
 
-        animationOpacity(1, 800).start(() => {
-            animationTranslate(activeIndex - (nextPrev === 'next' ? 1 : 3)).start(() => {
-                animationCircle(nextPrev === 'next' ? 1 : 0).start(() => {
-                    animatedValue4.setValue(1);
-                    animationOpacity(0, 350).start();
-                })
-            })
-        });
+        animationOpacity(1,800).start();
+        animationCircle(nextPrev === 'next' ? 1 : 0).start(() => {
+                animationTranslate(activeIndex - (nextPrev === 'next' ? 1 : 3)).start(()=>{
+                    animationOpacity(0, 350).start(); 
+                 })
+               })
+  
 
         setActiveIndex(nextPrev === 'next' ? activeIndex + 1 : activeIndex - 1);
     }
