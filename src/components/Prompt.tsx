@@ -1,27 +1,19 @@
 
-import React, { useState, useEffect } from 'react'
-
-import { View, Modal, Text, Button, SectionList, TouchableOpacity, FlatList, useWindowDimensions, StyleSheet, Platform, Dimensions } from 'react-native';
-
-import { HeaderTitle } from './HeaderTitle';
-import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
+import React, { useState, useEffect} from 'react'
+import { View, Modal, Text, TouchableOpacity, FlatList, useWindowDimensions, StyleSheet, Platform, Dimensions } from 'react-native';
 import { colors } from '../Themes/DlsTheme';
-import { DlhrEmplBussinesUnit, DlhrObserveEmplid, DlhrEquipTbl, Fields, promptType, promptField, objUseForm, M38GetCompIntfcDLHRTAOBSERVCIResponse } from '../interfaces/prompInterfaces';
-import { FlatlistPrompt } from './FlatlistPrompt';
+import {  promptType, promptField, objUseForm, M38GetCompIntfcDLHRTAOBSERVCIResponse } from '../interfaces/prompInterfaces';
 import { SearchInput } from './SearchInput';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { GetPromptArray } from './GetPromptArrayy';
 import { FlatListItemPrompt } from './FlatlisItemPrompt';
-import  Icon  from 'react-native-vector-icons/Ionicons';
-
-
-
+import Icon from 'react-native-vector-icons/Ionicons';
 
 
 interface Props {
-     onChange?: (value: string, field: keyof objUseForm) => void;
+    onChange?: (value: string, field: keyof objUseForm) => void;
     promptType: promptType
-    
+
     setemplid?: React.Dispatch<React.SetStateAction<{
         fieldValue1: string;
         fieldValue2: string;
@@ -44,6 +36,9 @@ export const Prompt = ({ setemplid, onChange, promptType, form }: Props) => {
 
 
     const [isVisible, setisVisible] = useState(false)
+
+    const [seeFlatList, setSeeFlatList] = useState(true);
+
 
     let strPLaceHolder = ''
     switch (promptType.type) {
@@ -200,7 +195,7 @@ export const Prompt = ({ setemplid, onChange, promptType, form }: Props) => {
                 break;
         }
 
-
+        setSeeFlatList(true);
     }, [term])
 
 
@@ -228,38 +223,39 @@ export const Prompt = ({ setemplid, onChange, promptType, form }: Props) => {
                 break;
 
             case 'DLHR_SECTOR':
-                data[0] !== undefined && 
-                form !== undefined &&
-                 setplaceHolder(
-                     data.filter(
-                         item => item.DL_SECTOR_ID === form?.['m38:DL_SECTOR_ID'])[0].DESCR)
-                break;
-          case 'DLHR_OBSERVE_EMPLID':
-                    data[0] !== undefined && 
+                data[0] !== undefined &&
                     form !== undefined &&
-                     setplaceHolder(
-                         data.filter(
-                             item =>
-                              item.EMPLID === form?.['m38:DL_OBSERVADOR']
-                              )[0].NOMBRE)
-                    break;
+                    setplaceHolder(
+                        data.filter(
+                            item => item.DL_SECTOR_ID === form?.['m38:DL_SECTOR_ID'])[0].DESCR)
+                break;
+            case 'DLHR_OBSERVE_EMPLID':
+                data[0] !== undefined &&
+                    form !== undefined &&
+                    setplaceHolder(
+                        data.filter(
+                            item =>
+                                item.EMPLID === form?.['m38:DL_OBSERVADOR']
+                        )[0].NOMBRE)
+                break;
 
         }
     }, [data])
 
 
     return (
-        <View style={{marginVertical:10}}>
+        <View style={{ marginVertical: 10 }}>
 
             <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={() => { setisVisible(true) }}>
                 <View style={styles.btnContainer}>
                     <Text style={styles.textBtn}>{placeHolder}</Text>
-                <Icon name="radio-button-on"   size={25} color='white' style={{right:13}}/>
-               
+                    <Icon name="radio-button-on" size={25} color='white' style={{ right: 13 }} />
+
                 </View>
             </TouchableOpacity>
+
             <Modal animationType='fade'
                 visible={isVisible}
                 transparent
@@ -275,6 +271,7 @@ export const Prompt = ({ setemplid, onChange, promptType, form }: Props) => {
                     onPressOut={() => { setisVisible(false) }}
                 >
                 </TouchableOpacity>
+
                 <View style={{
                     ...styles.conteinerModal,
                     top: height * 0.15,
@@ -283,25 +280,24 @@ export const Prompt = ({ setemplid, onChange, promptType, form }: Props) => {
                     width: width * 0.8,
 
                 }}>
-
-                     <View style={{
+                    <View style={{
                         ...styles.cardPrompt,
                         height: height * 0.5,
                         width: width * 0.8,
                         backgroundColor: colors.dlsGrayPrimary
-                    }}> 
+                    }}>
 
                         <SearchInput
-                            onDebounce={(value) => setTerm(value)}
+                            onDebounce={(value) => { setTerm(value) }}
                             placeholder={placeHolderSrch}
                             style={{
                                 ...styles.SearchInput,
                                 width: width - 40,
                                 top: (Platform.OS === 'ios') ? top : top + 10
-                            }
-                            }
-
+                            }}
+                            onSeeFlatList={setSeeFlatList}
                         />
+
                         <View style={{
                             top: 25,
                             height: height * 0.4,
@@ -309,28 +305,28 @@ export const Prompt = ({ setemplid, onChange, promptType, form }: Props) => {
                             backgroundColor: colors.dlsGrayPrimary
                         }}>
 
-                            <FlatList
-                                style={{}}
-                                data={term.length === 0 ? data : observeFiltered}
-                                renderItem={({ item }) =>
+                            {seeFlatList &&
+                                <FlatList
+                                    data={term.length === 0 ? data : observeFiltered}
+                                    renderItem={({ item }) =>
+                                        <FlatListItemPrompt
+                                            setplaceHolder={setplaceHolder}
+                                            field1={item[strField1]}
+                                            field2={item[strField2]}
+                                            closePrompt={setisVisible}
+                                            onChange={onChange}
+                                            fieldtype={fieldType}
+                                            setemplid={setemplid}
+                                            promptType={promptType}
+                                        />
+                                    }
+                                    keyExtractor={(item, index) => item[strField1]}
+                                    showsVerticalScrollIndicator={false}
+                                /* refreshing={seeFlatList} */
+                                />}
 
-                                    <FlatListItemPrompt
-                                        setplaceHolder={setplaceHolder}
-                                        field1={item[strField1]}
-                                        field2={item[strField2]}
-                                        closePrompt={setisVisible}
-                                        onChange={onChange}
-                                        fieldtype={fieldType}
-                                        setemplid={setemplid}
-                                        promptType={promptType}
-                                    />
-                                }
-                                keyExtractor={(item, index) => item[strField1] }
-                                showsVerticalScrollIndicator={false}
-
-                            />
                         </View>
-                    </View> 
+                    </View>
 
                 </View>
             </Modal>
@@ -365,13 +361,13 @@ const styles = StyleSheet.create({
     btnContainer: {
         height: 50,
         width: ScreenWidth * 0.87,
-      
+
         borderRadius: 15,
         backgroundColor: '#2b2c32',
         justifyContent: 'space-between',
-        paddingLeft:15,
-        flexDirection:'row',
-        alignItems:'center',
+        paddingLeft: 15,
+        flexDirection: 'row',
+        alignItems: 'center',
 
 
 
@@ -388,8 +384,8 @@ const styles = StyleSheet.create({
 
     textBtn: {
         fontSize: 15,
-        fontWeight:'bold',
-        color:'#fff'
-        
+        fontWeight: 'bold',
+        color: '#fff'
+
     }
 })

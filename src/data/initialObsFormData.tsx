@@ -9,7 +9,7 @@ export const initialObsFormData = {
     "m38:DL_CUSTOMER_ID": ' ',
     "m38:DL_SECTOR_ID": ' ',
     "m38:DL_PUESTO": ' ',
-    "m38:DL_ADESTACAR": ' ',
+    "m38:DL_ADESTACAR": 'N',
     "m38:DL_POLITINTERTAREA": ' ',
     "m38:DL_REQAPSSEG": ' ',
     "m38:DL_CUASIACC": ' ',
