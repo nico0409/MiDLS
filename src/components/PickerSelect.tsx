@@ -3,22 +3,24 @@ import RNSingleSelect, {
     ISingleSelectDataType,
 } from "@freakycoder/react-native-single-select";
 import { Dimensions, View } from 'react-native';
-import { promptType, DlhrBussinesUnit, DlhrOrigen, DlhrPuesto, DlhrTurno, M38GetCompIntfcDLHRTAOBSERVCIResponse, objUseForm } from '../interfaces/prompInterfaces';
+import { promptType, DlhrBussinesUnit, DlhrOrigen, DlhrPuesto, DlhrTurno, M38GetCompIntfcDLHRTAOBSERVCIResponse, objUseForm, DlhrAps } from '../interfaces/prompInterfaces';
 import { GetPromptArray } from './GetPromptArrayy';
 
 interface Props {
     placeholder: string;
-    type: "DLHR_EMPL_BUSSINES_UNIT" | "DLHR_TURNO" | "DLHR_ORIGEN" | "DLHR_PUESTO";
+    type: "DLHR_EMPL_BUSSINES_UNIT" | "DLHR_TURNO" | "DLHR_ORIGEN" | "DLHR_PUESTO"|"DLHR_APS";
     onChange: (value: string, field: keyof objUseForm) => void;
     form?: M38GetCompIntfcDLHRTAOBSERVCIResponse;
+    emplid?:string
 }
 
-interface DlhrPromptsDet extends DlhrOrigen, DlhrPuesto, DlhrTurno, DlhrBussinesUnit { };
+interface DlhrPromptsDet extends DlhrOrigen, DlhrPuesto, DlhrTurno, DlhrBussinesUnit,DlhrAps { };
 
 const { width: ScreenWidth } = Dimensions.get("window");
 
-export const PickerSelect = ({ placeholder, type, onChange, form }: Props) => {
+export const PickerSelect = ({ placeholder, type, onChange, form,emplid="C020513"}: Props) => {
 
+  
     
 
     const promptType: promptType = { type };
@@ -27,6 +29,7 @@ export const PickerSelect = ({ placeholder, type, onChange, form }: Props) => {
     let itemselect: ISingleSelectDataType = {id:0,value:''}
     let data: ISingleSelectDataType[];
     let fieldData: keyof objUseForm;
+    let descr:string;
 
     if (PromptObArray[0] !== undefined) {
 
@@ -35,13 +38,16 @@ export const PickerSelect = ({ placeholder, type, onChange, form }: Props) => {
         /* Unidad de Negocio */
         if (type === "DLHR_EMPL_BUSSINES_UNIT") {
             const businessUArrayC: any = PromptObArray.filter(
-                item => item.DLHR_OBSERVE_EMPLID?.EMPLID == 'C020513'
+                item => item.DLHR_OBSERVE_EMPLID?.EMPLID == emplid
             )[0].DLHR_BUSSINES_UNIT;
             allArrayC = Array.isArray(businessUArrayC) ? businessUArrayC : [businessUArrayC];
         } else {
             allArrayC = Array.isArray(PromptObArray) ? PromptObArray : [PromptObArray];
         }
 
+
+        
+        
         data = allArrayC!.map(
             (item, index) => {
                 let dataItem;
@@ -49,17 +55,15 @@ export const PickerSelect = ({ placeholder, type, onChange, form }: Props) => {
                     case "DLHR_ORIGEN":
                         dataItem = item.ORIGEN;
                         fieldData = "m38:DL_ORIGEN";
-                    
-                        
-                        if (form?.['m38:DL_ORIGEN'] === item.ORIGEN.toString()) {
+                        descr=item.DESCR
+                     if (form?.['m38:DL_ORIGEN'] === item.ORIGEN.toString()) {
                             itemselect = { id: index, value: item.DESCR, data: { dataItem, fieldData } }
-                               
-                                
-                        }
+                             }
                         break;
                     case "DLHR_PUESTO":
                         dataItem = item.DL_PUESTO;
                         fieldData = "m38:DL_PUESTO";
+                        descr=item.DESCR
                         if (form?.['m38:DL_PUESTO'] === item.DL_PUESTO) {
                             itemselect = { id: index, value: item.DESCR, data: { dataItem, fieldData } }
                         }
@@ -68,9 +72,9 @@ export const PickerSelect = ({ placeholder, type, onChange, form }: Props) => {
                     case "DLHR_TURNO":
                         dataItem = item.DL_TURNO;
                         fieldData = "m38:DL_TURNO";
-                        
-                        
-                        if (form?.['m38:DL_TURNO'] === item.DL_TURNO.toString()) {
+                        descr=item.DESCR
+                          if (form?.['m38:DL_TURNO'] == item.DL_TURNO.toString()) {
+                           
                             itemselect = { id: index, value: item.DESCR, data: { dataItem, fieldData } }
                         }
 
@@ -79,17 +83,25 @@ export const PickerSelect = ({ placeholder, type, onChange, form }: Props) => {
                         
                         dataItem = item.UNIDAD_DE_NEGOCIO;
                         fieldData = "m38:BUSINESS_UNIT";
-                    
-                       
-                        
-                        if (form?.['m38:BUSINESS_UNIT'] === item.UNIDAD_DE_NEGOCIO) {
+                        descr=item.DESCR
+                       if (form?.['m38:BUSINESS_UNIT'] === item.UNIDAD_DE_NEGOCIO) {
                             itemselect = { id: index, value: item.DESCR, data: { dataItem, fieldData } }
-                            
-                        }
+                            }
 
                         break;
+
+                     /*    case 'DLHR_APS':
+                             dataItem = item.DL_ACTION_NBR
+                            fieldData = "m38:DL_NUM_APS";
+                            descr=item.DL_ACTION_NBR!
+                          console.log(form?.['m38:DL_NUM_APS']);
+                          
+                            if (form?.['m38:DL_NUM_APS'] === item.DL_ACTION_NBR) {
+                                itemselect = { id: index, value: descr, data: { dataItem, fieldData } }
+                                } 
+                        break; */
                 }
-                return { id: index, value: item.DESCR, data: { dataItem, fieldData } }
+                return { id: index, value:descr , data: { dataItem, fieldData } }
             }
         )
 
@@ -99,26 +111,26 @@ export const PickerSelect = ({ placeholder, type, onChange, form }: Props) => {
     }
     useEffect(() => {
         form!==undefined&& setSelectedItem(itemselect)
-
+       
     }, [PromptObArray])
     
     return (
-        <View>
-            <RNSingleSelect
+        <View style={{marginVertical:15}}>
+             <RNSingleSelect
                 darkMode
                 disableAbsolute={false}
                 
                 initialValue={selectedItem}  
                 placeholder={placeholder}
                 data={data}
-                width={ScreenWidth * 0.9}
+                width={ScreenWidth * 0.87}
                 searchEnabled={false}
                 menuBarContainerWidth={ScreenWidth * 0.9}
                 onSelect={(selectedItem: ISingleSelectDataType) => {
                     onChange(selectedItem.data.dataItem, selectedItem.data.fieldData);
                     setSelectedItem(selectedItem);
                 }}
-            />
+            /> 
         </View>
     )
 }

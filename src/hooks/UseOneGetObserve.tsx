@@ -12,7 +12,7 @@ import { useForm } from './UseForm';
 export const UseOneGetObserve = (observeCardSrch: InterfGetOnesCard) => {
 
     const [isloading, setIsloading] = useState(true)
-    const {form,setFormValue,onChange,stateSend }= useForm<M38GetCompIntfcDLHRTAOBSERVCIResponse>({})
+    const {form,setFormValue,onChange,stateSend,setStateSend }= useForm<M38GetCompIntfcDLHRTAOBSERVCIResponse>({})
 
 
     
@@ -26,9 +26,16 @@ export const UseOneGetObserve = (observeCardSrch: InterfGetOnesCard) => {
     }
 
 
+    const initFormSended=()=>{
+     
+        setStateSend({"m38:BUSINESS_UNIT":observeCardSrch.busineesUnit,
+                            "m38:DL_IDENTIF_DT":observeCardSrch.IdentifDt,
+                        "m38:DL_NTARJETA":observeCardSrch.Ntarjeta})
+    }
+
     useEffect(() => {
         loadObserveCard();
-        
+        initFormSended();
     }
         , [])
 

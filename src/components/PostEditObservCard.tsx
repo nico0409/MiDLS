@@ -25,7 +25,8 @@ export const PostEditObservCard = (bodyRequest: string) => {
         SOAPAction: 'UPDATEDATA.V1'
       }
     }).then(res => {
-
+      console.log( res.status);
+       
       console.log(JSON.stringify(parse(res.data)));
 
      

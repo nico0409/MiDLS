@@ -68,9 +68,9 @@ setPlaceHolder({...typeSearh})
 
                 {/* contenido del modal */}
                 <View style={{
-                    backgroundColor: 'white',
-                    width: 200,
-                    height: 300,
+                    backgroundColor:colors.dlsGrayPrimary,
+                    width: 190,
+                    height: 230,
                     position: 'absolute',
                     justifyContent: 'center',
                     alignItems: 'center',
@@ -80,7 +80,9 @@ setPlaceHolder({...typeSearh})
                     },
                     elevation: 10,
                     borderRadius: 15,
-                    shadowOpacity: 0.25
+                    shadowOpacity: 0.25,
+                    top:90,
+                    left:30
 
 
 

@@ -6,9 +6,8 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { colors } from '../Themes/DlsTheme';
 import { PickerSelect } from './PickerSelect';
 import CheckBox from '@react-native-community/checkbox';
-import { M38GetCompIntfcDLHRTAOBSERVCIResponse, objUseForm } from '../interfaces/prompInterfaces';
+import { objUseForm } from '../interfaces/prompInterfaces';
 import { Prompt } from './Prompt';
-
 
 interface Props {
     form: objUseForm;
@@ -18,7 +17,7 @@ interface Props {
 export const CreateObservePageOne = ({ form, onChange }: Props) => {
 
     //datePicker
-    const [date, setDate] = useState('--/--/----');
+    const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
 
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
@@ -31,12 +30,9 @@ export const CreateObservePageOne = ({ form, onChange }: Props) => {
     };
 
     const handleConfirm = (date: any) => {
-
-        setDate(date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear());
-        onChange(date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear(), 'm38:DL_IDENTIF_DT');
         hideDatePicker();
-        console.log("form p1: ");
-        console.log(form);
+        setDate(date.toISOString().split('T')[0]);
+        onChange(date.toISOString().split('T')[0], 'm38:DL_IDENTIF_DT');
     };
 
     //CheckBox
@@ -47,11 +43,9 @@ export const CreateObservePageOne = ({ form, onChange }: Props) => {
 
             <View style={{ alignItems: 'center' }}>
 
-                <View style={styles.marginField}>
-                    <PickerSelect placeholder="Unidad de negocio" type="DLHR_EMPL_BUSSINES_UNIT" onChange={onChange} />
-                </View>
+                <PickerSelect placeholder="Unidad de negocio" type="DLHR_EMPL_BUSSINES_UNIT" onChange={onChange} />
 
-                <View style={{ flexDirection: 'row', marginBottom: 20 }}>
+                <View style={{ flexDirection: 'row' }}>
                     <Text style={{ color: 'white', fontSize: 20 }}>{date}</Text>
                     <TouchableOpacity
                         onPress={showDatePicker}>
@@ -59,28 +53,17 @@ export const CreateObservePageOne = ({ form, onChange }: Props) => {
                     </TouchableOpacity>
                 </View>
 
-                <View style={styles.marginField}>
-                    <PickerSelect placeholder="Origen" type="DLHR_ORIGEN" onChange={onChange} />
-                </View>
+                <PickerSelect placeholder="Origen" type="DLHR_ORIGEN" onChange={onChange} />
 
-                <View style={styles.marginField}>
-                    <Prompt onChange={onChange} promptType={{ type: 'DLHR_EQUIP_TBL' }} />
-                </View>
+                <Prompt onChange={onChange} promptType={{ type: 'DLHR_EQUIP_TBL' }} />
 
-                <View style={styles.marginField}>
-                    <PickerSelect placeholder="Turno" type="DLHR_TURNO" onChange={onChange} />
-                </View>
+                <PickerSelect placeholder="Turno" type="DLHR_TURNO" onChange={onChange} />
 
-                <View style={styles.marginField}>
-                    <Prompt onChange={onChange} promptType={{ type: 'DLHR_CUSTOMER' }} />
-                </View>
+                <Prompt onChange={onChange} promptType={{ type: 'DLHR_CUSTOMER' }} />
 
-                <View style={styles.marginField}>
-                    <Prompt onChange={onChange} promptType={{ type: 'DLHR_SECTOR' }} />
-                </View>
+                <Prompt onChange={onChange} promptType={{ type: 'DLHR_SECTOR' }} />
 
-                <View style={[{ ...styles.marginField },
-                { flexDirection: 'row', alignItems: 'center' }]
+                <View style={[{ flexDirection: 'row', alignItems: 'center' }]
                 }>
                     <CheckBox
                         disabled={false}
@@ -94,6 +77,7 @@ export const CreateObservePageOne = ({ form, onChange }: Props) => {
                 </View>
 
                 <DateTimePickerModal
+                    date={new Date(date)}
                     isVisible={isDatePickerVisible}
                     mode="date"
                     onConfirm={handleConfirm}
