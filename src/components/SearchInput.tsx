@@ -13,7 +13,6 @@ import { colors } from '../Themes/DlsTheme';
 interface Props {
     onDebounce: (value: string) => void
     style?: StyleProp<ViewStyle>
-    //setisVisible?:React.Dispatch<React.SetStateAction<boolean>>
     placeholder?:string
     term?:string
 }
@@ -36,15 +35,7 @@ export const SearchInput = ({ style, onDebounce,placeholder ,term}: Props) => {
         <View style={{
             ...styles.container,
             ...style as any
-        }}>
-          {/*   <TouchableOpacity
-            onPress={()=>{setisVisible(true)}}>
-            <IconAwesome
-                name="filter"
-                color='white'
-                size={25}
-            />
-            </TouchableOpacity> */}
+        }}>  
             <View style={styles.textBackground}>
                 <TextInput
                     placeholder={placeholder?placeholder:''}

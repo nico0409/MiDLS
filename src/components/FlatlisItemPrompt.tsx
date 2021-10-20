@@ -30,16 +30,17 @@ export const FlatListItemPrompt = ({ setemplid, promptType, fieldtype, setplaceH
     return (
         <TouchableOpacity activeOpacity={0.5}
             onPress={() => {
-                setplaceHolder(field2),
-                    closePrompt(false)
+                 setplaceHolder(field2),
+                    closePrompt(false) 
                    /*  ,onChange!(field1, fieldtype) */
                    
-                   , (setemplid !== undefined ?
+                    , (setemplid !== undefined ?
                         setemplid({ fieldValue1: field1, fieldValue2: field2 })
                         :
                         (onChange !== undefined ? onChange(field1, fieldtype) : {})) 
 
-
+ 
+ 
 
             }}
         >

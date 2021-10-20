@@ -98,26 +98,28 @@ export const InputModal = ({ placeholder, type, onChange, textSelect, form }: Pr
                     }}>
 
 
-                      
 
 
-                            <RNTextArea
+
+                        <RNTextArea
                             defaultCharCount={str.length}
-                            textInputStyle={{fontSize:20,color:colors.dlsTextwhite}}
-                            style={{  borderRadius: 12 ,
+                            textInputStyle={{ fontSize: 20, color: colors.dlsTextwhite }}
+                            style={{
+                                borderRadius: 12,
                                 top: 25,
                                 height: height * 0.3,
-                                 backgroundColor: colors.dlsGrayPrimary}}
+                                backgroundColor: colors.dlsGrayPrimary
+                            }}
                             value={str}
-                                maxCharLimit={150}
-                                placeholderTextColor="black"
-                                exceedCharCountColor="#990606"
-                                placeholder={"Write your review..."}
-                                
-                                onChangeText={(text)=>{setText(text)}}
-                            />
-                             
-                       
+                            maxCharLimit={150}
+                            placeholderTextColor="black"
+                            exceedCharCountColor="#990606"
+                            placeholder={"Write your review..."}
+
+                            onChangeText={(text) => { setText(text) }}
+                        />
+
+
                     </View>
 
                 </View>

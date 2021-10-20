@@ -19,13 +19,9 @@ import  Icon  from 'react-native-vector-icons/Ionicons';
 
 
 interface Props {
-    /* data: any[], */
-    isVisible?: boolean
-    setisVisible?: React.Dispatch<React.SetStateAction<boolean>>
-
-    onChange?: (value: string, field: keyof objUseForm) => void;
+     onChange?: (value: string, field: keyof objUseForm) => void;
     promptType: promptType
-    setplaceHolder?: React.Dispatch<React.SetStateAction<string>>
+    
     setemplid?: React.Dispatch<React.SetStateAction<{
         fieldValue1: string;
         fieldValue2: string;
@@ -34,7 +30,7 @@ interface Props {
 }
 
 const { width: ScreenWidth } = Dimensions.get("window");
-export const Prompt = ({ setemplid, /* setplaceHolder, */ /* isVisible, setisVisible, */ onChange, promptType, form }: Props) => {
+export const Prompt = ({ setemplid, onChange, promptType, form }: Props) => {
 
     const height = useWindowDimensions().height
     const width = useWindowDimensions().width
@@ -281,19 +277,19 @@ export const Prompt = ({ setemplid, /* setplaceHolder, */ /* isVisible, setisVis
                 </TouchableOpacity>
                 <View style={{
                     ...styles.conteinerModal,
-                    top: height * 0.25,
+                    top: height * 0.15,
                     left: width * 0.1,
                     height: height * 0.5,
                     width: width * 0.8,
 
                 }}>
 
-                    <View style={{
+                     <View style={{
                         ...styles.cardPrompt,
                         height: height * 0.5,
                         width: width * 0.8,
                         backgroundColor: colors.dlsGrayPrimary
-                    }}>
+                    }}> 
 
                         <SearchInput
                             onDebounce={(value) => setTerm(value)}
@@ -329,12 +325,12 @@ export const Prompt = ({ setemplid, /* setplaceHolder, */ /* isVisible, setisVis
                                         promptType={promptType}
                                     />
                                 }
-                                keyExtractor={(item, index) => item[strField1] + index.toString()}
+                                keyExtractor={(item, index) => item[strField1] }
                                 showsVerticalScrollIndicator={false}
 
                             />
                         </View>
-                    </View>
+                    </View> 
 
                 </View>
             </Modal>

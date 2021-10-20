@@ -37,10 +37,9 @@ export default ({ setTerm, item, index }: CardProps) => {
       <View style={{
         ...styles.card,
         backgroundColor: index % 2 === 0 ? colors.dlsYellowSecondary : colors.dlsBluePrimary
-        ,position:'relative'
       }}>
         {/*  <Backgrond srcImg="../assets/collage50pn.png" /> */}
-        <View style={{ alignItems: 'center',right:10 }}>
+        <View style={{ marginTop:10, alignItems:'center'}}>
           <Text style={styles.name}>
             {tarjeta.BUSINES_DESCR}
           </Text>
@@ -85,7 +84,7 @@ const styles = StyleSheet.create({
     width: CARD_WIDTH,
     height: CARD_HEIGHT,
     paddingHorizontal:10,
-
+    
     borderRadius: 20,
     shadowColor: "white",
     shadowOffset: {
@@ -102,8 +101,8 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 20,
     fontWeight: 'bold',
-    top: 20,
-    left: 10
+  
+    
   }
   ,pokebolaContainer: {
 
