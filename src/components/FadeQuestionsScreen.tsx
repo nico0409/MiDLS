@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { Animated, Dimensions, SafeAreaView, ScrollView, View } from 'react-native';
 import { CarouselForQuestions } from './CarouselForQuestions';
-import { QuestionCarousel, questionType } from '../interfaces/QuestionInterfaces';
+import { QuestionCarousel, questionsRGold } from '../interfaces/QuestionInterfaces';
 import { transform } from '@babel/core';
 import { FlatList } from 'react-native-gesture-handler';
 
@@ -49,7 +49,7 @@ export const FadeQuestionsScreen = ({ animatedValueOp, animatedValue, dataCarous
                                     moveCarousel={moveCarousel}
                                     moveCarousel2={moveCarousel2}
                                     moveCarousel3={moveCarousel3}
-                                    index={element.index}
+                                    indexScreen={element.index}
                                 />
                             </View>
                         )

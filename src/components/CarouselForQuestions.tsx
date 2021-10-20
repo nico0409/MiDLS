@@ -2,20 +2,22 @@ import React, { useState, useContext, useEffect, useRef } from 'react'
 import { Dimensions, View } from 'react-native';
 import { QuestionsCmp } from './Questions';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
-import { questionType } from '../interfaces/QuestionInterfaces';
+import { questionType, questionsRGold } from '../interfaces/QuestionInterfaces';
 import { AuthContext } from '../context/formContext/AuthContext';
+import { Rulegold } from './Rulegold';
 
 const windowWidth = Dimensions.get('window').width;
 
 interface Props {
-    data: questionType[];
+    data: questionsRGold[];
     moveCarousel: number;
     moveCarousel2: number;
     moveCarousel3: number;
-    index: number
+    indexScreen: number
 }
 
-export const CarouselForQuestions = ({ data, moveCarousel, moveCarousel2, moveCarousel3, index }: Props) => {
+export const CarouselForQuestions = ({ data, moveCarousel, moveCarousel2, moveCarousel3, indexScreen }: Props) => {
+
 
     const [activeIndex, setActiveIndex] = useState(0);
 
@@ -24,37 +26,64 @@ export const CarouselForQuestions = ({ data, moveCarousel, moveCarousel2, moveCa
     const { form, onChange } = useContext(AuthContext);
 
     useEffect(() => {
-        if (index === 2) {
+
+        switch (indexScreen) {
+            case 2:
+                // @ts-ignore
+                carouselRef.current.snapToItem(moveCarousel - 1, true);
+                break;
+            case 3:
+                // @ts-ignore
+                carouselRef.current.snapToItem(moveCarousel2 - 1, true);
+                break;
+            case 4:
+                // @ts-ignore
+                carouselRef.current.snapToItem(moveCarousel3 - 1, true);
+                break;
+        }
+
+       /*  if (indexScreen === 2) {
             // @ts-ignore
             carouselRef.current.snapToItem(moveCarousel - 1, true);
         } else
-            if (index === 3) {
+            if (indexScreen === 3) {
                 // @ts-ignore
                 carouselRef.current.snapToItem(moveCarousel2 - 1, true);
             } else
-                if (index === 4) {
+                if (indexScreen === 4) {
                     // @ts-ignore
                     carouselRef.current.snapToItem(moveCarousel3 - 1, true);
-                }
+                } */
 
     }, [moveCarousel, moveCarousel2, moveCarousel3])
 
-   /*  console.log(moveCarousel, moveCarousel2, moveCarousel3); */
+    /*  console.log(moveCarousel, moveCarousel2, moveCarousel3); */
 
-    const renderItem = (item: questionType, index: number) => {
+    const renderItem = (item: questionsRGold) => {
 
-        return (
-            <View >
-                <QuestionsCmp questiontType={item} form={form} onChange={onChange} />
-            </View>
-        )
+        switch (indexScreen) {
+            case undefined:
+                return (<></>)
+            case 4:
+                return (<>
+                    {item.questionsRGold?.map(element => {
+                        return (
+                            <View key={Math.random()}>
+                                <Rulegold form={form} onChange={onChange} questiontType={element} />
+                            </View>
+                        )
+                    })}
+                </>)
+            default:
+                return <QuestionsCmp questiontType={item.questionsRGold![0]} form={form} onChange={onChange} />;
+        }
     }
 
     return (
         <>
             <Carousel
                 data={data}
-                renderItem={({ item, index }) => renderItem(item, index)}
+                renderItem={({ item }) => renderItem(item)}
                 scrollEnabled={false}
                 sliderWidth={windowWidth}
                 itemWidth={windowWidth}
