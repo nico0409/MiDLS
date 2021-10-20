@@ -1,22 +1,22 @@
-import { TarjetaObserve } from '../interfaces/prompInterfaces';
+import { objUseForm, TarjetaObserve } from '../interfaces/prompInterfaces';
 import {j2xParser} from 'fast-xml-parser'
 import { PostNewObservCard } from './PostNewObservCard';
 
-export const NewObservCard=()=>{
+export const NewObservCard=(newcard:objUseForm)=>{
 
 
-     let newcard: TarjetaObserve={
+/*      let newcard: TarjetaObserve={
 
         ['m38:BUSINESS_UNIT']:'ARBUE',
         ['m38:DL_NTARJETA']:'NEW',
         ['m38:DL_EQUIPMENT_ID']:101,
         ['m38:DL_IDENTIF_DT']:'2020-01-01',
         ['m38:DL_ORIGEN']:'A',
+        ['m38:DL_OBSERVADOR']:'B000069',
         ['m38:DL_TURNO']:1,
         ['m38:DL_CUSTOMER_ID']:2,
         ['m38:DL_SECTOR_ID']:'CAPAC',
         ['m38:DL_PUESTO']:'G',
-        ['m38:DL_OBSERVADOR']:'B000069',
         ['m38:DL_ADESTACAR']:'Y',
         ['m38:DL_POLITINTERTAREA']:'Y',
         ['m38:DL_REQAPSSEG']:'Y',
@@ -44,9 +44,8 @@ export const NewObservCard=()=>{
         ['m38:DL_OP_IZADO']:'Y',
         ['m38:DL_PERM_TRABAJO']:'Y',
         ['m38:DL_MAN_CAMBIO']:'Y',
+     } */
 
-
-     }
      var defaultOptions = {
         attributeNamePrefix : "@_",
         attrNodeName: "@", //default is false
