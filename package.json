@@ -30,6 +30,7 @@
     "radio-buttons-react-native": "^1.0.4",
     "react": "^17.0.1",
     "react-native": "0.64.1",
+    "react-native-animated-spinkit": "^1.5.2",
     "react-native-bouncy-checkbox": "^2.1.7",
     "react-native-bouncy-checkbox-group": "^0.1.0",
     "react-native-gesture-handler": "^1.10.3",

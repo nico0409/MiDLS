@@ -5659,6 +5659,11 @@ react-is@^16.13.0, react-is@^16.7.0, react-is@^16.8.1:
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
+react-native-animated-spinkit@^1.5.2:
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/react-native-animated-spinkit/-/react-native-animated-spinkit-1.5.2.tgz#b1c00ecbadf48634273e6a843f8dfbcb7c006186"
+  integrity sha512-YCQGR3HzEQvyaAnepiyf/hv88Sta3UIZ2CFZPtFqwu+VbFJfMgjJZniOx4157TuR5AAYajEJP9Fgy+JLIU3jzQ==
+
 react-native-apple-header@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/react-native-apple-header/-/react-native-apple-header-0.1.1.tgz#aa8bd7eb6b7f75626b7d7e6b348d79db670413b0"

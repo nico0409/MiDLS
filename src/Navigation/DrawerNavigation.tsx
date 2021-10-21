@@ -48,15 +48,15 @@ export const DrawerNavigation = () => {
   }, [])
 
   const GetPrompts = async () => {
-    
+
     const prompts: StorageTypes = { StorageType: 'prompt' };
     Asingstorage(prompts, await GetPrompt());
     SplashScreen.hide();
   }
 
- /*  useEffect(() => {
-    
-  }, []) */
+  /*  useEffect(() => {
+     
+   }, []) */
 
 
 
@@ -65,24 +65,24 @@ export const DrawerNavigation = () => {
   return (
     <NavigateState>
       <SafeAreaView style={styles.container}>
-        {!isConnected && isConnected !== null ?
-          <WhitOutConection />
-          :
-          <Drawer.Navigator
+        {/* {!isConnected && isConnected !== null ? 
+        <WhitOutConection />
+        :*/}
+        <Drawer.Navigator
 
-            // drawerContent={(props: any) => <DrawerMenu {...props} />}
-            drawerContent={(props: any) => <MenuInterno {...props} />}
-          >
+          // drawerContent={(props: any) => <DrawerMenu {...props} />}
+          drawerContent={(props: any) => <MenuInterno {...props} />}
+        >
 
-            <Drawer.Screen name="TopTapNavigator" component={TopTapNavigator} />
-            <Drawer.Screen name="ContactScreen" component={ContactScreen} />
-            <Drawer.Screen name="RrhhScreen" component={RrhhScreen} />
-            {/*  <Drawer.Screen name="NewsScreen" component={NewsScreen} /> */}
-            <Drawer.Screen name="MyProfileScreenDrawer" component={MyProfileScreenDrawer} />
-            <Drawer.Screen name="PaycheckScreen" component={PaycheckScreen} />
-            <Drawer.Screen name="StackNavigatorObserve" component={StackNavigatorObserve} />
-          </Drawer.Navigator>
-        }
+          <Drawer.Screen name="TopTapNavigator" component={TopTapNavigator} />
+          <Drawer.Screen name="ContactScreen" component={ContactScreen} />
+          <Drawer.Screen name="RrhhScreen" component={RrhhScreen} />
+          {/*  <Drawer.Screen name="NewsScreen" component={NewsScreen} /> */}
+          <Drawer.Screen name="MyProfileScreenDrawer" component={MyProfileScreenDrawer} />
+          <Drawer.Screen name="PaycheckScreen" component={PaycheckScreen} />
+          <Drawer.Screen name="StackNavigatorObserve" component={StackNavigatorObserve} />
+        </Drawer.Navigator>
+        {/*  } */}
 
 
       </SafeAreaView>
