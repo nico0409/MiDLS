@@ -125,7 +125,7 @@ export const PickerSelect = ({ placeholder, type, onChange, form,emplid="C020513
                 data={data}
                 width={ScreenWidth * 0.87}
                 searchEnabled={false}
-                menuBarContainerWidth={ScreenWidth * 0.9}
+                menuBarContainerWidth={ScreenWidth * 0.87}
                 onSelect={(selectedItem: ISingleSelectDataType) => {
                     onChange(selectedItem.data.dataItem, selectedItem.data.fieldData);
                     setSelectedItem(selectedItem);

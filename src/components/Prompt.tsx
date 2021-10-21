@@ -1,8 +1,8 @@
 
-import React, { useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Modal, Text, TouchableOpacity, FlatList, useWindowDimensions, StyleSheet, Platform, Dimensions } from 'react-native';
 import { colors } from '../Themes/DlsTheme';
-import {  promptType, promptField, objUseForm, M38GetCompIntfcDLHRTAOBSERVCIResponse } from '../interfaces/prompInterfaces';
+import { promptType, promptField, objUseForm, M38GetCompIntfcDLHRTAOBSERVCIResponse } from '../interfaces/prompInterfaces';
 import { SearchInput } from './SearchInput';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { GetPromptArray } from './GetPromptArrayy';
@@ -59,6 +59,9 @@ export const Prompt = ({ setemplid, onChange, promptType, form }: Props) => {
             break;
         case 'DLHR_OBSERVE_EMPLID':
             strPLaceHolder = 'Observador'
+            break;
+        case 'DLHR_APS':
+            strPLaceHolder = 'Numero APS'
             break;
 
     }
@@ -141,10 +144,19 @@ export const Prompt = ({ setemplid, onChange, promptType, form }: Props) => {
             placeHolderSrch = 'Observador'
             fieldType = 'm38:DL_OBSERVADOR'
             break;
-        /* case 'DLHR_APS':
-            strField1 = field1.EncargadoAPS!;
-            strField2 = field2.EncargadoAPS!
-            break; */
+        case 'DLHR_APS':
+            const fieldAPS: promptField = {
+                DLHR_APS:
+                {
+                    field1: { APS: 'DL_ACTION_NBR' }
+                }
+            }
+
+            strField1 = fieldAPS.DLHR_APS?.field1.APS!;
+            placeHolderSrch = 'Numero APS'
+            fieldType = 'm38:DL_NUM_APS'
+            break;
+
 
     }
 
@@ -168,6 +180,7 @@ export const Prompt = ({ setemplid, onChange, promptType, form }: Props) => {
     useEffect(() => {
         if (term.length === 0) {
 
+            setSeeFlatList(true)
             return setObserveFiltred(data)
 
         }
@@ -185,12 +198,47 @@ export const Prompt = ({ setemplid, onChange, promptType, form }: Props) => {
 
                 setObserveFiltred(
                     data.filter(
-                        observe => observe[strField1].toString()
+                        observe => observe[strField1].toString().toLocaleLowerCase()
+                            .includes(term.toLocaleLowerCase())
+                    )
+                )
+                break;
+            case 'DLHR_CUSTOMER':
+
+                setObserveFiltred(
+                    data.filter(
+                        observe => observe[strField1].toString().toLocaleLowerCase()
+                            .includes(term.toLocaleLowerCase())
+                    )
+                )
+                break;
+            case 'DLHR_SECTOR':
+
+
+                setObserveFiltred(
+                    data.filter(
+                        observe => observe[strField1].toString().toLocaleLowerCase()
+                            .includes(term.toLocaleLowerCase())
+                    )
+                )
+                break;
+            case 'DLHR_OBSERVE_EMPLID':
+                setObserveFiltred(
+                    data.filter(
+                        observe => observe[strField1].toString().toLocaleLowerCase()
                             .includes(term.toLocaleLowerCase())
                     )
                 )
                 break;
 
+            case 'DLHR_APS':
+                setObserveFiltred(
+                    data.filter(
+                        observe => observe[strField1].toString().toLocaleLowerCase()
+                            .includes(term.toLocaleLowerCase())
+                    )
+                )
+                break;
             default:
                 break;
         }
@@ -229,19 +277,25 @@ export const Prompt = ({ setemplid, onChange, promptType, form }: Props) => {
                         data.filter(
                             item => item.DL_SECTOR_ID === form?.['m38:DL_SECTOR_ID'])[0].DESCR)
                 break;
-            case 'DLHR_OBSERVE_EMPLID':
-                data[0] !== undefined &&
-                    form !== undefined &&
-                    setplaceHolder(
-                        data.filter(
-                            item =>
-                                item.EMPLID === form?.['m38:DL_OBSERVADOR']
-                        )[0].NOMBRE)
+            case 'DLHR_APS':
+
+                if (data[0] !== undefined &&
+                    form !== undefined) {
+                    const item = data.filter(
+                        item =>
+                            item.DL_ACTION_NBR === form?.['m38:DL_NUM_APS']
+                    )[0];
+                    item !== undefined && setplaceHolder(item.DL_ACTION_NBR
+                    )
+                }
+
+
                 break;
 
         }
     }, [data])
 
+   
 
     return (
         <View style={{ marginVertical: 10 }}>
@@ -305,6 +359,7 @@ export const Prompt = ({ setemplid, onChange, promptType, form }: Props) => {
                             backgroundColor: colors.dlsGrayPrimary
                         }}>
 
+
                             {seeFlatList &&
                                 <FlatList
                                     data={term.length === 0 ? data : observeFiltered}
@@ -320,7 +375,7 @@ export const Prompt = ({ setemplid, onChange, promptType, form }: Props) => {
                                             promptType={promptType}
                                         />
                                     }
-                                    keyExtractor={(item, index) => item[strField1]}
+                                    keyExtractor={(item, index) => item[strField1]+ index.toString() }
                                     showsVerticalScrollIndicator={false}
                                 /* refreshing={seeFlatList} */
                                 />}
