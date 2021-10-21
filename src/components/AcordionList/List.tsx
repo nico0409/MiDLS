@@ -43,7 +43,7 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef }: ListProps)
 
 
   const dateInit: string = form["m38:DL_IDENTIF_DT"] ? form["m38:DL_IDENTIF_DT"] : new Date().toISOString().split('T')[0]
-  const LIST_ITEM_HEIGHT = 500;
+  const LIST_ITEM_HEIGHT = 750;
   const { interpolateNode } = Animated;
   const [open, setOpen] = useState(false);
   const transition = useTransition(open);
@@ -117,11 +117,12 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef }: ListProps)
           style={{
             borderBottomLeftRadius: 8,
             borderBottomRightRadius: 8,
-            height: 500, width: 350,
+            height: LIST_ITEM_HEIGHT, width: 350,
+
           }}
         >
           {MeuItemType.MeuItemType === 'Registro' && (
-            <View style={{ left: '2%' }}>
+            <View style={{ /* left: '2%' */ }}>
 
               <PickerSelect
                 form={form}
@@ -176,46 +177,9 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef }: ListProps)
             </View>
           )}
           {MeuItemType.MeuItemType === 'Comentarios' && (
-            <>
-              <CustomSwitchObserve title="¿Aplico interrupción de tareas?" onChange={onChange} switchType="m38:DL_POLITINTERTAREA" form={form} />
-              <CustomSwitchObserve title="Requiere APS de seguimiento" onChange={onChange} switchType="m38:DL_REQAPSSEG" form={form} />
-              {/*  <PickerSelect
-                form={form}
-                placeholder="APS"
-                type={"DLHR_APS"}
-                onChange={onChange} />   */}
-
-              <View>
-                <CustomSwitchObserve title="Cuasi accidente" onChange={onChange} switchType="m38:DL_CUASIACC" form={form} />
-                <InputModal
-                  placeholder={"Más Detalles"}
-
-                  type={'PTLT_DETAILS'}
-                  onChange={onChange}
-                  form={form}
-                />
-                <InputModal
-                  placeholder={"Accion"}
-
-                  type={'DL_ACCION'}
-                  onChange={onChange}
-                  form={form}
-                />
-              </View>
-              <View style={{ flexDirection: 'row', alignItems: 'center', height: 80, width: 100 }}>
-                <Text>A destacar</Text>
-                <CheckBox
-                  disabled={false}
-                  value={toggleCheckBox}
-                  onValueChange={(newValue) => {
-                    setToggleCheckBox(newValue);
-                    onChange(newValue ? 'Y' : 'N', 'm38:DL_ADESTACAR');
-                  }}
-                />
-
-              </View>
-              <InputModal
-                placeholder={"Descripción del Acto / Condición / Incidente"}
+            <View style={{/* alignItems:'center' */}}>
+            <InputModal
+                placeholder={"Descripción del Acto / Condición "}
                 textSelect={""}
                 type={'DL_DESCACTO'}
                 onChange={onChange}
@@ -228,7 +192,53 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef }: ListProps)
                 onChange={onChange}
                 form={form}
               />
-            </>
+              <CustomSwitchObserve title="¿Aplico interrupción de tareas?" onChange={onChange} switchType="m38:DL_POLITINTERTAREA" form={form} />
+              <CustomSwitchObserve title="Requiere APS de seguimiento" onChange={onChange} switchType="m38:DL_REQAPSSEG" form={form} />
+              {form["m38:DL_REQAPSSEG"] === 'Y' && <Prompt
+                form={form}
+                onChange={onChange}
+                promptType={{ type: 'DLHR_APS' }}
+              />}
+
+              <View>
+                 
+                <CustomSwitchObserve title="Cuasi accidente" onChange={onChange} switchType="m38:DL_CUASIACC" form={form} />
+                {form["m38:DL_CUASIACC"] === 'Y' &&
+                  <View>
+                    <InputModal
+                      placeholder={"Más Detalles"}
+
+                      type={'PTLT_DETAILS'}
+                      onChange={onChange}
+                      form={form}
+                    />
+                    <InputModal
+                      placeholder={"Accion"}
+
+                      type={'DL_ACCION'}
+                      onChange={onChange}
+                      form={form}
+                    />
+                  </View>
+                }
+              </View>
+              <View style={{alignItems:'center'}}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', width:'100%' ,justifyContent: 'space-around'}}>
+                <Text style={{ color: colors.dlsTextwhite,fontSize:15 }}>A destacar</Text>
+                <CheckBox
+                tintColors={{true:colors.dlsYellowSecondary ,false:colors.dlsBtonColosWhite}}
+               style={{ transform: [{ scaleX: 1.4 }, { scaleY: 1.4 }] }}
+                  disabled={false}
+                  value={toggleCheckBox}
+                  onValueChange={(newValue) => {
+                    setToggleCheckBox(newValue);
+                    onChange(newValue ? 'Y' : 'N', 'm38:DL_ADESTACAR');
+                  }}
+                />
+
+              </View>
+              </View>
+            </View>
           )}
           {MeuItemType.MeuItemType === 'Preguntas' && (
             <>
@@ -245,7 +255,7 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef }: ListProps)
             </>
           )}
           {MeuItemType.MeuItemType === 'ReglasOro' && (
-            <View style={{marginTop:10}}>
+            <View style={{ marginTop: 10 }}>
               <Rulegold form={form} onChange={onChange} questiontType={{ type: '1' }} />
               <Rulegold form={form} onChange={onChange} questiontType={{ type: '2' }} />
               <Rulegold form={form} onChange={onChange} questiontType={{ type: '3' }} />

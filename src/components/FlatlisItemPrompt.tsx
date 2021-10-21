@@ -10,7 +10,7 @@ import { objUseForm, promptType } from '../interfaces/prompInterfaces';
 
 interface Props {
     field1: string
-    field2: string
+    field2?: string
     closePrompt: React.Dispatch<React.SetStateAction<boolean>>
     onChange?: (value: string, field: keyof objUseForm) => void;
     setplaceHolder: React.Dispatch<React.SetStateAction<string>>
@@ -25,18 +25,19 @@ interface Props {
 
 export const FlatListItemPrompt = ({ setemplid, promptType, fieldtype, setplaceHolder, field1, field2, closePrompt, onChange }: Props) => {
 
+    
 
 
     return (
-        <TouchableOpacity 
+        <TouchableOpacity
             activeOpacity={0.5}
             onPress={() => {
-                setplaceHolder(field2),
+                setplaceHolder((promptType.type === 'DLHR_APS') ? field1 : field2!),
                     closePrompt(false)
                     /*  ,onChange!(field1, fieldtype) */
 
                     , (setemplid !== undefined ?
-                        setemplid({ fieldValue1: field1, fieldValue2: field2 })
+                        setemplid({ fieldValue1: field1, fieldValue2: field2! })
                         :
                         (onChange !== undefined ? onChange(field1, fieldtype) : {}))
             }}
@@ -47,11 +48,14 @@ export const FlatListItemPrompt = ({ setemplid, promptType, fieldtype, setplaceH
                         {field1}
                     </Text>
                 </View>
-                <View>
-                    <Text style={styles.itemText}>
-                        {field2}
-                    </Text>
-                </View>
+                {(promptType.type !== 'DLHR_APS') &&
+                    <View>
+                        <Text style={styles.itemText}>
+                            {field2}
+                        </Text>
+                    </View>
+                }
+
             </View>
         </TouchableOpacity>
     )

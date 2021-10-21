@@ -98,9 +98,9 @@ const styles = StyleSheet.create({
 
   },
   name: {
-    color: 'black',
+    color: colors.dlsTextwhite,
     fontSize: 20,
-    fontWeight: 'bold',
+   // fontWeight: 'bold',
   
     
   }
