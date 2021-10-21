@@ -45,8 +45,12 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
      */
 
     const y = new Animated.Value(0);
+
     const onScroll = Animated.event([{ nativeEvent: { contentOffset: { y } } }],
         { useNativeDriver: true })
+
+    const [seeFlatList, setSeeFlatList] = useState(true);
+
     useEffect(() => {
         if (term.length === 0) {
 
@@ -98,7 +102,7 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
                 break;
         }
 
-
+        setSeeFlatList(true);
 
     }, [term])
 
@@ -113,7 +117,7 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
 
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor:colors.dlsGrayPrimary}}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: colors.dlsGrayPrimary }}>
 
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()} >
@@ -155,6 +159,7 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
                     }
                     term={term}
                     placeholder={placeHolder.label}
+                    onSeeFlatList={setSeeFlatList}
 
                 />
                 <View style={{
@@ -194,15 +199,17 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
 
 
             <View >
-                <View style ={{marginVertical:50 }}>
+                <View style={{ marginVertical: 50 }}>
 
-                    <Wallet term={term} 
-                    observeFiltered={observeFiltered} 
-                     allObserveList={ allObserveList} 
-                     setTerm={setTerm} 
-                     />
+                    {seeFlatList &&
+                        <Wallet term={term}
+                            observeFiltered={observeFiltered}
+                            allObserveList={allObserveList}
+                            setTerm={setTerm}
+                        />
+                    }
                 </View>
-            
+
 
             </View>
             <TouchableOpacity

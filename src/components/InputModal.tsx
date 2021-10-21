@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { View, TouchableOpacity, Text, StyleSheet, Modal, useWindowDimensions, TextInput } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet, Modal, useWindowDimensions, TextInput, Dimensions } from 'react-native';
 import { colors } from '../Themes/DlsTheme';
 import { objUseForm, M38GetCompIntfcDLHRTAOBSERVCIResponse } from '../interfaces/prompInterfaces';
 import { onChange, Value } from 'react-native-reanimated';
 import RNTextArea from "@freakycoder/react-native-text-area";
+import Icon from 'react-native-vector-icons/Ionicons';
 
 interface Props {
     placeholder: string;
@@ -13,6 +14,7 @@ interface Props {
     textSelect?: string;
 }
 
+const { width: ScreenWidth } = Dimensions.get("window");
 export const InputModal = ({ placeholder, type, onChange, textSelect, form }: Props) => {
     const height = useWindowDimensions().height
     const width = useWindowDimensions().width
@@ -58,12 +60,13 @@ export const InputModal = ({ placeholder, type, onChange, textSelect, form }: Pr
 
 
     return (
-        <View style={{}} >
+        <View style={{marginVertical:10}} >
             <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={() => { setisVisible(true) }}>
                 <View style={styles.btnContainer}>
                     <Text style={styles.textBtn}>{placeholder}</Text>
+                    <Icon name="radio-button-on" size={25} color='white' style={{ right: 13 }} />
                 </View>
             </TouchableOpacity>
             <Modal animationType='fade'
@@ -98,26 +101,28 @@ export const InputModal = ({ placeholder, type, onChange, textSelect, form }: Pr
                     }}>
 
 
-                      
 
 
-                            <RNTextArea
+
+                        <RNTextArea
                             defaultCharCount={str.length}
-                            textInputStyle={{fontSize:20,color:colors.dlsTextwhite}}
-                            style={{  borderRadius: 12 ,
+                            textInputStyle={{ fontSize: 20, color: colors.dlsTextwhite }}
+                            style={{
+                                borderRadius: 12,
                                 top: 25,
                                 height: height * 0.3,
-                                 backgroundColor: colors.dlsGrayPrimary}}
+                                backgroundColor: colors.dlsGrayPrimary
+                            }}
                             value={str}
-                                maxCharLimit={150}
-                                placeholderTextColor="black"
-                                exceedCharCountColor="#990606"
-                                placeholder={"Write your review..."}
-                                
-                                onChangeText={(text)=>{setText(text)}}
-                            />
-                             
-                       
+                            maxCharLimit={150}
+                            placeholderTextColor="black"
+                            exceedCharCountColor="#990606"
+                            placeholder={"Write your review..."}
+
+                            onChangeText={(text) => { setText(text) }}
+                        />
+
+
                     </View>
 
                 </View>
@@ -129,14 +134,15 @@ export const InputModal = ({ placeholder, type, onChange, textSelect, form }: Pr
 }
 
 const styles = StyleSheet.create({
-
     btnContainer: {
         height: 50,
-        width: 250,
-        borderWidth: 1,
-        borderRadius: 10,
-        backgroundColor: colors.dlsBtonColosWhite,
-        justifyContent: 'center',
+        width: ScreenWidth * 0.87,
+
+        borderRadius: 15,
+        backgroundColor: '#2b2c32',
+        justifyContent: 'space-between',
+        paddingLeft: 15,
+        flexDirection: 'row',
         alignItems: 'center',
 
 
@@ -151,9 +157,13 @@ const styles = StyleSheet.create({
 
         elevation: 15
     },
+    
 
     textBtn: {
-        fontSize: 20
+        fontSize: 15,
+        fontWeight: 'bold',
+        color: '#fff'
+
     },
     conteinerModal: {
         position: 'absolute',
