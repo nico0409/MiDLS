@@ -1,42 +1,40 @@
 import React, { useRef } from 'react';
-import { Animated, Dimensions, SafeAreaView, ScrollView, View } from 'react-native';
+import { Dimensions, SafeAreaView, ScrollView, View } from 'react-native';
+import Animated from 'react-native-reanimated';
 import { CarouselForQuestions } from './CarouselForQuestions';
 import { QuestionCarousel, questionsRGold } from '../interfaces/QuestionInterfaces';
 import { transform } from '@babel/core';
 import { FlatList } from 'react-native-gesture-handler';
 
 interface Props {
-    animatedValueOp: Animated.Value;
-    animatedValue: Animated.Value;
+    /* animatedValueOp?: Animated.Value;
+    animatedValue?: Animated.Value; */
     dataCarousel: QuestionCarousel[];
     moveCarousel: number;
     moveCarousel2: number;
     moveCarousel3: number;
+    trasladeCarousel: number;
+    opacityPagesStyle: {
+        opacity: number;
+    }
 }
 
 const windowWidth = Dimensions.get('window').width;
 
-export const FadeQuestionsScreen = ({ animatedValueOp, animatedValue, dataCarousel, moveCarousel, moveCarousel2, moveCarousel3 }: Props) => {
+export const FadeQuestionsScreen = ({ dataCarousel, moveCarousel, moveCarousel2, moveCarousel3,trasladeCarousel,opacityPagesStyle }: Props) => {
 
     return (
         <>
-            <Animated.View style={{
+            <Animated.View style={[{
                 flex: 1,
                 flexDirection: 'row',
                 width: windowWidth * 3,
-                transform: [
+                 transform: [
                     {
-                        translateX: animatedValue.interpolate({
-                            inputRange: [0, 1, 2],
-                            outputRange: [0, -windowWidth, -windowWidth * 2]
-                        })
+                        translateX: trasladeCarousel
                     }
                 ],
-                opacity: animatedValueOp.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [1, 0]
-                })
-            }}>
+            },opacityPagesStyle]}>
                 {
                     dataCarousel.map(element => {
                         return (
