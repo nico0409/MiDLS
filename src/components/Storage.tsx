@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StorageTypes, DlhrAllObserve, AllObserveType, PromptObserveType } from '../interfaces/prompInterfaces';
+import { storageEmplid } from '../interfaces/storageInterface';
 
 export const Asingstorage= async({StorageType}:StorageTypes,data:Object)=>{
 
@@ -10,7 +11,7 @@ export const Asingstorage= async({StorageType}:StorageTypes,data:Object)=>{
 
 export const GetStorage = async({StorageType}:StorageTypes)=>{
     const Datos = await AsyncStorage.getItem(StorageType);
-
+    
     switch (StorageType) {
          case 'allObserve':
          const allObserve:AllObserveType=  JSON.parse(Datos!)
@@ -24,6 +25,13 @@ export const GetStorage = async({StorageType}:StorageTypes)=>{
                 const prompt:PromptObserveType=  JSON.parse(Datos!)
                
                 return prompt;    
+
+                case'emplid':
+
+                const emplid:storageEmplid=JSON.parse(Datos!)
+               
+                
+                return emplid
     }
     
     

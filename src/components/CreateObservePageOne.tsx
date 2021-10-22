@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { View, Text, Dimensions, ScrollView, StyleSheet } from 'react-native';
+import React, { useContext, useState } from 'react'
+import { View, Text, Dimensions, ScrollView, StyleSheet, } from 'react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Icon from 'react-native-vector-icons/Ionicons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -8,6 +8,8 @@ import { PickerSelect } from './PickerSelect';
 import CheckBox from '@react-native-community/checkbox';
 import { objUseForm } from '../interfaces/prompInterfaces';
 import { Prompt } from './Prompt';
+import { AuthContext } from '../context/formContext/AuthContext';
+
 
 interface Props {
     form: objUseForm;
@@ -15,12 +17,13 @@ interface Props {
 }
 
 export const CreateObservePageOne = ({ form, onChange }: Props) => {
-
+   
     //datePicker
     const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
 
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-
+    const {emplidSelect} = useContext(AuthContext)
+   
     const showDatePicker = () => {
         setDatePickerVisibility(true);
     };
@@ -35,15 +38,20 @@ export const CreateObservePageOne = ({ form, onChange }: Props) => {
         onChange(date.toISOString().split('T')[0], 'm38:DL_IDENTIF_DT');
     };
 
+    
+    
+
     //CheckBox
     const [toggleCheckBox, setToggleCheckBox] = useState(false)
+
+    const {setCardDescr,cardDescr} = useContext(AuthContext);
 
     return (
         <ScrollView>
 
             <View style={{ alignItems: 'center' }}>
 
-                <PickerSelect placeholder="Unidad de negocio" type="DLHR_EMPL_BUSSINES_UNIT" onChange={onChange} />
+                <PickerSelect placeholder="Unidad de negocio" type="DLHR_EMPL_BUSSINES_UNIT" onChange={onChange} setCardDescr={setCardDescr} cardDescr={cardDescr} emplid={emplidSelect} />
 
                 <View style={{ flexDirection: 'row' }}>
                     <Text style={{ color: 'white', fontSize: 20 }}>{date}</Text>
@@ -55,9 +63,9 @@ export const CreateObservePageOne = ({ form, onChange }: Props) => {
 
                 <PickerSelect placeholder="Origen" type="DLHR_ORIGEN" onChange={onChange} />
 
-                <Prompt onChange={onChange} promptType={{ type: 'DLHR_EQUIP_TBL' }} />
+                <Prompt onChange={onChange} promptType={{ type: 'DLHR_EQUIP_TBL' } } setCardDescr={setCardDescr} cardDescr={cardDescr} />
 
-                <PickerSelect placeholder="Turno" type="DLHR_TURNO" onChange={onChange} />
+                <PickerSelect placeholder="Turno" type="DLHR_TURNO" onChange={onChange} setCardDescr={setCardDescr} cardDescr={cardDescr}  />
 
                 <Prompt onChange={onChange} promptType={{ type: 'DLHR_CUSTOMER' }} />
 

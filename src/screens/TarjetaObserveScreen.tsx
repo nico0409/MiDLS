@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Text, View, Dimensions, SafeAreaView, Platform, Image, FlatList, ActivityIndicator, TouchableOpacity, Modal, Button, Animated } from 'react-native';
+import { Text, View, Dimensions, SafeAreaView, Platform, Image, FlatList, ActivityIndicator, TouchableOpacity, Modal, Button, Animated, StyleSheet } from 'react-native';
 import { SearchInput } from '../components/SearchInput';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ObserveCard } from '../components/ObserveCard';
@@ -132,12 +132,12 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: colors.dlsGrayPrimary }}>
 
-            <View style={styles.header}>
-                <TouchableOpacity onPress={() => navigation.goBack()} >
+            <View style={styless.header}>
+                {/* <TouchableOpacity onPress={() => navigation.goBack()} >
                     <Icon name="caret-back-outline"
                         color={colors.dlsYellowSecondary}
                         size={35} />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <TouchableOpacity
                     onPress={() => setstatePropmpEmp(true)}
                 >
@@ -265,3 +265,16 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
 
 
 }
+const styless=StyleSheet.create({
+
+header: {
+        marginVertical: 10,
+        paddingTop:10,
+        paddingLeft:20,
+    
+        flexDirection: 'row-reverse',
+        
+        alignItems: 'center'
+}
+
+})

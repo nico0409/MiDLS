@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import { View, Modal, Text, TouchableOpacity, FlatList, useWindowDimensions, StyleSheet, Platform, Dimensions } from 'react-native';
 import { colors } from '../Themes/DlsTheme';
-import { promptType, promptField, objUseForm, M38GetCompIntfcDLHRTAOBSERVCIResponse } from '../interfaces/prompInterfaces';
+import { promptType, promptField, objUseForm, M38GetCompIntfcDLHRTAOBSERVCIResponse, DlhrAllObserve } from '../interfaces/prompInterfaces';
 import { SearchInput } from './SearchInput';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { GetPromptArray } from './GetPromptArrayy';
@@ -19,10 +19,12 @@ interface Props {
         fieldValue2: string;
     }>>
     form?: M38GetCompIntfcDLHRTAOBSERVCIResponse
+    setCardDescr?:React.Dispatch<React.SetStateAction<DlhrAllObserve>>
+     cardDescr?: DlhrAllObserve
 }
 
 const { width,height} = Dimensions.get("window");
-export const Prompt = ({ setemplid, onChange, promptType, form }: Props) => {
+export const Prompt = ({ setemplid, onChange, promptType, form ,setCardDescr,cardDescr}: Props) => {
 
     
     const { top } = useSafeAreaInsets();
@@ -372,6 +374,8 @@ export const Prompt = ({ setemplid, onChange, promptType, form }: Props) => {
                                             fieldtype={fieldType}
                                             setemplid={setemplid}
                                             promptType={promptType}
+                                            setCardDescr={setCardDescr}
+                                            cardDescr={cardDescr}
                                         />
                                     }
                                     keyExtractor={(item, index) => item[strField1]+ index.toString() }

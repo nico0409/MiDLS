@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import { StyleSheet, Text, TouchableWithoutFeedback, View, TouchableOpacity } from 'react-native';
 
 import Animated from "react-native-reanimated";
@@ -20,6 +20,7 @@ import { QuestionsCmp } from "../Questions";
 import { ScrollView } from "react-native-gesture-handler";
 import { onChange } from 'react-native-reanimated';
 import { Rulegold } from '../Rulegold';
+import { AuthContext } from "../../context/formContext/AuthContext";
 
 
 
@@ -48,6 +49,7 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef }: ListProps)
   const [open, setOpen] = useState(false);
   const transition = useTransition(open);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const {emplidSelect} = useContext(AuthContext)
   const height = mix(transition, 0, LIST_ITEM_HEIGHT * 1);
   const bottomRadius = interpolateNode(transition, {
     inputRange: [0, 16 / 400],
@@ -129,6 +131,7 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef }: ListProps)
                 placeholder="Unidad de negocio"
                 type="DLHR_EMPL_BUSSINES_UNIT"
                 onChange={onChange}
+                emplid={emplidSelect} 
               />
 
               <View style={{ flexDirection: 'row', marginVertical: 10 }}>

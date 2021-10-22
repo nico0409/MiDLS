@@ -10,6 +10,8 @@ export interface AuthState {
     setFormValue: (form: M38GetCompIntfcDLHRTAOBSERVCIResponse) => void;
     cardDescr: DlhrAllObserve;
     setCardDescr: React.Dispatch<React.SetStateAction<DlhrAllObserve>>
+    setEmplidSelect:React.Dispatch<React.SetStateAction<string>>;
+    emplidSelect:string;
 }
 
 
@@ -21,6 +23,7 @@ export const AuthProvider = ({ children }: { children: JSX.Element[] | JSX.Eleme
 
     const { form, onChange, setFormValue } = useForm<M38GetCompIntfcDLHRTAOBSERVCIResponse>(initialObsFormData);
     const [cardDescr, setCardDescr] = useState<DlhrAllObserve>({});
+    const [emplidSelect, setEmplidSelect] = useState('')
 
     return (
 
@@ -29,8 +32,10 @@ export const AuthProvider = ({ children }: { children: JSX.Element[] | JSX.Eleme
             onChange,
             setFormValue,
             cardDescr,
-            setCardDescr
-        }}>
+            setCardDescr,
+            setEmplidSelect,
+            emplidSelect
+ }}>
             {children}
         </AuthContext.Provider>
     )

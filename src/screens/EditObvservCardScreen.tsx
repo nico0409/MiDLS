@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState,useContext } from 'react';
 import { View, useWindowDimensions, StyleSheet, Text, TouchableOpacity, Platform, ToastAndroid, Alert } from 'react-native';
 import Accordion from '../components/AcordionList';
 
@@ -20,6 +20,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import AwesomeIcon from 'react-native-vector-icons/FontAwesome'
 import { EditObservCard } from '../components/EditObserveCard';
 import { Chase } from 'react-native-animated-spinkit'
+import { AuthContext } from '../context/formContext/AuthContext';
+
 
 
 
@@ -69,7 +71,7 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
     const [editAble, setEditAble] = useState(false)
     const [initialState, setinitialState] = useState<M38GetCompIntfcDLHRTAOBSERVCIResponse | undefined>()
     const scrollViewRef = useRef<ScrollView>(null)
-
+ 
 
     useEffect(() => {
 
