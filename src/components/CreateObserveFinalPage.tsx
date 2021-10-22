@@ -1,27 +1,33 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { View, Dimensions, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, Dimensions, StyleSheet, TouchableOpacity } from 'react-native';
 
+import { StackScreenProps } from '@react-navigation/stack';
 import { Chase } from 'react-native-animated-spinkit';
-import Animated, { useSharedValue, useAnimatedStyle, withTiming, withSpring } from 'react-native-reanimated';
+import Animated, { useSharedValue, useAnimatedStyle, withTiming, withSpring, withDelay } from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { colors } from '../Themes/DlsTheme';
 import { AuthContext } from '../context/formContext/AuthContext';
 import { NewObservCard } from './NewObservCard';
+import Card from './Transformations/components/Card';
+
+interface Props extends StackScreenProps<any, any> { };
 
 const { height } = Dimensions.get('window');
 
-export const CreateObserveFinalPage = () => {
+export const CreateObserveFinalPage = ({ navigation, route }: Props) => {
 
-    const { form } = useContext(AuthContext);
+    const { form, cardDescr } = useContext(AuthContext);
 
     const [reqSended, setReqSended] = useState<'pending' | 'sended' | 'error'>('pending');
     const [bgCircleColor, setBgCircleColor] = useState('grey');
 
     console.log(form);
 
+    const opacityHomeValue = useSharedValue(0);
     const loadingValue = useSharedValue(0);
     const statusIconValue = useSharedValue(height);
+    const cardValue = useSharedValue(height);
     const circleBGValue = useSharedValue(0);
 
     const animatedLoadingStyle = useAnimatedStyle(() => {
@@ -35,7 +41,9 @@ export const CreateObserveFinalPage = () => {
                         //esta condición se pone porque el callback de reanimated se ejecuta a penas renderiza por primera vez,cosa que esta mál
                         //entonces se indica algun tipo de state y se setea en algun lado para que se ejecute en el callback que esperamos y cuando queramos
                         if (reqSended !== 'pending') {
+                            opacityHomeValue.value = 1;
                             statusIconValue.value = 0;
+                            cardValue.value = 0;
                             circleBGValue.value = Math.ceil(height / 95);
                         }
                     })
@@ -43,12 +51,29 @@ export const CreateObserveFinalPage = () => {
         };
     });
 
+    const animatedHomeIcon = useAnimatedStyle(() => {
+        return {
+            opacity: withDelay(1000,withTiming(opacityHomeValue.value,{duration:400})) 
+        };
+    });
+
     const animatedIconStatusStyle = useAnimatedStyle(() => {
         return {
             transform: [{
                 translateY: withSpring(statusIconValue.value, {
-                    damping: 14,
+                    damping: 12,
                     stiffness: 70,
+                })
+            }],
+        };
+    });
+
+    const animatedCardStyle = useAnimatedStyle(() => {
+        return {
+            transform: [{
+                translateY: withSpring(cardValue.value, {
+                    damping: 20,
+                    stiffness: 20,
                 })
             }],
         };
@@ -64,8 +89,8 @@ export const CreateObserveFinalPage = () => {
 
     useEffect(() => {
         setTimeout(() => {
-            NewObservCard({form, setReqSended, setBgCircleColor, loadingValue});
-        }, 1350);
+            NewObservCard({ form, setReqSended, setBgCircleColor, loadingValue });
+        }, 2000);
     }, [])
 
     return (
@@ -80,8 +105,22 @@ export const CreateObserveFinalPage = () => {
                 }
             </Animated.View>
 
+            <Animated.View style={[{ width: '100%', alignItems: 'flex-end' },animatedHomeIcon]}>
+                <TouchableOpacity 
+                style={{ paddingRight: 10, paddingTop: 10 }}
+                onPress={ () =>{
+                    navigation.pop(3)
+                }}>
+                    <Icon name="home" size={40} color="white" />
+                </TouchableOpacity>
+            </Animated.View>
+
             <Animated.View style={[styles.loadingContainer, animatedLoadingStyle]}>
                 <Chase size={140} color="white" />
+            </Animated.View>
+
+            <Animated.View style={[styles.cardContainer, animatedCardStyle]}>
+                <Card index={1} item={cardDescr} />
             </Animated.View>
 
         </View>
@@ -92,12 +131,12 @@ const styles = StyleSheet.create({
     loadingContainer: {
         width: '100%',
         alignItems: 'center',
-        paddingTop: height * 0.2,
+        paddingTop: height * 0.17,
     },
     iconStatusContainer: {
         width: '100%',
         alignItems: 'center',
-        paddingTop: height * 0.2,
+        paddingTop: height * 0.17,
         position: 'absolute'
     },
     circleBackground: {
@@ -107,5 +146,10 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: -50,
         alignSelf: 'center'
+    },
+    cardContainer: {
+        flex: 1,
+        alignSelf: 'center',
+        justifyContent: 'center'
     }
 })
