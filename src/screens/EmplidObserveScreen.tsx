@@ -48,20 +48,24 @@ export const EmplidObserveScreen = ({ navigation, route }: Props) => {
     
     
     const EmplidLoad = async () => {
-        const emplidStorage = await GetStorage({StorageType:'emplid'})
+         const emplidStorage = await GetStorage({StorageType:'emplid'})
 
 
 
-        function isPromptObserve(object: any): object is storageEmplid   {
+
+         function isPromptObserve(object: any): object is storageEmplid   {
             return 'emplid' in object;
         }
 
+        if (emplidStorage !== null)
+        {
         if (isPromptObserve(emplidStorage)) {
 
             
             setemplid({fieldValue1:emplidStorage.emplid,
                 fieldValue2:emplidStorage.name})
-        }
+        } 
+    } 
     }
  
 useEffect(() => {

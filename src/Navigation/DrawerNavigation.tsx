@@ -50,7 +50,7 @@ export const DrawerNavigation = () => {
   const GetPrompts = async () => {
 
     const prompts: StorageTypes = { StorageType: 'prompt' };
-    GetStorage({StorageType:'prompt'})===undefined &&
+   /*  GetStorage({StorageType:'prompt'})===undefined && */
     Asingstorage(prompts, await GetPrompt());
     SplashScreen.hide();
   }
