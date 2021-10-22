@@ -19,31 +19,44 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { RoutstackParams } from '../Navigation/StackNavigatorObserve';
 import IconAwesome from 'react-native-vector-icons/FontAwesome';
 import Wallet from '../components/Wallet';
+import { Chase } from 'react-native-animated-spinkit'
+import { width } from '../../../../can-it-be-done-in-react-native-master/src/Menu/Content';
+import { ModalPromptEmplid } from '../components/ModalPromptEmplid';
+
 
 
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
 
 
-interface Props extends DrawerScreenProps<any, any> { };
-
+/* interface Props extends DrawerScreenProps<any, any> { }; */
+interface Props extends StackScreenProps<any,any>{};
 export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
 
 
 
 
     const ScreenWidt = Dimensions.get('window').width;
+    const ScreenHeight = Dimensions.get('window').height;
     const { top } = useSafeAreaInsets();
 
     const [isVisible, setisVisible] = useState(false)
     const [term, setTerm] = useState('')
     const [placeHolder, setPlaceHolder] = useState<fieldSearchType>({ label: 'Numero de tarjeta' })
-    const { allObserveList, isloading, loadAllObserve } = useAllObserve(route.params!.emplid)
-    const [observeFiltered, setObserveFiltred] = useState<DlhrAllObserve[]>([])
-    /* const [searchValue, setsearchValue] = useState(0)
-    const [typeSearh, setTypeSearch] = useState<fieldSearchType>({ type: 'DLHR_NTARJETA' })
-     */
 
+    const { allObserveList, isloading, loadAllObserve } = useAllObserve(route.params!.emplid)
+
+    const [observeFiltered, setObserveFiltred] = useState<DlhrAllObserve[]>([])
+  
+    const [statePropmpEmp, setstatePropmpEmp] = useState(false)
+    const [emplid, setEmplid] = useState<
+        {
+            fieldValue1: string;
+            fieldValue2: string;
+        }>({
+            fieldValue1: route.params!.emplid,
+            fieldValue2: route.params!.name
+        })
     const y = new Animated.Value(0);
 
     const onScroll = Animated.event([{ nativeEvent: { contentOffset: { y } } }],
@@ -107,15 +120,15 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
     }, [term])
 
 
-    if (isloading) {
-        return (
-            <Loading />
-        )
-    }
-
-
-
-
+    useEffect(() => {
+         if( emplid.fieldValue1!==route.params!.emplid)
+       {console.log("entre");
+       
+        navigation.replace(
+            'TarjetaObserveScreen',
+            { name: emplid.fieldValue2, emplid: emplid.fieldValue1 }); 
+       }
+    }, [emplid])
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: colors.dlsGrayPrimary }}>
 
@@ -125,7 +138,9 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
                         color={colors.dlsYellowSecondary}
                         size={35} />
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => setstatePropmpEmp(true)}
+                >
                     <View style={{ flexDirection: 'row' }}>
                         <Icon name="person-outline"
                             color={colors.dlsYellowSecondary}
@@ -133,7 +148,7 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
                         <Text style={{
                             fontSize: 15, fontWeight: 'bold', fontFamily: 'Stagsans-Light',
                             color: colors.dlsYellowSecondary
-                        }}>{route.params!.name}</Text>
+                        }}>{emplid.fieldValue2}</Text>
                     </View>
                 </TouchableOpacity>
 
@@ -201,12 +216,20 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
             <View >
                 <View style={{ marginVertical: 50 }}>
 
-                    {seeFlatList &&
+                    {seeFlatList && !isloading ?
                         <Wallet term={term}
                             observeFiltered={observeFiltered}
                             allObserveList={allObserveList}
                             setTerm={setTerm}
-                        />
+                        /> :
+                        <View style={{
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            height: ScreenHeight * 0.80,
+                            width: ScreenWidt
+                        }}>
+                            <Chase size={48} color="#FFF" />
+                        </View>
                     }
                 </View>
 
@@ -231,6 +254,11 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
                 setTerm={setTerm}
                 setPlaceHolder={setPlaceHolder}
             />
+
+            <ModalPromptEmplid
+             setstatePropmpEmp={setstatePropmpEmp} 
+            statePropmpEmp={statePropmpEmp}
+            setemplid={setEmplid} />
         </SafeAreaView>
 
     )

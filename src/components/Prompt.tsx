@@ -21,11 +21,10 @@ interface Props {
     form?: M38GetCompIntfcDLHRTAOBSERVCIResponse
 }
 
-const { width: ScreenWidth } = Dimensions.get("window");
+const { width,height} = Dimensions.get("window");
 export const Prompt = ({ setemplid, onChange, promptType, form }: Props) => {
 
-    const height = useWindowDimensions().height
-    const width = useWindowDimensions().width
+    
     const { top } = useSafeAreaInsets();
 
     const [term, setTerm] = useState('')
@@ -415,7 +414,7 @@ const styles = StyleSheet.create({
     },
     btnContainer: {
         height: 50,
-        width: ScreenWidth * 0.87,
+        width: width * 0.87,
 
         borderRadius: 15,
         backgroundColor: '#2b2c32',
