@@ -25,14 +25,14 @@ export default ({ setTerm, item, index }: CardProps) => {
     <TouchableOpacity
 
       activeOpacity={0.9}
-    /* onPress={
+    onPress={
       () => (navigation.navigate('EditObvservCardScreen',
         {
           busineesUnit: tarjeta.BUSINESS_UNIT,
           IdentifDt: tarjeta.DL_IDENTIF_DT,
           Ntarjeta: tarjeta.NroTarjeta
         }), setTerm !== undefined ? setTerm(''): {})
-    } */
+    }
     >
       <View style={{
         ...styles.card,
