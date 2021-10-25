@@ -1,9 +1,12 @@
 
 
-import React from 'react'
+import React, { useContext } from 'react'
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { colors } from '../Themes/DlsTheme';
-import { objUseForm, promptType } from '../interfaces/prompInterfaces';
+import { objUseForm, promptType, DlhrAllObserve } from '../interfaces/prompInterfaces';
+import { AuthContext } from '../context/formContext/AuthContext';
+import { width } from '../../../../can-it-be-done-in-react-native-master/src/Menu/Content';
+import { Asingstorage } from './Storage';
 
 
 
@@ -19,27 +22,40 @@ interface Props {
         fieldValue1: string;
         fieldValue2: string;
     }>>
-    promptType: promptType
+    promptType: promptType;
+    setCardDescr?:React.Dispatch<React.SetStateAction<DlhrAllObserve>>;
+    cardDescr?: DlhrAllObserve;
 }
 
 
-export const FlatListItemPrompt = ({ setemplid, promptType, fieldtype, setplaceHolder, field1, field2, closePrompt, onChange }: Props) => {
-
+export const FlatListItemPrompt = ({ setemplid,
+    promptType,
+    fieldtype,
+    setplaceHolder,
+    field1, field2,
+    closePrompt,
+    onChange,
+    setCardDescr,
+    cardDescr
+}: Props) => {
     
-
+    const {setEmplidSelect} = useContext(AuthContext)
+    
 
     return (
         <TouchableOpacity
             activeOpacity={0.5}
             onPress={() => {
                 setplaceHolder((promptType.type === 'DLHR_APS') ? field1 : field2!),
-                    closePrompt(false)
+                    closePrompt(false);
                     /*  ,onChange!(field1, fieldtype) */
-
+                    promptType.type === 'DLHR_EQUIP_TBL'&&setCardDescr!({...cardDescr,...{IDEquipo: field1,ID_EQUIPO_DESCR: field2,}})
                     , (setemplid !== undefined ?
                         setemplid({ fieldValue1: field1, fieldValue2: field2! })
                         :
-                        (onChange !== undefined ? onChange(field1, fieldtype) : {}))
+                        (onChange !== undefined ? onChange(field1, fieldtype) : {}));
+                        promptType.type==='DLHR_EMPL_BUSSINES_UNIT'&& setEmplidSelect(field1) ;
+                        promptType.type==='DLHR_EMPL_BUSSINES_UNIT'&& Asingstorage({StorageType: 'emplid'}, { emplid: field1, name: field2 })
             }}
         >
             <View style={styles.container}>
@@ -49,7 +65,8 @@ export const FlatListItemPrompt = ({ setemplid, promptType, fieldtype, setplaceH
                     </Text>
                 </View>
                 {(promptType.type !== 'DLHR_APS') &&
-                    <View>
+                    <View style={{width:'60%' ,//backgroundColor:'blue'
+                }}>
                         <Text style={styles.itemText}>
                             {field2}
                         </Text>
@@ -64,7 +81,11 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         alignItems: 'center',
-        height: 40
+        justifyContent:'space-between',
+        height: 50,
+        //backgroundColor:'red',
+        width:'100%'
+        
 
     },
     itemText: {

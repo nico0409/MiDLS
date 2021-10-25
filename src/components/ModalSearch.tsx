@@ -61,7 +61,7 @@ setPlaceHolder({...typeSearh})
                 onRequestClose={() => { setisVisible(!isVisible); }}
             >
                 <TouchableOpacity
-                    style={{ flex: 1 }}
+                    style={{ flex: 1 ,backgroundColor: 'rgba(0,0,0,0.5)'}}
                     activeOpacity={1}
                     onPressOut={() => { setisVisible(false) }}
                 />
@@ -88,15 +88,49 @@ setPlaceHolder({...typeSearh})
 
                 }}>
 
-                    <RadioForm
+                  {/*   <RadioForm
                         radio_props={listSearchOptions}
                         initial={searchValue}
                         onPress={(value) => { setsearchValue!(value), changeType(value), setisVisible(false) }}
                         animation={true}
-                        buttonColor={'#50C900'}
-                        labelColor='green'
+                        buttonColor={colors.dlsTextwhite}
+                        labelColor={colors.dlsTextwhite}
+                         /> */}
 
-                    />
+<RadioForm
+  formHorizontal={false}
+  animation={true}
+  initial={searchValue}
+ 
+>
+ {
+    listSearchOptions.map((obj, i) => (
+      <RadioButton labelHorizontal={true} key={i} >
+        {/*  You can set RadioButtonLabel before RadioButtonInput */}
+        <RadioButtonInput
+          obj={obj}
+          index={i}
+           isSelected={searchValue=== i} 
+          onPress={(value) => { setsearchValue!(value), changeType(value) , setisVisible(false) }}
+          buttonInnerColor={colors.dlsBluePrimary}
+          buttonOuterColor={ colors.dlsBtonColosWhite}
+          
+          buttonOuterSize={25}
+          buttonStyle={{backgroundColor:colors.dlsGrayPrimary}}
+          buttonWrapStyle={{marginLeft: 5}}
+        />
+        <RadioButtonLabel
+          obj={obj}
+          index={i}
+          labelHorizontal={true}
+          onPress={(value) => { setsearchValue!(value), changeType(value) ,   setisVisible(false)}}
+          labelStyle={{fontSize: 17, color: colors.dlsTextwhite}}
+         
+        />
+      </RadioButton>
+    ))
+  }  
+</RadioForm>
 
                 </View>
 

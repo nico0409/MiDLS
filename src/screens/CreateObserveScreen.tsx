@@ -1,4 +1,4 @@
-import React, { useRef, useState,useContext  } from 'react'
+import React, { useRef, useState,useContext ,useEffect } from 'react'
 import { SafeAreaView, Dimensions, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import Carousel from 'react-native-snap-carousel';
@@ -15,6 +15,7 @@ import { stepIndicatorStyles } from '../data/stepIndicatorStyles';
 import { AuthContext } from '../context/formContext/AuthContext';
 
 
+
 interface DataTemp {
     namepage: string;
 }
@@ -26,7 +27,7 @@ const windowWidth = Dimensions.get('window').width;
 export const CreateObserveScreen = ({ navigation }: Props) => {
 
 
-    const {form,onChange} = useContext(AuthContext);
+    const {form,onChange,cardDescr,setCardDescr,setFormValue} = useContext(AuthContext);
 
     const carouselRef = useRef(null);
 
@@ -41,6 +42,14 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
         namepage: 'pagina2',
     }]
 
+   useEffect(() => {
+    setCardDescr({})
+    setFormValue(initialObsFormData)
+
+   }, [])
+
+ 
+   
     /* const { form, onChange } = useForm<objUseForm>(initialObsFormData); */
 
     const renderItem = (item: DataTemp, index: number) => {
@@ -54,6 +63,7 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
             </>
         )
     }
+
 
 
     return (

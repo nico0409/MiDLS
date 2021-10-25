@@ -156,13 +156,13 @@ export interface DlhrAllObserve {
   BUSINES_DESCR?:string;
   DL_IDENTIF_DT?: string;
   NroTarjeta?: string;
-  IDEquipo?: number;
+  IDEquipo?: string;
   ID_EQUIPO_DESCR?:string;
   DL_ORIGEN?: string;
   ORIGEN_DESCR?:string;
   DL_OBSERVADOR?: string;
   OBSERVADOR_DESCR?:string;
-  DL_TURNO?: number;
+  DL_TURNO?: string;
   TURNO_DESCR?:string;
   DL_CUSTOMER_ID?: number;
   CUSTOMER_DESCR?:string;

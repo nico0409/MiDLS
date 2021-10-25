@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { StorageTypes, PromptObserveType, AllObserveType, DlhrAllObserve, PromptObserve, promptType } from '../interfaces/prompInterfaces';
+import { storageEmplid } from '../interfaces/storageInterface';
 import { GetStorage } from './Storage';
 
 
@@ -11,7 +12,7 @@ export const GetPromptArray = (promptypedata:promptType ) => {
     
     const promptype: StorageTypes = { StorageType: 'prompt' };
     
-    let prompt: PromptObserveType | AllObserveType | DlhrAllObserve | undefined = {}
+    let prompt: PromptObserveType | AllObserveType | DlhrAllObserve |storageEmplid |undefined = {}
 
    /*  const [PromptObserveList, setPromptObserveList] = useState<PromptObserve>({}) */
     const [PromptObArray, setPromptArray] = useState<any[]>([])

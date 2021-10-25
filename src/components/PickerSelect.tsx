@@ -1,10 +1,11 @@
-import React, { useState ,useEffect} from 'react';
+import React, { useState ,useEffect, useContext} from 'react';
 import RNSingleSelect, {
     ISingleSelectDataType,
 } from "@freakycoder/react-native-single-select";
-import { Dimensions, View } from 'react-native';
-import { promptType, DlhrBussinesUnit, DlhrOrigen, DlhrPuesto, DlhrTurno, M38GetCompIntfcDLHRTAOBSERVCIResponse, objUseForm, DlhrAps } from '../interfaces/prompInterfaces';
+import { Dimensions, TouchableOpacity, View } from 'react-native';
+import { promptType, DlhrBussinesUnit, DlhrOrigen, DlhrPuesto, DlhrTurno, M38GetCompIntfcDLHRTAOBSERVCIResponse, objUseForm, DlhrAps, DlhrAllObserve } from '../interfaces/prompInterfaces';
 import { GetPromptArray } from './GetPromptArrayy';
+import { AuthContext } from '../context/formContext/AuthContext';
 
 interface Props {
     placeholder: string;
@@ -12,16 +13,18 @@ interface Props {
     onChange: (value: string, field: keyof objUseForm) => void;
     form?: M38GetCompIntfcDLHRTAOBSERVCIResponse;
     emplid?:string
+    setCardDescr?:React.Dispatch<React.SetStateAction<DlhrAllObserve>>
+    cardDescr?: DlhrAllObserve
 }
 
 interface DlhrPromptsDet extends DlhrOrigen, DlhrPuesto, DlhrTurno, DlhrBussinesUnit,DlhrAps { };
 
 const { width: ScreenWidth } = Dimensions.get("window");
 
-export const PickerSelect = ({ placeholder, type, onChange, form,emplid="C020513"}: Props) => {
+export const PickerSelect = ({ placeholder, type, onChange, form,setCardDescr,cardDescr,emplid}: Props) => {
 
   
-    
+   
 
     const promptType: promptType = { type };
     const [selectedItem, setSelectedItem] = useState<ISingleSelectDataType>()
@@ -90,16 +93,6 @@ export const PickerSelect = ({ placeholder, type, onChange, form,emplid="C020513
 
                         break;
 
-                     /*    case 'DLHR_APS':
-                             dataItem = item.DL_ACTION_NBR
-                            fieldData = "m38:DL_NUM_APS";
-                            descr=item.DL_ACTION_NBR!
-                          console.log(form?.['m38:DL_NUM_APS']);
-                          
-                            if (form?.['m38:DL_NUM_APS'] === item.DL_ACTION_NBR) {
-                                itemselect = { id: index, value: descr, data: { dataItem, fieldData } }
-                                } 
-                        break; */
                 }
                 return { id: index, value:descr , data: { dataItem, fieldData } }
             }
@@ -114,8 +107,21 @@ export const PickerSelect = ({ placeholder, type, onChange, form,emplid="C020513
        
     }, [PromptObArray])
     
+
+    const changeDescr=(value: string, descr :string)=>{
+        
+        if (type==='DLHR_TURNO'){
+            setCardDescr!({...cardDescr,...{DL_TURNO:value,TURNO_DESCR:descr}})
+        }else 
+        if (type==='DLHR_EMPL_BUSSINES_UNIT'){
+            setCardDescr!({...cardDescr,...{BUSINESS_UNIT:value,BUSINES_DESCR:descr}})
+        }
+    }
     return (
+        
         <View style={{marginVertical:15}}>
+            
+            
              <RNSingleSelect
                 darkMode
                 disableAbsolute={false}
@@ -128,9 +134,12 @@ export const PickerSelect = ({ placeholder, type, onChange, form,emplid="C020513
                 menuBarContainerWidth={ScreenWidth * 0.87}
                 onSelect={(selectedItem: ISingleSelectDataType) => {
                     onChange(selectedItem.data.dataItem, selectedItem.data.fieldData);
+                    changeDescr(selectedItem.data.dataItem,selectedItem.value) 
                     setSelectedItem(selectedItem);
                 }}
             /> 
+            
         </View>
+       
     )
 }
