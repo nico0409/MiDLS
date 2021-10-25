@@ -10,6 +10,8 @@ import { colors } from '../Themes/DlsTheme';
 import { AuthContext } from '../context/formContext/AuthContext';
 import { NewObservCard } from './NewObservCard';
 import Card from './Transformations/components/Card';
+import { Asingstorage, GetStorage } from './Storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface Props extends StackScreenProps<any, any> { };
 
@@ -17,7 +19,7 @@ const { height } = Dimensions.get('window');
 
 export const CreateObserveFinalPage = ({ navigation, route }: Props) => {
 
-    const { form, cardDescr,setCardDescr } = useContext(AuthContext);
+    const { form, cardDescr, setCardDescr } = useContext(AuthContext);
 
     const [reqSended, setReqSended] = useState<'pending' | 'sended' | 'error'>('pending');
     const [bgCircleColor, setBgCircleColor] = useState('grey');
@@ -53,7 +55,7 @@ export const CreateObserveFinalPage = ({ navigation, route }: Props) => {
 
     const animatedHomeIcon = useAnimatedStyle(() => {
         return {
-            opacity: withDelay(1000,withTiming(opacityHomeValue.value,{duration:400})) 
+            opacity: withDelay(1000, withTiming(opacityHomeValue.value, { duration: 400 }))
         };
     });
 
@@ -89,9 +91,23 @@ export const CreateObserveFinalPage = ({ navigation, route }: Props) => {
 
     useEffect(() => {
         setTimeout(() => {
-            NewObservCard({ form, setReqSended, setBgCircleColor, loadingValue,cardDescr,setCardDescr });
+            NewObservCard({ form, setReqSended, setBgCircleColor, loadingValue, cardDescr, setCardDescr });
+
+            const funcTest = async () => {
+                /* const arrayFormsOffline: any = GetStorage({ StorageType: 'offlineObserveCards' }); */
+
+                /* const arrayFormsOffline = await AsyncStorage.getItem('offlineObserveCards');
+                console.log("arrayFormsOffline3: ");
+                console.log(arrayFormsOffline); */
+
+            }
+
+            /* funcTest(); */
         }, 2000);
     }, [])
+
+
+
 
     return (
         <View style={{ flex: 1, backgroundColor: colors.dlsGrayPrimary }}>
@@ -105,12 +121,12 @@ export const CreateObserveFinalPage = ({ navigation, route }: Props) => {
                 }
             </Animated.View>
 
-            <Animated.View style={[{ width: '100%', alignItems: 'flex-end' },animatedHomeIcon]}>
-                <TouchableOpacity 
-                style={{ paddingRight: 10, paddingTop: 10 }}
-                onPress={ () =>{
-                    navigation.pop(3)
-                }}>
+            <Animated.View style={[{ width: '100%', alignItems: 'flex-end' }, animatedHomeIcon]}>
+                <TouchableOpacity
+                    style={{ paddingRight: 10, paddingTop: 10 }}
+                    onPress={() => {
+                        navigation.pop(3)
+                    }}>
                     <Icon name="home" size={40} color="white" />
                 </TouchableOpacity>
             </Animated.View>
