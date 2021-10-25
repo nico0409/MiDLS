@@ -5,6 +5,7 @@ import { j2xParser, parse } from 'fast-xml-parser';
 import PSDB from '../api/PSDB';
 import { DlhrAllObserve, objUseForm } from '../interfaces/prompInterfaces';
 import { RespNewCard } from '../interfaces/respNewCardObs';
+import { Asingstorage, GetStorage } from './Storage';
 
 const { height } = Dimensions.get('window');
 
@@ -67,12 +68,7 @@ export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingVal
       }).then(res => {
 
          const resp: RespNewCard = parse(res.data)
-         /* console.log(JSON.stringify(parse(res.data))); */
-         console.log(resp['soapenv:Envelope']['soapenv:Body']['m38:Create__CompIntfc__DLHR_TA_OBSERV_CIResponse']['m38:detail']['m38:DLHR_TA_OBSERV_CI']['m38:DL_NTARJETA']);
-
-         /* setCardDescr({...cardDescr,
-             NroTarjeta:resp['soapenv:Envelope']['soapenv:Body']['m38:Create__CompIntfc__DLHR_TA_OBSERV_CIResponse']['m38:detail']['m38:DLHR_TA_OBSERV_CI']['m38:DL_NTARJETA']}); */
-
+       
          setCardDescr({
             ...cardDescr,
             ...{ NroTarjeta: resp['soapenv:Envelope']['soapenv:Body']['m38:Create__CompIntfc__DLHR_TA_OBSERV_CIResponse']['m38:detail']['m38:DLHR_TA_OBSERV_CI']['m38:DL_NTARJETA'] }
@@ -81,12 +77,21 @@ export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingVal
          setBgCircleColor('#4ad66d');
          runAnimation();
 
-      }).catch(err => {
-         console.log("mensaje de catch:");
-         console.log(JSON.stringify(err));
+      }).catch(async (err) => {
 
          setBgCircleColor('orange');
          setReqSended('error');
          runAnimation();
+
+         const arrayFormsOffline: any = await GetStorage({ StorageType: 'offlineObserveCards' });
+
+         if (arrayFormsOffline === null) {
+            await Asingstorage({ StorageType: 'offlineObserveCards' }, [form])
+         } else {
+            let arrayFormOffline: Object[] = arrayFormsOffline;
+            arrayFormOffline.push(form);
+            await Asingstorage({ StorageType: 'offlineObserveCards' }, arrayFormOffline)
+         }
+
       });
 }
