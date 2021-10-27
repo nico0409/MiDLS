@@ -1,4 +1,4 @@
-import React, { useRef, useState,useContext ,useEffect } from 'react'
+import React, { useRef, useState, useContext, useEffect } from 'react'
 import { SafeAreaView, Dimensions, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import Carousel from 'react-native-snap-carousel';
@@ -7,27 +7,22 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { colors } from '../Themes/DlsTheme';
 import { CreateObservePageOne } from '../components/CreateObservePageOne';
 import { CreateObservePageTwo } from '../components/CreateObservePageTwo';
-import { useForm } from '../hooks/UseForm';
-import { M38GetCompIntfcDLHRTAOBSERVCIResponse, objUseForm } from '../interfaces/prompInterfaces';
-import { onChange } from 'react-native-reanimated';
 import { initialObsFormData } from '../data/initialObsFormData';
 import { stepIndicatorStyles } from '../data/stepIndicatorStyles';
 import { AuthContext } from '../context/formContext/AuthContext';
-
-
+import { initialObsCardDescr } from '../data/initialObsCardDescr';
 
 interface DataTemp {
     namepage: string;
 }
 
-interface Props extends StackScreenProps<any,any > { };
+interface Props extends StackScreenProps<any, any> { };
 
 const windowWidth = Dimensions.get('window').width;
 
 export const CreateObserveScreen = ({ navigation }: Props) => {
 
-
-    const {form,onChange,cardDescr,setCardDescr,setFormValue} = useContext(AuthContext);
+    const { form, onChange, cardDescr, setCardDescr, setFormValue } = useContext(AuthContext);
 
     const carouselRef = useRef(null);
 
@@ -42,14 +37,11 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
         namepage: 'pagina2',
     }]
 
-   useEffect(() => {
-    setCardDescr({})
-    setFormValue(initialObsFormData)
+    useEffect(() => {
+        setCardDescr(initialObsCardDescr)
+        setFormValue(initialObsFormData)
+    }, [])
 
-   }, [])
-
- 
-   
     /* const { form, onChange } = useForm<objUseForm>(initialObsFormData); */
 
     const renderItem = (item: DataTemp, index: number) => {
@@ -63,8 +55,6 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
             </>
         )
     }
-
-
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -85,7 +75,6 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
                         stepCount={5}
                         customStyles={stepIndicatorStyles}
                         currentPosition={activeIndex}
-                        labels={['Paso 1', 'Paso 2']}
                     /* renderLabel={renderLabel} */
                     /* onPress={onStepPress} */
                     />
@@ -125,6 +114,9 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
                         style={styles.nextPage}
                         onPress={() => {
                             if (activeIndex === 1) {
+                                console.log("form---------------------------------------");
+                                console.log(form);
+                                
                                 navigation.navigate('CreateObserveQuestionsPage');
                             } else {
                                 setBackButton(true);

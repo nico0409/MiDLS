@@ -243,7 +243,6 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
                         stepCount={5}
                         customStyles={stepIndicatorStyles}
                         currentPosition={activeIndex}
-                        labels={['Paso 1', 'Paso 2']}
                     //renderLabel={renderLabel} 
                     //onPress={onStepPress} 
                     />
