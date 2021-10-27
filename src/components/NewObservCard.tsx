@@ -46,8 +46,6 @@ export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingVal
    </soapenv:Body>\
 </soapenv:Envelope>`;
 
-console.log(xml);
-
    const runAnimation = (sended: boolean) => {
       setBgCircleColor(sended ? '#4ad66d' : 'orange');
       setReqSended(sended ? 'sended' : 'error');
