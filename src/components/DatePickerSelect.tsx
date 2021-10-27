@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, TouchableOpacity, View, StyleSheet, Dimensions } from 'react-native';
+import { Text, TouchableOpacity, View, StyleSheet, Dimensions, Platform, ToastAndroid, Alert } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { objUseForm } from '../interfaces/prompInterfaces';
@@ -15,7 +15,7 @@ export const DatePickerSelect = ({ onChange }: Props) => {
 
     //datePicker
     const dateInitial = new Date();
-    dateInitial.setDate(dateInitial.getDate() - 1);
+    /* dateInitial.setDate(dateInitial.getDate() - 1); */
 
     const [date, setDate] = useState(dateInitial);
 
@@ -30,14 +30,14 @@ export const DatePickerSelect = ({ onChange }: Props) => {
     };
 
     const handleConfirm = (date: Date) => {
-        hideDatePicker();
-        setDate(date);
-        onChange(date.toISOString().split('T')[0], 'm38:DL_IDENTIF_DT');
+            hideDatePicker();
+            setDate(date);
+            onChange(date.toISOString().split('T')[0], 'm38:DL_IDENTIF_DT');
     };
 
     return (
-        <View style={{ marginVertical: 10 }}>
-            <View style={{ flexDirection: 'row' }}>
+        <>
+            <View style={{ marginVertical: 10, flexDirection: 'row' }}>
                 <TouchableOpacity
                     onPress={showDatePicker}>
                     <View style={styles.btnContainer}>
@@ -53,8 +53,9 @@ export const DatePickerSelect = ({ onChange }: Props) => {
                 mode="date"
                 onConfirm={handleConfirm}
                 onCancel={hideDatePicker}
+                maximumDate={dateInitial}
             />
-        </View>
+        </>
     )
 }
 

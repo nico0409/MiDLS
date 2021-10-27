@@ -1,5 +1,5 @@
 import React, { useRef, useState, useContext, useEffect } from 'react'
-import { SafeAreaView, Dimensions, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { SafeAreaView, Dimensions, View, Text, TouchableOpacity, StyleSheet, Platform, ToastAndroid, Alert } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import Carousel from 'react-native-snap-carousel';
 import StepIndicator from 'react-native-step-indicator';
@@ -37,24 +37,70 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
         namepage: 'pagina2',
     }]
 
-    useEffect(() => {
-        setCardDescr(initialObsCardDescr)
-        setFormValue(initialObsFormData)
-    }, [])
+    //states de validacion
+    const [busunitErrorAnim, setBusunitErrorAnim] = useState(false);
+    const [origenErrorAnim, setOrigenErrorAnim] = useState(false);
+    const [turnoErrorAnim, setTurnoErrorAnim] = useState(false);
+    const [equipErrorAnim, setEquipErrorAnim] = useState(false);
+    const [clientesErrorAnim, setClientesErrorAnim] = useState(false);
+    const [sectorErrorAnim, setSectorErrorAnim] = useState(false);
 
-    /* const { form, onChange } = useForm<objUseForm>(initialObsFormData); */
+    const nextButton = () => {
+        if (activeIndex === 1) {
+            navigation.navigate('CreateObserveQuestionsPage');
+        } else {
+
+            !form["m38:BUSINESS_UNIT"] && setBusunitErrorAnim(true);
+            !form["m38:DL_ORIGEN"] && setOrigenErrorAnim(true);
+            !form["m38:DL_TURNO"] && setTurnoErrorAnim(true);
+            !form["m38:DL_EQUIPMENT_ID"] && setEquipErrorAnim(true);
+            !form["m38:DL_CUSTOMER_ID"] && setClientesErrorAnim(true);
+            !form["m38:DL_SECTOR_ID"] && setSectorErrorAnim(true);
+
+            if (!form["m38:BUSINESS_UNIT"] || !form["m38:DL_ORIGEN"] || !form["m38:DL_TURNO"] || !form["m38:DL_EQUIPMENT_ID"] || !form["m38:DL_CUSTOMER_ID"] || !form["m38:DL_SECTOR_ID"]) {
+                const msg = "Para continuar debe ingresar datos en los campos resaltados en rojo.";
+                if (Platform.OS === 'android') {
+                    ToastAndroid.showWithGravityAndOffset(msg,
+                        ToastAndroid.LONG,
+                        ToastAndroid.TOP,
+                        25,
+                        50)
+                } else {
+                    Alert.alert(msg);
+                }
+            } else {
+                setBackButton(true);
+                // @ts-ignore
+                carouselRef.current.snapToNext();
+            }
+        }
+    }
 
     const renderItem = (item: DataTemp, index: number) => {
         return (
             <>
                 {index === 0 ?
-                    <CreateObservePageOne form={form} onChange={onChange} />
+                    <CreateObservePageOne
+                        form={form}
+                        onChange={onChange}
+                        busunitErrorAnim={busunitErrorAnim}
+                        origenErrorAnim={origenErrorAnim}
+                        turnoErrorAnim={turnoErrorAnim}
+                        equipErrorAnim={equipErrorAnim}
+                        clientesErrorAnim={clientesErrorAnim}
+                        sectorErrorAnim={sectorErrorAnim}
+                    />
                     :
                     <CreateObservePageTwo form={form} onChange={onChange} />
                 }
             </>
         )
     }
+
+    useEffect(() => {
+        setCardDescr(initialObsCardDescr)
+        setFormValue(initialObsFormData)
+    }, [])
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -112,18 +158,7 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
 
                     <TouchableOpacity
                         style={styles.nextPage}
-                        onPress={() => {
-                            if (activeIndex === 1) {
-                                console.log("form---------------------------------------");
-                                console.log(form);
-                                
-                                navigation.navigate('CreateObserveQuestionsPage');
-                            } else {
-                                setBackButton(true);
-                                // @ts-ignore
-                                carouselRef.current.snapToNext();
-                            }
-                        }}
+                        onPress={nextButton}
                     >
                         <Text style={{ color: 'white', fontSize: 20 }}>Siguiente</Text>
                     </TouchableOpacity>

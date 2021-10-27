@@ -1,32 +1,27 @@
-
-
-import React, { useContext } from 'react'
+import React, { useContext } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { SharedValue } from 'react-native-reanimated';
 import { colors } from '../Themes/DlsTheme';
 import { objUseForm, promptType, DlhrAllObserve } from '../interfaces/prompInterfaces';
 import { AuthContext } from '../context/formContext/AuthContext';
-import { width } from '../../../../can-it-be-done-in-react-native-master/src/Menu/Content';
 import { Asingstorage } from './Storage';
 
-
-
-
 interface Props {
-    field1: string
-    field2?: string
-    closePrompt: React.Dispatch<React.SetStateAction<boolean>>
+    field1: string;
+    field2?: string;
+    closePrompt: React.Dispatch<React.SetStateAction<boolean>>;
     onChange?: (value: string, field: keyof objUseForm) => void;
-    setplaceHolder: React.Dispatch<React.SetStateAction<string>>
-    fieldtype: keyof objUseForm
+    setplaceHolder: React.Dispatch<React.SetStateAction<string>>;
+    fieldtype: keyof objUseForm;
     setemplid?: React.Dispatch<React.SetStateAction<{
         fieldValue1: string;
         fieldValue2: string;
-    }>>
+    }>>;
     promptType: promptType;
-    setCardDescr?:React.Dispatch<React.SetStateAction<DlhrAllObserve>>;
+    setCardDescr?: React.Dispatch<React.SetStateAction<DlhrAllObserve>>;
     cardDescr?: DlhrAllObserve;
+    borderAnimationValue?: SharedValue<number>;
 }
-
 
 export const FlatListItemPrompt = ({ setemplid,
     promptType,
@@ -36,11 +31,11 @@ export const FlatListItemPrompt = ({ setemplid,
     closePrompt,
     onChange,
     setCardDescr,
-    cardDescr
+    cardDescr,
+    borderAnimationValue
 }: Props) => {
-    
-    const {setEmplidSelect} = useContext(AuthContext)
-    
+
+    const { setEmplidSelect } = useContext(AuthContext)
 
     return (
         <TouchableOpacity
@@ -48,14 +43,15 @@ export const FlatListItemPrompt = ({ setemplid,
             onPress={() => {
                 setplaceHolder((promptType.type === 'DLHR_APS') ? field1 : field2!),
                     closePrompt(false);
-                    /*  ,onChange!(field1, fieldtype) */
-                    promptType.type === 'DLHR_EQUIP_TBL'&&setCardDescr!({...cardDescr,...{IDEquipo: field1,ID_EQUIPO_DESCR: field2,}})
+                (borderAnimationValue === undefined ? {} : borderAnimationValue.value = 0)
+                /*  ,onChange!(field1, fieldtype) */
+                promptType.type === 'DLHR_EQUIP_TBL' && setCardDescr!({ ...cardDescr, ...{ IDEquipo: field1, ID_EQUIPO_DESCR: field2, } })
                     , (setemplid !== undefined ?
                         setemplid({ fieldValue1: field1, fieldValue2: field2! })
                         :
                         (onChange !== undefined ? onChange(field1, fieldtype) : {}));
-                        promptType.type==='DLHR_EMPL_BUSSINES_UNIT'&& setEmplidSelect(field1) ;
-                        promptType.type==='DLHR_EMPL_BUSSINES_UNIT'&& Asingstorage({StorageType: 'emplid'}, { emplid: field1, name: field2 })
+                promptType.type === 'DLHR_EMPL_BUSSINES_UNIT' && setEmplidSelect(field1);
+                promptType.type === 'DLHR_EMPL_BUSSINES_UNIT' && Asingstorage({ StorageType: 'emplid' }, { emplid: field1, name: field2 })
             }}
         >
             <View style={styles.container}>
@@ -65,34 +61,29 @@ export const FlatListItemPrompt = ({ setemplid,
                     </Text>
                 </View>
                 {(promptType.type !== 'DLHR_APS') &&
-                    <View style={{width:'60%' ,//backgroundColor:'blue'
-                }}>
+                    <View style={{ width: '60%' }}>
                         <Text style={styles.itemText}>
                             {field2}
                         </Text>
                     </View>
                 }
-
             </View>
         </TouchableOpacity>
     )
 }
+
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent:'space-between',
+        justifyContent: 'space-between',
         height: 50,
-        //backgroundColor:'red',
-        width:'100%'
-        
-
+        width: '100%'
     },
     itemText: {
         marginLeft: 10,
         fontSize: 20,
         fontFamily: 'StagSans-Light',
-
         color: colors.dlsTextwhite,
         /* fontStyle: 'italic',*/
     },
