@@ -1,6 +1,5 @@
-
 import React, { useState, useEffect } from 'react'
-import { View, Modal, Text, TouchableOpacity, FlatList, useWindowDimensions, StyleSheet, Platform, Dimensions } from 'react-native';
+import { View, Modal, Text, TouchableOpacity, FlatList, StyleSheet, Platform, Dimensions } from 'react-native';
 import { colors } from '../Themes/DlsTheme';
 import { promptType, promptField, objUseForm, M38GetCompIntfcDLHRTAOBSERVCIResponse, DlhrAllObserve } from '../interfaces/prompInterfaces';
 import { SearchInput } from './SearchInput';
@@ -8,25 +7,25 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { GetPromptArray } from './GetPromptArrayy';
 import { FlatListItemPrompt } from './FlatlisItemPrompt';
 import Icon from 'react-native-vector-icons/Ionicons';
-
+import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 
 interface Props {
     onChange?: (value: string, field: keyof objUseForm) => void;
-    promptType: promptType
-
+    promptType: promptType;
     setemplid?: React.Dispatch<React.SetStateAction<{
         fieldValue1: string;
         fieldValue2: string;
-    }>>
-    form?: M38GetCompIntfcDLHRTAOBSERVCIResponse
-    setCardDescr?:React.Dispatch<React.SetStateAction<DlhrAllObserve>>
-     cardDescr?: DlhrAllObserve
+    }>>;
+    form?: M38GetCompIntfcDLHRTAOBSERVCIResponse;
+    setCardDescr?: React.Dispatch<React.SetStateAction<DlhrAllObserve>>;
+    cardDescr?: DlhrAllObserve;
+    activeBorderError?: boolean;
 }
 
-const { width,height} = Dimensions.get("window");
-export const Prompt = ({ setemplid, onChange, promptType, form ,setCardDescr,cardDescr}: Props) => {
+const { width, height } = Dimensions.get("window");
 
-    
+export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, cardDescr, activeBorderError = false }: Props) => {
+
     const { top } = useSafeAreaInsets();
 
     const [term, setTerm] = useState('')
@@ -35,11 +34,9 @@ export const Prompt = ({ setemplid, onChange, promptType, form ,setCardDescr,car
 
     const { PromptObArray } = GetPromptArray(promptType)
 
-
     const [isVisible, setisVisible] = useState(false)
 
     const [seeFlatList, setSeeFlatList] = useState(true);
-
 
     let strPLaceHolder = ''
     switch (promptType.type) {
@@ -47,10 +44,7 @@ export const Prompt = ({ setemplid, onChange, promptType, form ,setCardDescr,car
             strPLaceHolder = 'Emplid'
             break;
         case 'DLHR_EQUIP_TBL':
-
             strPLaceHolder = 'Equipos'
-
-
             break;
         case 'DLHR_CUSTOMER':
             strPLaceHolder = 'Clientes'
@@ -64,16 +58,14 @@ export const Prompt = ({ setemplid, onChange, promptType, form ,setCardDescr,car
         case 'DLHR_APS':
             strPLaceHolder = 'Numero APS'
             break;
-
     }
-    const [placeHolder, setplaceHolder] = useState(strPLaceHolder)
 
+    const [placeHolder, setplaceHolder] = useState(strPLaceHolder)
 
     let strField1 = '';
     let strField2 = ''
     let placeHolderSrch = ''
     let fieldType: keyof objUseForm = 'm38:BUSINESS_UNIT'
-
 
     switch (promptType.type) {
         case 'DLHR_EQUIP_TBL':
@@ -88,7 +80,6 @@ export const Prompt = ({ setemplid, onChange, promptType, form ,setCardDescr,car
             strField2 = fieldEquip.DLHR_EQUIP_TBL?.field2.equipo!
             placeHolderSrch = 'Equipo'
             fieldType = 'm38:DL_EQUIPMENT_ID'
-
             break;
         case 'DLHR_EMPL_BUSSINES_UNIT':
             const fieldBussineU: promptField = {
@@ -105,7 +96,6 @@ export const Prompt = ({ setemplid, onChange, promptType, form ,setCardDescr,car
             placeHolderSrch = 'Empleado'
             fieldType = 'm38:BUSINESS_UNIT'
             break;
-
         case 'DLHR_CUSTOMER':
             const fieldCustomer: promptField = {
                 DLHR_CUSTOMER:
@@ -152,16 +142,11 @@ export const Prompt = ({ setemplid, onChange, promptType, form ,setCardDescr,car
                     field1: { APS: 'DL_ACTION_NBR' }
                 }
             }
-
             strField1 = fieldAPS.DLHR_APS?.field1.APS!;
             placeHolderSrch = 'Numero APS'
             fieldType = 'm38:DL_NUM_APS'
             break;
-
-
     }
-
-
 
     let data: any[] = [];
     switch (promptType.type) {
@@ -174,20 +159,13 @@ export const Prompt = ({ setemplid, onChange, promptType, form ,setCardDescr,car
 
     }
 
-
-
-
-
     useEffect(() => {
         if (term.length === 0) {
-
             setSeeFlatList(true)
             return setObserveFiltred(data)
-
         }
         switch (promptType.type) {
             case 'DLHR_EMPL_BUSSINES_UNIT':
-
                 setObserveFiltred(
                     data.filter(
                         observe => observe[strField1].toLocaleLowerCase()
@@ -196,7 +174,6 @@ export const Prompt = ({ setemplid, onChange, promptType, form ,setCardDescr,car
                 )
                 break;
             case 'DLHR_EQUIP_TBL':
-
                 setObserveFiltred(
                     data.filter(
                         observe => observe[strField1].toString().toLocaleLowerCase()
@@ -214,8 +191,6 @@ export const Prompt = ({ setemplid, onChange, promptType, form ,setCardDescr,car
                 )
                 break;
             case 'DLHR_SECTOR':
-
-
                 setObserveFiltred(
                     data.filter(
                         observe => observe[strField1].toString().toLocaleLowerCase()
@@ -231,7 +206,6 @@ export const Prompt = ({ setemplid, onChange, promptType, form ,setCardDescr,car
                     )
                 )
                 break;
-
             case 'DLHR_APS':
                 setObserveFiltred(
                     data.filter(
@@ -240,14 +214,9 @@ export const Prompt = ({ setemplid, onChange, promptType, form ,setCardDescr,car
                     )
                 )
                 break;
-            default:
-                break;
         }
-
         setSeeFlatList(true);
     }, [term])
-
-
 
     useEffect(() => {
         switch (promptType.type) {
@@ -270,7 +239,6 @@ export const Prompt = ({ setemplid, onChange, promptType, form ,setCardDescr,car
                         )[0].DESCR
                     )
                 break;
-
             case 'DLHR_SECTOR':
                 data[0] !== undefined &&
                     form !== undefined &&
@@ -279,7 +247,6 @@ export const Prompt = ({ setemplid, onChange, promptType, form ,setCardDescr,car
                             item => item.DL_SECTOR_ID === form?.['m38:DL_SECTOR_ID'])[0].DESCR)
                 break;
             case 'DLHR_APS':
-
                 if (data[0] !== undefined &&
                     form !== undefined) {
                     const item = data.filter(
@@ -289,35 +256,42 @@ export const Prompt = ({ setemplid, onChange, promptType, form ,setCardDescr,car
                     item !== undefined && setplaceHolder(item.DL_ACTION_NBR
                     )
                 }
-
-
                 break;
-
         }
     }, [data])
 
-   
+    const borderAnimationValue = useSharedValue(0);
+
+    const borderAnimationStyle = useAnimatedStyle(() => {
+        return {
+            borderWidth: withSpring(borderAnimationValue.value, { damping: 8 })
+        }
+    })
+
+    useEffect(() => {
+        if (activeBorderError) {
+            borderAnimationValue.value = 3;
+        }
+    }, [activeBorderError]);
 
     return (
-        <View style={{ marginVertical: 10 }}>
-
-            <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={() => { setisVisible(true) }}>
-                <View style={styles.btnContainer}>
-                    <Text style={styles.textBtn}>{placeHolder}</Text>
-                    <Icon name="radio-button-on" size={25} color='white' style={{ right: 13 }} />
-
-                </View>
-            </TouchableOpacity>
+        <>
+            <Animated.View style={[{ marginVertical: 10, borderColor: 'red', borderRadius: 20 }, borderAnimationStyle]}>
+                <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() => { setisVisible(true) }}>
+                    <View style={styles.btnContainer}>
+                        <Text style={styles.textBtn}>{placeHolder}</Text>
+                        <Icon name="radio-button-on" size={25} color='white' style={{ right: 13 }} />
+                    </View>
+                </TouchableOpacity>
+            </Animated.View>
 
             <Modal animationType='fade'
                 visible={isVisible}
                 transparent
                 onRequestClose={() => {
-
                     setisVisible(!isVisible);
-
                 }}
             >
                 <TouchableOpacity
@@ -341,7 +315,6 @@ export const Prompt = ({ setemplid, onChange, promptType, form ,setCardDescr,car
                         width: width * 0.8,
                         backgroundColor: colors.dlsGrayPrimary
                     }}>
-
                         <SearchInput
                             onDebounce={(value) => { setTerm(value) }}
                             placeholder={placeHolderSrch}
@@ -359,8 +332,6 @@ export const Prompt = ({ setemplid, onChange, promptType, form ,setCardDescr,car
 
                             backgroundColor: colors.dlsGrayPrimary
                         }}>
-
-
                             {seeFlatList &&
                                 <FlatList
                                     data={term.length === 0 ? data : observeFiltered}
@@ -376,19 +347,18 @@ export const Prompt = ({ setemplid, onChange, promptType, form ,setCardDescr,car
                                             promptType={promptType}
                                             setCardDescr={setCardDescr}
                                             cardDescr={cardDescr}
+                                            borderAnimationValue={borderAnimationValue}
                                         />
                                     }
-                                    keyExtractor={(item, index) => item[strField1]+ index.toString() }
+                                    keyExtractor={(item, index) => item[strField1] + index.toString()}
                                     showsVerticalScrollIndicator={false}
-                                /* refreshing={seeFlatList} */
-                                />}
-
+                                />
+                            }
                         </View>
                     </View>
-
                 </View>
             </Modal>
-        </View>
+        </>
     )
 }
 

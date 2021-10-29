@@ -131,7 +131,7 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef }: ListProps)
                 placeholder="Unidad de negocio"
                 type="DLHR_EMPL_BUSSINES_UNIT"
                 onChange={onChange}
-                emplid={emplidSelect} 
+                emplid={emplidSelect.fieldValue1} 
               />
 
               <View style={{ flexDirection: 'row', marginVertical: 10 }}>

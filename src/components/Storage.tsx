@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { StorageTypes, AllObserveType, PromptObserveType, objUseForm } from '../interfaces/prompInterfaces';
+import { StorageTypes, AllObserveType, PromptObserveType, objUseForm, DlhrAllObserve } from '../interfaces/prompInterfaces';
 import { storageEmplid } from '../interfaces/storageInterface';
 
 export const Asingstorage = async ({ StorageType }: StorageTypes, data: Object | Object[]) => {
@@ -17,6 +17,10 @@ export const GetStorage = async ({ StorageType }: StorageTypes) => {
         case 'offlineObserveCards':
             const ObserveCard: objUseForm[] = JSON.parse(Datos!)
             return ObserveCard;
+
+        case 'offlineObserveCardsDescr':
+            const offfObsCardDesc: DlhrAllObserve[] = JSON.parse(Datos!)
+            return offfObsCardDesc;
 
         case 'prompt':
             const prompt: PromptObserveType = JSON.parse(Datos!)

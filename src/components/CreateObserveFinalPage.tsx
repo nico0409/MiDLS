@@ -10,21 +10,17 @@ import { colors } from '../Themes/DlsTheme';
 import { AuthContext } from '../context/formContext/AuthContext';
 import { NewObservCard } from './NewObservCard';
 import Card from './Transformations/components/Card';
-import { Asingstorage, GetStorage } from './Storage';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface Props extends StackScreenProps<any, any> { };
 
 const { height } = Dimensions.get('window');
 
-export const CreateObserveFinalPage = ({ navigation, route }: Props) => {
+export const CreateObserveFinalPage = ({ navigation }: Props) => {
 
-    const { form, cardDescr, setCardDescr } = useContext(AuthContext);
+    const { form, cardDescr, setCardDescr,emplidSelect } = useContext(AuthContext);
 
     const [reqSended, setReqSended] = useState<'pending' | 'sended' | 'error'>('pending');
     const [bgCircleColor, setBgCircleColor] = useState('grey');
-
-    console.log(form);
 
     const opacityHomeValue = useSharedValue(0);
     const loadingValue = useSharedValue(0);
@@ -92,25 +88,12 @@ export const CreateObserveFinalPage = ({ navigation, route }: Props) => {
     useEffect(() => {
         setTimeout(() => {
             NewObservCard({ form, setReqSended, setBgCircleColor, loadingValue, cardDescr, setCardDescr });
-
-            const funcTest = async () => {
-                /* const arrayFormsOffline: any = GetStorage({ StorageType: 'offlineObserveCards' }); */
-
-                /* const arrayFormsOffline = await AsyncStorage.getItem('offlineObserveCards');
-                console.log("arrayFormsOffline3: ");
-                console.log(arrayFormsOffline); */
-
-            }
-
-            /* funcTest(); */
         }, 2000);
     }, [])
 
-
-
-
     return (
         <View style={{ flex: 1, backgroundColor: colors.dlsGrayPrimary }}>
+
             <Animated.View style={[styles.circleBackground, { backgroundColor: bgCircleColor }, animatedCircleBgStyle]} />
 
             <Animated.View style={[styles.iconStatusContainer, animatedIconStatusStyle]}>
@@ -125,7 +108,7 @@ export const CreateObserveFinalPage = ({ navigation, route }: Props) => {
                 <TouchableOpacity
                     style={{ paddingRight: 10, paddingTop: 10 }}
                     onPress={() => {
-                        navigation.pop(3)
+                        navigation.replace('TarjetaObserveScreen',{name:emplidSelect.fieldValue2,emplid:emplidSelect.fieldValue1})
                     }}>
                     <Icon name="home" size={40} color="white" />
                 </TouchableOpacity>

@@ -37,9 +37,10 @@ export const EmplidObserveScreen = ({ navigation, route }: Props) => {
 
             const emmplid: storageEmplid = { emplid: emplid.fieldValue1, name: emplid.fieldValue2 }
             placeHolder = emplid.fieldValue2;
-            setEmplidSelect(emplid.fieldValue1)
+            setEmplidSelect({fieldValue1: emplid.fieldValue1,fieldValue2:emplid.fieldValue2})
             Asingstorage(emplidTypeStorage, emmplid)
-            navigation.navigate(
+
+            navigation.replace(
                 'TarjetaObserveScreen',
                 { name: emplid.fieldValue2, emplid: emplid.fieldValue1 });
         }

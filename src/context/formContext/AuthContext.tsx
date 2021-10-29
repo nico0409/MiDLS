@@ -11,8 +11,14 @@ export interface AuthState {
     setFormValue: (form: M38GetCompIntfcDLHRTAOBSERVCIResponse) => void;
     cardDescr: DlhrAllObserve;
     setCardDescr: React.Dispatch<React.SetStateAction<DlhrAllObserve>>
-    setEmplidSelect:React.Dispatch<React.SetStateAction<string>>;
-    emplidSelect:string;
+    setEmplidSelect: React.Dispatch<React.SetStateAction<{
+        fieldValue1: string;
+        fieldValue2: string;
+    }>>;
+    emplidSelect: {
+        fieldValue1: string;
+        fieldValue2: string;
+    }
 }
 
 //Crear el contexto
@@ -23,7 +29,14 @@ export const AuthProvider = ({ children }: { children: JSX.Element[] | JSX.Eleme
 
     const { form, onChange, setFormValue } = useForm<M38GetCompIntfcDLHRTAOBSERVCIResponse>(initialObsFormData);
     const [cardDescr, setCardDescr] = useState<DlhrAllObserve>(initialObsCardDescr);
-    const [emplidSelect, setEmplidSelect] = useState('')
+    const [emplidSelect, setEmplidSelect] = useState<
+        {
+            fieldValue1: string;
+            fieldValue2: string;
+        }>({
+            fieldValue1: '',
+            fieldValue2: ''
+        });
 
     return (
 
@@ -34,8 +47,8 @@ export const AuthProvider = ({ children }: { children: JSX.Element[] | JSX.Eleme
             cardDescr,
             setCardDescr,
             setEmplidSelect,
-            emplidSelect
- }}>
+            emplidSelect,
+        }}>
             {children}
         </AuthContext.Provider>
     )

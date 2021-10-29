@@ -1,33 +1,19 @@
-import React, { useState, useEffect } from 'react'
-import { Text, View, Dimensions, SafeAreaView, Platform, Image, FlatList, ActivityIndicator, TouchableOpacity, Modal, Button, Animated, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Text, View, Dimensions, SafeAreaView, Platform, FlatList, TouchableOpacity, Animated, StyleSheet } from 'react-native';
 import { SearchInput } from '../components/SearchInput';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ObserveCard } from '../components/ObserveCard';
 import { colors, styles } from '../Themes/DlsTheme';
-import { GetStorage, Asingstorage } from '../components/Storage';
-import { PromptObserve, StorageTypes, DlhrAllObserve, fieldSearchType } from '../interfaces/prompInterfaces';
-import { GetPrompt } from '../components/GetPrompt';
-import { GetAllObserve } from '../components/GetAllObserve';
+import { DlhrAllObserve, fieldSearchType } from '../interfaces/prompInterfaces';
 import { useAllObserve } from '../hooks/useAllObserve';
-import { ToggleDrawerHeader } from '../components/ToggleDrawerHeader';
-import { DrawerScreenProps } from '@react-navigation/drawer';
-
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Loading } from '../components/Loading';
 import { ModalSearch } from '../components/ModalSearch';
 import { StackScreenProps } from '@react-navigation/stack';
-import { RoutstackParams } from '../Navigation/StackNavigatorObserve';
 import IconAwesome from 'react-native-vector-icons/FontAwesome';
 import Wallet from '../components/Wallet';
 import { Chase } from 'react-native-animated-spinkit'
-import { width } from '../../../../can-it-be-done-in-react-native-master/src/Menu/Content';
 import { ModalPromptEmplid } from '../components/ModalPromptEmplid';
 
-
-
-
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
-
 
 /* interface Props extends DrawerScreenProps<any, any> { }; */
 interface Props extends StackScreenProps<any,any>{};
@@ -238,7 +224,7 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
             <TouchableOpacity
                 activeOpacity={0.6}
                 style={{ zIndex: 999, ...styles.addButtonContainer }}
-                onPress={() => { navigation.navigate('CreateObserveScreen') }}
+                onPress={() => { navigation.replace('CreateObserveScreen') }}
             >
 
                 <View style={styles.addButton} >

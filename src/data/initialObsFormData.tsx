@@ -1,13 +1,15 @@
+import { nroTarjetaEmpty } from "./nroTarjetaEmpty";
+
 export const initialObsFormData = {
-    "m38:BUSINESS_UNIT": ' ',
-    "m38:DL_NTARJETA": ' ',
-    "m38:DL_EQUIPMENT_ID": ' ',
-    "m38:DL_IDENTIF_DT": ' ',
-    "m38:DL_ORIGEN": ' ',
+    "m38:BUSINESS_UNIT": '',
+    "m38:DL_NTARJETA": nroTarjetaEmpty,
+    "m38:DL_EQUIPMENT_ID": '',
+    "m38:DL_IDENTIF_DT": new Date().toISOString().split('T')[0],
+    "m38:DL_ORIGEN": '',
     "m38:DL_OBSERVADOR": ' ',
-    "m38:DL_TURNO": ' ',
-    "m38:DL_CUSTOMER_ID": ' ',
-    "m38:DL_SECTOR_ID": ' ',
+    "m38:DL_TURNO": '',
+    "m38:DL_CUSTOMER_ID": '',
+    "m38:DL_SECTOR_ID": '',
     "m38:DL_PUESTO": ' ',
     "m38:DL_ADESTACAR": 'N',
     "m38:DL_POLITINTERTAREA": ' ',

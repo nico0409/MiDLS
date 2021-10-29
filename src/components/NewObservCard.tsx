@@ -6,6 +6,7 @@ import PSDB from '../api/PSDB';
 import { DlhrAllObserve, objUseForm } from '../interfaces/prompInterfaces';
 import { RespNewCard } from '../interfaces/respNewCardObs';
 import { Asingstorage, GetStorage } from './Storage';
+import { nroTarjetaEmpty } from '../data/nroTarjetaEmpty';
 
 const { height } = Dimensions.get('window');
 
@@ -14,19 +15,11 @@ interface Params {
    setReqSended: React.Dispatch<React.SetStateAction<"pending" | "sended" | "error">>;
    setBgCircleColor: React.Dispatch<React.SetStateAction<string>>;
    loadingValue: SharedValue<number>;
-   cardDescr: DlhrAllObserve
+   cardDescr: DlhrAllObserve;
    setCardDescr: React.Dispatch<React.SetStateAction<DlhrAllObserve>>
 }
 
 export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingValue, cardDescr, setCardDescr }: Params) => {
-
-   const runAnimation = () => {
-      loadingValue.value = height;
-   }
-
-   /* const PostNewObservCard = (bodyRequest: string) => {
-
-   } */
 
    var defaultOptions = {
       attributeNamePrefix: "@_",
@@ -43,10 +36,7 @@ export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingVal
    };
 
    var parser = new j2xParser(defaultOptions);
-
    var xml = parser.parse(form);
-   console.log(xml);
-   /* PostNewObservCard(xml); */
 
    let xmls = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:m38="http://xmlns.oracle.com/Enterprise/Tools/schemas/M558814.V1">\
    <soapenv:Header/>\
@@ -57,6 +47,12 @@ export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingVal
    </soapenv:Body>\
 </soapenv:Envelope>`;
 
+   const runAnimation = (sended: boolean) => {
+      setBgCircleColor(sended ? '#4ad66d' : 'orange');
+      setReqSended(sended ? 'sended' : 'error');
+      loadingValue.value = height;
+   }
+
    PSDB.post('/CI_DLHR_TA_OBSERV_CI.1.wsdl',
       xmls,
       {
@@ -65,33 +61,41 @@ export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingVal
             'Content-Type': 'text/xml',
             SOAPAction: 'Create.V1'
          }
-      }).then(res => {
+      }).then(async (res) => {
 
-         const resp: RespNewCard = parse(res.data)
-       
+         const resp: RespNewCard = parse(res.data);
+
          setCardDescr({
             ...cardDescr,
             ...{ NroTarjeta: resp['soapenv:Envelope']['soapenv:Body']['m38:Create__CompIntfc__DLHR_TA_OBSERV_CIResponse']['m38:detail']['m38:DLHR_TA_OBSERV_CI']['m38:DL_NTARJETA'] }
          })
-         setReqSended('sended')
-         setBgCircleColor('#4ad66d');
-         runAnimation();
+         runAnimation(true);
 
       }).catch(async (err) => {
 
-         setBgCircleColor('orange');
-         setReqSended('error');
-         runAnimation();
+         runAnimation(false);
 
          const arrayFormsOffline: any = await GetStorage({ StorageType: 'offlineObserveCards' });
+         const arrayCardsDescrOffline: any = await GetStorage({ StorageType: 'offlineObserveCardsDescr' });
+
+         /*console.log(nroTarjetaEmpty + ((arrayCardsDescrOffline ?  arrayCardsDescrOffline.lenght() : 0) + 1).toString());
+
+          setCardDescr({
+            ...cardDescr,
+            ...{ NroTarjeta: nroTarjetaEmpty + ((arrayCardsDescrOffline ?  arrayCardsDescrOffline.lenght() : 0) + 1).toString() }
+         })*/
 
          if (arrayFormsOffline === null) {
-            await Asingstorage({ StorageType: 'offlineObserveCards' }, [form])
+            await Asingstorage({ StorageType: 'offlineObserveCards' }, [form]);
+            await Asingstorage({ StorageType: 'offlineObserveCardsDescr' }, [cardDescr]);
          } else {
             let arrayFormOffline: Object[] = arrayFormsOffline;
-            arrayFormOffline.push(form);
-            await Asingstorage({ StorageType: 'offlineObserveCards' }, arrayFormOffline)
-         }
+            arrayFormOffline.unshift(form);
+            await Asingstorage({ StorageType: 'offlineObserveCards' }, arrayFormOffline);
 
+            let arrayCardDescrOffline: Object[] = arrayCardsDescrOffline;
+            arrayCardDescrOffline.unshift(cardDescr);
+            await Asingstorage({ StorageType: 'offlineObserveCardsDescr' }, arrayCardDescrOffline);
+         }
       });
 }

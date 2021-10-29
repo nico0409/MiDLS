@@ -1,8 +1,10 @@
+import { nroTarjetaEmpty } from "./nroTarjetaEmpty";
+
 export const initialObsCardDescr ={
 BUSINESS_UNIT: ' ',
 BUSINES_DESCR: ' ',
-DL_IDENTIF_DT: ' ',
-NroTarjeta: ' ',
+DL_IDENTIF_DT: new Date().toISOString().split('T')[0],
+NroTarjeta: nroTarjetaEmpty,
 IDEquipo: ' ',
 ID_EQUIPO_DESCR: ' ',
 DL_ORIGEN: ' ',
