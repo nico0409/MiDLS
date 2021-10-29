@@ -17,7 +17,7 @@ const { height } = Dimensions.get('window');
 
 export const CreateObserveFinalPage = ({ navigation }: Props) => {
 
-    const { form, cardDescr, setCardDescr,emplidSelect } = useContext(AuthContext);
+    const { form, cardDescr, setCardDescr } = useContext(AuthContext);
 
     const [reqSended, setReqSended] = useState<'pending' | 'sended' | 'error'>('pending');
     const [bgCircleColor, setBgCircleColor] = useState('grey');

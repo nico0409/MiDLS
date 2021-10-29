@@ -56,7 +56,7 @@ export const DatePickerSelect = ({ onChange, cardDescr, setCardDescr }: Props) =
                 mode="date"
                 onConfirm={handleConfirm}
                 onCancel={hideDatePicker}
-                /* maximumDate={dateInitial} */
+                maximumDate={dateInitial}
             />
         </>
     )
