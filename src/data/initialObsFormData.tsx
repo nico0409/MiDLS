@@ -1,6 +1,8 @@
+import { nroTarjetaEmpty } from "./nroTarjetaEmpty";
+
 export const initialObsFormData = {
     "m38:BUSINESS_UNIT": '',
-    "m38:DL_NTARJETA": ' ',
+    "m38:DL_NTARJETA": nroTarjetaEmpty,
     "m38:DL_EQUIPMENT_ID": '',
     "m38:DL_IDENTIF_DT": new Date().toISOString().split('T')[0],
     "m38:DL_ORIGEN": '',

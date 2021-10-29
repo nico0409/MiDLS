@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
-import { Text, TouchableOpacity, View, StyleSheet, Dimensions, Platform, ToastAndroid, Alert } from 'react-native';
+import { Text, TouchableOpacity, View, StyleSheet, Dimensions } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { objUseForm } from '../interfaces/prompInterfaces';
+import { DlhrAllObserve, objUseForm } from '../interfaces/prompInterfaces';
 import { colors } from '../Themes/DlsTheme';
 
 interface Props {
     onChange: (value: string, field: keyof objUseForm) => void;
+    cardDescr?: DlhrAllObserve;
+    setCardDescr?: React.Dispatch<React.SetStateAction<DlhrAllObserve>>;
 }
 
 const { width } = Dimensions.get('window')
 
-export const DatePickerSelect = ({ onChange }: Props) => {
+export const DatePickerSelect = ({ onChange, cardDescr, setCardDescr }: Props) => {
 
     //datePicker
     const dateInitial = new Date();
@@ -30,9 +32,10 @@ export const DatePickerSelect = ({ onChange }: Props) => {
     };
 
     const handleConfirm = (date: Date) => {
-            hideDatePicker();
-            setDate(date);
-            onChange(date.toISOString().split('T')[0], 'm38:DL_IDENTIF_DT');
+        hideDatePicker();
+        setDate(date);
+        setCardDescr!({ ...cardDescr, ...{ DL_IDENTIF_DT: date.toISOString().split('T')[0] } })
+        onChange(date.toISOString().split('T')[0], 'm38:DL_IDENTIF_DT');
     };
 
     return (
@@ -53,7 +56,7 @@ export const DatePickerSelect = ({ onChange }: Props) => {
                 mode="date"
                 onConfirm={handleConfirm}
                 onCancel={hideDatePicker}
-                maximumDate={dateInitial}
+                /* maximumDate={dateInitial} */
             />
         </>
     )

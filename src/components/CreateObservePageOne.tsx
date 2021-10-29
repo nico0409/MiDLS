@@ -28,9 +28,9 @@ export const CreateObservePageOne = ({ form, onChange, busunitErrorAnim, origenE
 
             <View style={{ alignItems: 'center' }}>
 
-                <PickerSelect placeholder="Unidad de negocio" type="DLHR_EMPL_BUSSINES_UNIT" onChange={onChange} setCardDescr={setCardDescr} cardDescr={cardDescr} emplid={emplidSelect} activeBorderError={busunitErrorAnim} />
+                <PickerSelect placeholder="Unidad de negocio" type="DLHR_EMPL_BUSSINES_UNIT" onChange={onChange} setCardDescr={setCardDescr} cardDescr={cardDescr} emplid={emplidSelect.fieldValue1} activeBorderError={busunitErrorAnim} />
 
-                <DatePickerSelect onChange={onChange} />
+                <DatePickerSelect onChange={onChange} cardDescr={cardDescr} setCardDescr={setCardDescr} />
 
                 <PickerSelect placeholder="Origen" type="DLHR_ORIGEN" onChange={onChange} activeBorderError={origenErrorAnim} />
 

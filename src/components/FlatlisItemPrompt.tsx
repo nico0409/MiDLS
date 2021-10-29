@@ -50,7 +50,7 @@ export const FlatListItemPrompt = ({ setemplid,
                         setemplid({ fieldValue1: field1, fieldValue2: field2! })
                         :
                         (onChange !== undefined ? onChange(field1, fieldtype) : {}));
-                promptType.type === 'DLHR_EMPL_BUSSINES_UNIT' && setEmplidSelect(field1);
+                promptType.type === 'DLHR_EMPL_BUSSINES_UNIT' && setEmplidSelect({fieldValue1: field1, fieldValue2:field2!});
                 promptType.type === 'DLHR_EMPL_BUSSINES_UNIT' && Asingstorage({ StorageType: 'emplid' }, { emplid: field1, name: field2 })
             }}
         >

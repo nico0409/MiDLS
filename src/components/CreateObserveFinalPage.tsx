@@ -17,7 +17,7 @@ const { height } = Dimensions.get('window');
 
 export const CreateObserveFinalPage = ({ navigation }: Props) => {
 
-    const { form, cardDescr, setCardDescr } = useContext(AuthContext);
+    const { form, cardDescr, setCardDescr,emplidSelect } = useContext(AuthContext);
 
     const [reqSended, setReqSended] = useState<'pending' | 'sended' | 'error'>('pending');
     const [bgCircleColor, setBgCircleColor] = useState('grey');
@@ -108,7 +108,7 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
                 <TouchableOpacity
                     style={{ paddingRight: 10, paddingTop: 10 }}
                     onPress={() => {
-                        navigation.pop(3)
+                        navigation.replace('TarjetaObserveScreen',{name:emplidSelect.fieldValue2,emplid:emplidSelect.fieldValue1})
                     }}>
                     <Icon name="home" size={40} color="white" />
                 </TouchableOpacity>

@@ -6,6 +6,7 @@ import PSDB from '../api/PSDB';
 import { DlhrAllObserve, objUseForm } from '../interfaces/prompInterfaces';
 import { RespNewCard } from '../interfaces/respNewCardObs';
 import { Asingstorage, GetStorage } from './Storage';
+import { nroTarjetaEmpty } from '../data/nroTarjetaEmpty';
 
 const { height } = Dimensions.get('window');
 
@@ -75,13 +76,26 @@ export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingVal
          runAnimation(false);
 
          const arrayFormsOffline: any = await GetStorage({ StorageType: 'offlineObserveCards' });
+         const arrayCardsDescrOffline: any = await GetStorage({ StorageType: 'offlineObserveCardsDescr' });
+
+         /*console.log(nroTarjetaEmpty + ((arrayCardsDescrOffline ?  arrayCardsDescrOffline.lenght() : 0) + 1).toString());
+
+          setCardDescr({
+            ...cardDescr,
+            ...{ NroTarjeta: nroTarjetaEmpty + ((arrayCardsDescrOffline ?  arrayCardsDescrOffline.lenght() : 0) + 1).toString() }
+         })*/
 
          if (arrayFormsOffline === null) {
             await Asingstorage({ StorageType: 'offlineObserveCards' }, [form]);
+            await Asingstorage({ StorageType: 'offlineObserveCardsDescr' }, [cardDescr]);
          } else {
             let arrayFormOffline: Object[] = arrayFormsOffline;
-            arrayFormOffline.push(form);
+            arrayFormOffline.unshift(form);
             await Asingstorage({ StorageType: 'offlineObserveCards' }, arrayFormOffline);
+
+            let arrayCardDescrOffline: Object[] = arrayCardsDescrOffline;
+            arrayCardDescrOffline.unshift(cardDescr);
+            await Asingstorage({ StorageType: 'offlineObserveCardsDescr' }, arrayCardDescrOffline);
          }
       });
 }
