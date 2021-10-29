@@ -108,7 +108,8 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
                 <TouchableOpacity
                     style={{ paddingRight: 10, paddingTop: 10 }}
                     onPress={() => {
-                        navigation.replace('TarjetaObserveScreen',{name:emplidSelect.fieldValue2,emplid:emplidSelect.fieldValue1})
+                        /* navigation.replace('TarjetaObserveScreen',{name:emplidSelect.fieldValue2,emplid:emplidSelect.fieldValue1}) */
+                        navigation.pop(3)
                     }}>
                     <Icon name="home" size={40} color="white" />
                 </TouchableOpacity>
