@@ -13,6 +13,8 @@ import Wallet from '../components/Wallet';
 import { Chase } from 'react-native-animated-spinkit'
 import { ModalPromptEmplid } from '../components/ModalPromptEmplid';
 
+import { useIsFocused } from '@react-navigation/native';
+
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
 
 /* interface Props extends DrawerScreenProps<any, any> { }; */
@@ -30,7 +32,7 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
     const [term, setTerm] = useState('')
     const [placeHolder, setPlaceHolder] = useState<fieldSearchType>({ label: 'Numero de tarjeta' })
 
-    const { allObserveList, isloading, loadAllObserve } = useAllObserve(route.params!.emplid)
+    const { allObserveList, isloading, loadAllObserve } = useAllObserve(route.params!.emplid,useIsFocused())
 
     const [observeFiltered, setObserveFiltred] = useState<DlhrAllObserve[]>([])
   
@@ -104,7 +106,6 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
         setSeeFlatList(true);
 
     }, [term])
-
 
     useEffect(() => {
          if( emplid.fieldValue1!==route.params!.emplid)
@@ -224,7 +225,9 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
             <TouchableOpacity
                 activeOpacity={0.6}
                 style={{ zIndex: 999, ...styles.addButtonContainer }}
-                onPress={() => { navigation.replace('CreateObserveScreen') }}
+                onPress={() => { /* navigation.replace('CreateObserveScreen') */
+                navigation.navigate('CreateObserveScreen')
+             }}
             >
 
                 <View style={styles.addButton} >

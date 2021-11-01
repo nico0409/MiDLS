@@ -73,29 +73,34 @@ export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingVal
 
       }).catch(async (err) => {
 
-         runAnimation(false);
-
          const arrayFormsOffline: any = await GetStorage({ StorageType: 'offlineObserveCards' });
          const arrayCardsDescrOffline: any = await GetStorage({ StorageType: 'offlineObserveCardsDescr' });
 
-         /*console.log(nroTarjetaEmpty + ((arrayCardsDescrOffline ?  arrayCardsDescrOffline.lenght() : 0) + 1).toString());
-
-          setCardDescr({
+         const newCardDescr = {
             ...cardDescr,
-            ...{ NroTarjeta: nroTarjetaEmpty + ((arrayCardsDescrOffline ?  arrayCardsDescrOffline.lenght() : 0) + 1).toString() }
-         })*/
+            ...{ NroTarjeta: nroTarjetaEmpty + ((arrayCardsDescrOffline ? (arrayCardsDescrOffline.length + 1) : 1).toString()) }
+         }
+
+         const newForm = {
+            ...form,
+            ...{ "m38:DL_NTARJETA": nroTarjetaEmpty + ((arrayCardsDescrOffline ? (arrayCardsDescrOffline.length + 1) : 1).toString()) }
+         }
+
+         setCardDescr(newCardDescr);
 
          if (arrayFormsOffline === null) {
-            await Asingstorage({ StorageType: 'offlineObserveCards' }, [form]);
-            await Asingstorage({ StorageType: 'offlineObserveCardsDescr' }, [cardDescr]);
+            await Asingstorage({ StorageType: 'offlineObserveCards' }, [newForm]);
+            await Asingstorage({ StorageType: 'offlineObserveCardsDescr' }, [newCardDescr]);
          } else {
             let arrayFormOffline: Object[] = arrayFormsOffline;
-            arrayFormOffline.unshift(form);
+            arrayFormOffline.unshift(newForm);
             await Asingstorage({ StorageType: 'offlineObserveCards' }, arrayFormOffline);
 
             let arrayCardDescrOffline: Object[] = arrayCardsDescrOffline;
-            arrayCardDescrOffline.unshift(cardDescr);
+            arrayCardDescrOffline.unshift(newCardDescr);
             await Asingstorage({ StorageType: 'offlineObserveCardsDescr' }, arrayCardDescrOffline);
          }
+
+         runAnimation(false);
       });
 }

@@ -109,7 +109,10 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
                 <View style={{ height: 60, width: '100%', flexDirection: 'row', alignItems: 'center' }}>
 
                     <TouchableOpacity
-                        onPress={() => navigation.replace('TarjetaObserveScreen',{name:emplidSelect.fieldValue2,emplid:emplidSelect.fieldValue1})}
+                        onPress={() => 
+                            /* navigation.replace('TarjetaObserveScreen',{name:emplidSelect.fieldValue2,emplid:emplidSelect.fieldValue1}) */
+                            navigation.pop()
+                        }
                     >
                         <Icon name="chevron-back-outline" size={40} color={colors.dlsYellowSecondary} />
                     </TouchableOpacity>
