@@ -20,11 +20,12 @@ interface Props {
     setCardDescr?: React.Dispatch<React.SetStateAction<DlhrAllObserve>>;
     cardDescr?: DlhrAllObserve;
     activeBorderError?: boolean;
+    initialValue?: string;
 }
 
 const { width, height } = Dimensions.get("window");
 
-export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, cardDescr, activeBorderError = false }: Props) => {
+export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, cardDescr, activeBorderError = false, initialValue }: Props) => {
 
     const { top } = useSafeAreaInsets();
 
@@ -60,12 +61,14 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
             break;
     }
 
-    const [placeHolder, setplaceHolder] = useState(strPLaceHolder)
+    //initialValue es para asignar un valor inicial en caso de que el campo se necesita indicar algo en el placeholder, como un valor x cuando el form y data este vacio
+
+    const [placeHolder, setplaceHolder] = useState(initialValue ? initialValue : strPLaceHolder)
 
     let strField1 = '';
-    let strField2 = ''
-    let placeHolderSrch = ''
-    let fieldType: keyof objUseForm = 'm38:BUSINESS_UNIT'
+    let strField2 = '';
+    let placeHolderSrch = '';
+    let fieldType: keyof objUseForm = 'm38:BUSINESS_UNIT';
 
     switch (promptType.type) {
         case 'DLHR_EQUIP_TBL':
@@ -245,6 +248,15 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
                     setplaceHolder(
                         data.filter(
                             item => item.DL_SECTOR_ID === form?.['m38:DL_SECTOR_ID'])[0].DESCR)
+                break;
+            case 'DLHR_OBSERVE_EMPLID':
+                if (data[0] !== undefined &&
+                    form !== undefined) {
+                    const item = data.filter(
+                        item => item.EMPLID === form?.['m38:DL_OBSERVADOR'])[0];
+                    item !== undefined && setplaceHolder(item.NOMBRE
+                    )
+                }
                 break;
             case 'DLHR_APS':
                 if (data[0] !== undefined &&

@@ -22,7 +22,7 @@ export const CreateObservePageOne = ({ form, onChange, busunitErrorAnim, origenE
     const { emplidSelect } = useContext(AuthContext)
 
     const { setCardDescr, cardDescr } = useContext(AuthContext);
-
+    
     return (
         <ScrollView>
 
@@ -42,13 +42,9 @@ export const CreateObservePageOne = ({ form, onChange, busunitErrorAnim, origenE
 
                 <Prompt onChange={onChange} promptType={{ type: 'DLHR_SECTOR' }} activeBorderError={sectorErrorAnim} />
 
-                <View style={styles.marginField}>
-                    <Prompt onChange={onChange} promptType={{ type: 'DLHR_OBSERVE_EMPLID' }} />
-                </View>
+                <Prompt onChange={onChange} promptType={{ type: 'DLHR_OBSERVE_EMPLID' }} initialValue={emplidSelect.fieldValue2}/>
 
-                <View style={styles.marginField}>
-                    <PickerSelect placeholder="Puesto" type={"DLHR_PUESTO"} onChange={onChange} />
-                </View>
+                <PickerSelect placeholder="Puesto" type={"DLHR_PUESTO"} onChange={onChange} />
 
             </View>
 

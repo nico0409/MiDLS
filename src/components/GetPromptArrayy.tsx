@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { StorageTypes, PromptObserveType, AllObserveType, DlhrAllObserve, PromptObserve, promptType } from '../interfaces/prompInterfaces';
+import { StorageTypes, PromptObserveType, AllObserveType, DlhrAllObserve, PromptObserve, promptType, objUseForm } from '../interfaces/prompInterfaces';
 import { storageEmplid } from '../interfaces/storageInterface';
 import { GetStorage } from './Storage';
 
@@ -12,7 +12,7 @@ export const GetPromptArray = (promptypedata:promptType ) => {
     
     const promptype: StorageTypes = { StorageType: 'prompt' };
     
-    let prompt: PromptObserveType | AllObserveType | DlhrAllObserve |storageEmplid |undefined = {}
+    let prompt: PromptObserveType | AllObserveType | DlhrAllObserve[] |objUseForm[] |storageEmplid |undefined = {}
 
    /*  const [PromptObserveList, setPromptObserveList] = useState<PromptObserve>({}) */
     const [PromptObArray, setPromptArray] = useState<any[]>([])
@@ -27,8 +27,9 @@ export const GetPromptArray = (promptypedata:promptType ) => {
         if (isPromptObserve(prompt)) {
            /*  setPromptObserveList({ ...PromptObserveList, ...prompt.PromptObserve! }); */
             const ArrayEquip = prompt.PromptObserve!['soapenv:Envelope']?.['soapenv:Body']?.DLHR_OBSERVE_PROMPT![promptypedata.type!];
+            
             /* const oneEquip: any[] = [ !Array.isArray(ArrayEquip) ? ArrayEquip:[]] */;
-            setPromptArray( Array.isArray(ArrayEquip) ? ArrayEquip:[ArrayEquip] )
+            setPromptArray( Array.isArray(ArrayEquip) ? ArrayEquip:[ArrayEquip] )            
         }
     }
  

@@ -3,6 +3,7 @@ import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from "rea
 import { useNavigation } from '@react-navigation/native';
 import { DlhrAllObserve } from '../../../interfaces/prompInterfaces';
 import { colors } from "../../../Themes/DlsTheme";
+import { nroTarjetaEmpty } from "../../../data/nroTarjetaEmpty";
 
 
 const { width } = Dimensions.get("window");
@@ -25,14 +26,18 @@ export default ({ setTerm, item, index }: CardProps) => {
     <TouchableOpacity
 
       activeOpacity={0.9}
-    onPress={
-      () => (navigation.navigate('EditObvservCardScreen',
-        {
-          busineesUnit: tarjeta.BUSINESS_UNIT,
-          IdentifDt: tarjeta.DL_IDENTIF_DT,
-          Ntarjeta: tarjeta.NroTarjeta
-        }), setTerm !== undefined ? setTerm(''): {})
-    }
+      onPress={
+        () => {
+          navigation.navigate('EditObvservCardScreen',
+            {
+              busineesUnit: tarjeta.BUSINESS_UNIT,
+              IdentifDt: tarjeta.DL_IDENTIF_DT,
+              Ntarjeta: tarjeta.NroTarjeta,
+              cardOffline: tarjeta.NroTarjeta?.includes(nroTarjetaEmpty)
+            });
+          setTerm !== undefined ? setTerm('') : {}
+        }
+      }
     >
       <View style={{
         ...styles.card,

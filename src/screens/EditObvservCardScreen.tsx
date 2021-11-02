@@ -1,31 +1,20 @@
-import React, { useEffect, useRef, useState,useContext } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View, useWindowDimensions, StyleSheet, Text, TouchableOpacity, Platform, ToastAndroid, Alert } from 'react-native';
-import Accordion from '../components/AcordionList';
 
-import { useForm } from '../hooks/UseForm';
-import { GetOneCard } from '../components/GetOneCard';
-import { InterfGetOnesCard, M38GetCompIntfcDLHRTAOBSERVCIResponse, MeuItemType } from '../interfaces/prompInterfaces';
-import { DrawerScreenProps } from '@react-navigation/drawer';
-import { RoutstackParams } from '../Navigation/StackNavigatorObserve';
 import { StackScreenProps } from '@react-navigation/stack';
-import { UseOneGetObserve } from '../hooks/UseOneGetObserve';
-import { Loading } from '../components/Loading';
-
-import List, { List as ListModel } from "../components/AcordionList/List";
-import { colors } from '../Themes/DlsTheme';
-import { onChange } from 'react-native-reanimated';
-import { Prompt } from '../components/Prompt';
 import { ScrollView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
-import AwesomeIcon from 'react-native-vector-icons/FontAwesome'
+import AwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import { Chase } from 'react-native-animated-spinkit';
+
+import { M38GetCompIntfcDLHRTAOBSERVCIResponse, MeuItemType } from '../interfaces/prompInterfaces';
+import { RoutstackParams } from '../Navigation/StackNavigatorObserve';
+import { UseOneGetObserve } from '../hooks/UseOneGetObserve';
+import List, { List as ListModel } from "../components/AcordionList/List";
+import { colors } from '../Themes/DlsTheme';
 import { EditObservCard } from '../components/EditObserveCard';
-import { Chase } from 'react-native-animated-spinkit'
-import { AuthContext } from '../context/formContext/AuthContext';
 
-
-
-
-
+interface Props extends StackScreenProps<RoutstackParams, 'EditObvservCardScreen'> {};
 
 const list: ListModel = {
     name: "Registro",
@@ -34,6 +23,7 @@ const list: ListModel = {
 
     ],
 };
+
 const list2: ListModel = {
     name: "Comentarios",
     items: [
@@ -57,44 +47,29 @@ const list4: ListModel = {
 
     ],
 };
-interface Props extends StackScreenProps<RoutstackParams, 'EditObvservCardScreen'> {
-
-}
 
 export const EditObvservCardScreen = ({ navigation, route }: Props) => {
 
+    const { isloading, loadObserveCard, form, onChange, stateSend } = UseOneGetObserve( route.params);
 
-    const { isloading, loadObserveCard, form, onChange, stateSend } = UseOneGetObserve(/* {
-        IdentifDt: '2020-05-31',
-        busineesUnit: 'CDR', Ntarjeta: '2020-4070-039506'
-    }*/  route.params)
     const [editAble, setEditAble] = useState(false)
     const [initialState, setinitialState] = useState<M38GetCompIntfcDLHRTAOBSERVCIResponse | undefined>()
     const scrollViewRef = useRef<ScrollView>(null)
- 
 
     useEffect(() => {
-
         setinitialState(stateSend);
     }, [isloading])
 
-
-
-
-
-
     useEffect(() => {
-
-
-
         if (initialState !== undefined && JSON.stringify(stateSend) !== JSON.stringify(initialState))
             setEditAble(true)
-
     }, [stateSend])
 
     const { height, width } = useWindowDimensions();
+
     form['m38:DL_NTARJETA']
     /* console.log(form,isloading); */
+
     const menus: MeuItemType[] = [
         { MeuItemType: 'Registro' },
         { MeuItemType: 'Comentarios' },
@@ -118,10 +93,6 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
         }
     }
 
-
-
-
-
     return (
 
         < View style={{ flex: 1 }}>
@@ -129,19 +100,22 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
                 <View style={{ height: 60, width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
 
                     <TouchableOpacity
-                        onPress={() => navigation.pop()}
+                        onPress={() => { route.params.cardOffline ? navigation.pop(4) : navigation.pop() }}
                     >
                         <Icon name="chevron-back-outline" size={40} color={colors.dlsYellowSecondary} />
                     </TouchableOpacity>
-                    <TouchableOpacity
-                        disabled={!editAble}
-                        onPress={() => EditObservCard({ form: stateSend!, alertSend })}
-                    >
-                        <AwesomeIcon name="edit" size={30} color={editAble ? colors.dlsYellowSecondary : colors.dlsBtonColosWhite} />
-                    </TouchableOpacity>
+
+                    {!route.params.cardOffline &&
+                        <TouchableOpacity
+                            disabled={!editAble}
+                            onPress={() => EditObservCard({ form: stateSend!, alertSend })}
+                        >
+                            <AwesomeIcon name="edit" size={30} color={editAble ? colors.dlsYellowSecondary : colors.dlsBtonColosWhite} />
+                        </TouchableOpacity>
+                    }
 
                 </View>
-                {!isloading? 
+                {!isloading ?
                     <>
                         <View style={styles.containerTitle}>
                             <Text style={styles.title}>{`Tarjeta Número:`}</Text>
@@ -156,25 +130,21 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
                             <List {...{ list: list4 }} MeuItemType={menus[3]} form={form} onChange={onChange} scrollViewRef={scrollViewRef} />
                         </ScrollView>
                     </>
-                :
-                <View style={{alignItems:'center', justifyContent:'center',flex:1}}>
-                <Chase size={48} color="#FFF" />
-                </View>
+                    :
+                    <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+                        <Chase size={48} color="#FFF" />
+                    </View>
                 }
             </View>
-
-
         </View>
-
     )
 }
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: colors.dlsGrayPrimary,
-        padding: 16,
-        /* 
-         */
+        padding: 16
     },
     containerTitle: {
         justifyContent: 'center',

@@ -17,7 +17,8 @@ export const DatePickerSelect = ({ onChange, cardDescr, setCardDescr }: Props) =
 
     //datePicker
     const dateInitial = new Date();
-    /* dateInitial.setDate(dateInitial.getDate() - 1); */
+    console.log(dateInitial);
+    
 
     const [date, setDate] = useState(dateInitial);
 
@@ -34,7 +35,7 @@ export const DatePickerSelect = ({ onChange, cardDescr, setCardDescr }: Props) =
     const handleConfirm = (date: Date) => {
         hideDatePicker();
         setDate(date);
-        setCardDescr!({ ...cardDescr, ...{ DL_IDENTIF_DT: date.toISOString().split('T')[0] } })
+        (setCardDescr && setCardDescr({ ...cardDescr, ...{ DL_IDENTIF_DT: date.toISOString().split('T')[0] } }))
         onChange(date.toISOString().split('T')[0], 'm38:DL_IDENTIF_DT');
     };
 
@@ -56,7 +57,7 @@ export const DatePickerSelect = ({ onChange, cardDescr, setCardDescr }: Props) =
                 mode="date"
                 onConfirm={handleConfirm}
                 onCancel={hideDatePicker}
-                maximumDate={dateInitial}
+                /* maximumDate={dateInitial} */
             />
         </>
     )
