@@ -1,5 +1,5 @@
 import React, { useState, useEffect,useContext } from "react";
-import { StyleSheet, Text, TouchableWithoutFeedback, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 
 import Animated from "react-native-reanimated";
 import { mix, useTransition } from "react-native-redash/src/v1/";
@@ -10,21 +10,15 @@ import { ListItem } from "./ListItem";
 import { MeuItemType, M38GetCompIntfcDLHRTAOBSERVCIResponse } from '../../interfaces/prompInterfaces';
 import { Prompt } from '../Prompt';
 import { PickerSelect } from '../PickerSelect';
-import Icon from 'react-native-vector-icons/Ionicons';
 import { colors } from "../../Themes/DlsTheme";
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { CustomSwitchObserve } from '../CustomSwitchObserve';
 import CheckBox from "@react-native-community/checkbox";
 import { InputModal } from "../InputModal";
 import { QuestionsCmp } from "../Questions";
 import { ScrollView } from "react-native-gesture-handler";
-import { onChange } from 'react-native-reanimated';
 import { Rulegold } from '../Rulegold';
 import { AuthContext } from "../../context/formContext/AuthContext";
-
-
-
-const { interpolateNode } = Animated;
+import { DatePickerSelect } from "../DatePickerSelect";
 
 export interface List {
   name: string;
@@ -41,38 +35,19 @@ interface ListProps {
 
 export default ({ form, onChange, list, MeuItemType, scrollViewRef }: ListProps) => {
 
-
-
-  const dateInit: string = form["m38:DL_IDENTIF_DT"] ? form["m38:DL_IDENTIF_DT"] : new Date().toISOString().split('T')[0]
   const LIST_ITEM_HEIGHT = 750;
   const { interpolateNode } = Animated;
   const [open, setOpen] = useState(false);
   const transition = useTransition(open);
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const {emplidSelect} = useContext(AuthContext)
+  const {emplidSelect} = useContext(AuthContext);
   const height = mix(transition, 0, LIST_ITEM_HEIGHT * 1);
   const bottomRadius = interpolateNode(transition, {
     inputRange: [0, 16 / 400],
     outputRange: [8, 0],
   });
 
-  const showDatePicker = () => {
-    setDatePickerVisibility(true);
-  };
-  const hideDatePicker = () => {
-    setDatePickerVisibility(false);
-  };
-  const [date, setDate] = useState(form["m38:DL_IDENTIF_DT"]);
+  const [toggleCheckBox, setToggleCheckBox] = useState(false);
 
-  const handleConfirm = (date: Date) => {
-
-    hideDatePicker();
-    setDate(date.toISOString().split('T')[0]);
-    /*onChange(date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear(), 'm38:DL_IDENTIF_DT'); */
-    onChange(date.toISOString().split('T')[0], 'm38:DL_IDENTIF_DT');
-
-  };
-  const [toggleCheckBox, setToggleCheckBox] = useState(false)
   useEffect(() => {
     if (form !== undefined)
       setToggleCheckBox(form["m38:DL_ADESTACAR"] === 'Y' ? true : false)
@@ -95,8 +70,6 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef }: ListProps)
 
     }
   }
-
-
 
   return (
     <>
@@ -134,13 +107,8 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef }: ListProps)
                 emplid={emplidSelect.fieldValue1} 
               />
 
-              <View style={{ flexDirection: 'row', marginVertical: 10 }}>
-                <Text style={{ color: colors.dlsTextwhite, fontSize: 20 }}>{date}</Text>
-                <TouchableOpacity
-                  onPress={showDatePicker}>
-                  <Icon name="calendar" size={30} color={colors.dlsYellowSecondary} />
-                </TouchableOpacity>
-              </View>
+              <DatePickerSelect onChange={onChange} />
+
               <PickerSelect
                 form={form}
                 placeholder="Origen"
@@ -275,13 +243,6 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef }: ListProps)
 
         </View>
       </Animated.View>
-      <DateTimePickerModal
-        isVisible={isDatePickerVisible}
-        mode="date"
-        onConfirm={date => handleConfirm(date)}
-        onCancel={hideDatePicker}
-        date={new Date(dateInit)}
-      />
     </>
   );
 };

@@ -1,22 +1,13 @@
-import React, { useEffect, useState } from 'react'
-
-import { DlhrAllObserve, StorageTypes, M38GetCompIntfcDLHRTAOBSERVCIResponse, InterfGetOnesCard, objUseForm } from '../interfaces/prompInterfaces';
-
-import { Asingstorage } from '../components/Storage';
+import React, { useEffect, useState } from 'react';
+import { M38GetCompIntfcDLHRTAOBSERVCIResponse, InterfGetOnesCard } from '../interfaces/prompInterfaces';
+import { GetStorage } from '../components/Storage';
 import { GetOneCard } from '../components/GetOneCard';
-
 import { useForm } from './UseForm';
-
-
 
 export const UseOneGetObserve = (observeCardSrch: InterfGetOnesCard) => {
 
     const [isloading, setIsloading] = useState(true)
-    const {form,setFormValue,onChange,stateSend,setStateSend }= useForm<M38GetCompIntfcDLHRTAOBSERVCIResponse>({})
-
-
-    
-    
+    const { form, setFormValue, onChange, stateSend, setStateSend } = useForm<M38GetCompIntfcDLHRTAOBSERVCIResponse>({})
 
     const loadObserveCard = async () => {
         setIsloading(true);
@@ -25,28 +16,33 @@ export const UseOneGetObserve = (observeCardSrch: InterfGetOnesCard) => {
         setIsloading(false)
     }
 
+    const loadObserveCardOffline = async () => {
+        setIsloading(true);
+        const cardOffline: any = await GetStorage({ StorageType: 'offlineObserveCards' });
+        setFormValue(cardOffline.find((element:any) => element["m38:DL_NTARJETA"]===observeCardSrch.Ntarjeta));
+        setIsloading(false)
+    }
 
-    const initFormSended=()=>{
-     
-        setStateSend({"m38:BUSINESS_UNIT":observeCardSrch.busineesUnit,
-                            "m38:DL_IDENTIF_DT":observeCardSrch.IdentifDt,
-                        "m38:DL_NTARJETA":observeCardSrch.Ntarjeta})
+    const initFormSended = () => {
+
+        setStateSend({
+            "m38:BUSINESS_UNIT": observeCardSrch.busineesUnit,
+            "m38:DL_IDENTIF_DT": observeCardSrch.IdentifDt,
+            "m38:DL_NTARJETA": observeCardSrch.Ntarjeta
+        })
     }
 
     useEffect(() => {
-        loadObserveCard();
+        observeCardSrch.cardOffline ? loadObserveCardOffline() : loadObserveCard();
         initFormSended();
-    }
-        , [])
+    }, [])
 
     return {
-        
-         stateSend, 
+        stateSend,
         isloading,
         loadObserveCard,
         form,
         setFormValue,
         onChange,
-       
     }
 }

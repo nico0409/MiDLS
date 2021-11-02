@@ -98,8 +98,8 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
     }
 
     useEffect(() => {
-        setCardDescr(initialObsCardDescr)
-        setFormValue(initialObsFormData)
+        setCardDescr({...initialObsCardDescr, ...{ DL_OBSERVADOR: emplidSelect.fieldValue1 } })
+        setFormValue({ ...initialObsFormData, ...{ "m38:DL_OBSERVADOR": emplidSelect.fieldValue1 } })
     }, [])
 
     return (
@@ -109,7 +109,7 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
                 <View style={{ height: 60, width: '100%', flexDirection: 'row', alignItems: 'center' }}>
 
                     <TouchableOpacity
-                        onPress={() => 
+                        onPress={() =>
                             /* navigation.replace('TarjetaObserveScreen',{name:emplidSelect.fieldValue2,emplid:emplidSelect.fieldValue1}) */
                             navigation.pop()
                         }
