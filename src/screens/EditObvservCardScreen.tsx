@@ -68,7 +68,7 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
     const { height, width } = useWindowDimensions();
 
     form['m38:DL_NTARJETA']
-    /* console.log(form,isloading); */
+   
 
     const menus: MeuItemType[] = [
         { MeuItemType: 'Registro' },
@@ -76,7 +76,8 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
         { MeuItemType: 'Preguntas' },
         { MeuItemType: 'ReglasOro' },
     ]
-
+   
+    
     const alertSend = (sended: boolean) => {
         let msg = ''
 

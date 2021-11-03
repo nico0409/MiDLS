@@ -22,7 +22,10 @@ export const InputModal = ({ placeholder, type, onChange, textSelect, form }: Pr
 
     let str = ''
     const setText = (value: string) => {
-
+      /*  value= value.replace('<','&lt;')
+       value= value.replace('>','&gt;')
+        console.log(value); */
+        
         switch (type) {
             case 'DL_DESCACTO':
                 onChange(value, 'm38:DL_DESCACTO')
@@ -40,6 +43,7 @@ export const InputModal = ({ placeholder, type, onChange, textSelect, form }: Pr
 
         }
     }
+    
     switch (type) {
         case 'DL_DESCACTO':
 
@@ -109,18 +113,19 @@ export const InputModal = ({ placeholder, type, onChange, textSelect, form }: Pr
                             textInputStyle={{ fontSize: 20, color: colors.dlsTextwhite }}
                             style={{
                                 borderRadius: 12,
-                                top: 25,
-                                height: height * 0.3,
+                               alignItems:'flex-start',
+                                height: height * 0.34,
                                 backgroundColor: colors.dlsGrayPrimary
                             }}
                             value={str}
-                            maxCharLimit={150}
+                            maxCharLimit={300}
                             placeholderTextColor="black"
                             exceedCharCountColor="#990606"
                             placeholder={"Write your review..."}
 
                             onChangeText={(text) => { setText(text) }}
                         />
+
 
 
                     </View>
@@ -171,8 +176,8 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     cardPrompt: {
-        backgroundColor: 'white',
-        justifyContent: 'center',
+        
+        
         alignItems: 'center',
         shadowOffset: {
             width: 0,
