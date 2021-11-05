@@ -53,7 +53,7 @@ export const DatePickerSelect = ({ onChange, cardDescr, setCardDescr }: Props) =
             <View style={{ paddingLeft: 10 }}>
                 <Text style={{ color: 'white', fontWeight: 'bold' }}>Fecha de Identificación</Text>
             </View>
-            <View style={{ marginTop:5, flexDirection: 'row' }}>
+            <View style={{ marginTop: 5, flexDirection: 'row' }}>
                 <TouchableOpacity
                     onPress={showDatePicker}>
                     <View style={styles.btnContainer}>
@@ -69,7 +69,7 @@ export const DatePickerSelect = ({ onChange, cardDescr, setCardDescr }: Props) =
                 mode="date"
                 onConfirm={handleConfirm}
                 onCancel={hideDatePicker}
-            /* maximumDate={dateInitial} */
+                maximumDate={dateInitial}
             />
         </View>
     )
