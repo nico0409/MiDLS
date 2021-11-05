@@ -24,13 +24,25 @@ export const CreateObservePageTwo = ({ form, onChange }: Props) => {
 
             <View style={{ alignItems: 'center' }}>
 
-                <View style={styles.marginField}>
-                    <CustomSwitchObserve title="¿Aplico interrupción de tareas?" onChange={onChange} switchType="m38:DL_POLITINTERTAREA" />
-                </View>
+                <InputModal
+                    placeholder={"Descripción del Acto / Condición "}
+                    textSelect={""}
+                    type={'DL_DESCACTO'}
+                    onChange={onChange}
+                    form={form}
+                />
+                <InputModal
+                    placeholder={"Acción para evitar reiteración"}
+                    textSelect={""}
+                    type={'DL_ACCEVITREIT'}
+                    onChange={onChange}
+                    form={form}
+                />
 
-                <View style={styles.marginField}>
-                    <CustomSwitchObserve title="Requiere APS de seguimiento" onChange={onChange} switchType="m38:DL_REQAPSSEG" />
-                </View>
+                <CustomSwitchObserve title="¿Aplico interrupción de tareas?" onChange={onChange} switchType="m38:DL_POLITINTERTAREA" />
+
+                <CustomSwitchObserve title="Requiere APS de seguimiento" onChange={onChange} switchType="m38:DL_REQAPSSEG" />
+
                 {form["m38:DL_REQAPSSEG"] === 'Y' &&
                     <Prompt
                         form={form}
