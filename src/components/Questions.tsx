@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, SafeAreaView } from "react-native";
+import { View, Text, SafeAreaView, StyleSheet } from "react-native";
 import { M38GetCompIntfcDLHRTAOBSERVCIResponse, objUseForm } from '../interfaces/prompInterfaces';
 
 import BouncyCheckboxGroup, {
@@ -19,10 +19,10 @@ interface Props {
 }
 export const QuestionsCmp = ({ form, questiontType, onChange }: Props) => {
 
-let initialValue=0
+  let initialValue = 0
 
-  const mapValuesToIndex = (value: string ='' ) => {
-   switch (value) {
+  const mapValuesToIndex = (value: string = '') => {
+    switch (value) {
       case 'A':
         return 0
       case 'B':
@@ -36,40 +36,40 @@ let initialValue=0
         return 4
     }
 
-    
+
   }
 
-  const mapIndexToValue=(index:number)=>{
+  const mapIndexToValue = (index: number) => {
 
     switch (index) {
       case 0:
         return 'A'
-        case 1:
+      case 1:
         return 'B'
-        case 2:
+      case 2:
         return 'C'
-        case 3:
+      case 3:
         return 'D'
 
-        default :
-       return 'A'
+      default:
+        return 'A'
     }
   }
-  
+
 
   const data = QuestionsData.type.filter(item => {
     if (item.type.type === questiontType.type)
       return item;
 
   })
-  
-  
-  
+
+
+
   if (form !== undefined) {
-    initialValue=  mapValuesToIndex(form?.[data[0].field]!) 
-    }
+    initialValue = mapValuesToIndex(form?.[data[0].field]!)
+  }
   else {
-    initialValue=   mapValuesToIndex() 
+    initialValue = mapValuesToIndex()
   }
 
 
@@ -80,15 +80,15 @@ let initialValue=0
         <View style={styles.container}>
 
 
-          <View style={{ marginLeft: 32, marginTop: 24 }}>
-            <Text style={{ color: "#a8a8ac", fontWeight: "500", fontSize: 16 }}>
+          <View style={{ /* marginLeft: 32, */ marginTop: 24}}>
+            <Text style={{ color: "white", fontWeight: "bold", fontSize: 18 }}>
               {data[0]?.question}
             </Text>
           </View>
           <View
             style={{
               marginTop: 16,
-              marginLeft: 32,
+              /* marginHorizontal: 32, */
               justifyContent: "center",
             }}
           >
@@ -97,7 +97,7 @@ let initialValue=0
               style={{ flexDirection: "column" }}
               initial={initialValue}
               onChange={(selectedItem: ICheckboxButton) => {
-                onChange(mapIndexToValue(selectedItem.id),data[0].field)
+                onChange(mapIndexToValue(selectedItem.id), data[0].field)
               }}
             />
           </View>
@@ -109,7 +109,9 @@ let initialValue=0
 };
 
 
-const styles = {
-  container: { marginTop: 24 },
-
-};
+const styles = StyleSheet.create({
+  container: { 
+    marginTop: 24,
+    marginHorizontal:'10%'
+   }
+});

@@ -7,7 +7,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { GetPromptArray } from './GetPromptArrayy';
 import { FlatListItemPrompt } from './FlatlisItemPrompt';
 import Icon from 'react-native-vector-icons/Ionicons';
-import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
+import Animated, { useAnimatedStyle, useSharedValue, withDelay, withSpring, withTiming } from 'react-native-reanimated';
 
 interface Props {
     onChange?: (value: string, field: keyof objUseForm) => void;
@@ -221,6 +221,9 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
         setSeeFlatList(true);
     }, [term])
 
+    const titleAnimationValue = useSharedValue(25);
+    const heightAnimationValue = useSharedValue(0);
+
     useEffect(() => {
         switch (promptType.type) {
             case 'DLHR_EQUIP_TBL':
@@ -229,34 +232,40 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
                     setplaceHolder(
                         data.filter(
                             item =>
-                                item.DL_EQUIPEMENT_ID === form?.['m38:DL_EQUIPMENT_ID']
-                        )[0].DESCR
-                    )
+                                item.DL_EQUIPEMENT_ID === form?.['m38:DL_EQUIPMENT_ID'])[0].DESCR);
+                form?.['m38:DL_EQUIPMENT_ID'] && (titleAnimationValue.value = -5);
+                form?.['m38:DL_EQUIPMENT_ID'] && (heightAnimationValue.value = 20);
                 break;
             case 'DLHR_CUSTOMER':
                 data[0] !== undefined &&
                     form !== undefined &&
                     setplaceHolder(
                         data.filter(
-                            item => item.DL_CUSTOMER_ID === form?.['m38:DL_CUSTOMER_ID']
-                        )[0].DESCR
-                    )
+                            item => item.DL_CUSTOMER_ID === form?.['m38:DL_CUSTOMER_ID'])[0].DESCR);
+                form?.['m38:DL_CUSTOMER_ID'] && (titleAnimationValue.value = -5);
+                form?.['m38:DL_CUSTOMER_ID'] && (heightAnimationValue.value = 20);
                 break;
             case 'DLHR_SECTOR':
                 data[0] !== undefined &&
                     form !== undefined &&
                     setplaceHolder(
                         data.filter(
-                            item => item.DL_SECTOR_ID === form?.['m38:DL_SECTOR_ID'])[0].DESCR)
+                            item => item.DL_SECTOR_ID === form?.['m38:DL_SECTOR_ID'])[0].DESCR);
+                form?.['m38:DL_SECTOR_ID'] && (titleAnimationValue.value = -5);
+                form?.['m38:DL_SECTOR_ID'] && (heightAnimationValue.value = 20);
                 break;
             case 'DLHR_OBSERVE_EMPLID':
                 if (data[0] !== undefined &&
                     form !== undefined) {
                     const item = data.filter(
                         item => item.EMPLID === form?.['m38:DL_OBSERVADOR'])[0];
-                    item !== undefined && setplaceHolder(item.NOMBRE
-                    )
+                    item !== undefined && setplaceHolder(item.NOMBRE)
+
+                    form?.['m38:DL_OBSERVADOR'] && (titleAnimationValue.value = -5);
+                    form?.['m38:DL_OBSERVADOR'] && (heightAnimationValue.value = 20);
                 }
+                console.log("form?.['m38:DL_OBSERVADOR']:");
+                console.log(form?.['m38:DL_OBSERVADOR']);
                 break;
             case 'DLHR_APS':
                 if (data[0] !== undefined &&
@@ -267,10 +276,14 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
                     )[0];
                     item !== undefined && setplaceHolder(item.DL_ACTION_NBR
                     )
-                }
+                }                
+                form?.['m38:DL_NUM_APS'] && (titleAnimationValue.value = -5);
+                form?.['m38:DL_NUM_APS'] && (heightAnimationValue.value = 20);
                 break;
         }
     }, [data])
+
+    const [isItemChanged, setIsItemChanged] = useState(false);
 
     const borderAnimationValue = useSharedValue(0);
 
@@ -280,15 +293,35 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
         }
     })
 
+    const titleAnimationStyle = useAnimatedStyle(() => {
+        return {
+            height: withTiming(heightAnimationValue.value, { duration: 300 }),
+            transform: [{ translateY: withTiming(titleAnimationValue.value, { duration: 300 }) }]
+        }
+    })
+
     useEffect(() => {
         if (activeBorderError) {
             borderAnimationValue.value = 3;
         }
     }, [activeBorderError]);
 
+    useEffect(() => {
+        if (isItemChanged) {
+            heightAnimationValue.value = 20;
+            titleAnimationValue.value = -5;
+            borderAnimationValue.value = 0;
+        }
+    }, [isItemChanged]);
+
     return (
-        <>
-            <Animated.View style={[{ marginVertical: 10, borderColor: 'red', borderRadius: 20 }, borderAnimationStyle]}>
+        <View style={{ marginVertical: 10 }}>
+
+            <Animated.View style={[{ paddingLeft: 10 }, titleAnimationStyle]}>
+                <Text style={{ color: 'white', fontWeight: 'bold' }}>{placeHolderSrch}</Text>
+            </Animated.View>
+
+            <Animated.View style={[{ borderColor: 'red', borderRadius: 20 }, borderAnimationStyle]}>
                 <TouchableOpacity
                     activeOpacity={0.8}
                     onPress={() => { setisVisible(true) }}>
@@ -359,7 +392,7 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
                                             promptType={promptType}
                                             setCardDescr={setCardDescr}
                                             cardDescr={cardDescr}
-                                            borderAnimationValue={borderAnimationValue}
+                                            setIsItemChanged={setIsItemChanged}
                                         />
                                     }
                                     keyExtractor={(item, index) => item[strField1] + index.toString()}
@@ -370,7 +403,7 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
                     </View>
                 </View>
             </Modal>
-        </>
+        </View>
     )
 }
 

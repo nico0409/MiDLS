@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import RNSingleSelect, { ISingleSelectDataType } from "@freakycoder/react-native-single-select";
-import { Dimensions, View } from 'react-native';
+import { Dimensions, Text, View } from 'react-native';
 import { promptType, DlhrBussinesUnit, DlhrOrigen, DlhrPuesto, DlhrTurno, M38GetCompIntfcDLHRTAOBSERVCIResponse, objUseForm, DlhrAps, DlhrAllObserve } from '../interfaces/prompInterfaces';
 import { GetPromptArray } from './GetPromptArrayy';
-import Animated, { useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
+import Animated, { useSharedValue, useAnimatedStyle, withSpring, withTiming } from 'react-native-reanimated';
 
 interface Props {
     placeholder: string;
@@ -29,6 +29,9 @@ export const PickerSelect = ({ placeholder, type, onChange, form, setCardDescr, 
     let data: ISingleSelectDataType[];
     let fieldData: keyof objUseForm;
     let descr: string;
+    
+    const titleAnimationValue = useSharedValue(25);
+    const heightAnimationValue = useSharedValue(0);
 
     if (PromptObArray[0] !== undefined) {
 
@@ -55,6 +58,8 @@ export const PickerSelect = ({ placeholder, type, onChange, form, setCardDescr, 
                         if (form?.['m38:DL_ORIGEN'] === item.ORIGEN.toString()) {
                             itemselect = { id: index, value: item.DESCR, data: { dataItem, fieldData } }
                         }
+                        form?.['m38:DL_ORIGEN'] && (titleAnimationValue.value = -5);
+                        form?.['m38:DL_ORIGEN'] && (heightAnimationValue.value = 20);
                         break;
                     case "DLHR_PUESTO":
                         dataItem = item.DL_PUESTO;
@@ -63,15 +68,18 @@ export const PickerSelect = ({ placeholder, type, onChange, form, setCardDescr, 
                         if (form?.['m38:DL_PUESTO'] === item.DL_PUESTO) {
                             itemselect = { id: index, value: item.DESCR, data: { dataItem, fieldData } }
                         }
+                        form?.['m38:DL_PUESTO'] && (titleAnimationValue.value = -5);
+                        form?.['m38:DL_PUESTO'] && (heightAnimationValue.value = 20);
                         break;
                     case "DLHR_TURNO":
                         dataItem = item.DL_TURNO;
                         fieldData = "m38:DL_TURNO";
                         descr = item.DESCR
                         if (form?.['m38:DL_TURNO'] == item.DL_TURNO.toString()) {
-
                             itemselect = { id: index, value: item.DESCR, data: { dataItem, fieldData } }
                         }
+                        form?.['m38:DL_TURNO'] && (titleAnimationValue.value = -5);
+                        form?.['m38:DL_TURNO'] && (heightAnimationValue.value = 20);
                         break;
                     case "DLHR_EMPL_BUSSINES_UNIT":
                         dataItem = item.UNIDAD_DE_NEGOCIO;
@@ -80,6 +88,8 @@ export const PickerSelect = ({ placeholder, type, onChange, form, setCardDescr, 
                         if (form?.['m38:BUSINESS_UNIT'] === item.UNIDAD_DE_NEGOCIO) {
                             itemselect = { id: index, value: item.DESCR, data: { dataItem, fieldData } }
                         }
+                        form?.['m38:BUSINESS_UNIT'] && (titleAnimationValue.value = -5);
+                        form?.['m38:BUSINESS_UNIT'] && (heightAnimationValue.value = 20);
                         break;
                 }
                 return { id: index, value: descr, data: { dataItem, fieldData } }
@@ -101,11 +111,20 @@ export const PickerSelect = ({ placeholder, type, onChange, form, setCardDescr, 
             }
     }
 
+    const [isItemChanged, setIsItemChanged] = useState(false);
+
     const borderAnimationValue = useSharedValue(0);
 
     const borderAnimationStyle = useAnimatedStyle(() => {
         return {
             borderWidth: withSpring(borderAnimationValue.value, { damping: 8 })
+        }
+    })
+
+    const titleAnimationStyle = useAnimatedStyle(() => {
+        return {
+            height: withTiming(heightAnimationValue.value, { duration: 300 }),
+            transform: [{ translateY: withTiming(titleAnimationValue.value, { duration: 300 }) }]
         }
     })
 
@@ -115,28 +134,41 @@ export const PickerSelect = ({ placeholder, type, onChange, form, setCardDescr, 
         }
     }, [activeBorderError]);
 
+    useEffect(() => {
+        if (isItemChanged) {
+            titleAnimationValue.value = -5;
+            heightAnimationValue.value = 20;
+            borderAnimationValue.value = 0
+        }
+    }, [isItemChanged]);
+
     return (
-        <Animated.View style={[{ marginVertical: 15, borderColor: 'red', borderRadius: 20 }, borderAnimationStyle]}>
+        <View style={{ marginVertical: 10 }}>
 
-            <RNSingleSelect
-                darkMode
-                disableAbsolute={false}
-                initialValue={selectedItem}
-                placeholder={placeholder}
-                data={data}
-                width={ScreenWidth * 0.87}
-                searchEnabled={false}
-                menuBarContainerWidth={ScreenWidth * 0.87}
-                onSelect={(selectedItem: ISingleSelectDataType) => {
-                    onChange(selectedItem.data.dataItem, selectedItem.data.fieldData);
-                    changeDescr(selectedItem.data.dataItem, selectedItem.value)
-                    setSelectedItem(selectedItem);
-                    if (borderAnimationValue.value === 3) {
-                        borderAnimationValue.value = 0
-                    }
-                }}
-            />
+            <Animated.View style={[{ paddingLeft: 10 }, titleAnimationStyle]}>
+                <Text style={{ color: 'white', fontWeight: 'bold' }}>{placeholder}</Text>
+            </Animated.View>
 
-        </Animated.View>
+            <Animated.View style={[{ marginVertical: 0, borderColor: 'red', borderRadius: 20 }, borderAnimationStyle]}>
+
+                <RNSingleSelect
+                    darkMode
+                    disableAbsolute={false}
+                    initialValue={selectedItem}
+                    placeholder={placeholder}
+                    data={data}
+                    width={ScreenWidth * 0.87}
+                    searchEnabled={false}
+                    menuBarContainerWidth={ScreenWidth * 0.87}
+                    onSelect={(selectedItem: ISingleSelectDataType) => {
+                        onChange(selectedItem.data.dataItem, selectedItem.data.fieldData);
+                        changeDescr(selectedItem.data.dataItem, selectedItem.value);
+                        setSelectedItem(selectedItem);
+                        setIsItemChanged(true)
+                    }}
+                />
+            </Animated.View>
+
+        </View>
     )
 }

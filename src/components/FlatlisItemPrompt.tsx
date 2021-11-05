@@ -20,7 +20,7 @@ interface Props {
     promptType: promptType;
     setCardDescr?: React.Dispatch<React.SetStateAction<DlhrAllObserve>>;
     cardDescr?: DlhrAllObserve;
-    borderAnimationValue?: SharedValue<number>;
+    setIsItemChanged?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const FlatListItemPrompt = ({ setemplid,
@@ -32,7 +32,7 @@ export const FlatListItemPrompt = ({ setemplid,
     onChange,
     setCardDescr,
     cardDescr,
-    borderAnimationValue
+    setIsItemChanged
 }: Props) => {
 
     const { setEmplidSelect } = useContext(AuthContext)
@@ -41,16 +41,16 @@ export const FlatListItemPrompt = ({ setemplid,
         <TouchableOpacity
             activeOpacity={0.5}
             onPress={() => {
+                (setIsItemChanged !== undefined ? setIsItemChanged(true) : {})
                 setplaceHolder((promptType.type === 'DLHR_APS') ? field1 : field2!),
                     closePrompt(false);
-                (borderAnimationValue === undefined ? {} : borderAnimationValue.value = 0)
                 /*  ,onChange!(field1, fieldtype) */
                 promptType.type === 'DLHR_EQUIP_TBL' && setCardDescr!({ ...cardDescr, ...{ IDEquipo: field1, ID_EQUIPO_DESCR: field2, } })
                     , (setemplid !== undefined ?
                         setemplid({ fieldValue1: field1, fieldValue2: field2! })
                         :
                         (onChange !== undefined ? onChange(field1, fieldtype) : {}));
-                promptType.type === 'DLHR_EMPL_BUSSINES_UNIT' && setEmplidSelect({fieldValue1: field1, fieldValue2:field2!});
+                promptType.type === 'DLHR_EMPL_BUSSINES_UNIT' && setEmplidSelect({ fieldValue1: field1, fieldValue2: field2! });
                 promptType.type === 'DLHR_EMPL_BUSSINES_UNIT' && Asingstorage({ StorageType: 'emplid' }, { emplid: field1, name: field2 })
             }}
         >
