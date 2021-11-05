@@ -10,6 +10,7 @@ import { useState } from 'react';
 import { NavigationContext } from '../context/NavigateContext';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import { DrawerRoutParams } from '../Navigation/DrawerNavigation';
+import { useNetInfo } from '@react-native-community/netinfo';
 
 
 interface Props extends MaterialTopTabScreenProps<DrawerRoutParams, "TopTapNavigator"> {}
@@ -20,6 +21,7 @@ export const NewsScreen = ({ navigation, route }: Props) => {
   const { state, setNavigator, setstate } = useContext(NavigationContext)
   const [showAlert, setShowAlert] = useState(true)
 
+  const { isConnected } = useNetInfo();
 
 
 
@@ -35,13 +37,15 @@ export const NewsScreen = ({ navigation, route }: Props) => {
   return (
 
     <View style={styless.containerWebView}>
-
+ {isConnected &&
       <WebView
         key={status}
         onLoadEnd={() => { signIn(), setLoad(false) }}
         onNavigationStateChange={navstate => changeURLNews(navstate.url)}
         style={styless.webview}
-        source={{ uri: 'https://midls.dls-archer.com/midls/?page_id=419' }} />
+        source={{ uri: 'https://midls.dls-archer.com/midls/?page_id=419' }} 
+        />
+ }
       {load &&
         <View style={{ position: 'absolute', alignSelf: 'center' }}>
           <ActivityIndicator size={35} color="rgba(245,217,47,1)" ></ActivityIndicator>
