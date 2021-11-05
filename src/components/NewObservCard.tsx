@@ -75,6 +75,9 @@ export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingVal
 
       }).catch(async (err) => {
 
+         console.log("err---------------------------------------------------");
+         console.log(JSON.stringify(err));
+         
          const arrayFormsOffline: any = await GetStorage({ StorageType: 'offlineObserveCards' });
          const arrayCardsDescrOffline: any = await GetStorage({ StorageType: 'offlineObserveCardsDescr' });
 
