@@ -1659,6 +1659,14 @@ anymatch@^3.0.3:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
 
+apisauce@^2.1.1:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/apisauce/-/apisauce-2.1.2.tgz#4cd988d5612a34f051523ef7b2b75338afd37a55"
+  integrity sha512-2/9tz9uR/56UfZpzeMkGyX33tNjYpBNjhwvT/yyYIItulboxzTqZTD3F3Q7WJVXl8fvX6PZDMaxoFH4r/sXkEA==
+  dependencies:
+    axios "^0.21.4"
+    ramda "^0.25.0"
+
 appdirsjs@^1.2.4:
   version "1.2.5"
   resolved "https://registry.npmjs.org/appdirsjs/-/appdirsjs-1.2.5.tgz"
@@ -2298,6 +2306,11 @@ commondir@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npmjs.org/commondir/-/commondir-1.0.1.tgz"
   integrity sha1-3dgA2gxmEnOTzKWVDqloo6rxJTs=
+
+compare-versions@^3.6.0:
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/compare-versions/-/compare-versions-3.6.0.tgz#1a5689913685e5a87637b8d3ffca75514ec41d62"
+  integrity sha512-W6Af2Iw1z4CB7q4uU4hv646dW9GQuBM+YpC0UvUCWSD8w90SJjp+ujJuXaEMtAXBtSqGfMPuFOVn4/+FlaqfBA==
 
 component-emitter@^1.2.1:
   version "1.3.0"
@@ -5628,6 +5641,11 @@ radio-buttons-react-native@^1.0.4:
   resolved "https://registry.npmjs.org/radio-buttons-react-native/-/radio-buttons-react-native-1.0.4.tgz"
   integrity sha512-5AKM/p3a9mykQ1BCIbBnHrDwXZZ6iJuDEDFaiNb2Pa2Nx9EgUMgU5owcrU9g9eaK7didA5rJ3yAUKGnyfhBqcw==
 
+ramda@^0.25.0:
+  version "0.25.0"
+  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.25.0.tgz#8fdf68231cffa90bc2f9460390a0cb74a29b29a9"
+  integrity sha512-GXpfrYVPwx3K7RQ6aYT8KPS8XViSXUVJT1ONhoKPE9VAleW42YE+U+8VEyGWt41EnEQW7gwecYJriTI0pKoecQ==
+
 range-parser@~1.2.1:
   version "1.2.1"
   resolved "https://registry.npmjs.org/range-parser/-/range-parser-1.2.1.tgz"
@@ -5669,6 +5687,13 @@ react-native-apple-header@^0.1.1:
   resolved "https://registry.yarnpkg.com/react-native-apple-header/-/react-native-apple-header-0.1.1.tgz#aa8bd7eb6b7f75626b7d7e6b348d79db670413b0"
   integrity sha512-olhk1icxbmX4p320+iE3NunTQOlqBHMxHp/HcQ3XiUpPzekLPhJKK0r5dZfp80LEdcdxnZKhJMJqq0FquIG/VQ==
 
+react-native-awesome-alerts@^1.5.2:
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/react-native-awesome-alerts/-/react-native-awesome-alerts-1.5.2.tgz#eb8e05a8bc22ac304c59f82eab6be19308942c32"
+  integrity sha512-PPTzKLpwDKbjeghvrRkg7OunND4C7d4bQORVLBnhqUK2z2PfZiI3UCULU0tczzeOyavv5hVSrYNXKPXlvhfmVg==
+  dependencies:
+    prop-types "^15.7.2"
+
 react-native-bottom-search-bar@^0.1.3:
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/react-native-bottom-search-bar/-/react-native-bottom-search-bar-0.1.3.tgz#8a29c838470993d1afb7803af8c8d4ef646bc50a"
@@ -5697,6 +5722,16 @@ react-native-codegen@^0.0.6:
     flow-parser "^0.121.0"
     jscodeshift "^0.11.0"
     nullthrows "^1.1.1"
+
+react-native-device-info@^0.9.3:
+  version "0.9.9"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-0.9.9.tgz#42490719b8be2b8ffe689f3c74d56884ca05c0d7"
+  integrity sha1-QkkHGbi+K4/+aJ88dNVohMoFwNc=
+
+react-native-device-info@^8.1.2, react-native-device-info@^8.4.4:
+  version "8.4.4"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-8.4.4.tgz#afd27e72de5e91b0d97c3c3b7f55c36c2c4af0f7"
+  integrity sha512-poTzcGYTodYdHIzstaQnl2ftsqg2G4ApRv7tG/Omhux3WlMyjlaXXSsIngAd354QyN4XRgOlQsev0eOUzGtu/Q==
 
 react-native-dynamic-vector-icons@^1.1.6:
   version "1.1.6"
@@ -5784,6 +5819,14 @@ react-native-simple-radio-button@^2.7.4:
   resolved "https://registry.npmjs.org/react-native-simple-radio-button/-/react-native-simple-radio-button-2.7.4.tgz"
   integrity sha512-QOZNmJUn0ViBGU+at7wAG/uGzd5PfXi0kMHr9lfTCLXknW/f9f2fOVjxjdHvOCdf/zA/eMJBjGjtusSDzQf1+w==
 
+react-native-siren@0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-siren/-/react-native-siren-0.0.4.tgz#6898e1396057aa3248619ae3a044207d8431b0b8"
+  integrity sha512-V/1hdSkB+OmLmrW780/cl7XM/46v/oT2lVXTBMqF1xWMaSAgxiijuTDHH24g4R92Ef92qW/d1CpqEuKqeQeoQQ==
+  dependencies:
+    apisauce "^2.1.1"
+    react-native-device-info "^0.9.3"
+
 react-native-snap-carousel@^3.9.1:
   version "3.9.1"
   resolved "https://registry.npmjs.org/react-native-snap-carousel/-/react-native-snap-carousel-3.9.1.tgz"
@@ -5808,6 +5851,13 @@ react-native-step-indicator@^1.0.3:
   version "1.0.3"
   resolved "https://registry.npmjs.org/react-native-step-indicator/-/react-native-step-indicator-1.0.3.tgz"
   integrity sha512-WwTb6lpJl0T7MV59sus1utoEQuqbuWHq6V0R0iDWmlPRFjM0qirhTNTS5on1+V9Qmc9dsUCT380/mRgDF+U6zw==
+
+react-native-store-version@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/react-native-store-version/-/react-native-store-version-1.3.2.tgz#d0819a633bd8f7635a37b19567e6c63d5fa55946"
+  integrity sha512-gkj+bhegOmIJ0kDdJ8akjRFnhBakz/P5alsWPpuM8cGjl9Vkj19mMixRkaeGckK6juzrXkxTau2fFwS65CzPoA==
+  dependencies:
+    compare-versions "^3.6.0"
 
 react-native-svg@^12.1.1:
   version "12.1.1"
@@ -6203,6 +6253,11 @@ semver@7.0.0:
   resolved "https://registry.npmjs.org/semver/-/semver-7.0.0.tgz"
   integrity sha512-+GB6zVA9LWh6zovYQLALHwv5rb2PHGlJi3lfiqIHxR0uuwCgefcOJc59v9fv1w8GbStwxuuqqAjI9NMAOOgq1A==
 
+semver@7.2.1:
+  version "7.2.1"
+  resolved "https://registry.yarnpkg.com/semver/-/semver-7.2.1.tgz#d997aa36bdbb00b501ae4ac4c7d17e9f7a587ae5"
+  integrity sha512-aHhm1pD02jXXkyIpq25qBZjr3CQgg8KST8uX0OWXch3xE6jw+1bfbWnCjzMwojsTquroUmKFHNzU6x26mEiRxw==
+
 semver@^6.0.0, semver@^6.1.1, semver@^6.1.2, semver@^6.3.0:
   version "6.3.0"
   resolved "https://registry.npmjs.org/semver/-/semver-6.3.0.tgz"
@@ -6455,6 +6510,16 @@ source-map@^0.7.3:
   version "0.7.3"
   resolved "https://registry.npmjs.org/source-map/-/source-map-0.7.3.tgz"
   integrity sha512-CkCj6giN3S+n9qrYiBTX5gystlENnRW5jZeNLHpe6aue+SrHcG5VYwujhW9s4dY31mEGsxBDrHR6oI69fTXsaQ==
+
+sp-react-native-in-app-updates@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/sp-react-native-in-app-updates/-/sp-react-native-in-app-updates-1.1.3.tgz#96d58b3ede80ca6c9d66bffa3260c58390be039a"
+  integrity sha512-ETx1Udko2IkqQbJB6g/TQ/B6gWoJvSVbJMP1rssgIhdJox1hNO1zoHTxQrOZeyAQ2dmbKafRtNcvGzuXaES07A==
+  dependencies:
+    react-native-device-info "^8.1.2"
+    react-native-siren "0.0.4"
+    semver "7.2.1"
+    underscore "1.12.1"
 
 spdx-correct@^3.0.0:
   version "3.1.1"
@@ -6894,6 +6959,11 @@ unbox-primitive@^1.0.1:
     has-bigints "^1.0.1"
     has-symbols "^1.0.2"
     which-boxed-primitive "^1.0.2"
+
+underscore@1.12.1:
+  version "1.12.1"
+  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.12.1.tgz#7bb8cc9b3d397e201cf8553336d262544ead829e"
+  integrity sha512-hEQt0+ZLDVUMhebKxL4x1BTtDY7bavVofhZ9KZ4aI26X9SRaE+Y3m83XUL1UP2jn8ynjndwCCpEHdUG+9pP1Tw==
 
 unicode-canonical-property-names-ecmascript@^1.0.4:
   version "1.0.4"

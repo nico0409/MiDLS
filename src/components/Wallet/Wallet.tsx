@@ -41,7 +41,7 @@ const Wallet = ({ term, observeFiltered, allObserveList ,setTerm}: Props) => {
   );
 
   
-  return  ( allObserveList[0].NroTarjeta !== undefined ? 
+  return  (allObserveList[0]!==undefined && allObserveList[0].NroTarjeta !== undefined ? 
       <AnimatedFlatList
       
         scrollEventThrottle={16}

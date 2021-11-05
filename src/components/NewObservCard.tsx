@@ -7,6 +7,7 @@ import { DlhrAllObserve, objUseForm } from '../interfaces/prompInterfaces';
 import { RespNewCard } from '../interfaces/respNewCardObs';
 import { Asingstorage, GetStorage } from './Storage';
 import { nroTarjetaEmpty } from '../data/nroTarjetaEmpty';
+import { ConvertXML } from '../../helpers/ConvertXML';
 
 const { height } = Dimensions.get('window');
 
@@ -35,6 +36,7 @@ export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingVal
       // attrValueProcessor: a=> he.encode(a, {isAttributeValue: isAttribute, useNamedReferences: true})// default is a=>a
    };
 
+   ConvertXML(form);
    var parser = new j2xParser(defaultOptions);
    var xml = parser.parse(form);
 

@@ -24,6 +24,7 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
 
 
 
+
     const ScreenWidt = Dimensions.get('window').width;
     const ScreenHeight = Dimensions.get('window').height;
     const { top } = useSafeAreaInsets();
@@ -51,17 +52,20 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
             fieldValue1: route.params!.emplid,
             fieldValue2: route.params!.name
         })
-    const y = new Animated.Value(0);
+   /*  const y = new Animated.Value(0);
 
     const onScroll = Animated.event([{ nativeEvent: { contentOffset: { y } } }],
-        { useNativeDriver: true })
+        { useNativeDriver: true }) */
 
     const [seeFlatList, setSeeFlatList] = useState(true);
+    
+    console.log(seeFlatList, isloading );
 
     useEffect(() => {
         if (term.length === 0) {
 
-            return setObserveFiltred(allObserveList)
+            setObserveFiltred(allObserveList)
+            return setSeeFlatList(true)
 
         }
         switch (placeHolder.type) {
@@ -231,8 +235,7 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
             <TouchableOpacity
                 activeOpacity={0.6}
                 style={{ zIndex: 999, ...styles.addButtonContainer }}
-                onPress={() => { /* navigation.replace('CreateObserveScreen') */
-                navigation.navigate('CreateObserveScreen')
+                onPress={() => {   navigation.navigate('CreateObserveScreen')
              }}
             >
 
