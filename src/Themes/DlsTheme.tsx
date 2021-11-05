@@ -32,7 +32,7 @@ export const colors = {
   
 }
 export const fillColorBtn=colors.dlsBluePrimary
-export const unfillColorBtn=colors.dlsBtonColosWhite
+export const unfillColorBtn= 'rgba(243,239,239,0.8)'
 
 export const styles = StyleSheet.create({
 

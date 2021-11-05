@@ -51,9 +51,8 @@ export const CreateObservePageTwo = ({ form, onChange }: Props) => {
                     />
                 }
 
-                <View style={styles.marginField}>
-                    <CustomSwitchObserve title="Cuasi accidente" onChange={onChange} switchType="m38:DL_CUASIACC" />
-                </View>
+                <CustomSwitchObserve title="Cuasi accidente" onChange={onChange} switchType="m38:DL_CUASIACC" />
+
                 {form["m38:DL_CUASIACC"] === 'Y' &&
                     <View>
                         <InputModal
@@ -71,12 +70,17 @@ export const CreateObservePageTwo = ({ form, onChange }: Props) => {
                     </View>
                 }
 
-                <View style={[{ flexDirection: 'row', alignItems: 'center' }]
-                }>
+                <View style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    width: '100%',
+                    justifyContent: 'space-between',
+                    paddingHorizontal: 25
+                }}>
                     <Text style={{ color: colors.dlsTextwhite, fontSize: 15 }}>A destacar</Text>
                     <CheckBox
                         tintColors={{ true: colors.dlsYellowSecondary, false: colors.dlsBtonColosWhite }}
-                        style={{ transform: [{ scaleX: 1.4 }, { scaleY: 1.4 }] }}
+                        style={{ transform: [{ scaleX: 1.1 }, { scaleY: 1.1 }] }}
                         disabled={false}
                         value={toggleCheckBox}
                         onValueChange={(newValue) => {

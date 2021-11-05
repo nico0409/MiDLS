@@ -98,7 +98,7 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
 
         < View style={{ flex: 1 }}>
             <View style={{ ...styles.container, height: height }}>
-                <View style={{ height: 60, width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                <View style={{ height: '10%', width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
 
                     <TouchableOpacity
                         onPress={() => { route.params.cardOffline ? navigation.pop(4) : navigation.pop() }}
@@ -123,7 +123,7 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
                             <Text style={styles.title}>{`${form['m38:DL_NTARJETA']}`}</Text>
                         </View>
 
-                        <ScrollView style={{ marginTop: 30 }} ref={scrollViewRef} >
+                        <ScrollView ref={scrollViewRef} scrollEnabled={false} showsVerticalScrollIndicator={false}>
 
                             <List {...{ list }} MeuItemType={menus[0]} form={form} onChange={onChange} scrollViewRef={scrollViewRef} />
                             <List {...{ list: list2 }} MeuItemType={menus[1]} form={form} onChange={onChange} scrollViewRef={scrollViewRef} />
@@ -145,11 +145,12 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: colors.dlsGrayPrimary,
-        padding: 16
+        paddingHorizontal: 16
     },
     containerTitle: {
-        justifyContent: 'center',
-        alignItems: 'center'
+        /* justifyContent: 'center', */
+        alignItems: 'center',
+        height:'10%'
     },
     title: {
         fontSize: 25,

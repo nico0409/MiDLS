@@ -45,7 +45,12 @@ export const CustomSwitchObserve = ({ title, onChange, switchType, form }: Props
     }, [])
 
     return (
-        <View style={{ flexDirection: 'row', alignItems: 'center',marginVertical:10 ,backgroundColor:'red',width:'100%'}}>
+        <View style={{ flexDirection: 'row',
+         alignItems: 'center',marginVertical:10 ,
+         width:'100%',
+         justifyContent:'space-between',
+         paddingHorizontal:25
+         }}>
             <Text style={{ color: colors.dlsTextwhite,fontSize:15 }}>{title}</Text>
             <Switch
             style={{ transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }] }}

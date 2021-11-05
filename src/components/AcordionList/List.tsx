@@ -1,5 +1,5 @@
-import React, { useState, useEffect,useContext } from "react";
-import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
+import React, { useState, useEffect, useContext } from "react";
+import { Dimensions, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 
 import Animated from "react-native-reanimated";
 import { mix, useTransition } from "react-native-redash/src/v1/";
@@ -33,13 +33,16 @@ interface ListProps {
   scrollViewRef?: React.RefObject<ScrollView>
 }
 
+const { height: heightDimension } = Dimensions.get('window');
+//37,5
+
 export default ({ form, onChange, list, MeuItemType, scrollViewRef }: ListProps) => {
 
-  const LIST_ITEM_HEIGHT = 750;
+  const LIST_ITEM_HEIGHT = heightDimension * 0.68;
   const { interpolateNode } = Animated;
   const [open, setOpen] = useState(false);
   const transition = useTransition(open);
-  const {emplidSelect} = useContext(AuthContext);
+  const { emplidSelect } = useContext(AuthContext);
   const height = mix(transition, 0, LIST_ITEM_HEIGHT * 1);
   const bottomRadius = interpolateNode(transition, {
     inputRange: [0, 16 / 400],
@@ -88,23 +91,24 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef }: ListProps)
         </Animated.View>
       </TouchableWithoutFeedback>
       <Animated.View style={[styles.items, { height }]}>
-        <View
+        <ScrollView
           style={{
             borderBottomLeftRadius: 8,
             borderBottomRightRadius: 8,
-            height: LIST_ITEM_HEIGHT, width: 350,
-
+            height: LIST_ITEM_HEIGHT,
+            width: '100%',
+            alignSelf: 'center'
           }}
         >
           {MeuItemType.MeuItemType === 'Registro' && (
-            <View style={{ /* left: '2%' */ }}>
+            <View style={{ alignItems: 'center' }}>
 
               <PickerSelect
                 form={form}
                 placeholder="Unidad de negocio"
                 type="DLHR_EMPL_BUSSINES_UNIT"
                 onChange={onChange}
-                emplid={emplidSelect.fieldValue1} 
+                emplid={emplidSelect.fieldValue1}
               />
 
               <DatePickerSelect onChange={onChange} />
@@ -148,8 +152,8 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef }: ListProps)
             </View>
           )}
           {MeuItemType.MeuItemType === 'Comentarios' && (
-            <View style={{/* alignItems:'center' */}}>
-            <InputModal
+            <View style={{ alignItems: 'center' }}>
+              <InputModal
                 placeholder={"Descripción del Acto / Condición "}
                 textSelect={""}
                 type={'DL_DESCACTO'}
@@ -171,34 +175,38 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef }: ListProps)
                 promptType={{ type: 'DLHR_APS' }}
               />}
 
-              <View>
-                 
-                <CustomSwitchObserve title="Cuasi accidente" onChange={onChange} switchType="m38:DL_CUASIACC" form={form} />
-                {form["m38:DL_CUASIACC"] === 'Y' &&
-                  <View>
-                    <InputModal
-                      placeholder={"Más Detalles"}
+              <CustomSwitchObserve title="Cuasi accidente" onChange={onChange} switchType="m38:DL_CUASIACC" form={form} />
 
-                      type={'PTLT_DETAILS'}
-                      onChange={onChange}
-                      form={form}
-                    />
-                    <InputModal
-                      placeholder={"Accion"}
+              {form["m38:DL_CUASIACC"] === 'Y' &&
+                <View>
+                  <InputModal
+                    placeholder={"Más Detalles"}
 
-                      type={'DL_ACCION'}
-                      onChange={onChange}
-                      form={form}
-                    />
-                  </View>
-                }
-              </View>
-              <View style={{alignItems:'center'}}>
-              <View style={{ flexDirection: 'row', alignItems: 'center', width:'100%' ,justifyContent: 'space-around'}}>
-                <Text style={{ color: colors.dlsTextwhite,fontSize:15 }}>A destacar</Text>
+                    type={'PTLT_DETAILS'}
+                    onChange={onChange}
+                    form={form}
+                  />
+                  <InputModal
+                    placeholder={"Accion"}
+
+                    type={'DL_ACCION'}
+                    onChange={onChange}
+                    form={form}
+                  />
+                </View>
+              }
+
+              <View style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                width: '100%',
+                justifyContent: 'space-between',
+                paddingHorizontal: 25
+              }}>
+                <Text style={{ color: colors.dlsTextwhite, fontSize: 15 }}>A destacar</Text>
                 <CheckBox
-                tintColors={{true:colors.dlsYellowSecondary ,false:colors.dlsBtonColosWhite}}
-               style={{ transform: [{ scaleX: 1.4 }, { scaleY: 1.4 }] }}
+                  tintColors={{ true: colors.dlsYellowSecondary, false: colors.dlsBtonColosWhite }}
+                  style={{ transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }] }}
                   disabled={false}
                   value={toggleCheckBox}
                   onValueChange={(newValue) => {
@@ -208,12 +216,11 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef }: ListProps)
                 />
 
               </View>
-              </View>
             </View>
           )}
           {MeuItemType.MeuItemType === 'Preguntas' && (
             <>
-              <ScrollView>
+              <View>
                 <QuestionsCmp form={form} questiontType={{ type: '1' }} onChange={onChange} />
                 <QuestionsCmp form={form} questiontType={{ type: '2' }} onChange={onChange} />
                 <QuestionsCmp form={form} questiontType={{ type: '3' }} onChange={onChange} />
@@ -222,11 +229,11 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef }: ListProps)
                 <QuestionsCmp form={form} questiontType={{ type: '6' }} onChange={onChange} />
                 <QuestionsCmp form={form} questiontType={{ type: '7' }} onChange={onChange} />
                 <QuestionsCmp form={form} questiontType={{ type: '8' }} onChange={onChange} />
-              </ScrollView>
+              </View>
             </>
           )}
           {MeuItemType.MeuItemType === 'ReglasOro' && (
-            <View style={{ marginTop: 10 }}>
+            <View style={{ marginTop: 10, marginHorizontal:'15%'}}>
               <Rulegold form={form} onChange={onChange} questiontType={{ type: '1' }} />
               <Rulegold form={form} onChange={onChange} questiontType={{ type: '2' }} />
               <Rulegold form={form} onChange={onChange} questiontType={{ type: '3' }} />
@@ -239,9 +246,7 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef }: ListProps)
             </View>
           )}
 
-
-
-        </View>
+        </ScrollView>
       </Animated.View>
     </>
   );
