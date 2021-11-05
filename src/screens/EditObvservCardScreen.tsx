@@ -147,7 +147,7 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
                         <Chase size={48} color="#FFF" />
                     </View>
                 }
-            </View> }
+            </View> 
         </View>
     )
 }
