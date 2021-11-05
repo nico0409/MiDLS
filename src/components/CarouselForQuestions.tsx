@@ -1,8 +1,8 @@
-import React, { useState, useContext, useEffect, useRef } from 'react'
-import { Dimensions, View } from 'react-native';
+import React, { useState, useContext, useEffect, useRef } from 'react';
+import { Dimensions, Text, View } from 'react-native';
 import { QuestionsCmp } from './Questions';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
-import { questionType, questionsRGold } from '../interfaces/QuestionInterfaces';
+import { questionsRGold } from '../interfaces/QuestionInterfaces';
 import { AuthContext } from '../context/formContext/AuthContext';
 import { Rulegold } from './Rulegold';
 
@@ -17,7 +17,6 @@ interface Props {
 }
 
 export const CarouselForQuestions = ({ data, moveCarousel, moveCarousel2, moveCarousel3, indexScreen }: Props) => {
-
 
     const [activeIndex, setActiveIndex] = useState(0);
 
@@ -42,22 +41,7 @@ export const CarouselForQuestions = ({ data, moveCarousel, moveCarousel2, moveCa
                 break;
         }
 
-       /*  if (indexScreen === 2) {
-            // @ts-ignore
-            carouselRef.current.snapToItem(moveCarousel - 1, true);
-        } else
-            if (indexScreen === 3) {
-                // @ts-ignore
-                carouselRef.current.snapToItem(moveCarousel2 - 1, true);
-            } else
-                if (indexScreen === 4) {
-                    // @ts-ignore
-                    carouselRef.current.snapToItem(moveCarousel3 - 1, true);
-                } */
-
     }, [moveCarousel, moveCarousel2, moveCarousel3])
-
-  
 
     const renderItem = (item: questionsRGold) => {
 
@@ -65,7 +49,10 @@ export const CarouselForQuestions = ({ data, moveCarousel, moveCarousel2, moveCa
             case undefined:
                 return (<></>)
             case 4:
-                return (<>
+                return (<View style={{
+                    marginTop: 24,
+                    marginHorizontal:'10%'}}>
+                    <Text style={{color:'white',fontSize:18,fontWeight:'bold',paddingBottom:10}}>Reglas de Oro</Text>
                     {item.questionsRGold?.map(element => {
                         return (
                             <View key={Math.random()}>
@@ -73,9 +60,11 @@ export const CarouselForQuestions = ({ data, moveCarousel, moveCarousel2, moveCa
                             </View>
                         )
                     })}
-                </>)
+                </View>)
             default:
-                return <QuestionsCmp questiontType={item.questionsRGold![0]} form={form} onChange={onChange} />;
+                return (
+                    <QuestionsCmp questiontType={item.questionsRGold![0]} form={form} onChange={onChange} />
+                );
         }
     }
 
@@ -95,7 +84,7 @@ export const CarouselForQuestions = ({ data, moveCarousel, moveCarousel2, moveCa
             <Pagination
                 dotsLength={data.length}
                 activeDotIndex={activeIndex}
-                containerStyle={{ paddingVertical: 5 }}
+                containerStyle={{ paddingTop: 5, paddingBottom: 30 }}
                 dotStyle={{
                     width: 10,
                     height: 10,

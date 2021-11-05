@@ -17,8 +17,6 @@ export const DatePickerSelect = ({ onChange, cardDescr, setCardDescr }: Props) =
 
     //datePicker
     const dateInitial = new Date();
-   
-    
 
     const [date, setDate] = useState(dateInitial);
 
@@ -39,13 +37,27 @@ export const DatePickerSelect = ({ onChange, cardDescr, setCardDescr }: Props) =
         onChange(date.toISOString().split('T')[0], 'm38:DL_IDENTIF_DT');
     };
 
+    const formattedDate = (d = new Date) => {
+        let month = String(d.getMonth() + 1);
+        let day = String(d.getDate());
+        const year = String(d.getFullYear());
+
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+
+        return `${day}/${month}/${year}`;
+    }
+
     return (
-        <>
-            <View style={{ marginVertical: 10, flexDirection: 'row' }}>
+        <View style={{ marginVertical: 10 }}>
+            <View style={{ paddingLeft: 10 }}>
+                <Text style={{ color: 'white', fontWeight: 'bold' }}>Fecha de Identificación</Text>
+            </View>
+            <View style={{ marginTop: 5, flexDirection: 'row' }}>
                 <TouchableOpacity
                     onPress={showDatePicker}>
                     <View style={styles.btnContainer}>
-                        <Text style={{ color: 'white', fontSize: 20 }}>{date.toISOString().split('T')[0]}</Text>
+                        <Text style={{ color: 'white', fontSize: 20 }}>{formattedDate(date)}</Text>
                         <Icon name="calendar" size={26} color={colors.dlsYellowSecondary} style={{ right: 13 }} />
                     </View>
                 </TouchableOpacity>
@@ -57,9 +69,9 @@ export const DatePickerSelect = ({ onChange, cardDescr, setCardDescr }: Props) =
                 mode="date"
                 onConfirm={handleConfirm}
                 onCancel={hideDatePicker}
-                /* maximumDate={dateInitial} */
+                maximumDate={dateInitial}
             />
-        </>
+        </View>
     )
 }
 
