@@ -17,7 +17,7 @@ export const DatePickerSelect = ({ onChange, cardDescr, setCardDescr }: Props) =
 
     //datePicker
     const dateInitial = new Date();
-    console.log(dateInitial);
+   
     
 
     const [date, setDate] = useState(dateInitial);

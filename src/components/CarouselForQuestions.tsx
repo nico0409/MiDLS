@@ -57,7 +57,7 @@ export const CarouselForQuestions = ({ data, moveCarousel, moveCarousel2, moveCa
 
     }, [moveCarousel, moveCarousel2, moveCarousel3])
 
-    /*  console.log(moveCarousel, moveCarousel2, moveCarousel3); */
+  
 
     const renderItem = (item: questionsRGold) => {
 

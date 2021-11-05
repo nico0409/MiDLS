@@ -39,7 +39,7 @@ const Wallet = ({ term, observeFiltered, allObserveList ,setTerm}: Props) => {
       { useNativeDriver: true }
     )
   );
-  console.log(allObserveList[0].NroTarjeta);
+
   
   return  ( allObserveList[0].NroTarjeta !== undefined ? 
       <AnimatedFlatList

@@ -17,7 +17,7 @@ import { useIsFocused } from '@react-navigation/native';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
 
-/* interface Props extends DrawerScreenProps<any, any> { }; */
+
 interface Props extends StackScreenProps<any,any>{};
 export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
 
@@ -32,9 +32,15 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
     const [term, setTerm] = useState('')
     const [placeHolder, setPlaceHolder] = useState<fieldSearchType>({ label: 'Numero de tarjeta' })
 
+   
+    
     const { allObserveList, isloading, loadAllObserve } = useAllObserve(route.params!.emplid,useIsFocused())
 
+   
+    
+    
     const [observeFiltered, setObserveFiltred] = useState<DlhrAllObserve[]>([])
+    
   
     const [statePropmpEmp, setstatePropmpEmp] = useState(false)
     const [emplid, setEmplid] = useState<
@@ -109,7 +115,7 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
 
     useEffect(() => {
          if( emplid.fieldValue1!==route.params!.emplid)
-       {console.log("entre");
+       {
        
         navigation.replace(
             'TarjetaObserveScreen',

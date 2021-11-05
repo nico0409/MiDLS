@@ -41,9 +41,7 @@ export const GetPrompt = async () => {
 
          let empleado = respuesta.PromptObserve?.['soapenv:Envelope']!['soapenv:Body']!.DLHR_OBSERVE_PROMPT!.DLHR_OBSERVE_EMPLID;
 
-         /* (Array.isArray(empleado))?
-           console.log(empleado[0].NOMBRE):
-           console.log(empleado!.NOMBRE); */
+        
 
       }).catch(err => { console.log(err) });
    return respuesta;

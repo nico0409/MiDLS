@@ -4,7 +4,7 @@ import { DlhrAllObserve, StorageTypes } from '../interfaces/prompInterfaces';
 import { GetAllObserve } from '../components/GetAllObserve';
 import { Asingstorage, GetStorage } from '../components/Storage';
 
-export const useAllObserve = (emplid: string,isFocused:boolean) => {
+export const useAllObserve = (emplid: string, isFocused: boolean) => {
 
     const [isloading, setIsloading] = useState(true)
     const [allObserveList, setObserveList] = useState<DlhrAllObserve[]>([])
@@ -12,7 +12,7 @@ export const useAllObserve = (emplid: string,isFocused:boolean) => {
 
     const loadAllObserve = async () => {
         setIsloading(true);
-        const resp = await GetAllObserve('2020-01-01', emplid)
+        const resp = await GetAllObserve('', emplid)
         const arrayObserve = resp.AllObserve?.['soapenv:Envelope']?.['soapenv:Body'].DLHR_ALL_OBSERVE_COLL.DLHR_ALL_OBSERVE;
         const oneObserve: DlhrAllObserve[] = [];
         const observe: DlhrAllObserve = {}
@@ -24,10 +24,16 @@ export const useAllObserve = (emplid: string,isFocused:boolean) => {
 
         const offlineCardsList: any = await GetStorage({ StorageType: 'offlineObserveCardsDescr' });
 
-        offlineCardsList === null ?
+ 
+
+        if (offlineCardsList === null) {
             setObserveList(newAllObserveList)
-            :
+        } else if (newAllObserveList[0].BUSINESS_UNIT! === undefined) {
+            setObserveList(offlineCardsList)
+        } else {
             setObserveList([...offlineCardsList, ...newAllObserveList])
+        }
+
 
         setIsloading(false)
 

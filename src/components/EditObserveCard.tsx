@@ -14,7 +14,7 @@ export const EditObservCard = ({ form, alertSend }: Props) => {
 
 
 
-   var defaultOptions = {
+   let defaultOptions = {
       attributeNamePrefix: "@_",
       attrNodeName: "@", //default is false
       textNodeName: "#text",
@@ -28,12 +28,15 @@ export const EditObservCard = ({ form, alertSend }: Props) => {
       // attrValueProcessor: a=> he.encode(a, {isAttributeValue: isAttribute, useNamedReferences: true})// default is a=>a
    };
 
-   var parser = new j2xParser(defaultOptions);
+   let parser = new j2xParser(defaultOptions);
 
-   var xml = parser.parse(form);
+   let xml:String = parser.parse(form);
    /* console.log(xml); */
    /*  PostEditObservCard(xml); */
 
+  
+  
+   
    let xmlRequest = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:m38="http://xmlns.oracle.com/Enterprise/Tools/schemas/M161738.V1">\
     <soapenv:Header/>\
     <soapenv:Body>\
