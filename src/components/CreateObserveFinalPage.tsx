@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { View, Dimensions, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Dimensions, StyleSheet, TouchableOpacity, Text } from 'react-native';
 
 import { StackScreenProps } from '@react-navigation/stack';
 import { Chase } from 'react-native-animated-spinkit';
@@ -119,8 +119,24 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
                 <Chase size={140} color="white" />
             </Animated.View>
 
-            <Animated.View style={[styles.cardContainer, animatedCardStyle]}>
-                <Card index={1} item={cardDescr} />
+            <Animated.View style={animatedCardStyle}>
+                <View style={{ marginHorizontal: '10%', marginBottom: '10%' }}>
+                    {reqSended === 'sended' ?
+                        <>
+                            <Text style={{ color: 'white', fontSize: 40, fontWeight: 'bold' }}>Listo!</Text>
+                            <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>La tarjeta ha sido enviada correctamente.</Text>
+                        </>
+                        :
+                        <>
+                            <Text style={{ color: 'white', fontSize: 40, fontWeight: 'bold' }}>Ups!</Text>
+                            <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>Error al intentar conectarse a Internet.</Text>
+                            <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>Cuando el dispositivo detecte una conexión, la tarjeta se enviará automaticamente.</Text>
+                        </>
+                    }
+                </View>
+                <View style={styles.cardContainer}>
+                    <Card index={1} item={cardDescr} />
+                </View>
             </Animated.View>
 
         </View>
@@ -131,13 +147,13 @@ const styles = StyleSheet.create({
     loadingContainer: {
         width: '100%',
         alignItems: 'center',
-        paddingTop: height * 0.17,
+        paddingTop: height * 0.08,
     },
     iconStatusContainer: {
         width: '100%',
         alignItems: 'center',
-        paddingTop: height * 0.17,
-        position: 'absolute'
+        paddingTop: height * 0.10,
+        position: 'absolute',
     },
     circleBackground: {
         height: 200,
@@ -148,8 +164,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     cardContainer: {
-        flex: 1,
         alignSelf: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     }
 })
