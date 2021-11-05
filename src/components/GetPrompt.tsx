@@ -26,22 +26,19 @@ export const GetPrompt = async () => {
          headers:
          {
             'Content-Type': 'text/xml',
-            SOAPAction: 'DLHR_APP_PROMPT.v1'
+            SOAPAction: 'DLHR_APP_PROMPT.v1',
+            
          }
       }).then(res => {
 
 
-
+         
 
          respuesta = {
             PromptObserve:parse(res.data),
          type:'PromptObserveType'
          };
-
-
-         let empleado = respuesta.PromptObserve?.['soapenv:Envelope']!['soapenv:Body']!.DLHR_OBSERVE_PROMPT!.DLHR_OBSERVE_EMPLID;
-
-        
+     
 
       }).catch(err => { console.log(err) });
    return respuesta;

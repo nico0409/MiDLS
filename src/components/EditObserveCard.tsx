@@ -3,6 +3,7 @@ import { j2xParser } from 'fast-xml-parser'
 import { PostEditObservCard } from './PostEditObservCard';
 import PSDB from '../api/PSDB';
 import { parse } from 'fast-xml-parser';
+import { ConvertXML } from '../../helpers/ConvertXML';
 
 
 interface Props {
@@ -30,13 +31,17 @@ export const EditObservCard = ({ form, alertSend }: Props) => {
 
    let parser = new j2xParser(defaultOptions);
 
+   ConvertXML(form);
+
    let xml:String = parser.parse(form);
-   /* console.log(xml); */
+  
    /*  PostEditObservCard(xml); */
 
+  /*  value= value.replace('<','&lt;')
+       value= value.replace('>','&gt;')
+        console.log(value); */
   
-  
-   
+     
    let xmlRequest = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:m38="http://xmlns.oracle.com/Enterprise/Tools/schemas/M161738.V1">\
     <soapenv:Header/>\
     <soapenv:Body>\
