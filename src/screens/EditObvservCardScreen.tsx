@@ -14,6 +14,14 @@ import List, { List as ListModel } from "../components/AcordionList/List";
 import { colors } from '../Themes/DlsTheme';
 import { EditObservCard } from '../components/EditObserveCard';
 
+import SpInAppUpdates, {
+    NeedsUpdateResponse,
+    IAUUpdateKind,
+    StartUpdateOptions,
+  } from 'sp-react-native-in-app-updates';
+  
+
+
 interface Props extends StackScreenProps<RoutstackParams, 'EditObvservCardScreen'> {};
 
 const list: ListModel = {
@@ -50,7 +58,10 @@ const list4: ListModel = {
 
 export const EditObvservCardScreen = ({ navigation, route }: Props) => {
 
-    const { isloading, loadObserveCard, form, onChange, stateSend } = UseOneGetObserve( route.params);
+ 
+
+
+     const { isloading, loadObserveCard, form, onChange, stateSend } = UseOneGetObserve( route.params);
 
     const [editAble, setEditAble] = useState(false)
     const [initialState, setinitialState] = useState<M38GetCompIntfcDLHRTAOBSERVCIResponse | undefined>()
@@ -92,7 +103,7 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
         } else {
             Alert.alert(msg);
         }
-    }
+    } 
 
     return (
 
@@ -136,7 +147,7 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
                         <Chase size={48} color="#FFF" />
                     </View>
                 }
-            </View>
+            </View> 
         </View>
     )
 }

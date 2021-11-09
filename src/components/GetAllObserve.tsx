@@ -31,12 +31,15 @@ export const GetAllObserve = async (fecha: string, emplid: string) => {
          headers:
          {
             'Content-Type': 'text/xml',
-            SOAPAction: 'DL_HR_ALL_OBSERVE.v1'
+            SOAPAction: 'DL_HR_ALL_OBSERVE.v1',
+            responseType: 'arraybuffer',
+            responseEncoding: 'binary'
          }
       }).then(res => {
 
-
-         respuesta={AllObserve: parse(res.data),
+        
+            
+         respuesta={AllObserve: parse(res.data.toString('UTF-8')),
          type:'AllObserveType'}
       }).catch(err => { console.log(err) }); 
 return respuesta;

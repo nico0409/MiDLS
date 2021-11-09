@@ -31,3 +31,29 @@ export const GetStorage = async ({ StorageType }: StorageTypes) => {
             return emplid
     }
 }
+
+export const DeleteStorage = async (numero: number) => {
+
+    const data = await GetStorage({ StorageType: 'offlineObserveCards' })
+    const dataDescr = await GetStorage({ StorageType: 'offlineObserveCardsDescr' })
+    function isofflineObserveCard(object: any): object is objUseForm[] {
+        return true
+    }
+    function isofflineObserveCardDescr(object: any): object is objUseForm[] {
+        return true
+    }
+    if (isofflineObserveCard(data)) {
+        
+       let eliminado= data.splice(numero,1)
+      console.log(eliminado);
+      
+        Asingstorage({StorageType:'offlineObserveCards'},data)
+    }
+    if (isofflineObserveCardDescr(dataDescr)) {
+        dataDescr.splice(numero,1)
+
+        Asingstorage({StorageType:'offlineObserveCardsDescr'},dataDescr)
+    }
+
+
+}

@@ -27,7 +27,7 @@ interface Props extends MaterialTopTabScreenProps <ParamListBase,'PersonaScreen'
   const {signIn,changeURLProfile,status} = useContext(AuthContext)
   const [load, setLoad] = useState(true)
   const {state,setNavigator} = useContext(NavigationContext)
-
+  const { isConnected } = useNetInfo();
   useEffect(() => {
     if (status==='not-authenticated') setLoad(true)
    }, [status])
@@ -44,6 +44,7 @@ interface Props extends MaterialTopTabScreenProps <ParamListBase,'PersonaScreen'
 
   return (
     <View style={styless.containerWebView}>
+        {isConnected &&
          <WebView
            onLoadEnd={()=>{signIn(), setLoad(false)}}
           onNavigationStateChange={navstate=>changeURLProfile(navstate.url)} 
@@ -51,6 +52,7 @@ interface Props extends MaterialTopTabScreenProps <ParamListBase,'PersonaScreen'
             key={status}
             source={{ uri: 'https://midls.dls-archer.com/midls/user/' }} 
             /> 
+        }
             {load &&
         <View style={{flex:1, position:'absolute',top:'50%',right:'50%'}}>
         <ActivityIndicator size={35} color="rgba(245,217,47,1)" style={{marginTop:'60%'}}></ActivityIndicator>

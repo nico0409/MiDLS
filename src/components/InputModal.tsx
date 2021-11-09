@@ -22,9 +22,6 @@ export const InputModal = ({ placeholder, type, onChange, textSelect, form }: Pr
 
     let str = ''
     const setText = (value: string) => {
-      /*  value= value.replace('<','&lt;')
-       value= value.replace('>','&gt;')
-        console.log(value); */
         
         switch (type) {
             case 'DL_DESCACTO':
