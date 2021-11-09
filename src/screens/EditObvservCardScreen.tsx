@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useContext } from 'react';
 import { View, useWindowDimensions, StyleSheet, Text, TouchableOpacity, Platform, ToastAndroid, Alert } from 'react-native';
 
 import { StackScreenProps } from '@react-navigation/stack';
@@ -18,11 +18,12 @@ import SpInAppUpdates, {
     NeedsUpdateResponse,
     IAUUpdateKind,
     StartUpdateOptions,
-  } from 'sp-react-native-in-app-updates';
-  
+} from 'sp-react-native-in-app-updates';
+import { AuthContext } from '../context/formContext/AuthContext';
 
 
-interface Props extends StackScreenProps<RoutstackParams, 'EditObvservCardScreen'> {};
+
+interface Props extends StackScreenProps<RoutstackParams, 'EditObvservCardScreen'> { };
 
 const list: ListModel = {
     name: "Registro",
@@ -58,10 +59,10 @@ const list4: ListModel = {
 
 export const EditObvservCardScreen = ({ navigation, route }: Props) => {
 
- 
 
+    const { setReloadCardList } = useContext(AuthContext)
 
-     const { isloading, loadObserveCard, form, onChange, stateSend } = UseOneGetObserve( route.params);
+    const { isloading, loadObserveCard, form, onChange, stateSend } = UseOneGetObserve(route.params);
 
     const [editAble, setEditAble] = useState(false)
     const [initialState, setinitialState] = useState<M38GetCompIntfcDLHRTAOBSERVCIResponse | undefined>()
@@ -79,7 +80,7 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
     const { height, width } = useWindowDimensions();
 
     form['m38:DL_NTARJETA']
-   
+
 
     const menus: MeuItemType[] = [
         { MeuItemType: 'Registro' },
@@ -87,8 +88,8 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
         { MeuItemType: 'Preguntas' },
         { MeuItemType: 'ReglasOro' },
     ]
-   
-    
+
+
     const alertSend = (sended: boolean) => {
         let msg = ''
 
@@ -103,7 +104,7 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
         } else {
             Alert.alert(msg);
         }
-    } 
+    }
 
     return (
 
@@ -120,7 +121,7 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
                     {!route.params.cardOffline &&
                         <TouchableOpacity
                             disabled={!editAble}
-                            onPress={() => EditObservCard({ form: stateSend!, alertSend })}
+                            onPress={() => EditObservCard({ form: stateSend!, alertSend, setReloadCardList })}
                         >
                             <AwesomeIcon name="edit" size={30} color={editAble ? colors.dlsYellowSecondary : colors.dlsBtonColosWhite} />
                         </TouchableOpacity>
@@ -147,7 +148,7 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
                         <Chase size={48} color="#FFF" />
                     </View>
                 }
-            </View> 
+            </View>
         </View>
     )
 }
@@ -161,7 +162,7 @@ const styles = StyleSheet.create({
     containerTitle: {
         /* justifyContent: 'center', */
         alignItems: 'center',
-        height:'10%'
+        height: '10%'
     },
     title: {
         fontSize: 25,

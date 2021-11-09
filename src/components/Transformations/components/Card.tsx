@@ -1,9 +1,12 @@
 import React from "react";
 import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from '@react-navigation/native';
+import LinearGradient from 'react-native-linear-gradient';
 import { DlhrAllObserve } from '../../../interfaces/prompInterfaces';
 import { colors } from "../../../Themes/DlsTheme";
 import { nroTarjetaEmpty } from "../../../data/nroTarjetaEmpty";
+import Icon from 'react-native-vector-icons/Ionicons';
+
 
 
 const { width } = Dimensions.get("window");
@@ -22,64 +25,80 @@ export default ({ setTerm, item, index }: CardProps) => {
 
   const navigation = useNavigation();
   const tarjeta: DlhrAllObserve = { ...item }
+
+  const bgLgColor = () => {
+    if (tarjeta.NroTarjeta?.startsWith(nroTarjetaEmpty)) {
+      return ['#d69702', '#FFE100']
+    } else {
+      return ['#00799B', '#1BE1F7']
+    }
+  }
+
   return (
     <TouchableOpacity
-
-      activeOpacity={0.9}
-      onPress={
-        () => {
-          navigation.navigate('EditObvservCardScreen',
-            {
-              busineesUnit: tarjeta.BUSINESS_UNIT,
-              IdentifDt: tarjeta.DL_IDENTIF_DT,
-              Ntarjeta: tarjeta.NroTarjeta,
-              cardOffline: tarjeta.NroTarjeta?.includes(nroTarjetaEmpty)
-            });
-          setTerm !== undefined ? setTerm('') : {}
-        }
-      }
+      activeOpacity={0.7}
+      onPress={() => {
+        navigation.navigate('EditObvservCardScreen',
+          {
+            busineesUnit: tarjeta.BUSINESS_UNIT,
+            IdentifDt: tarjeta.DL_IDENTIF_DT,
+            Ntarjeta: tarjeta.NroTarjeta,
+            cardOffline: tarjeta.NroTarjeta?.startsWith(nroTarjetaEmpty)
+          });
+        setTerm !== undefined ? setTerm('') : {}
+      }}
     >
-      <View style={{
+      {/* <View style={{
         ...styles.card,
         backgroundColor: index % 2 === 0 ? colors.dlsYellowSecondary : colors.dlsBluePrimary
-      }}>
-        {/*  <Backgrond srcImg="../assets/collage50pn.png" /> */}
-        <View style={{ marginTop: 10, alignItems: 'center' }}>
-          <Text style={styles.name}>
-            {tarjeta.BUSINES_DESCR}
+      }}> */}
+      <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} colors={bgLgColor()} style={styles.card}>
+
+        <View style={[styles.fieldContainer, { marginTop: 10 }]}>
+          <Text style={styles.textTitle}>N° Tarjeta:</Text>
+          <Text style={styles.textValue}>{tarjeta.NroTarjeta}</Text>
+        </View>
+
+        <View style={styles.fieldContainer}>
+          <Text style={styles.textTitle}>Unidad de negocio</Text>
+          <Text style={styles.textValue}>{tarjeta.BUSINES_DESCR}</Text>
+        </View>
+
+        <View style={{ flexDirection: 'row' }}>
+          <View style={styles.fieldContainer}>
+            <Text style={styles.textTitle}>Turno</Text>
+            <Text style={styles.textValue}>{tarjeta.TURNO_DESCR}</Text>
+          </View>
+
+          <View style={styles.fieldContainer}>
+            <Text style={styles.textTitle}>Fecha Identificación</Text>
+            <Text style={styles.textValue}>{tarjeta.DL_IDENTIF_DT}</Text>
+          </View>
+        </View>
+
+        <View style={styles.fieldContainer}>
+          <Text style={styles.textTitle}>Equipo</Text>
+          <Text style={styles.textValue}>{
+            tarjeta.ID_EQUIPO_DESCR?.length! > 18 ?
+              tarjeta.ID_EQUIPO_DESCR?.substr(0, 18) + '...'
+              :
+              tarjeta.ID_EQUIPO_DESCR}
           </Text>
         </View>
 
-        <View style={{ marginTop: 15 }}>
+      </LinearGradient>
+      {/*  </View> */}
 
-          <Text style={styles.name}>
-            {tarjeta.ID_EQUIPO_DESCR}
-          </Text>
-        </View>
-        <View style={{ marginTop: 3 }}>
-          <Text style={styles.name}>
-            {tarjeta.TURNO_DESCR}
-          </Text>
-        </View>
-
-
-        <View style={{ marginTop: 3 }}>
-          <Text style={styles.name}>
-            Tarjeta:{tarjeta.NroTarjeta}
-          </Text>
-        </View>
-        <View style={{ marginTop: 3 }}>
-          <Text style={styles.name}>
-            {tarjeta.DL_IDENTIF_DT}
-          </Text>
-        </View>
+      <View style={styles.iconContainer}>
+        {tarjeta.NroTarjeta?.startsWith(nroTarjetaEmpty) ?
+          <View style={{ paddingRight: 5 }}>
+            <Icon name="cloud-offline" size={40} color="white" />
+          </View>
+          :
+          <Icon name="checkmark-circle" size={50} color="white" />
+        }
       </View>
-      <View style={styles.pokebolaContainer}>
-        <Image
-          source={require('../assets/pokebola-blanca.png')}
-          style={styles.pokebola}
-        />
-      </View>
+
     </TouchableOpacity>
   )
 
@@ -89,8 +108,7 @@ const styles = StyleSheet.create({
     width: CARD_WIDTH,
     height: CARD_HEIGHT,
     paddingHorizontal: 10,
-
-    borderRadius: 20,
+    borderRadius: 40,
     shadowColor: "white",
     shadowOffset: {
       width: 0,
@@ -98,35 +116,24 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.58,
     shadowRadius: 16.00,
-
-
-
   },
-  name: {
+  fieldContainer: {
+    marginTop: 5,
+    marginLeft: 30
+  },
+  textTitle: {
+    fontSize: 14,
+    color: 'white',
+  },
+  textValue: {
     color: colors.dlsTextwhite,
     fontSize: 20,
-    // fontWeight: 'bold',
-
-
+    fontWeight: 'bold',
   }
-  , pokebolaContainer: {
-
-
-    width: 100,
-    height: 100,
+  , iconContainer: {
     position: 'absolute',
-    bottom: 0,
-    right: 0,
+    bottom: 10,
+    right: 10,
     overflow: 'hidden',
-    opacity: 0.5
-  }, pokebola: {
-    width: 100,
-    height: 100,
-    position: 'absolute',
-    right: -25,
-    bottom: -25
-
-
-  },
-
+  }
 });

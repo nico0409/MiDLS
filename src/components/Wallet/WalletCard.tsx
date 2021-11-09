@@ -16,19 +16,19 @@ const styles = StyleSheet.create({
   card: {
     marginVertical: MARGIN,
     alignSelf: "center",
-    
+
   },
 });
 
 interface WalletCardProps {
   y: Animated.Value;
   index: number;
- item:unknown;
-  setTerm:React.Dispatch<React.SetStateAction<string>>,
+  item: unknown;
+  setTerm: React.Dispatch<React.SetStateAction<string>>,
 
 }
 
-const WalletCard = ({y, index,item, setTerm}: WalletCardProps) => {
+const WalletCard = ({ y, index, item, setTerm }: WalletCardProps) => {
   const position = Animated.subtract(index * CARD_HEIGHT, y);
   const isDisappearing = -CARD_HEIGHT;
   const isTop = 0;
@@ -59,19 +59,19 @@ const WalletCard = ({y, index,item, setTerm}: WalletCardProps) => {
     outputRange: [0.5, 1, 1, 0.5],
   });
   return (
-    
+
     <Animated.View
       style={[styles.card, { opacity, transform: [{ translateY }, { scale }] }]}
       key={index}
-      
+
     >
-    {/*  <ObserveCard observe={item} index={index}  y={y} setTerm={setTerm} /> */}
-     <Shadow distance={5} startColor={'#ffffff33'} radius={20} offset={[1, 2]} > 
-    <Card setTerm={setTerm} item={item} index={index}/>
-     </Shadow> 
+      {/*  <ObserveCard observe={item} index={index}  y={y} setTerm={setTerm} /> */}
+      {/* <Shadow distance={5} startColor={'#ffffff33'} radius={40} offset={[1, 2]} > */}
+        <Card setTerm={setTerm} item={item} index={index} />
+      {/* </Shadow> */}
     </Animated.View>
-    
-    
+
+
   );
 };
 

@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import { DlhrAllObserve, StorageTypes } from '../interfaces/prompInterfaces';
 import { GetAllObserve } from '../components/GetAllObserve';
 import { Asingstorage, GetStorage } from '../components/Storage';
+import { AuthContext } from '../context/formContext/AuthContext';
 
 export const useAllObserve = (emplid: string, isFocused: boolean) => {
 
     const [isloading, setIsloading] = useState(true)
     const [allObserveList, setObserveList] = useState<DlhrAllObserve[]>([])
     const allboserve: StorageTypes = { StorageType: 'allObserve' };
+
+    const { reloadCardList, setReloadCardList } = useContext(AuthContext)
 
     const loadAllObserve = async () => {
         setIsloading(true);
@@ -24,7 +27,7 @@ export const useAllObserve = (emplid: string, isFocused: boolean) => {
 
         const offlineCardsList: any = await GetStorage({ StorageType: 'offlineObserveCardsDescr' });
 
- 
+
 
         if (offlineCardsList === null) {
             setObserveList(newAllObserveList)
@@ -39,9 +42,13 @@ export const useAllObserve = (emplid: string, isFocused: boolean) => {
 
     }
 
-
     useEffect(() => {
         loadAllObserve();
+    },[])
+
+    useEffect(() => {
+        reloadCardList && loadAllObserve();
+        reloadCardList && setReloadCardList(false);
     }, [isFocused])
 
     return {

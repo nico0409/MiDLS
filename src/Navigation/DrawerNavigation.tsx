@@ -26,7 +26,7 @@ import { TarjetaObserveScreen } from '../screens/TarjetaObserveScreen';
 import { StackNavigatorObserve } from './StackNavigatorObserve';
 import { types } from '@babel/core';
 import { CheckUpdateAndroid } from '../components/CheckUpdateAndroid';
-import checkVersion from 'react-native-store-version';
+/* import checkVersion from 'react-native-store-version'; */
 import { getVersion } from 'react-native-device-info';
 import { SendObserveStorage } from '../components/SendObserveStorage';
 

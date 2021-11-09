@@ -19,6 +19,8 @@ export interface AuthState {
         fieldValue1: string;
         fieldValue2: string;
     }
+    reloadCardList: boolean;
+    setReloadCardList: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 //Crear el contexto
@@ -38,6 +40,8 @@ export const AuthProvider = ({ children }: { children: JSX.Element[] | JSX.Eleme
             fieldValue2: ''
         });
 
+    const [reloadCardList,setReloadCardList] = useState(false);
+
     return (
 
         <AuthContext.Provider value={{
@@ -48,6 +52,8 @@ export const AuthProvider = ({ children }: { children: JSX.Element[] | JSX.Eleme
             setCardDescr,
             setEmplidSelect,
             emplidSelect,
+            reloadCardList,
+            setReloadCardList
         }}>
             {children}
         </AuthContext.Provider>
