@@ -113,7 +113,7 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
                 <View style={{ height: '10%', width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
 
                     <TouchableOpacity
-                        onPress={() => { route.params.cardOffline ? navigation.pop(4) : navigation.pop() }}
+                        onPress={() => { /* route.params.cardOffline ? navigation.pop(4) : */ navigation.pop() }}
                     >
                         <Icon name="chevron-back-outline" size={40} color={colors.dlsYellowSecondary} />
                     </TouchableOpacity>
