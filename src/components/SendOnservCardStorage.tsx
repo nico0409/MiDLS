@@ -66,26 +66,4 @@ try {
     console.log(xml);
 }
  
-        
-     
-        
-       /*  .then(res => {
-            console.log(res.status);
-         
-
-            if (res.status === 200) {
-                console.log('se ejecuta delete');
-                
-               
-                 DeleteStorage(index) 
-
-            }
-
-            
-        }).catch(err => {
-            console.log(err)
-            console.log(xml);
-
-        })
- */
 }

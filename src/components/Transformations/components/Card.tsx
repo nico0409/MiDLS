@@ -9,10 +9,10 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 
 
-const { width } = Dimensions.get("window");
-const ratio = 228 / 362;
+const { width ,height} = Dimensions.get("window");
+//const ratio = 228 / 362;
 export const CARD_WIDTH = width * 0.9;
-export const CARD_HEIGHT = CARD_WIDTH * ratio;
+export const CARD_HEIGHT = (height * 0.3);
 
 
 interface CardProps {
