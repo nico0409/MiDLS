@@ -109,11 +109,6 @@ drawerContent={(props: any) => <MenuInterno {...props} />}
 <Drawer.Screen name="StackNavigatorObserve" component={StackNavigatorObserve} />
 </Drawer.Navigator> }
          
-      
-        
-        {/*  } */}
-
-
       </SafeAreaView>
     </NavigateState>
   );

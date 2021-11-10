@@ -14,6 +14,7 @@ import { Chase } from 'react-native-animated-spinkit'
 import { ModalPromptEmplid } from '../components/ModalPromptEmplid';
 
 import { useIsFocused } from '@react-navigation/native';
+import { useNetInfo } from '@react-native-community/netinfo';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
 
@@ -24,7 +25,7 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
 
 
 
-
+    const { isConnected } = useNetInfo();
     const ScreenWidt = Dimensions.get('window').width;
     const ScreenHeight = Dimensions.get('window').height;
     const { top } = useSafeAreaInsets();
@@ -59,7 +60,7 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
 
     const [seeFlatList, setSeeFlatList] = useState(true);
     
-    console.log(seeFlatList, isloading );
+    
 
     useEffect(() => {
         if (term.length === 0) {
@@ -126,6 +127,13 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
             { name: emplid.fieldValue2, emplid: emplid.fieldValue1 }); 
        }
     }, [emplid])
+
+
+    useEffect(() => {
+      if( isConnected===true){
+            
+      }
+    }, [isConnected])
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: colors.dlsGrayPrimary }}>
 
