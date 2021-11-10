@@ -6,11 +6,13 @@ import { objUseForm } from '../interfaces/prompInterfaces'
 import { DeleteStorage } from './Storage';
 
 interface Params {
-    form: objUseForm;
-    index:number
+    data: objUseForm[];
+    index: number,
 }
-export const SendOnservCardStorage = ({ form,index }: Params) => {
-    console.log("entre2");
+export const SendOnservCardStorage =  async({ data, index }: Params) => {
+    console.log("entre a enviar");
+    const form = data[index]
+    
     var defaultOptions = {
         attributeNamePrefix: "@_",
         attrNodeName: "@", //default is false
@@ -38,29 +40,30 @@ export const SendOnservCardStorage = ({ form,index }: Params) => {
    </soapenv:Body>\
 </soapenv:Envelope>`;
 
-    PSDB.post('/CI_DLHR_TA_OBSERV_CI.1.wsdl',
-        xmls,
+
+
+try {
+    const  resp=await  PSDB.post('/CI_DLHR_TA_OBSERV_CI.1.wsdl',
+    xmls,
+    {
+        headers:
         {
-            headers:
-            {
-                'Content-Type': 'text/xml',
-                SOAPAction: 'Create.V1'
-            }
-        }).then(res => {
-            console.log( res.status);
-             console.log(JSON.stringify(parse(res.data)));
+            'Content-Type': 'text/xml',
+            SOAPAction: 'Create.V1'
+        }
+    })
 
-             if(res.status===200){
-                DeleteStorage(index);
+    if (resp.status === 200) {
+        console.log('se ejecuta delete');
+        
+       
+       await DeleteStorage(index) 
 
-             }
-      
-           
-          }).catch(err => { console.log(err)
-            console.log(xmls);
-            
-         });
-
-
-
+    }
+} catch (error) {
+    
+    console.log(error)
+    console.log(xml);
+}
+ 
 }

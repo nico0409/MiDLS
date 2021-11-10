@@ -38,8 +38,9 @@ export const GetAllObserve = async (fecha: string, emplid: string) => {
       }).then(res => {
 
         
-            
-         respuesta={AllObserve: parse(res.data.toString('UTF-8')),
+          
+         
+         respuesta={AllObserve: parse(decodeURIComponent(escape(res.data))),
          type:'AllObserveType'}
       }).catch(err => { console.log(err) }); 
 return respuesta;
