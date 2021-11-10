@@ -160,9 +160,9 @@ export const PickerSelect = ({ placeholder, type, onChange, form, setCardDescr, 
                     width={ScreenWidth * 0.87}
                     searchEnabled={false}
                     menuBarContainerWidth={ScreenWidth * 0.87}
-                    onSelect={(selectedItem: ISingleSelectDataType) => {
+                    onSelect={(selectedItem: ISingleSelectDataType) => {                        
                         onChange(selectedItem.data.dataItem, selectedItem.data.fieldData);
-                        changeDescr(selectedItem.data.dataItem, selectedItem.value);
+                        setCardDescr ===undefined ? {} : changeDescr(selectedItem.data.dataItem, selectedItem.value);
                         setSelectedItem(selectedItem);
                         setIsItemChanged(true)
                     }}

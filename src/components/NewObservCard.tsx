@@ -17,10 +17,11 @@ interface Params {
    setBgCircleColor: React.Dispatch<React.SetStateAction<string>>;
    loadingValue: SharedValue<number>;
    cardDescr: DlhrAllObserve;
-   setCardDescr: React.Dispatch<React.SetStateAction<DlhrAllObserve>>
+   setCardDescr: React.Dispatch<React.SetStateAction<DlhrAllObserve>>;
+   setReloadCardList: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingValue, cardDescr, setCardDescr }: Params) => {
+export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingValue, cardDescr, setCardDescr, setReloadCardList }: Params) => {
 
    var defaultOptions = {
       attributeNamePrefix: "@_",
@@ -47,7 +48,7 @@ export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingVal
    ${xml}\
    </m38:Create__CompIntfc__DLHR_TA_OBSERV_CI>\
    </soapenv:Body>\
-</soapenv:Envelope>`;
+   </soapenv:Envelope>`;
 
    const runAnimation = (sended: boolean) => {
       setBgCircleColor(sended ? '#4ad66d' : 'orange');
@@ -55,6 +56,8 @@ export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingVal
       loadingValue.value = height;
    }
 
+   setReloadCardList(true);
+   
    PSDB.post('/CI_DLHR_TA_OBSERV_CI.1.wsdl',
       xmls,
       {
@@ -77,18 +80,18 @@ export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingVal
 
          console.log("err---------------------------------------------------");
          console.log(JSON.stringify(err));
-         
+
          const arrayFormsOffline: any = await GetStorage({ StorageType: 'offlineObserveCards' });
          const arrayCardsDescrOffline: any = await GetStorage({ StorageType: 'offlineObserveCardsDescr' });
 
          const newCardDescr = {
             ...cardDescr,
-            ...{ NroTarjeta: nroTarjetaEmpty + ((arrayCardsDescrOffline ? (arrayCardsDescrOffline.length + 1) : 1).toString()) }
+            ...{ NroTarjeta: nroTarjetaEmpty + ((arrayCardsDescrOffline ? (Number(arrayCardsDescrOffline[0].NroTarjeta.substring(nroTarjetaEmpty.length)) + 1) : 1).toString()) }
          }
 
          const newForm = {
             ...form,
-            ...{ "m38:DL_NTARJETA": nroTarjetaEmpty + ((arrayCardsDescrOffline ? (arrayCardsDescrOffline.length + 1) : 1).toString()) }
+            ...{ "m38:DL_NTARJETA": nroTarjetaEmpty + ((arrayCardsDescrOffline ? (Number(arrayCardsDescrOffline[0].NroTarjeta.substring(nroTarjetaEmpty.length)) + 1) : 1).toString()) }
          }
 
          setCardDescr(newCardDescr);
