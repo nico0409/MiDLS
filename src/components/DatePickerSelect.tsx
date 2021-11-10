@@ -9,24 +9,19 @@ interface Props {
     onChange: (value: string, field: keyof objUseForm) => void;
     cardDescr?: DlhrAllObserve;
     setCardDescr?: React.Dispatch<React.SetStateAction<DlhrAllObserve>>;
+    disabled?: boolean;
 }
 
 const { width } = Dimensions.get('window')
 
-export const DatePickerSelect = ({ onChange, cardDescr, setCardDescr }: Props) => {
+export const DatePickerSelect = ({ onChange, cardDescr, setCardDescr, disabled = false }: Props) => {
 
     //datePicker
 
-
- 
     const dateInitial = new Date();
 
-const [date, setDate] = useState(dateInitial);
- const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+    const [date, setDate] = useState(dateInitial);
 
-
- 
- 
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
     const showDatePicker = () => {
@@ -41,18 +36,16 @@ const [date, setDate] = useState(dateInitial);
         let dd = String(date.getDate()).padStart(2, '0');
         let mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
         let yyyy = date.getFullYear();
-        
-         let dateFormated = yyyy + '/' + mm +'/' + dd
-     
-     
+
+        let dateFormated = yyyy + '/' + mm + '/' + dd
+
         hideDatePicker();
         setDate(date);
         console.log(date);
-        
+
         (setCardDescr && setCardDescr({ ...cardDescr, ...{ dateFormated } }))
         onChange(dateFormated, 'm38:DL_IDENTIF_DT');
-        
-        
+
     };
 
     const formattedDate = (d = new Date) => {
@@ -73,10 +66,13 @@ const [date, setDate] = useState(dateInitial);
             </View>
             <View style={{ marginTop: 5, flexDirection: 'row' }}>
                 <TouchableOpacity
+                    disabled={disabled}
                     onPress={showDatePicker}>
                     <View style={styles.btnContainer}>
                         <Text style={{ color: 'white', fontSize: 20 }}>{formattedDate(date)}</Text>
-                        <Icon name="calendar" size={26} color={colors.dlsYellowSecondary} style={{ right: 13 }} />
+                        {!disabled &&
+                            <Icon name="calendar" size={26} color={colors.dlsYellowSecondary} style={{ right: 13 }} />
+                        }
                     </View>
                 </TouchableOpacity>
             </View>
@@ -87,7 +83,7 @@ const [date, setDate] = useState(dateInitial);
                 mode="date"
                 onConfirm={handleConfirm}
                 onCancel={hideDatePicker}
-                maximumDate={dateInitial}
+                /* maximumDate={dateInitial} */
             />
         </View>
     )

@@ -59,7 +59,6 @@ const list4: ListModel = {
 
 export const EditObvservCardScreen = ({ navigation, route }: Props) => {
 
-
     const { setReloadCardList } = useContext(AuthContext)
 
     const { isloading, loadObserveCard, form, onChange, stateSend } = UseOneGetObserve(route.params);
@@ -137,10 +136,10 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
 
                         <ScrollView ref={scrollViewRef} scrollEnabled={false} showsVerticalScrollIndicator={false}>
 
-                            <List {...{ list }} MeuItemType={menus[0]} form={form} onChange={onChange} scrollViewRef={scrollViewRef} />
-                            <List {...{ list: list2 }} MeuItemType={menus[1]} form={form} onChange={onChange} scrollViewRef={scrollViewRef} />
-                            <List {...{ list: list3 }} MeuItemType={menus[2]} form={form} onChange={onChange} scrollViewRef={scrollViewRef} />
-                            <List {...{ list: list4 }} MeuItemType={menus[3]} form={form} onChange={onChange} scrollViewRef={scrollViewRef} />
+                            <List {...{ list }} MeuItemType={menus[0]} form={form} onChange={onChange} scrollViewRef={scrollViewRef} cardOffline={route.params.cardOffline} />
+                            <List {...{ list: list2 }} MeuItemType={menus[1]} form={form} onChange={onChange} scrollViewRef={scrollViewRef} cardOffline={route.params.cardOffline} />
+                            <List {...{ list: list3 }} MeuItemType={menus[2]} form={form} onChange={onChange} scrollViewRef={scrollViewRef} cardOffline={route.params.cardOffline} />
+                            <List {...{ list: list4 }} MeuItemType={menus[3]} form={form} onChange={onChange} scrollViewRef={scrollViewRef} cardOffline={route.params.cardOffline} />
                         </ScrollView>
                     </>
                     :
