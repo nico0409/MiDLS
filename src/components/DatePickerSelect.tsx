@@ -16,10 +16,17 @@ const { width } = Dimensions.get('window')
 export const DatePickerSelect = ({ onChange, cardDescr, setCardDescr }: Props) => {
 
     //datePicker
+
+
+ 
     const dateInitial = new Date();
 
-    const [date, setDate] = useState(dateInitial);
+const [date, setDate] = useState(dateInitial);
+ const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
 
+
+ 
+ 
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
     const showDatePicker = () => {
@@ -31,10 +38,21 @@ export const DatePickerSelect = ({ onChange, cardDescr, setCardDescr }: Props) =
     };
 
     const handleConfirm = (date: Date) => {
+        let dd = String(date.getDate()).padStart(2, '0');
+        let mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+        let yyyy = date.getFullYear();
+        
+         let dateFormated = yyyy + '/' + mm +'/' + dd
+     
+     
         hideDatePicker();
         setDate(date);
-        (setCardDescr && setCardDescr({ ...cardDescr, ...{ DL_IDENTIF_DT: date.toISOString().split('T')[0] } }))
-        onChange(date.toISOString().split('T')[0], 'm38:DL_IDENTIF_DT');
+        console.log(date);
+        
+        (setCardDescr && setCardDescr({ ...cardDescr, ...{ dateFormated } }))
+        onChange(dateFormated, 'm38:DL_IDENTIF_DT');
+        
+        
     };
 
     const formattedDate = (d = new Date) => {

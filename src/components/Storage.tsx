@@ -32,28 +32,43 @@ export const GetStorage = async ({ StorageType }: StorageTypes) => {
     }
 }
 
-export const DeleteStorage = async (numero: number) => {
-
-    const data = await GetStorage({ StorageType: 'offlineObserveCards' })
-    const dataDescr = await GetStorage({ StorageType: 'offlineObserveCardsDescr' })
+const deleteFunction = async (data: any, dataDescr: any, item: number) => {
     function isofflineObserveCard(object: any): object is objUseForm[] {
         return true
     }
     function isofflineObserveCardDescr(object: any): object is objUseForm[] {
         return true
     }
+
     if (isofflineObserveCard(data)) {
-        
-       let eliminado= data.splice(numero,1)
-      console.log(eliminado);
-      
-        Asingstorage({StorageType:'offlineObserveCards'},data)
+console.log('/////////////////////////////////////////////////');
+console.log(data);
+console.log('/////////////////////////////////////////////////');
+
+
+
+        data.splice(item, 1);
+        Asingstorage({ StorageType: 'offlineObserveCards' }, data)
     }
     if (isofflineObserveCardDescr(dataDescr)) {
-        dataDescr.splice(numero,1)
 
-        Asingstorage({StorageType:'offlineObserveCardsDescr'},dataDescr)
+        dataDescr.splice(item, 1)
+        Asingstorage({ StorageType: 'offlineObserveCardsDescr' }, dataDescr)
     }
+
+}
+
+export const DeleteStorage = async (items: number) => {
+
+
+    const data = await GetStorage({ StorageType: 'offlineObserveCards' });
+    const dataDescr = await GetStorage({ StorageType: 'offlineObserveCardsDescr' });
+    await deleteFunction(data, dataDescr, items);
+
+
+
+
+
 
 
 }
