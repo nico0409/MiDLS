@@ -28,7 +28,7 @@ export default ({ setTerm, item, index }: CardProps) => {
 
   const bgLgColor = () => {
     if (tarjeta.NroTarjeta?.startsWith(nroTarjetaEmpty)) {
-      return ['#d69702', '#FFE100']
+      return ['#D67002', '#FFD000']
     } else {
       return ['#00799B', '#1BE1F7']
     }

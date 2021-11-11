@@ -124,7 +124,7 @@ export const InputModal = ({ placeholder, type, onChange, textSelect, form, disa
                         <View
                             pointerEvents={disabled ? "none" : "auto"}>
                             <RNTextArea
-                                defaultCharCount={str.length}
+                                defaultCharCount={newText.length}
                                 textInputStyle={{ fontSize: 20, color: colors.dlsTextwhite }}
                                 style={{
                                     borderRadius: 12,

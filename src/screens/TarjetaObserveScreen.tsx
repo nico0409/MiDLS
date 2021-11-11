@@ -249,7 +249,7 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
              }}
             >
                 <View style={styles.addButton} >
-                    <Icon name="add-circle" size={65} color={colors.dlsYellowSecondary} />
+                    <Icon name="add-circle" size={65} color={'#ffdd00'} />
                 </View>
             </TouchableOpacity>
 

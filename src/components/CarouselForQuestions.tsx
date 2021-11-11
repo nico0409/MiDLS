@@ -61,6 +61,10 @@ export const CarouselForQuestions = ({ data, moveCarousel, moveCarousel2, moveCa
                         )
                     })}
                 </View>)
+            case 3:
+                return (
+                    <QuestionsCmp questiontType={item.questionsRGold![0]} form={form} onChange={onChange} darkText/>
+                );
             default:
                 return (
                     <QuestionsCmp questiontType={item.questionsRGold![0]} form={form} onChange={onChange} />
