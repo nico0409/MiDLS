@@ -63,13 +63,13 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef, cardOffline 
         scrollViewRef?.current?.scrollTo({ y: 40, animated: true })
         break;
       case 'Comentarios':
-        scrollViewRef?.current?.scrollTo({ y: 140, animated: true })
+        scrollViewRef?.current?.scrollTo({ y: 160, animated: true })
         break;
       case 'Preguntas':
-        scrollViewRef?.current?.scrollTo({ y: 270, animated: true })
+        scrollViewRef?.current?.scrollTo({ y: 300, animated: true })
         break;
       case 'ReglasOro':
-        scrollViewRef?.current?.scrollTo({ y: 390, animated: true })
+        scrollViewRef?.current?.scrollTo({ y: 420, animated: true })
         break;
     }
   }
@@ -92,6 +92,7 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef, cardOffline 
           <Chevron {...{ transition }} />
         </Animated.View>
       </TouchableWithoutFeedback>
+
       <Animated.View style={[styles.items, { height }]}>
         <ScrollView
           style={{
@@ -103,7 +104,7 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef, cardOffline 
           }}
         >
           {MeuItemType.MeuItemType === 'Registro' && (
-            <View style={{ alignItems: 'center' }}>
+            <View style={{ alignItems: 'center', marginBottom: 50 }}>
 
               <PickerSelect
                 form={form}
@@ -258,7 +259,7 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef, cardOffline 
           )}
           {MeuItemType.MeuItemType === 'Preguntas' && (
             <>
-              <View pointerEvents={cardOffline ? "none" : "auto"}>
+              <View pointerEvents={cardOffline ? "none" : "auto"} style={{ marginBottom: 40 }}>
                 <QuestionsCmp form={form} questiontType={{ type: '1' }} onChange={onChange} />
                 <QuestionsCmp form={form} questiontType={{ type: '2' }} onChange={onChange} />
                 <QuestionsCmp form={form} questiontType={{ type: '3' }} onChange={onChange} />
@@ -271,7 +272,7 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef, cardOffline 
             </>
           )}
           {MeuItemType.MeuItemType === 'ReglasOro' && (
-            <View pointerEvents={cardOffline ? "none" : "auto"} style={{ marginTop: 10, marginHorizontal: '15%' }}>
+            <View pointerEvents={cardOffline ? "none" : "auto"} style={{ marginTop: 10, marginHorizontal: '15%', marginBottom: 20 }}>
               <Rulegold form={form} onChange={onChange} questiontType={{ type: '1' }} />
               <Rulegold form={form} onChange={onChange} questiontType={{ type: '2' }} />
               <Rulegold form={form} onChange={onChange} questiontType={{ type: '3' }} />
@@ -292,7 +293,7 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef, cardOffline 
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 50,
+    marginTop: 60,
     backgroundColor: colors.dlsBotonBlack,
     padding: 16,
     borderTopLeftRadius: 8,

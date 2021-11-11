@@ -26,7 +26,7 @@ export const PickerSelect = ({ placeholder, type, onChange, form, setCardDescr, 
     const promptType: promptType = { type };
     const [selectedItem, setSelectedItem] = useState<ISingleSelectDataType>()
     const { PromptObArray } = GetPromptArray(promptType);
-    let itemselect: ISingleSelectDataType = { id: 0, value: '' }
+    let itemselect: ISingleSelectDataType;
     let data: ISingleSelectDataType[];
     let fieldData: keyof objUseForm;
     let descr: string;
