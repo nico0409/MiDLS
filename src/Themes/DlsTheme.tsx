@@ -1,4 +1,6 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet,Dimensions} from "react-native";
+
+const {width,height} = Dimensions.get('window');
 
 export const styless = StyleSheet.create({
   containerWebView: {
@@ -50,14 +52,10 @@ export const styles = StyleSheet.create({
 
   },
   DLSLogoBG: {
-    position: 'absolute',
-    top: 100,
-    right: 30,
-    width: 300,
-    height: 400,
     opacity: 0.1,
-    resizeMode: 'cover'
-
+    width: width,
+    height:height,
+    resizeMode: 'contain',
   },
   title: {
 
@@ -66,7 +64,7 @@ export const styles = StyleSheet.create({
   }, addButton: {
     width: 65,
     height: 65,
-    opacity: 0.9,
+    opacity: 1,
     //backgroundColor:'white',
     borderRadius: 100,
 

@@ -9,7 +9,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 
 
-const { width ,height} = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 //const ratio = 228 / 362;
 export const CARD_WIDTH = width * 0.9;
 export const CARD_HEIGHT = (height * 0.3);
@@ -54,38 +54,39 @@ export default ({ setTerm, item, index }: CardProps) => {
       }}> */}
       <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} colors={bgLgColor()} style={styles.card}>
 
-        <View style={[styles.fieldContainer, { marginTop: 10 }]}>
-          <Text style={styles.textTitle}>N° Tarjeta:</Text>
-          <Text style={styles.textValue}>{tarjeta.NroTarjeta}</Text>
-        </View>
-
-        <View style={styles.fieldContainer}>
-          <Text style={styles.textTitle}>Unidad de negocio</Text>
-          <Text style={styles.textValue}>{tarjeta.BUSINES_DESCR}</Text>
-        </View>
-
-        <View style={{ flexDirection: 'row' }}>
+        <View >
           <View style={styles.fieldContainer}>
-            <Text style={styles.textTitle}>Turno</Text>
-            <Text style={styles.textValue}>{tarjeta.TURNO_DESCR}</Text>
+            <Text style={styles.textTitle}>N° Tarjeta:</Text>
+            <Text style={styles.textValue}>{tarjeta.NroTarjeta}</Text>
           </View>
 
           <View style={styles.fieldContainer}>
-            <Text style={styles.textTitle}>Fecha Identificación</Text>
-            <Text style={styles.textValue}>{tarjeta.DL_IDENTIF_DT}</Text>
+            <Text style={styles.textTitle}>Unidad de negocio</Text>
+            <Text style={styles.textValue}>{tarjeta.BUSINES_DESCR}</Text>
+          </View>
+
+          <View style={{ flexDirection: 'row' }}>
+            <View style={styles.fieldContainer}>
+              <Text style={styles.textTitle}>Turno</Text>
+              <Text style={styles.textValue}>{tarjeta.TURNO_DESCR}</Text>
+            </View>
+
+            <View style={styles.fieldContainer}>
+              <Text style={styles.textTitle}>Fecha Identificación</Text>
+              <Text style={styles.textValue}>{tarjeta.DL_IDENTIF_DT}</Text>
+            </View>
+          </View>
+
+          <View style={styles.fieldContainer}>
+            <Text style={styles.textTitle}>Equipo</Text>
+            <Text style={styles.textValue}>{
+              tarjeta.ID_EQUIPO_DESCR?.length! > 18 ?
+                tarjeta.ID_EQUIPO_DESCR?.substr(0, 18) + '...'
+                :
+                tarjeta.ID_EQUIPO_DESCR}
+            </Text>
           </View>
         </View>
-
-        <View style={styles.fieldContainer}>
-          <Text style={styles.textTitle}>Equipo</Text>
-          <Text style={styles.textValue}>{
-            tarjeta.ID_EQUIPO_DESCR?.length! > 18 ?
-              tarjeta.ID_EQUIPO_DESCR?.substr(0, 18) + '...'
-              :
-              tarjeta.ID_EQUIPO_DESCR}
-          </Text>
-        </View>
-
       </LinearGradient>
       {/*  </View> */}
 
@@ -109,6 +110,7 @@ const styles = StyleSheet.create({
     height: CARD_HEIGHT,
     paddingHorizontal: 10,
     borderRadius: 40,
+    justifyContent: 'center',
     shadowColor: "white",
     shadowOffset: {
       width: 0,

@@ -21,7 +21,8 @@ export const InputModal = ({ placeholder, type, onChange, textSelect, form, disa
     const [isVisible, setisVisible] = useState(false)
 
     let str = ''
-    const setText = (value: string) => {
+
+    /* const setText = (value: string) => {
 
         switch (type) {
             case 'DL_DESCACTO':
@@ -38,7 +39,7 @@ export const InputModal = ({ placeholder, type, onChange, textSelect, form, disa
                 onChange(value, 'm38:DL_ACCION')
                 break;
         }
-    }
+    } */
 
     switch (type) {
         case 'DL_DESCACTO':
@@ -54,6 +55,29 @@ export const InputModal = ({ placeholder, type, onChange, textSelect, form, disa
         case 'DL_ACCION':
             str = form['m38:DL_ACCION']!
             break;
+    }
+
+    const [opacitySaveBtn, setOpacitySaveBtn] = useState(0.5);
+    const [newText, setNewText] = useState(str);
+
+    const saveDescrBtn = () => {
+
+        switch (type) {
+            case 'DL_DESCACTO':
+                onChange(newText, 'm38:DL_DESCACTO')
+                break;
+            case 'DL_ACCEVITREIT':
+                onChange(newText, 'm38:DL_ACCEVITREIT')
+                break;
+            case 'PTLT_DETAILS':
+                onChange(newText, 'm38:PTLT_DETAILS')
+                break;
+            case 'DL_ACCION':
+                onChange(newText, 'm38:DL_ACCION')
+                break;
+        }
+        setisVisible(false)
+        setOpacitySaveBtn(0.5);
     }
 
     return (
@@ -75,12 +99,12 @@ export const InputModal = ({ placeholder, type, onChange, textSelect, form, disa
 
                 }}
             >
-                <TouchableOpacity
+                <View
                     style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.4)', }}
-                    activeOpacity={1}
-                    onPressOut={() => { setisVisible(false) }}
+                /* activeOpacity={1}
+                onPressOut={() => { setisVisible(false) }} */
                 >
-                </TouchableOpacity>
+                </View>
                 <View style={{
                     ...styles.conteinerModal,
                     top: height * 0.25,
@@ -93,8 +117,8 @@ export const InputModal = ({ placeholder, type, onChange, textSelect, form, disa
                         pointerEvents={disabled ? "none" : "auto"}
                         style={{
                             ...styles.cardPrompt,
-                            height: height * 0.4,
-                            width: width * 0.8,
+                            height: height * 0.50,
+                            width: width * 0.90,
                             backgroundColor: colors.dlsGrayPrimary
                         }}
                     >
@@ -104,16 +128,53 @@ export const InputModal = ({ placeholder, type, onChange, textSelect, form, disa
                             style={{
                                 borderRadius: 12,
                                 alignItems: 'flex-start',
-                                height: height * 0.34,
-                                backgroundColor: colors.dlsGrayPrimary
+                                height: height * 0.35,
+                                width: width * 0.8,
+                                backgroundColor: '#2b2c32',
+                                marginTop: 20
                             }}
-                            value={str}
+                            value={newText}
                             maxCharLimit={300}
-                            placeholderTextColor="black"
                             exceedCharCountColor="#990606"
-                            placeholder={"Write your review..."}
-                            onChangeText={(text) => { setText(text) }}
+                            placeholder={"Escriba su comentario aquí..."}
+                            placeholderTextColor="white"
+                            onChangeText={(text) => {
+                                /* setText(text)  */
+                                setNewText(text)
+                                if (text.length > 300) {
+                                    opacitySaveBtn === 0.5 ? {} : setOpacitySaveBtn(0.5);
+                                } else {
+                                    opacitySaveBtn === 1 ? {} : setOpacitySaveBtn(1)
+                                }
+                            }}
                         />
+
+                        <View style={{
+                            flex: 1,
+                            flexDirection: 'row',
+                            width: '85%',
+                            alignItems: 'center',
+                            justifyContent: 'space-between'
+                        }}>
+                            <TouchableOpacity
+                                style={[styles.backSaveBtn, { width: '35%' }]}
+                                onPress={() => { setisVisible(false) }}
+                            >
+                                <Text style={{ color: 'white', fontSize: 18 }}>Cancelar</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity
+                                style={{ width: '35%' }}
+                                disabled={opacitySaveBtn === 1 ? false : true}
+                                onPress={saveDescrBtn}
+                            >
+                                <View
+                                    style={[styles.backSaveBtn, { opacity: opacitySaveBtn }]}>
+                                    <Text style={{ color: 'white', fontSize: 18 }}>Guardar</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+
                     </View>
                 </View>
             </Modal>
@@ -148,12 +209,14 @@ const styles = StyleSheet.create({
         color: '#fff'
     },
     conteinerModal: {
+        alignItems: 'center',
         position: 'absolute',
         zIndex: 999,
         flex: 1,
     },
     cardPrompt: {
         alignItems: 'center',
+        justifyContent: 'center',
         shadowOffset: {
             width: 0,
             height: 10
@@ -166,5 +229,12 @@ const styles = StyleSheet.create({
     SearchInput: {
         position: 'absolute',
         zIndex: 998,
+    },
+    backSaveBtn: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#2b2c32',
+        height: 50,
+        borderRadius: 15
     }
 });
