@@ -114,7 +114,6 @@ export const InputModal = ({ placeholder, type, onChange, textSelect, form, disa
 
                 }}>
                     <View
-                        pointerEvents={disabled ? "none" : "auto"}
                         style={{
                             ...styles.cardPrompt,
                             height: height * 0.50,
@@ -122,32 +121,35 @@ export const InputModal = ({ placeholder, type, onChange, textSelect, form, disa
                             backgroundColor: colors.dlsGrayPrimary
                         }}
                     >
-                        <RNTextArea
-                            defaultCharCount={str.length}
-                            textInputStyle={{ fontSize: 20, color: colors.dlsTextwhite }}
-                            style={{
-                                borderRadius: 12,
-                                alignItems: 'flex-start',
-                                height: height * 0.35,
-                                width: width * 0.8,
-                                backgroundColor: '#2b2c32',
-                                marginTop: 20
-                            }}
-                            value={newText}
-                            maxCharLimit={300}
-                            exceedCharCountColor="#990606"
-                            placeholder={"Escriba su comentario aquí..."}
-                            placeholderTextColor="white"
-                            onChangeText={(text) => {
-                                /* setText(text)  */
-                                setNewText(text)
-                                if (text.length > 300) {
-                                    opacitySaveBtn === 0.5 ? {} : setOpacitySaveBtn(0.5);
-                                } else {
-                                    opacitySaveBtn === 1 ? {} : setOpacitySaveBtn(1)
-                                }
-                            }}
-                        />
+                        <View
+                            pointerEvents={disabled ? "none" : "auto"}>
+                            <RNTextArea
+                                defaultCharCount={str.length}
+                                textInputStyle={{ fontSize: 20, color: colors.dlsTextwhite }}
+                                style={{
+                                    borderRadius: 12,
+                                    alignItems: 'flex-start',
+                                    height: height * 0.35,
+                                    width: width * 0.8,
+                                    backgroundColor: '#2b2c32',
+                                    marginTop: 20
+                                }}
+                                value={newText}
+                                maxCharLimit={300}
+                                exceedCharCountColor="#990606"
+                                placeholder={"Escriba su comentario aquí..."}
+                                placeholderTextColor="white"
+                                onChangeText={(text) => {
+                                    /* setText(text)  */
+                                    setNewText(text)
+                                    if (text.length > 300) {
+                                        opacitySaveBtn === 0.5 ? {} : setOpacitySaveBtn(0.5);
+                                    } else {
+                                        opacitySaveBtn === 1 ? {} : setOpacitySaveBtn(1)
+                                    }
+                                }}
+                            />
+                        </View>
 
                         <View style={{
                             flex: 1,
@@ -160,7 +162,7 @@ export const InputModal = ({ placeholder, type, onChange, textSelect, form, disa
                                 style={[styles.backSaveBtn, { width: '35%' }]}
                                 onPress={() => { setisVisible(false) }}
                             >
-                                <Text style={{ color: 'white', fontSize: 18 }}>Cancelar</Text>
+                                <Text style={{ color: 'white', fontSize: 18 }}>{disabled ? "Volver" :"Cancelar"}</Text>
                             </TouchableOpacity>
 
                             <TouchableOpacity

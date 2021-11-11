@@ -83,7 +83,7 @@ export const DatePickerSelect = ({ onChange, cardDescr, setCardDescr, disabled =
                 mode="date"
                 onConfirm={handleConfirm}
                 onCancel={hideDatePicker}
-                /* maximumDate={dateInitial} */
+                maximumDate={dateInitial}
             />
         </View>
     )
