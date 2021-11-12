@@ -78,43 +78,22 @@ export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingVal
 
       }).catch(async (err) => {
 
-         /*     console.log("err---------------------------------------------------");
-             console.log(JSON.stringify(err)); */
+         console.log("err---------------------------------------------------");
+         console.log(JSON.stringify(err));
 
          const arrayFormsOffline: any = await GetStorage({ StorageType: 'offlineObserveCards' });
          const arrayCardsDescrOffline: any = await GetStorage({ StorageType: 'offlineObserveCardsDescr' });
 
-         let newCardDescr;
-         let newForm
-         if (arrayCardsDescrOffline) {
-            newCardDescr = {
-               ...cardDescr,
-               ...{ NroTarjeta: nroTarjetaEmpty + ((Number(arrayCardsDescrOffline[0].NroTarjeta.substring(nroTarjetaEmpty.length)) + 1).toString()) }
-            }
-            newForm = {
-               ...form,
-               ...{ "m38:DL_NTARJETA": nroTarjetaEmpty + ((Number(arrayCardsDescrOffline[0].NroTarjeta.substring(nroTarjetaEmpty.length)) + 1).toString()) }
-            }
-         } else {
-            newCardDescr = {
-               ...cardDescr,
-               ...{ NroTarjeta: nroTarjetaEmpty + (1).toString() }
-            }
-            newForm = {
-               ...form,
-               ...{ "m38:DL_NTARJETA": nroTarjetaEmpty + (1).toString() }
-            }
-         }
-
-         /* const newCardDescr = {
+         const newCardDescr = {
             ...cardDescr,
-            ...{ NroTarjeta: nroTarjetaEmpty + ((arrayCardsDescrOffline[0] ? (Number(arrayCardsDescrOffline[0].NroTarjeta.substring(nroTarjetaEmpty.length)) + 1) : 1).toString()) }
+            ...{ NroTarjeta: nroTarjetaEmpty + ((arrayCardsDescrOffline[0] !== undefined ? (Number(arrayCardsDescrOffline[0].NroTarjeta.substring(nroTarjetaEmpty.length)) + 1) : 1).toString()) }
          }
 
          const newForm = {
             ...form,
-            ...{ "m38:DL_NTARJETA": nroTarjetaEmpty + ((arrayCardsDescrOffline[0] ? (Number(arrayCardsDescrOffline[0].NroTarjeta.substring(nroTarjetaEmpty.length)) + 1) : 1).toString()) }
-         } */
+            ...{ "m38:DL_NTARJETA": nroTarjetaEmpty + ((arrayCardsDescrOffline[0] !== undefined ? (Number(arrayCardsDescrOffline[0].NroTarjeta.substring(nroTarjetaEmpty.length)) + 1) : 1).toString()) }
+         }
+
 
          setCardDescr(newCardDescr);
 
