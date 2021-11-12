@@ -79,7 +79,9 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
 
     const { height, width } = useWindowDimensions();
 
-    form['m38:DL_NTARJETA']
+    
+    console.log("inicial",stateSend);
+   
 
 
     const menus: MeuItemType[] = [

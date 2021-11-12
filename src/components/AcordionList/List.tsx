@@ -19,6 +19,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { Rulegold } from '../Rulegold';
 import { AuthContext } from "../../context/formContext/AuthContext";
 import { DatePickerSelect } from "../DatePickerSelect";
+import { RalationchipBtn } from "../RalationchipBtn";
 
 export interface List {
   name: string;
@@ -169,11 +170,18 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef }: ListProps)
               />
               <CustomSwitchObserve title="¿Aplico interrupción de tareas?" onChange={onChange} switchType="m38:DL_POLITINTERTAREA" form={form} />
               <CustomSwitchObserve title="Requiere APS de seguimiento" onChange={onChange} switchType="m38:DL_REQAPSSEG" form={form} />
-              {form["m38:DL_REQAPSSEG"] === 'Y' && <Prompt
+              {form["m38:DL_REQAPSSEG"] === 'Y' && 
+              <View>
+              <Prompt
                 form={form}
                 onChange={onChange}
                 promptType={{ type: 'DLHR_APS' }}
-              />}
+                
+              
+              />
+              <RalationchipBtn form={form} />
+              </View>
+              }
 
               <CustomSwitchObserve title="Cuasi accidente" onChange={onChange} switchType="m38:DL_CUASIACC" form={form} />
 

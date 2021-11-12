@@ -83,16 +83,19 @@ export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingVal
 
          const arrayFormsOffline: any = await GetStorage({ StorageType: 'offlineObserveCards' });
          const arrayCardsDescrOffline: any = await GetStorage({ StorageType: 'offlineObserveCardsDescr' });
-console.log(arrayCardsDescrOffline[0]);
 
+               console.log(arrayFormsOffline);
+               console.log(arrayCardsDescrOffline);
+               
+               
          const newCardDescr = {
             ...cardDescr,
-            ...{ NroTarjeta: nroTarjetaEmpty + ((arrayCardsDescrOffline[0]!==undefined ? (Number(arrayCardsDescrOffline[0].NroTarjeta.substring(nroTarjetaEmpty.length)) + 1) : 1).toString()) }
+            ...{ NroTarjeta: nroTarjetaEmpty + ((arrayCardsDescrOffline ? (arrayCardsDescrOffline.length + 1) : 1).toString()) }
          }
 
          const newForm = {
             ...form,
-            ...{ "m38:DL_NTARJETA": nroTarjetaEmpty + ((arrayCardsDescrOffline[0]!==undefined ? (Number(arrayCardsDescrOffline[0].NroTarjeta.substring(nroTarjetaEmpty.length)) + 1) : 1).toString()) }
+            ...{ "m38:DL_NTARJETA": nroTarjetaEmpty + ((arrayCardsDescrOffline ? (arrayCardsDescrOffline.length + 1) : 1).toString()) }
          }
 
          setCardDescr(newCardDescr);

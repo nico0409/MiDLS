@@ -16,6 +16,7 @@ export const EditObservCard = ({ form, alertSend,setReloadCardList }: Props) => 
 
 
 
+
    let defaultOptions = {
       attributeNamePrefix: "@_",
       attrNodeName: "@", //default is false
@@ -51,6 +52,8 @@ export const EditObservCard = ({ form, alertSend,setReloadCardList }: Props) => 
     </m38:Updatedata__CompIntfc__DLHR_TA_OBSERV_CI>\
     </soapenv:Body>\
  </soapenv:Envelope>`;
+
+
 
    PSDB.post('/CI_DLHR_TA_OBSERV_CI.1.wsdl',
    xmlRequest,
