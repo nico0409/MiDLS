@@ -41,19 +41,25 @@ const deleteFunction = async (data: any, dataDescr: any, item: number) => {
     }
 
     if (isofflineObserveCard(data)) {
-console.log('/////////////////////////////////////////////////');
-console.log(data);
-console.log('/////////////////////////////////////////////////');
-
-
 
         data.splice(item, 1);
-        Asingstorage({ StorageType: 'offlineObserveCards' }, data)
+        console.log("ultima ejecucion", data.length);
+
+        if (data.length === 0) {
+            await AsyncStorage.removeItem('offlineObserveCards');
+        } else {
+            Asingstorage({ StorageType: 'offlineObserveCards' }, data);
+        }
+
     }
     if (isofflineObserveCardDescr(dataDescr)) {
 
         dataDescr.splice(item, 1)
-        Asingstorage({ StorageType: 'offlineObserveCardsDescr' }, dataDescr)
+        if (data.length === 0) {
+            await AsyncStorage.removeItem('offlineObserveCardsDescr');
+        } else {
+            Asingstorage({ StorageType: 'offlineObserveCardsDescr' }, dataDescr);
+        }
     }
 
 }

@@ -19,9 +19,10 @@ interface Params {
    cardDescr: DlhrAllObserve;
    setCardDescr: React.Dispatch<React.SetStateAction<DlhrAllObserve>>;
    setReloadCardList: React.Dispatch<React.SetStateAction<boolean>>;
+   setErrorType: React.Dispatch<React.SetStateAction<"server" | "network" | undefined>>;
 }
 
-export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingValue, cardDescr, setCardDescr, setReloadCardList }: Params) => {
+export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingValue, cardDescr, setCardDescr, setReloadCardList,setErrorType }: Params) => {
 
    var defaultOptions = {
       attributeNamePrefix: "@_",
@@ -80,18 +81,19 @@ export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingVal
 
          console.log("err---------------------------------------------------");
          console.log(JSON.stringify(err));
+         console.log(err.message);
 
          const arrayFormsOffline: any = await GetStorage({ StorageType: 'offlineObserveCards' });
          const arrayCardsDescrOffline: any = await GetStorage({ StorageType: 'offlineObserveCardsDescr' });
 
          const newCardDescr = {
             ...cardDescr,
-            ...{ NroTarjeta: nroTarjetaEmpty + ((arrayCardsDescrOffline[0] !== undefined ? (Number(arrayCardsDescrOffline[0].NroTarjeta.substring(nroTarjetaEmpty.length)) + 1) : 1).toString()) }
+            ...{ NroTarjeta: nroTarjetaEmpty + ((arrayCardsDescrOffline ? (arrayCardsDescrOffline.length + 1) : 1).toString()) }
          }
 
          const newForm = {
             ...form,
-            ...{ "m38:DL_NTARJETA": nroTarjetaEmpty + ((arrayCardsDescrOffline[0] !== undefined ? (Number(arrayCardsDescrOffline[0].NroTarjeta.substring(nroTarjetaEmpty.length)) + 1) : 1).toString()) }
+            ...{ "m38:DL_NTARJETA": nroTarjetaEmpty + ((arrayCardsDescrOffline ? (arrayCardsDescrOffline.length + 1) : 1).toString()) }
          }
 
 
@@ -110,6 +112,7 @@ export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingVal
             await Asingstorage({ StorageType: 'offlineObserveCardsDescr' }, arrayCardDescrOffline);
          }
 
+         setErrorType(err.message === "Network Error" ? 'network': 'server');
          runAnimation(false);
       });
 }
