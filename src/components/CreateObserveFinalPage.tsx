@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { View, Dimensions, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { View, Dimensions, StyleSheet, TouchableOpacity, Text, BackHandler } from 'react-native';
 
 import { StackScreenProps } from '@react-navigation/stack';
 import { Chase } from 'react-native-animated-spinkit';
@@ -88,9 +88,16 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
 
     useEffect(() => {
         setTimeout(() => {
-            NewObservCard({ form, setReqSended, setBgCircleColor, loadingValue, cardDescr, setCardDescr, setReloadCardList,setErrorType });
+            NewObservCard({ form, setReqSended, setBgCircleColor, loadingValue, cardDescr, setCardDescr, setReloadCardList, setErrorType });
         }, 2000);
     }, [])
+
+    useEffect(() => {
+        navigation.addListener('beforeRemove', (e) => {
+            // Prevent default behavior of leaving the screen
+            e.preventDefault();
+        })
+    }, []);
 
     return (
         <View style={{ flex: 1, backgroundColor: colors.dlsGrayPrimary }}>
@@ -110,6 +117,7 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
                     style={{ paddingRight: 10, paddingTop: 10 }}
                     onPress={() => {
                         /* navigation.replace('TarjetaObserveScreen',{name:emplidSelect.fieldValue2,emplid:emplidSelect.fieldValue1}) */
+                        navigation.removeListener('beforeRemove',()=>{});
                         navigation.pop(3)
                     }}>
                     <Icon name="home" size={40} color="white" />
