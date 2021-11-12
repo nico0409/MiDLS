@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { TarjetaObserveScreen } from '../screens/TarjetaObserveScreen';
 import { CreateObserveScreen } from '../screens/CreateObserveScreen';
@@ -11,6 +11,7 @@ import { InterfGetOnesCard } from '../interfaces/prompInterfaces';
 import { AuthProvider } from '../context/formContext/AuthContext';
 import { CreateObserveFinalPage } from '../components/CreateObserveFinalPage';
 import { SlidesScreen } from '../screens/SlideScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export type RoutstackParams = {
 
@@ -31,6 +32,21 @@ const Stack = createStackNavigator();
 
 export const StackNavigatorObserve = () => {
 
+    const [showWelcomeScreen, setShowWelcomeScreen] = useState(false);
+
+    const checkStorage = async () => {
+        if (await AsyncStorage.getItem('welcomeScreenLoaded')) {
+            console.log("entro a loaded: " + await AsyncStorage.getItem('welcomeScreenLoaded'));
+        } else {
+            setShowWelcomeScreen(true);
+            console.log("entro a null");
+            await AsyncStorage.setItem('welcomeScreenLoaded', 'loaded');
+        }
+    }
+
+    useEffect(() => {
+        checkStorage()
+    }, [])
 
     return (
         <FormContext>
@@ -46,7 +62,7 @@ export const StackNavigatorObserve = () => {
                     <Stack.Screen name="SlidesScreen" component={SlidesScreen} />
                     <Stack.Screen name="EmplidObserveScreen" component={EmplidObserveScreen} />
                     <Stack.Screen name="TarjetaObserveScreen" component={TarjetaObserveScreen} />
-                    <Stack.Screen name="CreateObserveScreen" component={CreateObserveScreen} /> 
+                    <Stack.Screen name="CreateObserveScreen" component={CreateObserveScreen} />
                     <Stack.Screen name="CreateObserveQuestionsPage" component={CreateObserveQuestionsPage} />
                     <Stack.Screen name="CreateObserveFinalPage" component={CreateObserveFinalPage} />
                     <Stack.Screen name="EditObvservCardScreen" component={EditObvservCardScreen} />
