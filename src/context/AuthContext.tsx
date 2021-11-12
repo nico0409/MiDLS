@@ -1,3 +1,4 @@
+import { useNetInfo } from '@react-native-community/netinfo'
 import React,{ createContext, useReducer,useState, useEffect } from 'react'
 import { authReducer, AuthState } from './authReducer'
 
@@ -27,8 +28,18 @@ type AuthContextProps={
 export const AuthContext= createContext({} as AuthContextProps)
 
 
+
 export const AuthProvider=({children}:any)=>{
 
+    const { isConnected } = useNetInfo();
+
+useEffect(() => {
+ 
+   if (isConnected===true){
+       
+   }
+    
+}, [isConnected])
 
 
     //const [currentUrl, setCurrentUrl] = useState('')

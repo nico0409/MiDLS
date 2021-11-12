@@ -17,7 +17,7 @@ export const EditObservCard = ({ form, alertSend,setReloadCardList }: Props) => 
 
 
 
-   let defaultOptions = {
+    let defaultOptions = {
       attributeNamePrefix: "@_",
       attrNodeName: "@", //default is false
       textNodeName: "#text",
@@ -27,21 +27,13 @@ export const EditObservCard = ({ form, alertSend,setReloadCardList }: Props) => 
       format: false,
       indentBy: "  ",
       supressEmptyNode: true,
-      //   tagValueProcessor: a=> he.encode(a, { useNamedReferences: true}),// default is a=>a
-      // attrValueProcessor: a=> he.encode(a, {isAttributeValue: isAttribute, useNamedReferences: true})// default is a=>a
+     
    };
 
    let parser = new j2xParser(defaultOptions);
 
-   ConvertXML(form);
-
+     ConvertXML(form); 
    let xml:String = parser.parse(form);
-  
-   /*  PostEditObservCard(xml); */
-
-  /*  value= value.replace('<','&lt;')
-       value= value.replace('>','&gt;')
-        console.log(value); */
   
      
    let xmlRequest = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:m38="http://xmlns.oracle.com/Enterprise/Tools/schemas/M161738.V1">\
@@ -51,7 +43,7 @@ export const EditObservCard = ({ form, alertSend,setReloadCardList }: Props) => 
     ${xml}\
     </m38:Updatedata__CompIntfc__DLHR_TA_OBSERV_CI>\
     </soapenv:Body>\
- </soapenv:Envelope>`;
+ </soapenv:Envelope>`; 
 
 
 
@@ -68,6 +60,6 @@ export const EditObservCard = ({ form, alertSend,setReloadCardList }: Props) => 
          setReloadCardList(true);
 
 
-      }).catch(err => {alertSend(false)  })
+      }).catch(err => {alertSend(false)  }) 
 
 }
