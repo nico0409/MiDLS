@@ -9,6 +9,7 @@ import { color } from 'react-native-reanimated';
 import { UseAnimation } from '../hooks/UseAnimation';
 import { useNavigation } from '@react-navigation/core';
 import { StackScreenProps } from '@react-navigation/stack';
+import { colors } from '../Themes/DlsTheme';
 //import { ThemeContext } from '../Context/themeContext/ThemeContext';
 
 
@@ -98,7 +99,7 @@ export const SlidesScreen = ({navigation}:Props) => {
                     width:10,
                     height:5,
                     borderRadius:10,
-                    backgroundColor:'rgba(179,9,0,1)'
+                    backgroundColor:colors.dlsBluePrimary,
                     
                     
                 }}
@@ -110,7 +111,7 @@ export const SlidesScreen = ({navigation}:Props) => {
                 }}>
                    <TouchableOpacity style={{
                         flexDirection:'row',
-                        backgroundColor:'rgba(179,9,0,1)',
+                        backgroundColor:colors.dlsBluePrimary,
                         width:120,
                         height:35,
                         borderRadius:20,
@@ -145,7 +146,7 @@ const styles = StyleSheet.create({
     title:{
         fontSize:30,
         fontWeight:'bold',
-        color:'#5856d6'
+       
 
     },
     subtitle:{

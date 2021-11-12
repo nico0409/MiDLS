@@ -52,7 +52,7 @@ export const styles = StyleSheet.create({
 
   },
   DLSLogoBG: {
-    opacity: 0.1,
+    
     width: width,
     height:height,
     resizeMode: 'contain',

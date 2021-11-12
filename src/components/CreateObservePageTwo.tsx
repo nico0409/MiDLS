@@ -8,6 +8,7 @@ import { CustomSwitchObserve } from './CustomSwitchObserve';
 import { colors } from '../Themes/DlsTheme';
 import { Prompt } from './Prompt';
 import { InputModal } from './InputModal';
+import { RalationchipBtn } from './RalationchipBtn';
 
 interface Props {
     form: objUseForm;
@@ -44,11 +45,14 @@ export const CreateObservePageTwo = ({ form, onChange }: Props) => {
                 <CustomSwitchObserve title="Requiere APS de seguimiento" onChange={onChange} switchType="m38:DL_REQAPSSEG" />
 
                 {form["m38:DL_REQAPSSEG"] === 'Y' &&
+                <View>
                     <Prompt
                         form={form}
                         onChange={onChange}
                         promptType={{ type: 'DLHR_APS' }}
                     />
+                    <RalationchipBtn form={form} />
+                    </View>
                 }
 
                 <CustomSwitchObserve title="Cuasi accidente" onChange={onChange} switchType="m38:DL_CUASIACC" />

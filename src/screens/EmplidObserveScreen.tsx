@@ -76,10 +76,10 @@ export const EmplidObserveScreen = ({ navigation, route }: Props) => {
     }, [])
 
     return (
-        <View style={{ alignItems: 'center', flex: 1, backgroundColor: colors.dlsGrayPrimary }}>
+        <View style={{ alignItems: 'center', flex: 1, backgroundColor:colors.dlsGrayPrimary}}>
             <View style={{position:'absolute',flex:1}}>
                 <Image
-                    source={require('../assets/Logo_DLSNegativo_sf.png')}
+                    source={require('../assets/Logo_DLSNegativo_sf2.png')}
                     style={styles.DLSLogoBG}
                 />
             </View>
