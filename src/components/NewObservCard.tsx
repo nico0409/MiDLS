@@ -86,6 +86,10 @@ export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingVal
          const arrayFormsOffline: any = await GetStorage({ StorageType: 'offlineObserveCards' });
          const arrayCardsDescrOffline: any = await GetStorage({ StorageType: 'offlineObserveCardsDescr' });
 
+               console.log(arrayFormsOffline);
+               console.log(arrayCardsDescrOffline);
+               
+               
          const newCardDescr = {
             ...cardDescr,
             ...{ NroTarjeta: nroTarjetaEmpty + ((arrayCardsDescrOffline ? (arrayCardsDescrOffline.length + 1) : 1).toString()) }

@@ -61,7 +61,6 @@ const deleteFunction = async (data: any, dataDescr: any, item: number) => {
             Asingstorage({ StorageType: 'offlineObserveCardsDescr' }, dataDescr);
         }
     }
-
 }
 
 export const DeleteStorage = async (items: number) => {

@@ -7,15 +7,21 @@ export const useForm = <T extends Object>( initState: T ) => {
      const [stateSend, setStateSend] = useState<M38GetCompIntfcDLHRTAOBSERVCIResponse>();  
 
     const onChange = ( value: string, field: keyof T ) => {
-        setState({
+
+      
+        
+         setState({
             ...state,
             [field]: value
-        });
+        }); 
+
+
 
          setStateSend({
             ...stateSend,
             [field]: value
         });  
+     
     }
     const setFormValue=(form:T)=>{
             setState({

@@ -38,6 +38,7 @@ export const FlatListItemPrompt = ({ setemplid,
     const { setEmplidSelect } = useContext(AuthContext)
 
 
+
     return (
         <TouchableOpacity
             activeOpacity={0.5}
@@ -55,10 +56,13 @@ export const FlatListItemPrompt = ({ setemplid,
                 (setemplid !== undefined ?
                     setemplid({ fieldValue1: field1, fieldValue2: field2! }) : {});
 
-                (onChange !== undefined ? onChange(field1, fieldtype) : {});
 
                 promptType.type === 'DLHR_EMPL_BUSSINES_UNIT' && setEmplidSelect({ fieldValue1: field1, fieldValue2: field2! });
-                promptType.type === 'DLHR_EMPL_BUSSINES_UNIT' && Asingstorage({ StorageType: 'emplid' }, { emplid: field1, name: field2 })
+                promptType.type === 'DLHR_EMPL_BUSSINES_UNIT' && Asingstorage({ StorageType: 'emplid' }, { emplid: field1, name: field2 });
+                closePrompt(false);
+                (onChange !== undefined && onChange(field1, fieldtype));
+            /*    promptType.type === 'DLHR_APS' && onChange!(field2!, "m38:DL_RESPSEGAPS"); */
+                
             }}
         >
             <View style={styles.container}>

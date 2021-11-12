@@ -25,7 +25,7 @@ export type Fields = {
   customer?: 'DL_CUSTOMER_ID' | 'DESCR'
   sector?: 'DL_SECTOR_ID' | 'DESCR'
   observador?: 'EMPLID' | 'NOMBRE'
-  APS?: 'DL_ACTION_NBR'
+  APS?: 'DL_ACTION_NBR' | 'EMPLID' 
   EncargadoAPS?: 'EMPLID' | 'NOMBRE'
 
 }
@@ -42,7 +42,7 @@ export type promptField = {
   DLHR_CUSTOMER?: { field1: Fields, field2: Fields }
   DLHR_SECTOR?: { field1: Fields, field2: Fields }
   DLHR_OBSERVE_EMPLID?: { field1: Fields, field2: Fields }
-  DLHR_APS?: { field1: Fields }
+  DLHR_APS?: { field1: Fields ,field2: Fields }
 }
 export type fieldSearchType = {
 

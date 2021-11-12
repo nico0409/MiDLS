@@ -68,6 +68,7 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
 
     let strField1 = '';
     let strField2 = '';
+    let strField3 = '';
     let placeHolderSrch = '';
     let fieldType: keyof objUseForm = 'm38:BUSINESS_UNIT';
 
@@ -143,10 +144,12 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
             const fieldAPS: promptField = {
                 DLHR_APS:
                 {
-                    field1: { APS: 'DL_ACTION_NBR' }
+                    field1: { APS: 'DL_ACTION_NBR' },
+                    field2: { APS:'EMPLID' }
                 }
             }
             strField1 = fieldAPS.DLHR_APS?.field1.APS!;
+            strField2 = fieldAPS.DLHR_APS?.field2.APS!;
             placeHolderSrch = 'Numero APS'
             fieldType = 'm38:DL_NUM_APS'
             break;
@@ -265,8 +268,7 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
                     form?.['m38:DL_OBSERVADOR'] && (titleAnimationValue.value = -5);
                     form?.['m38:DL_OBSERVADOR'] && (heightAnimationValue.value = 20);
                 }
-                console.log("form?.['m38:DL_OBSERVADOR']:");
-                console.log(form?.['m38:DL_OBSERVADOR']);
+               
                 break;
             case 'DLHR_APS':
                 if (data[0] !== undefined &&

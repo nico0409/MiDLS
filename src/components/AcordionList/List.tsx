@@ -19,6 +19,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { Rulegold } from '../Rulegold';
 import { AuthContext } from "../../context/formContext/AuthContext";
 import { DatePickerSelect } from "../DatePickerSelect";
+import { RalationchipBtn } from "../RalationchipBtn";
 
 export interface List {
   name: string;
@@ -197,13 +198,19 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef, cardOffline 
                 form={form}
                 disabled={cardOffline}
               />
+
               {form["m38:DL_REQAPSSEG"] === 'Y' &&
-                <Prompt
-                  form={form}
-                  onChange={onChange}
-                  promptType={{ type: 'DLHR_APS' }}
-                  disabled={cardOffline}
-                />
+                <View>
+
+                  <Prompt
+                    form={form}
+                    onChange={onChange}
+                    promptType={{ type: 'DLHR_APS' }}
+                    disabled={cardOffline}
+                  />
+
+                  <RalationchipBtn form={form} />
+                </View>
               }
 
               <CustomSwitchObserve

@@ -10,6 +10,7 @@ import { EditObvservCardScreen } from '../screens/EditObvservCardScreen';
 import { InterfGetOnesCard } from '../interfaces/prompInterfaces';
 import { AuthProvider } from '../context/formContext/AuthContext';
 import { CreateObserveFinalPage } from '../components/CreateObserveFinalPage';
+import { SlidesScreen } from '../screens/SlideScreen';
 
 export type RoutstackParams = {
 
@@ -42,6 +43,7 @@ export const StackNavigatorObserve = () => {
                         }
                     }}
                 >
+                    <Stack.Screen name="SlidesScreen" component={SlidesScreen} />
                     <Stack.Screen name="EmplidObserveScreen" component={EmplidObserveScreen} />
                     <Stack.Screen name="TarjetaObserveScreen" component={TarjetaObserveScreen} />
                     <Stack.Screen name="CreateObserveScreen" component={CreateObserveScreen} /> 
