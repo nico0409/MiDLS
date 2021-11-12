@@ -19,9 +19,10 @@ interface Params {
    cardDescr: DlhrAllObserve;
    setCardDescr: React.Dispatch<React.SetStateAction<DlhrAllObserve>>;
    setReloadCardList: React.Dispatch<React.SetStateAction<boolean>>;
+   setErrorType: React.Dispatch<React.SetStateAction<"server" | "network" | undefined>>;
 }
 
-export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingValue, cardDescr, setCardDescr, setReloadCardList }: Params) => {
+export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingValue, cardDescr, setCardDescr, setReloadCardList,setErrorType }: Params) => {
 
    var defaultOptions = {
       attributeNamePrefix: "@_",
@@ -80,6 +81,7 @@ export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingVal
 
          console.log("err---------------------------------------------------");
          console.log(JSON.stringify(err));
+         console.log(err.message);
 
          const arrayFormsOffline: any = await GetStorage({ StorageType: 'offlineObserveCards' });
          const arrayCardsDescrOffline: any = await GetStorage({ StorageType: 'offlineObserveCardsDescr' });
@@ -114,6 +116,7 @@ export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingVal
             await Asingstorage({ StorageType: 'offlineObserveCardsDescr' }, arrayCardDescrOffline);
          }
 
+         setErrorType(err.message === "Network Error" ? 'network': 'server');
          runAnimation(false);
       });
 }

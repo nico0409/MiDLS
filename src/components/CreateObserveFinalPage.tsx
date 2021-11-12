@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { View, Dimensions, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { View, Dimensions, StyleSheet, TouchableOpacity, Text, BackHandler } from 'react-native';
 
 import { StackScreenProps } from '@react-navigation/stack';
 import { Chase } from 'react-native-animated-spinkit';
@@ -20,6 +20,7 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
     const { form, cardDescr, setCardDescr, setReloadCardList } = useContext(AuthContext);
 
     const [reqSended, setReqSended] = useState<'pending' | 'sended' | 'error'>('pending');
+    const [errorType, setErrorType] = useState<'server' | 'network'>();
     const [bgCircleColor, setBgCircleColor] = useState('grey');
 
     const opacityHomeValue = useSharedValue(0);
@@ -87,9 +88,16 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
 
     useEffect(() => {
         setTimeout(() => {
-            NewObservCard({ form, setReqSended, setBgCircleColor, loadingValue, cardDescr, setCardDescr,setReloadCardList });
+            NewObservCard({ form, setReqSended, setBgCircleColor, loadingValue, cardDescr, setCardDescr, setReloadCardList, setErrorType });
         }, 2000);
     }, [])
+
+    useEffect(() => {
+        navigation.addListener('beforeRemove', (e) => {
+            // Prevent default behavior of leaving the screen
+            e.preventDefault();
+        })
+    }, []);
 
     return (
         <View style={{ flex: 1, backgroundColor: colors.dlsGrayPrimary }}>
@@ -109,6 +117,7 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
                     style={{ paddingRight: 10, paddingTop: 10 }}
                     onPress={() => {
                         /* navigation.replace('TarjetaObserveScreen',{name:emplidSelect.fieldValue2,emplid:emplidSelect.fieldValue1}) */
+                        navigation.removeListener('beforeRemove',()=>{});
                         navigation.pop(3)
                     }}>
                     <Icon name="home" size={40} color="white" />
@@ -119,8 +128,8 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
                 <Chase size={140} color="white" />
             </Animated.View>
 
-            <Animated.View style={[{backgroundColor:colors.dlsGrayPrimary,flex:1,alignItems:'center',justifyContent:'space-evenly',borderTopLeftRadius:60,borderTopRightRadius:60},animatedCardStyle]}>
-                <View style={{ marginHorizontal: '10%'}}>
+            <Animated.View style={[{ backgroundColor: colors.dlsGrayPrimary, flex: 1, alignItems: 'center', justifyContent: 'space-evenly', borderTopLeftRadius: 60, borderTopRightRadius: 60 }, animatedCardStyle]}>
+                <View style={{ marginHorizontal: '10%' }}>
                     {reqSended === 'sended' ?
                         <>
                             <Text style={{ color: 'white', fontSize: 40, fontWeight: 'bold' }}>Listo!</Text>
@@ -128,9 +137,19 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
                         </>
                         :
                         <>
-                            <Text style={{ color: 'white', fontSize: 40, fontWeight: 'bold' }}>Ups!</Text>
-                            <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>Error al intentar conectarse a Internet.</Text>
-                            <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>Cuando el dispositivo detecte una conexión, la tarjeta se enviará automaticamente.</Text>
+                            {errorType === 'network' ?
+                                <>
+                                    <Text style={{ color: 'white', fontSize: 40, fontWeight: 'bold' }}>Ups!</Text>
+                                    <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>Error de conexión a Internet</Text>
+                                    <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>Cuando el dispositivo detecte una conexión, la tarjeta se enviará automaticamente.</Text>
+                                </>
+                                :
+                                <>
+                                    <Text style={{ color: 'white', fontSize: 40, fontWeight: 'bold' }}>Ups!</Text>
+                                    <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>Error al intentar conectarse con el Servidor.</Text>
+                                    <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>Cuando el dispositivo detecte una conexión con el servidor, la tarjeta se enviará automaticamente.</Text>
+                                </>
+                            }
                         </>
                     }
                 </View>
