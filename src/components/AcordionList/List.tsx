@@ -184,11 +184,6 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef, cardOffline 
                 form={form}
                 disabled={cardOffline}
               />
-              <View>
-              <Prompt
-              {form["m38:DL_REQAPSSEG"] === 'Y' && 
-              <CustomSwitchObserve title="Requiere APS de seguimiento" onChange={onChange} switchType="m38:DL_REQAPSSEG" form={form} />
-              <CustomSwitchObserve title="¿Aplico interrupción de tareas?" onChange={onChange} switchType="m38:DL_POLITINTERTAREA" form={form} />
               <CustomSwitchObserve
                 title="¿Aplico interrupción de tareas?"
                 onChange={onChange}
@@ -199,24 +194,23 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef, cardOffline 
               <CustomSwitchObserve
                 title="Requiere APS de seguimiento"
                 onChange={onChange}
-              />
-              <RalationchipBtn form={form} />
-              </View>
-              }
-              
-                promptType={{ type: 'DLHR_APS' }}
-                
                 switchType="m38:DL_REQAPSSEG"
                 form={form}
                 disabled={cardOffline}
               />
+
               {form["m38:DL_REQAPSSEG"] === 'Y' &&
-                <Prompt
-                  form={form}
-                  onChange={onChange}
-                  promptType={{ type: 'DLHR_APS' }}
-                  disabled={cardOffline}
-                />
+                <View>
+
+                  <Prompt
+                    form={form}
+                    onChange={onChange}
+                    promptType={{ type: 'DLHR_APS' }}
+                    disabled={cardOffline}
+                  />
+
+                  <RalationchipBtn form={form} />
+                </View>
               }
 
               <CustomSwitchObserve
