@@ -119,8 +119,8 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
                 <Chase size={140} color="white" />
             </Animated.View>
 
-            <Animated.View style={animatedCardStyle}>
-                <View style={{ marginHorizontal: '10%', marginBottom: '10%' }}>
+            <Animated.View style={[{backgroundColor:colors.dlsGrayPrimary,flex:1,alignItems:'center',justifyContent:'space-evenly',borderTopLeftRadius:60,borderTopRightRadius:60},animatedCardStyle]}>
+                <View style={{ marginHorizontal: '10%'}}>
                     {reqSended === 'sended' ?
                         <>
                             <Text style={{ color: 'white', fontSize: 40, fontWeight: 'bold' }}>Listo!</Text>

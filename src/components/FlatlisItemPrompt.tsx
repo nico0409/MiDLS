@@ -43,15 +43,16 @@ export const FlatListItemPrompt = ({ setemplid,
         <TouchableOpacity
             activeOpacity={0.5}
             onPress={() => {
-                (
-                    setIsItemChanged !== undefined ? setIsItemChanged(true) : {});
+                (setIsItemChanged !== undefined ? setIsItemChanged(true) : {});
+
                 setplaceHolder((promptType.type === 'DLHR_APS') ? field1 : field2!);
-               
-            /*     promptType.type === 'DLHR_APS' && onChange!(field2!, "m38:DL_RESPSEGAPS"); */
-                
+
+                closePrompt(false);
+
                 promptType.type === 'DLHR_EQUIP_TBL' &&
                     setCardDescr !== undefined &&
                     setCardDescr({ ...cardDescr, ...{ IDEquipo: field1, ID_EQUIPO_DESCR: field2, } });
+
                 (setemplid !== undefined ?
                     setemplid({ fieldValue1: field1, fieldValue2: field2! }) : {});
 

@@ -57,7 +57,7 @@ export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingVal
    }
 
    setReloadCardList(true);
-   
+
    PSDB.post('/CI_DLHR_TA_OBSERV_CI.1.wsdl',
       xmls,
       {
@@ -78,8 +78,8 @@ export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingVal
 
       }).catch(async (err) => {
 
-     /*     console.log("err---------------------------------------------------");
-         console.log(JSON.stringify(err)); */
+         console.log("err---------------------------------------------------");
+         console.log(JSON.stringify(err));
 
          const arrayFormsOffline: any = await GetStorage({ StorageType: 'offlineObserveCards' });
          const arrayCardsDescrOffline: any = await GetStorage({ StorageType: 'offlineObserveCardsDescr' });
@@ -97,6 +97,7 @@ export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingVal
             ...form,
             ...{ "m38:DL_NTARJETA": nroTarjetaEmpty + ((arrayCardsDescrOffline ? (arrayCardsDescrOffline.length + 1) : 1).toString()) }
          }
+
 
          setCardDescr(newCardDescr);
 

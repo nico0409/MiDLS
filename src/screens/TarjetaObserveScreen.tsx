@@ -15,6 +15,7 @@ import { ModalPromptEmplid } from '../components/ModalPromptEmplid';
 
 import { useIsFocused } from '@react-navigation/native';
 import { useNetInfo } from '@react-native-community/netinfo';
+import { opacity } from '../libs/react-native-redash/src/v1/Colors';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
 
@@ -240,20 +241,18 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
 
 
             </View>
+
             <TouchableOpacity
                 activeOpacity={0.6}
                 style={{ zIndex: 999, ...styles.addButtonContainer }}
                 onPress={() => {   navigation.navigate('CreateObserveScreen')
              }}
             >
-
                 <View style={styles.addButton} >
-
-                    <Icon name="add-circle" size={65} color={colors.dlsBluePrimary} />
-
-
+                    <Icon name="add-circle" size={65} color={'#ffdd00'} />
                 </View>
             </TouchableOpacity>
+
             <ModalSearch
                 isVisible={isVisible}
                 setisVisible={setisVisible}

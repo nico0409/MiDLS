@@ -1,4 +1,6 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet,Dimensions} from "react-native";
+
+const {width,height} = Dimensions.get('window');
 
 export const styless = StyleSheet.create({
   containerWebView: {
@@ -20,8 +22,8 @@ export const colors = {
   //dlsBluePrimary: 'rgba(0,183,237,1)',
   dlsBluePrimary: '#0087ba',
   //dlsBluePrimary:'rgba(0,183,237,0.6)',
-  //dlsYellowSecondary: 'rgba(245,217,47,1)',
-  dlsYellowSecondary: 'rgba(190, 170, 0, 1)',
+  /* dlsYellowSecondary: 'rgba(245,217,47,1)', */
+  dlsYellowSecondary: '#D5BE14',
   //dlsGrayPrimary: 'rgba(66,73,78,1)',
   dlsGrayPrimary:'#08111c',
   dlsWhiteBackGround: 'rgba(243,239,239,0.9)',
@@ -50,14 +52,10 @@ export const styles = StyleSheet.create({
 
   },
   DLSLogoBG: {
-    position: 'absolute',
-    top: 100,
-    right: 30,
-    width: 300,
-    height: 400,
     opacity: 0.1,
-    resizeMode: 'cover'
-
+    width: width,
+    height:height,
+    resizeMode: 'contain',
   },
   title: {
 
@@ -66,7 +64,7 @@ export const styles = StyleSheet.create({
   }, addButton: {
     width: 65,
     height: 65,
-    opacity: 0.9,
+    opacity: 1,
     //backgroundColor:'white',
     borderRadius: 100,
 

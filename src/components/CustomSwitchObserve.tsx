@@ -9,9 +9,10 @@ interface Props {
     switchType: "m38:DL_POLITINTERTAREA" | "m38:DL_REQAPSSEG" | "m38:DL_CUASIACC";
     onChange: (value: string, field: keyof objUseForm) => void;
     form?: M38GetCompIntfcDLHRTAOBSERVCIResponse;
+    disabled?: boolean;
 }
 
-export const CustomSwitchObserve = ({ title, onChange, switchType, form }: Props) => {
+export const CustomSwitchObserve = ({ title, onChange, switchType, form, disabled = false }: Props) => {
 
     const [isEnabled, setIsEnabled] = useState(false);
 
@@ -31,8 +32,8 @@ export const CustomSwitchObserve = ({ title, onChange, switchType, form }: Props
                     break;
 
                 case 'm38:DL_POLITINTERTAREA':
-                   
-                    
+
+
                     setIsEnabled(form?.['m38:DL_POLITINTERTAREA'] === 'Y' ? true : false)
                     break;
 
@@ -45,17 +46,20 @@ export const CustomSwitchObserve = ({ title, onChange, switchType, form }: Props
     }, [])
 
     return (
-        <View style={{ flexDirection: 'row',
-         alignItems: 'center',marginVertical:10 ,
-         width:'100%',
-         justifyContent:'space-between',
-         paddingHorizontal:25
-         }}>
-            <Text style={{ color: colors.dlsTextwhite,fontSize:15 }}>{title}</Text>
+        <View
+            pointerEvents={disabled ? "none" : "auto"}
+            style={{
+                flexDirection: 'row',
+                alignItems: 'center', marginVertical: 10,
+                width: '100%',
+                justifyContent: 'space-between',
+                paddingHorizontal: 25
+            }}>
+            <Text style={{ color: colors.dlsTextwhite, fontSize: 15 }}>{title}</Text>
             <Switch
-            style={{ transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }] }}
-                trackColor={{ false: 'gray', true: colors.dlsYellowSecondary }}
-                thumbColor={(Platform.OS === 'android') ? colors.dlsYellowSecondary : ''}
+                style={{ transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }] }}
+                trackColor={{ false: 'gray', true: (disabled ? '#adb5bd' : colors.dlsYellowSecondary) }}
+                thumbColor={(Platform.OS === 'android') ? (disabled ? '#adb5bd' : colors.dlsYellowSecondary) : ''}
                 onValueChange={toggleSwitch}
                 value={isEnabled}
             />

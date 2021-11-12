@@ -14,22 +14,23 @@ interface Props {
     setCardDescr?: React.Dispatch<React.SetStateAction<DlhrAllObserve>>;
     cardDescr?: DlhrAllObserve;
     activeBorderError?: boolean;
+    disabled?: boolean;
 }
 
 interface DlhrPromptsDet extends DlhrOrigen, DlhrPuesto, DlhrTurno, DlhrBussinesUnit, DlhrAps { };
 
 const { width: ScreenWidth } = Dimensions.get("window");
 
-export const PickerSelect = ({ placeholder, type, onChange, form, setCardDescr, cardDescr, emplid, activeBorderError = false }: Props) => {
+export const PickerSelect = ({ placeholder, type, onChange, form, setCardDescr, cardDescr, emplid, activeBorderError = false, disabled = false }: Props) => {
 
     const promptType: promptType = { type };
     const [selectedItem, setSelectedItem] = useState<ISingleSelectDataType>()
     const { PromptObArray } = GetPromptArray(promptType);
-    let itemselect: ISingleSelectDataType = { id: 0, value: '' }
+    let itemselect: ISingleSelectDataType;
     let data: ISingleSelectDataType[];
     let fieldData: keyof objUseForm;
     let descr: string;
-    
+
     const titleAnimationValue = useSharedValue(25);
     const heightAnimationValue = useSharedValue(0);
 
@@ -149,7 +150,7 @@ export const PickerSelect = ({ placeholder, type, onChange, form, setCardDescr, 
                 <Text style={{ color: 'white', fontWeight: 'bold' }}>{placeholder}</Text>
             </Animated.View>
 
-            <Animated.View style={[{ marginVertical: 0, borderColor: 'red', borderRadius: 20 }, borderAnimationStyle]}>
+            <Animated.View pointerEvents={disabled ? "none" : "auto"} style={[{ marginVertical: 0, borderColor: 'red', borderRadius: 20 }, borderAnimationStyle]}>
 
                 <RNSingleSelect
                     darkMode
@@ -160,13 +161,16 @@ export const PickerSelect = ({ placeholder, type, onChange, form, setCardDescr, 
                     width={ScreenWidth * 0.87}
                     searchEnabled={false}
                     menuBarContainerWidth={ScreenWidth * 0.87}
-                    onSelect={(selectedItem: ISingleSelectDataType) => {                        
+                    onSelect={(selectedItem: ISingleSelectDataType) => {
                         onChange(selectedItem.data.dataItem, selectedItem.data.fieldData);
-                        setCardDescr ===undefined ? {} : changeDescr(selectedItem.data.dataItem, selectedItem.value);
+                        setCardDescr === undefined ? {} : changeDescr(selectedItem.data.dataItem, selectedItem.value);
                         setSelectedItem(selectedItem);
                         setIsItemChanged(true)
                     }}
                 />
+                {disabled &&
+                    <View style={{ height: '100%', width: '15%', backgroundColor: '#2b2c32', position: 'absolute', right: 0, borderRadius: 50 }} />
+                }
             </Animated.View>
 
         </View>
