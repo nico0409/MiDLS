@@ -21,11 +21,12 @@ interface Props {
     cardDescr?: DlhrAllObserve;
     activeBorderError?: boolean;
     initialValue?: string;
+    disabled?: boolean;
 }
 
 const { width, height } = Dimensions.get("window");
 
-export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, cardDescr, activeBorderError = false, initialValue }: Props) => {
+export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, cardDescr, activeBorderError = false, initialValue, disabled = false }: Props) => {
 
     const { top } = useSafeAreaInsets();
 
@@ -276,7 +277,7 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
                     )[0];
                     item !== undefined && setplaceHolder(item.DL_ACTION_NBR
                     )
-                }                
+                }
                 form?.['m38:DL_NUM_APS'] && (titleAnimationValue.value = -5);
                 form?.['m38:DL_NUM_APS'] && (heightAnimationValue.value = 20);
                 break;
@@ -323,11 +324,14 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
 
             <Animated.View style={[{ borderColor: 'red', borderRadius: 20 }, borderAnimationStyle]}>
                 <TouchableOpacity
+                    disabled={disabled}
                     activeOpacity={0.8}
                     onPress={() => { setisVisible(true) }}>
                     <View style={styles.btnContainer}>
                         <Text style={styles.textBtn}>{placeHolder}</Text>
-                        <Icon name="radio-button-on" size={25} color='white' style={{ right: 13 }} />
+                        {!disabled &&
+                            <Icon name="radio-button-on" size={25} color='white' style={{ right: 13 }} />
+                        }
                     </View>
                 </TouchableOpacity>
             </Animated.View>

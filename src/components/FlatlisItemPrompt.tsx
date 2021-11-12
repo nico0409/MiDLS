@@ -42,18 +42,21 @@ export const FlatListItemPrompt = ({ setemplid,
         <TouchableOpacity
             activeOpacity={0.5}
             onPress={() => {
-                (
-                    setIsItemChanged !== undefined ? setIsItemChanged(true) : {})
-                setplaceHolder((promptType.type === 'DLHR_APS') ? field1 : field2!),
-                    closePrompt(false),
-                    onChange!(field1, fieldtype)
+                (setIsItemChanged !== undefined ? setIsItemChanged(true) : {});
+
+                setplaceHolder((promptType.type === 'DLHR_APS') ? field1 : field2!);
+
+                closePrompt(false);
+
                 promptType.type === 'DLHR_EQUIP_TBL' &&
                     setCardDescr !== undefined &&
-                    setCardDescr({ ...cardDescr, ...{ IDEquipo: field1, ID_EQUIPO_DESCR: field2, } })
-                    , (setemplid !== undefined ?
-                        setemplid({ fieldValue1: field1, fieldValue2: field2! })
-                        :
-                        (onChange !== undefined ? onChange(field1, fieldtype) : {}));
+                    setCardDescr({ ...cardDescr, ...{ IDEquipo: field1, ID_EQUIPO_DESCR: field2, } });
+
+                (setemplid !== undefined ?
+                    setemplid({ fieldValue1: field1, fieldValue2: field2! }) : {});
+
+                (onChange !== undefined ? onChange(field1, fieldtype) : {});
+
                 promptType.type === 'DLHR_EMPL_BUSSINES_UNIT' && setEmplidSelect({ fieldValue1: field1, fieldValue2: field2! });
                 promptType.type === 'DLHR_EMPL_BUSSINES_UNIT' && Asingstorage({ StorageType: 'emplid' }, { emplid: field1, name: field2 })
             }}

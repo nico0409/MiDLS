@@ -16,8 +16,9 @@ interface Props {
   form?: M38GetCompIntfcDLHRTAOBSERVCIResponse
   questiontType: questionType
   onChange: (value: string, field: keyof objUseForm) => void;
+  darkText?: boolean;
 }
-export const QuestionsCmp = ({ form, questiontType, onChange }: Props) => {
+export const QuestionsCmp = ({ form, questiontType, onChange, darkText = false }: Props) => {
 
   let initialValue = 0
 
@@ -59,11 +60,17 @@ export const QuestionsCmp = ({ form, questiontType, onChange }: Props) => {
 
   const data = QuestionsData.type.filter(item => {
     if (item.type.type === questiontType.type)
-      return item;
+    return item;
 
   })
 
-
+  data[0]?.choices.map(element => {
+    element.textStyle = {
+      textDecorationLine: "none",
+      color: darkText ? 'black' : 'white',
+      fontSize:18
+    }
+  });
 
   if (form !== undefined) {
     initialValue = mapValuesToIndex(form?.[data[0].field]!)
@@ -80,8 +87,8 @@ export const QuestionsCmp = ({ form, questiontType, onChange }: Props) => {
         <View style={styles.container}>
 
 
-          <View style={{ /* marginLeft: 32, */ marginTop: 24}}>
-            <Text style={{ color: "white", fontWeight: "bold", fontSize: 18 }}>
+          <View style={{ /* marginLeft: 32, */ marginTop: 24 }}>
+            <Text style={{ color: darkText ? 'black' : 'white', fontWeight: "bold", fontSize: 22 }}>
               {data[0]?.question}
             </Text>
           </View>
@@ -110,8 +117,8 @@ export const QuestionsCmp = ({ form, questiontType, onChange }: Props) => {
 
 
 const styles = StyleSheet.create({
-  container: { 
+  container: {
     marginTop: 24,
-    marginHorizontal:'10%'
-   }
+    marginHorizontal: '10%'
+  }
 });
