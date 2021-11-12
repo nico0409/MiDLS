@@ -78,7 +78,7 @@ export const DrawerNavigation = () => {
     const prompts: StorageTypes = { StorageType: 'prompt' };
    /*  GetStorage({StorageType:'prompt'})===undefined && */
   
-     await SendObserveStorage();
+   /*   await SendObserveStorage(); */
     Asingstorage(prompts, await GetPrompt());
     setNeedsUpdate( await CheckUpdateAndroid());
    SplashScreen.hide();

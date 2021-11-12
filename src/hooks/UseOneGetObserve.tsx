@@ -19,7 +19,7 @@ export const UseOneGetObserve = (observeCardSrch: InterfGetOnesCard) => {
     const loadObserveCardOffline = async () => {
         setIsloading(true);
         const cardOffline: any = await GetStorage({ StorageType: 'offlineObserveCards' });
-        setFormValue(cardOffline.find((element:any) => element["m38:DL_NTARJETA"]===observeCardSrch.Ntarjeta));
+        setFormValue(cardOffline?.find((element:any) => element["m38:DL_NTARJETA"]===observeCardSrch.Ntarjeta));
         setIsloading(false)
     }
 

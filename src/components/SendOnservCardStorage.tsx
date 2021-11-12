@@ -1,9 +1,11 @@
 import { j2xParser, parse } from 'fast-xml-parser';
-import React from 'react'
+import React,{useContext} from 'react'
 import { ConvertXML } from '../../helpers/ConvertXML';
 import PSDB from '../api/PSDB';
+import { AuthContext } from '../context/AuthContext';
 import { objUseForm } from '../interfaces/prompInterfaces'
 import { DeleteStorage } from './Storage';
+
 
 interface Params {
     data: objUseForm[];
@@ -11,6 +13,8 @@ interface Params {
 }
 export const SendOnservCardStorage =  async({ data, index }: Params) => {
     console.log("entre a enviar");
+
+    
     const form = data[index]
     
     var defaultOptions = {
@@ -57,7 +61,8 @@ try {
         console.log('se ejecuta delete');
         
        
-       await DeleteStorage(index) 
+       await DeleteStorage(index) ;
+     
 
     }
 } catch (error) {

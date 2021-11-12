@@ -124,7 +124,7 @@ export const InputModal = ({ placeholder, type, onChange, textSelect, form, disa
                         <View
                             pointerEvents={disabled ? "none" : "auto"}>
                             <RNTextArea
-                                defaultCharCount={newText.length}
+                                defaultCharCount={newText?.length}
                                 textInputStyle={{ fontSize: 20, color: colors.dlsTextwhite }}
                                 style={{
                                     borderRadius: 12,
@@ -142,7 +142,7 @@ export const InputModal = ({ placeholder, type, onChange, textSelect, form, disa
                                 onChangeText={(text) => {
                                     /* setText(text)  */
                                     setNewText(text)
-                                    if (text.length > 300) {
+                                    if (text?.length > 300) {
                                         opacitySaveBtn === 0.5 ? {} : setOpacitySaveBtn(0.5);
                                     } else {
                                         opacitySaveBtn === 1 ? {} : setOpacitySaveBtn(1)

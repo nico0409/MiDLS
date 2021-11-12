@@ -13,13 +13,13 @@ import { UseOneGetObserve } from '../hooks/UseOneGetObserve';
 import List, { List as ListModel } from "../components/AcordionList/List";
 import { colors } from '../Themes/DlsTheme';
 import { EditObservCard } from '../components/EditObserveCard';
-
+import {AuthContext as AuthcontextGeneral} from '../context/AuthContext'
 import SpInAppUpdates, {
     NeedsUpdateResponse,
     IAUUpdateKind,
     StartUpdateOptions,
 } from 'sp-react-native-in-app-updates';
-import { AuthContext } from '../context/formContext/AuthContext';
+
 
 
 
@@ -59,7 +59,7 @@ const list4: ListModel = {
 
 export const EditObvservCardScreen = ({ navigation, route }: Props) => {
 
-    const { setReloadCardList } = useContext(AuthContext)
+    const { setReloadCardList } = useContext(AuthcontextGeneral)
 
     const { isloading, loadObserveCard, form, onChange, stateSend } = UseOneGetObserve(route.params);
 
