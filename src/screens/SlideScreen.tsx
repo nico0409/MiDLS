@@ -1,27 +1,22 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
-import { Dimensions, Image, Text, View, StyleSheet, TouchableOpacity/* , Animated */ } from 'react-native';
+import React, { useRef, useState } from 'react'
+import { Dimensions, Image, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { useSharedValue, useAnimatedStyle, withTiming, withDelay } from 'react-native-reanimated';
 import { items } from '../data/SlideData';
 import { Slide } from '../interfaces/appInterfaces';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { UseAnimation } from '../hooks/UseAnimation';
 import { StackScreenProps } from '@react-navigation/stack';
 import { colors } from '../Themes/DlsTheme';
-//import { ThemeContext } from '../Context/themeContext/ThemeContext';
-import { opacity } from '../libs/react-native-redash/src/Colors';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface Props extends StackScreenProps<any, any> { };
 
 export const SlidesScreen = ({ navigation }: Props) => {
-    const { /* opacity ,*/ fadeIn, fadeOut } = UseAnimation(0);
-    const [activIndex, setActivIndex] = useState(0);
-    const { height: screenHeight, width: screenWidth } = Dimensions.get('window');
-    const carouselRef = useRef(null);
 
-    /* const [isVisible, setIsvisible] = useState(false) */
-    // const {theme:{colors}} = useContext(ThemeContext)  
+    const [activIndex, setActivIndex] = useState(0);
+    const { width: screenWidth } = Dimensions.get('window');
+    const carouselRef = useRef(null);
 
     const renderItem = (item: Slide) => {
 
@@ -32,6 +27,7 @@ export const SlidesScreen = ({ navigation }: Props) => {
                 borderRadius: 5,
                 justifyContent: 'center'
             }}>
+
                 <View style={{ width: '100%', height: '60%', padding: 30 }}>
                     <View style={{
                         backgroundColor: 'white',
@@ -63,7 +59,6 @@ export const SlidesScreen = ({ navigation }: Props) => {
                 </View>
 
             </View>
-
         )
     }
 
@@ -75,14 +70,19 @@ export const SlidesScreen = ({ navigation }: Props) => {
         return {
             width: withTiming(widthText.value, { duration: 400 }),
             paddingLeft: withTiming(padLeftText.value, { duration: 400 }),
-            opacity: withDelay(400,withTiming(opacity.value, { duration: 300 }),)
+            opacity: withDelay(400, withTiming(opacity.value, { duration: 300 }),)
         };
     });
 
-    const runWidthAnimation = () =>{
-        widthText.value = 80;
+    const runWidthAnimation = () => {
+        widthText.value = 100;
         padLeftText.value = 20;
         opacity.value = 1;
+    }
+
+    const finalActionEvents = async () => {
+        await AsyncStorage.setItem('welcomeScreenLoaded', 'loaded');
+        navigation.replace("EmplidObserveScreen");
     }
 
     return (
@@ -104,11 +104,7 @@ export const SlidesScreen = ({ navigation }: Props) => {
                 inactiveSlideOpacity={1}
                 onSnapToItem={(index) => {
                     setActivIndex(index)
-                    index=== items.length -1 && runWidthAnimation()
-                    /* index === items.length - 1 && 
-                     */
-                    /* fadeIn() */
-                    /* setIsvisible(true) */
+                    index === items.length - 1 && runWidthAnimation()
                 }}
             />
             <View style={{
@@ -129,10 +125,7 @@ export const SlidesScreen = ({ navigation }: Props) => {
                     }}
 
                 />
-                {/*                 {
-                    isVisible && <Animated.View style={{
-                        opacity
-                    }}> */}
+
                 <TouchableOpacity style={{
                     flexDirection: 'row',
                     backgroundColor: colors.dlsBluePrimary,
@@ -140,19 +133,19 @@ export const SlidesScreen = ({ navigation }: Props) => {
                     height: 40,
                     borderRadius: 20,
                     alignItems: 'center',
-                    
+
                 }}
                     activeOpacity={0.9}
                     onPress={() => {
 
                         // @ts-ignore
                         carouselRef.current.snapToNext();
-                        activIndex === items.length - 1 &&
-                            navigation.replace("EmplidObserveScreen")
+                        activIndex === items.length - 1 && finalActionEvents()
+
                     }}
                 >
                     <Animated.View style={[widthTextAnimatedStyle, { flexWrap: 'wrap' }]}>
-                        <Text style={{ fontSize: 18, color: 'white' }}>Entrar</Text>
+                        <Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}>Ingresar</Text>
                     </Animated.View>
                     <View style={{ paddingHorizontal: 10 }}>
                         <Icon
@@ -163,22 +156,17 @@ export const SlidesScreen = ({ navigation }: Props) => {
                     </View>
                 </TouchableOpacity>
 
-                {/*                     </Animated.View>
-                } */}
             </View>
-
         </SafeAreaView>
     )
 }
+
 const styles = StyleSheet.create({
     title: {
         fontSize: 30,
         fontWeight: 'bold',
-
-
     },
     subtitle: {
         fontSize: 17
     }
-
 });
