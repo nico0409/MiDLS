@@ -236,7 +236,7 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
                     setplaceHolder(
                         data.filter(
                             item =>
-                                item.DL_EQUIPEMENT_ID === form?.['m38:DL_EQUIPMENT_ID'])[0].DESCR);
+                                item.DL_EQUIPEMENT_ID === form?.['m38:DL_EQUIPMENT_ID'])[0]?.DESCR);
                 form?.['m38:DL_EQUIPMENT_ID'] && (titleAnimationValue.value = -5);
                 form?.['m38:DL_EQUIPMENT_ID'] && (heightAnimationValue.value = 20);
                 break;
@@ -245,7 +245,7 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
                     form !== undefined &&
                     setplaceHolder(
                         data.filter(
-                            item => item.DL_CUSTOMER_ID === form?.['m38:DL_CUSTOMER_ID'])[0].DESCR);
+                            item => item.DL_CUSTOMER_ID === form?.['m38:DL_CUSTOMER_ID'])[0]?.DESCR);
                 form?.['m38:DL_CUSTOMER_ID'] && (titleAnimationValue.value = -5);
                 form?.['m38:DL_CUSTOMER_ID'] && (heightAnimationValue.value = 20);
                 break;
@@ -254,7 +254,7 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
                     form !== undefined &&
                     setplaceHolder(
                         data.filter(
-                            item => item.DL_SECTOR_ID === form?.['m38:DL_SECTOR_ID'])[0].DESCR);
+                            item => item.DL_SECTOR_ID === form?.['m38:DL_SECTOR_ID'])[0]?.DESCR);
                 form?.['m38:DL_SECTOR_ID'] && (titleAnimationValue.value = -5);
                 form?.['m38:DL_SECTOR_ID'] && (heightAnimationValue.value = 20);
                 break;

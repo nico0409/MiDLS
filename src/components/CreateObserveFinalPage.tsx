@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import { colors } from '../Themes/DlsTheme';
 import { AuthContext } from '../context/formContext/AuthContext';
+import {AuthContext as AuthcontextGeneral} from '../context/AuthContext'
 import { NewObservCard } from './NewObservCard';
 import Card from './Transformations/components/Card';
 
@@ -17,7 +18,9 @@ const { height } = Dimensions.get('window');
 
 export const CreateObserveFinalPage = ({ navigation }: Props) => {
 
-    const { form, cardDescr, setCardDescr, setReloadCardList } = useContext(AuthContext);
+    const { form, cardDescr, setCardDescr} = useContext(AuthContext);
+
+   const {setReloadCardList}=useContext(AuthcontextGeneral);
 
     const [reqSended, setReqSended] = useState<'pending' | 'sended' | 'error'>('pending');
     const [errorType, setErrorType] = useState<'server' | 'network'>();
