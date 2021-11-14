@@ -4,10 +4,12 @@ import { DlhrAllObserve, StorageTypes } from '../interfaces/prompInterfaces';
 import { GetAllObserve } from '../components/GetAllObserve';
 import { Asingstorage, GetStorage } from '../components/Storage';
 
-import {AuthContext as AuthcontextGeneral} from '../context/AuthContext'
+import { AuthContext as AuthcontextGeneral } from '../context/AuthContext'
+import { useNetInfo } from '@react-native-community/netinfo';
 
 export const useAllObserve = (emplid: string, isFocused: boolean) => {
 
+    const { isConnected } = useNetInfo();
     const [isloading, setIsloading] = useState(true)
     const [allObserveList, setObserveList] = useState<DlhrAllObserve[]>([])
     const allboserve: StorageTypes = { StorageType: 'allObserve' };
@@ -45,14 +47,19 @@ export const useAllObserve = (emplid: string, isFocused: boolean) => {
 
     useEffect(() => {
         loadAllObserve();
-    },[])
+    }, [])
 
     useEffect(() => {
-        reloadCardList && loadAllObserve();
-        reloadCardList && setReloadCardList(false);
+        isFocused &&
+            reloadCardList && loadAllObserve(),
+            reloadCardList && setReloadCardList(false);
     }, [isFocused])
 
-   
+   /*  useEffect(() => {
+        isFocused && isConnected &&
+            reloadCardList && loadAllObserve(),
+            reloadCardList && setReloadCardList(false);
+    }, [isConnected]) */
 
     return {
         allObserveList,

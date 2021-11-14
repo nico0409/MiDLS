@@ -88,7 +88,7 @@ export const EmplidObserveScreen = ({ navigation, route }: Props) => {
                 style={{ position: 'absolute', left: 10, top: 10 }}
                 onPress={() => navigation.goBack()}
             >
-                <Icon name="caret-back-outline"
+                <Icon name="chevron-back-outline"
                     color={colors.dlsYellowSecondary}
                     size={35} />
             </TouchableOpacity>
