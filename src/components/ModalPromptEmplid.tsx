@@ -60,6 +60,8 @@ export const ModalPromptEmplid = ({setemplid,setstatePropmpEmp,statePropmpEmp}:P
         setObserveFiltred(
                     data.filter(
                         observe => observe[strField1].toLocaleLowerCase()
+                            .includes(term.toLocaleLowerCase())||
+                            observe[strField2].toLocaleLowerCase()
                             .includes(term.toLocaleLowerCase())
                     )
                 )
