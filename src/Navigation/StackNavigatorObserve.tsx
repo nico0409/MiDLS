@@ -12,6 +12,7 @@ import { AuthProvider } from '../context/formContext/AuthContext';
 import { CreateObserveFinalPage } from '../components/CreateObserveFinalPage';
 import { SlidesScreen } from '../screens/SlideScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Loading } from '../components/Loading';
 
 export type RoutstackParams = {
 
@@ -33,15 +34,16 @@ const Stack = createStackNavigator();
 export const StackNavigatorObserve = () => {
 
     const [showWelcomeScreen, setShowWelcomeScreen] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     const checkStorage = async () => {
         if (await AsyncStorage.getItem('welcomeScreenLoaded')) {
-            console.log("entro a loaded: " + await AsyncStorage.getItem('welcomeScreenLoaded'));
+            /* console.log("entro a loaded: " + await AsyncStorage.getItem('welcomeScreenLoaded')); */
         } else {
             setShowWelcomeScreen(true);
             console.log("entro a null");
-            await AsyncStorage.setItem('welcomeScreenLoaded', 'loaded');
         }
+        setIsLoading(false);
     }
 
     useEffect(() => {
@@ -51,22 +53,28 @@ export const StackNavigatorObserve = () => {
     return (
         <FormContext>
             <SafeAreaView style={styles.container}>
-                <Stack.Navigator
-                    screenOptions={{
-                        headerShown: false,
-                        cardStyle: {
-                            backgroundColor: 'white'
+                {isLoading ?
+                    <Loading />
+                    :
+                    <Stack.Navigator
+                        screenOptions={{
+                            headerShown: false,
+                            cardStyle: {
+                                backgroundColor: 'white'
+                            }
+                        }}
+                    >
+                        {showWelcomeScreen &&
+                            <Stack.Screen name="SlidesScreen" component={SlidesScreen} />
                         }
-                    }}
-                >
-                    <Stack.Screen name="SlidesScreen" component={SlidesScreen} />
-                    <Stack.Screen name="EmplidObserveScreen" component={EmplidObserveScreen} />
-                    <Stack.Screen name="TarjetaObserveScreen" component={TarjetaObserveScreen} />
-                    <Stack.Screen name="CreateObserveScreen" component={CreateObserveScreen} />
-                    <Stack.Screen name="CreateObserveQuestionsPage" component={CreateObserveQuestionsPage} />
-                    <Stack.Screen name="CreateObserveFinalPage" component={CreateObserveFinalPage} />
-                    <Stack.Screen name="EditObvservCardScreen" component={EditObvservCardScreen} />
-                </Stack.Navigator>
+                        <Stack.Screen name="EmplidObserveScreen" component={EmplidObserveScreen} />
+                        <Stack.Screen name="TarjetaObserveScreen" component={TarjetaObserveScreen} />
+                        <Stack.Screen name="CreateObserveScreen" component={CreateObserveScreen} />
+                        <Stack.Screen name="CreateObserveQuestionsPage" component={CreateObserveQuestionsPage} />
+                        <Stack.Screen name="CreateObserveFinalPage" component={CreateObserveFinalPage} />
+                        <Stack.Screen name="EditObvservCardScreen" component={EditObvservCardScreen} />
+                    </Stack.Navigator>
+                }
             </SafeAreaView>
         </FormContext>
     );

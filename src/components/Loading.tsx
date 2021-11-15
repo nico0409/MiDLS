@@ -1,20 +1,17 @@
-import React from 'react'
-import { ActivityIndicator, Text, View } from 'react-native';
+import React from 'react';
+import { View } from 'react-native';
+import { Chase } from 'react-native-animated-spinkit';
 
 
 export const Loading = () => {
     return (
         <View style={{
-            flex:1,
-            alignItems:'center',
-            justifyContent:'center'
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center'
 
         }}>
-        <ActivityIndicator
-       size={50}
-       color='green'
-       />
-       <Text>Loading...</Text>
+            <Chase size={48} color="#FFF" />
         </View>
     )
 }

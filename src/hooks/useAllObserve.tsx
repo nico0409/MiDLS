@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useState } from 'react'
 
 import { DlhrAllObserve, StorageTypes } from '../interfaces/prompInterfaces';
 import { GetAllObserve } from '../components/GetAllObserve';
-import { Asingstorage, GetStorage } from '../components/Storage';
+import { GetStorage } from '../components/Storage';
 
-import {AuthContext as AuthcontextGeneral} from '../context/AuthContext'
+import { AuthContext as AuthcontextGeneral } from '../context/AuthContext'
 
 export const useAllObserve = (emplid: string, isFocused: boolean) => {
 
@@ -45,14 +45,12 @@ export const useAllObserve = (emplid: string, isFocused: boolean) => {
 
     useEffect(() => {
         loadAllObserve();
-    },[])
+    }, [])
 
-    useEffect(() => {
-        reloadCardList && loadAllObserve();
-        reloadCardList && setReloadCardList(false);
+    useEffect(() => {     
+            reloadCardList && loadAllObserve(),
+            reloadCardList && setReloadCardList(false);
     }, [isFocused])
-
-   
 
     return {
         allObserveList,
