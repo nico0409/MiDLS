@@ -20,7 +20,7 @@ import { opacity } from '../libs/react-native-redash/src/v1/Colors';
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
 
 
-interface Props extends StackScreenProps<any,any>{};
+interface Props extends StackScreenProps<any, any> { };
 export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
 
 
@@ -35,16 +35,16 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
     const [term, setTerm] = useState('')
     const [placeHolder, setPlaceHolder] = useState<fieldSearchType>({ label: 'Numero de tarjeta' })
 
-   
-    
-    const { allObserveList, isloading, loadAllObserve } = useAllObserve(route.params!.emplid,useIsFocused())
 
-   
-    
-    
+
+    const { allObserveList, isloading, loadAllObserve } = useAllObserve(route.params!.emplid, useIsFocused())
+
+
+
+
     const [observeFiltered, setObserveFiltred] = useState<DlhrAllObserve[]>([])
-    
-  
+
+
     const [statePropmpEmp, setstatePropmpEmp] = useState(false)
     const [emplid, setEmplid] = useState<
         {
@@ -54,14 +54,14 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
             fieldValue1: route.params!.emplid,
             fieldValue2: route.params!.name
         })
-   /*  const y = new Animated.Value(0);
-
-    const onScroll = Animated.event([{ nativeEvent: { contentOffset: { y } } }],
-        { useNativeDriver: true }) */
+    /*  const y = new Animated.Value(0);
+ 
+     const onScroll = Animated.event([{ nativeEvent: { contentOffset: { y } } }],
+         { useNativeDriver: true }) */
 
     const [seeFlatList, setSeeFlatList] = useState(true);
-    
-    
+
+
 
     useEffect(() => {
         if (term.length === 0) {
@@ -120,21 +120,46 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
     }, [term])
 
     useEffect(() => {
-         if( emplid.fieldValue1!==route.params!.emplid)
-       {
-       
-        navigation.replace(
-            'TarjetaObserveScreen',
-            { name: emplid.fieldValue2, emplid: emplid.fieldValue1 }); 
-       }
+        if (emplid.fieldValue1 !== route.params!.emplid) {
+
+            navigation.replace(
+                'TarjetaObserveScreen',
+                { name: emplid.fieldValue2, emplid: emplid.fieldValue1 });
+        }
     }, [emplid])
 
 
     useEffect(() => {
-      if( isConnected===true){
-            
-      }
+        if (isConnected === true) {
+
+        }
     }, [isConnected])
+
+    const customImgAddObsv = () => {
+        return (
+            <View style={{ position: 'absolute', alignSelf: 'center', top: ScreenHeight * 0.35 }}>
+                <View style={{ borderWidth: 8, borderRadius: 10, borderColor: "#c7c7c7" }}>
+                    <Icon name="list-outline" size={100} color="#c7c7c7" />
+                    <View style={{ position: 'absolute', bottom: -30, right: -30, alignItems: 'center', justifyContent: 'center' }}>
+                        <View style={{ position: 'absolute', backgroundColor: colors.dlsGrayPrimary, height: 55, width: 60, borderRadius: 100 }} />
+                        <Icon name="add-circle" size={50} color="#c7c7c7" />
+                    </View>
+                </View>
+            </View>
+        )
+    }
+
+    const customImgSrchErrObsv = () => {
+        return (
+            <View style={{ position: 'absolute', alignSelf: 'center', top: ScreenHeight * 0.33 }}>
+                <Icon name="search-circle" size={170} color="#c7c7c7" />
+                <View style={{ position: 'absolute', top: 66, left: 62, alignItems: 'center', justifyContent: 'center' }}>
+                    <Icon name="close" size={30} color={colors.dlsGrayPrimary} />
+                </View>
+            </View>
+        )
+    }
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: colors.dlsGrayPrimary }}>
 
@@ -220,6 +245,21 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
 
 
             <View >
+
+                {
+                    (term.length !== 0) ?
+                        observeFiltered.length === 0 ? customImgSrchErrObsv() : <></>
+                        :
+                        allObserveList.length > 1 ? <></>
+                            :
+                            allObserveList.length === 0 ?
+                                customImgAddObsv()
+                                :
+                                Object.keys(allObserveList[0]).length === 0 ?
+                                    customImgAddObsv()
+                                    : <></>
+                }
+
                 <View style={{ marginVertical: 50 }}>
 
                     {seeFlatList && !isloading ?
@@ -246,8 +286,9 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
             <TouchableOpacity
                 activeOpacity={0.6}
                 style={{ zIndex: 999, ...styles.addButtonContainer }}
-                onPress={() => {   navigation.navigate('CreateObserveScreen')
-             }}
+                onPress={() => {
+                    navigation.navigate('CreateObserveScreen')
+                }}
             >
                 <View style={styles.addButton} >
                     <Icon name="add-circle" size={65} color={'#ffdd00'} />
@@ -262,25 +303,25 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
             />
 
             <ModalPromptEmplid
-             setstatePropmpEmp={setstatePropmpEmp} 
-            statePropmpEmp={statePropmpEmp}
-            setemplid={setEmplid} />
+                setstatePropmpEmp={setstatePropmpEmp}
+                statePropmpEmp={statePropmpEmp}
+                setemplid={setEmplid} />
         </SafeAreaView>
 
     )
 
 
 }
-const styless=StyleSheet.create({
+const styless = StyleSheet.create({
 
-header: {
+    header: {
         marginVertical: 10,
-        paddingTop:10,
-        paddingLeft:20,
-    
+        paddingTop: 10,
+        paddingLeft: 20,
+
         flexDirection: 'row-reverse',
-        
+
         alignItems: 'center'
-}
+    }
 
 })
