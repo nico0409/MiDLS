@@ -227,6 +227,7 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
                             observeFiltered={observeFiltered}
                             allObserveList={allObserveList}
                             setTerm={setTerm}
+                            loadAllObserve={loadAllObserve}
                         /> :
                         <View style={{
                             alignItems: 'center',
