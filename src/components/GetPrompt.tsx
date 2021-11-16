@@ -35,7 +35,7 @@ export const GetPrompt = async () => {
          
          
          respuesta = {
-            PromptObserve:parse(decodeURIComponent(escape(res.data))),
+            PromptObserve:parse(decodeURIComponent(encodeURIComponent(res.data))),
          type:'PromptObserveType'
          };
      
