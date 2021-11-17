@@ -33,7 +33,7 @@ export default ({ transition }: ChevronProps) => {
     <Animated.View
       style={[styles.container,  { transform: [{ rotateZ }], backgroundColor }  ]}
     >
-      <Icon name="chevron-down" color="black" size={24} />
+      <Icon name="chevron-up" color="black" size={24} />
     </Animated.View>
   );
 };

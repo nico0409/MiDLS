@@ -178,14 +178,13 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
             case 'DLHR_EMPL_BUSSINES_UNIT':
                     setObserveFiltred(
                         data.filter(
-                            observe => observe[strField2].toLocaleLowerCase()
+                            observe => observe[strField1].toLocaleLowerCase()
                                 .includes(term.toLocaleLowerCase())||
                                 observe[strField2].toLocaleLowerCase()
                                 .includes(term.toLocaleLowerCase())
                         )
                     )
 
-               
                 break;
             case 'DLHR_EQUIP_TBL':
              
