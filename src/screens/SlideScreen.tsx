@@ -93,7 +93,11 @@ export const SlidesScreen = ({ navigation }: Props) => {
     const finalActionEvents = async () => {
         toggleCheckBox &&
             await AsyncStorage.setItem('welcomeScreenLoaded', 'loaded');
-        navigation.replace("EmplidObserveScreen");
+
+        toggleCheckBox ?
+            navigation.replace("EmplidObserveScreen")
+            :
+            navigation.navigate("EmplidObserveScreen")
     }
 
     return (
