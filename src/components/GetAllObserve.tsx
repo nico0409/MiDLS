@@ -40,7 +40,7 @@ export const GetAllObserve = async (fecha: string, emplid: string) => {
         
           
          
-         respuesta={AllObserve: parse(decodeURIComponent(encodeURIComponent(res.data))),
+         respuesta={AllObserve: parse(decodeURIComponent(escape(res.data))),
          type:'AllObserveType'}
       }).catch(err => { console.log(err) }); 
 return respuesta;

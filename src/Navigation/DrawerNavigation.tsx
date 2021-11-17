@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import SplashScreen from 'react-native-splash-screen'
@@ -32,7 +32,7 @@ import { SendObserveStorage } from '../components/SendObserveStorage';
 
 export type DrawerRoutParams = {
 
-  TopTapNavigator: {needsUpdate:boolean }
+  TopTapNavigator: { needsUpdate: boolean }
 }
 
 
@@ -52,63 +52,64 @@ const NavigateState = ({ children }: { children: JSX.Element | JSX.Element[] }) 
 
 export const DrawerNavigation = () => {
   const { isConnected } = useNetInfo();
- const [needsUpdate, setNeedsUpdate] = useState(false)
+  const [needsUpdate, setNeedsUpdate] = useState(false)
   const [endGetPrompt, setendGetPrompt] = useState(false)
 
   useEffect(() => {
-    
-    if(isConnected!==null){
-      if (isConnected===true)
-      {GetPrompts();
-      
+
+    if (isConnected !== null) {
+      if (isConnected === true) {
+        GetPrompts();
+
       }
-      else{
+      else {
+
         setendGetPrompt(true);
         SplashScreen.hide();
       }
-      
+
     }
-   
+
 
   }, [isConnected])
 
   const GetPrompts = async () => {
-  
+
 
     const prompts: StorageTypes = { StorageType: 'prompt' };
-   /*  GetStorage({StorageType:'prompt'})===undefined && */
-  
-   /*   await SendObserveStorage(); */
+    /*  GetStorage({StorageType:'prompt'})===undefined && */
+
+    /*   await SendObserveStorage(); */
     Asingstorage(prompts, await GetPrompt());
-    setNeedsUpdate( await CheckUpdateAndroid());
-   SplashScreen.hide();
+    setNeedsUpdate(await CheckUpdateAndroid());
+    SplashScreen.hide();
     setendGetPrompt(true);
   }
 
 
 
- 
+
   return (
     <NavigateState>
       <SafeAreaView style={styles.container}>
         {/* {!isConnected && isConnected !== null ? 
         <WhitOutConection />
         :*/}
-      {endGetPrompt &&  <Drawer.Navigator
+        {endGetPrompt && <Drawer.Navigator
 
-// drawerContent={(props: any) => <DrawerMenu {...props} />}
-drawerContent={(props: any) => <MenuInterno {...props} />}
->
-<Drawer.Screen name="TopTapNavigator" component={TopTapNavigator} initialParams={{needsUpdate}} />
-{/*   <Drawer.Screen name="TopTapNavigator" component={TopTapNavigator} /> */}
-<Drawer.Screen name="ContactScreen" component={ContactScreen} />
-<Drawer.Screen name="RrhhScreen" component={RrhhScreen} />
-{/*  <Drawer.Screen name="NewsScreen" component={NewsScreen} /> */}
-<Drawer.Screen name="MyProfileScreenDrawer" component={MyProfileScreenDrawer} />
-<Drawer.Screen name="PaycheckScreen" component={PaycheckScreen} />
-<Drawer.Screen name="StackNavigatorObserve" component={StackNavigatorObserve} />
-</Drawer.Navigator> }
-         
+          // drawerContent={(props: any) => <DrawerMenu {...props} />}
+          drawerContent={(props: any) => <MenuInterno {...props} />}
+        >
+          <Drawer.Screen name="TopTapNavigator" component={TopTapNavigator} initialParams={{ needsUpdate }} />
+          {/*   <Drawer.Screen name="TopTapNavigator" component={TopTapNavigator} /> */}
+          <Drawer.Screen name="ContactScreen" component={ContactScreen} />
+          <Drawer.Screen name="RrhhScreen" component={RrhhScreen} />
+          {/*  <Drawer.Screen name="NewsScreen" component={NewsScreen} /> */}
+          <Drawer.Screen name="MyProfileScreenDrawer" component={MyProfileScreenDrawer} />
+          <Drawer.Screen name="PaycheckScreen" component={PaycheckScreen} />
+          <Drawer.Screen name="StackNavigatorObserve" component={StackNavigatorObserve} />
+        </Drawer.Navigator>}
+
       </SafeAreaView>
     </NavigateState>
   );

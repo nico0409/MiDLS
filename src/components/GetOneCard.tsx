@@ -28,7 +28,7 @@ export const GetOneCard = async (OneCard: InterfGetOnesCard) => {
             }
         }).then(
             res => {              
-                respuesta = parse(decodeURIComponent(encodeURIComponent(res.data)))
+                respuesta = parse(decodeURIComponent(escape(res.data)))
             }
 
         ))

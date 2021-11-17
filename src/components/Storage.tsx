@@ -3,7 +3,19 @@ import { StorageTypes, AllObserveType, PromptObserveType, objUseForm, DlhrAllObs
 import { storageEmplid } from '../interfaces/storageInterface';
 
 export const Asingstorage = async ({ StorageType }: StorageTypes, data: Object | Object[]) => {
-    await AsyncStorage.setItem(StorageType, JSON.stringify(data));
+   
+ 
+    StorageType==='prompt'?
+    data.hasOwnProperty("PromptObserve")&&
+    await AsyncStorage.setItem(StorageType, JSON.stringify(data)):
+    await AsyncStorage.setItem(StorageType, JSON.stringify(data))
+
+
+  
+   
+   
+    
+    
 }
 
 export const GetStorage = async ({ StorageType }: StorageTypes) => {

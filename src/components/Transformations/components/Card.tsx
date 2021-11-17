@@ -73,7 +73,12 @@ export default ({ setTerm, item, index }: CardProps) => {
 
             <View style={styles.fieldContainer}>
               <Text style={styles.textTitle}>Fecha Identificación</Text>
-              <Text style={styles.textValue}>{tarjeta.DL_IDENTIF_DT}</Text>
+              <Text style={styles.textValue}>{
+                tarjeta.DL_IDENTIF_DT!.substring(8, 10) + "-" +
+                tarjeta.DL_IDENTIF_DT!.substring(5, 7) + "-" +
+                tarjeta.DL_IDENTIF_DT!.substring(0, 4)
+              }
+              </Text>
             </View>
           </View>
 

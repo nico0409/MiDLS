@@ -138,8 +138,8 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
                     field2: { observador: 'NOMBRE' }
                 }
             }
-            strField1 = fieldObserveEmpl.DLHR_OBSERVE_EMPLID?.field1.observador!;
-            strField2 = fieldObserveEmpl.DLHR_OBSERVE_EMPLID?.field2.observador!;
+            strField1 = fieldObserveEmpl?.DLHR_OBSERVE_EMPLID?.field1.observador!;
+            strField2 = fieldObserveEmpl?.DLHR_OBSERVE_EMPLID?.field2.observador!;
             placeHolderSrch = 'Observador'
             fieldType = 'm38:DL_OBSERVADOR'
             break;
