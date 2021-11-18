@@ -10,7 +10,10 @@ import { WhitOutConection } from './WhitOutConection';
 
 export const MapScreen = () => {
   const { isConnected } = useNetInfo();
-  return (
+
+  return (<View/>) 
+}
+  /*return (
 
     <View style={[styless.containerWebView, { paddingTop: 0 }]}>
 
@@ -30,5 +33,5 @@ export const MapScreen = () => {
 
   )
 }
-
+*/
 

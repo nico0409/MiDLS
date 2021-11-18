@@ -34,8 +34,9 @@ export const NewsScreen = ({ navigation, route }: Props) => {
   }, [status])
 
 
-  return (
-
+  return (<View/>) 
+}
+/*
     <View style={styless.containerWebView}>
  {isConnected &&
       <WebView
@@ -87,3 +88,4 @@ export const NewsScreen = ({ navigation, route }: Props) => {
 }
 
 
+*/
