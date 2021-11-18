@@ -116,7 +116,11 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef, cardOffline 
                 disabled={cardOffline}
               />
 
-              <DatePickerSelect onChange={onChange} disabled={cardOffline} />
+              <DatePickerSelect
+                form={form}
+                onChange={onChange}
+                disabled={cardOffline}
+              />
 
               <PickerSelect
                 form={form}
