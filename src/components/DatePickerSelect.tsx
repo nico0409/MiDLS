@@ -38,12 +38,13 @@ export const DatePickerSelect = ({ onChange, cardDescr, setCardDescr, disabled =
         let yyyy = date.getFullYear();
 
         let dateFormated = yyyy + '/' + mm + '/' + dd
-
+        
         hideDatePicker();
+        
+        setCardDescr&&setCardDescr({ ...cardDescr, ...{DL_IDENTIF_DT: dateFormated } })
         setDate(date);
-        console.log(date);
-
-        (setCardDescr && setCardDescr({ ...cardDescr, ...{ dateFormated } }))
+        
+        
         onChange(dateFormated, 'm38:DL_IDENTIF_DT');
 
     };

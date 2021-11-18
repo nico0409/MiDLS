@@ -470,7 +470,7 @@ export const goldRuleData: ruleGold[] = [
     },
     {
         type: { type: '9' },
-        text: 'Manejo del Cambiol',
+        text: 'Manejo del Cambio',
         field: 'm38:DL_MAN_CAMBIO'
     },
 ]

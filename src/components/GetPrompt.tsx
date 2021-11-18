@@ -6,6 +6,7 @@ import PSDB from '../api/PSDB';
 
 export const GetPrompt = async () => {
 
+
    let respuesta: PromptObserveType = {}
 
 
@@ -32,15 +33,20 @@ export const GetPrompt = async () => {
       }).then(res => {
 
 
+         console.log("recivio prompt");
          
-         
+        
+   
          respuesta = {
             PromptObserve:parse(decodeURIComponent(escape(res.data))),
          type:'PromptObserveType'
          };
-     
+       
 
-      }).catch(err => { console.log(err) });
+ 
+      }).catch(err => { 
+         console.log("error prompt");
+         console.log(err) });
    return respuesta;
 }
 

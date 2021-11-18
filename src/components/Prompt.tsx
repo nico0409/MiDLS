@@ -40,6 +40,9 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
 
     const [seeFlatList, setSeeFlatList] = useState(true);
 
+
+    let regex = "/^[a-zA-Z]*$/";
+
     let strPLaceHolder = ''
     switch (promptType.type) {
         case 'DLHR_EMPL_BUSSINES_UNIT':
@@ -135,8 +138,8 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
                     field2: { observador: 'NOMBRE' }
                 }
             }
-            strField1 = fieldObserveEmpl.DLHR_OBSERVE_EMPLID?.field1.observador!;
-            strField2 = fieldObserveEmpl.DLHR_OBSERVE_EMPLID?.field2.observador!;
+            strField1 = fieldObserveEmpl?.DLHR_OBSERVE_EMPLID?.field1.observador!;
+            strField2 = fieldObserveEmpl?.DLHR_OBSERVE_EMPLID?.field2.observador!;
             placeHolderSrch = 'Observador'
             fieldType = 'm38:DL_OBSERVADOR'
             break;
@@ -145,7 +148,7 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
                 DLHR_APS:
                 {
                     field1: { APS: 'DL_ACTION_NBR' },
-                    field2: { APS:'EMPLID' }
+                    field2: { APS: 'EMPLID' }
                 }
             }
             strField1 = fieldAPS.DLHR_APS?.field1.APS!;
@@ -173,17 +176,23 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
         }
         switch (promptType.type) {
             case 'DLHR_EMPL_BUSSINES_UNIT':
-                setObserveFiltred(
-                    data.filter(
-                        observe => observe[strField1].toLocaleLowerCase()
-                            .includes(term.toLocaleLowerCase())
+                    setObserveFiltred(
+                        data.filter(
+                            observe => observe[strField1].toLocaleLowerCase()
+                                .includes(term.toLocaleLowerCase())||
+                                observe[strField2].toLocaleLowerCase()
+                                .includes(term.toLocaleLowerCase())
+                        )
                     )
-                )
+
                 break;
             case 'DLHR_EQUIP_TBL':
+             
                 setObserveFiltred(
                     data.filter(
                         observe => observe[strField1].toString().toLocaleLowerCase()
+                            .includes(term.toLocaleLowerCase()) ||
+                            observe[strField2].toLocaleLowerCase()
                             .includes(term.toLocaleLowerCase())
                     )
                 )
@@ -193,6 +202,8 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
                 setObserveFiltred(
                     data.filter(
                         observe => observe[strField1].toString().toLocaleLowerCase()
+                            .includes(term.toLocaleLowerCase())||
+                            observe[strField2].toLocaleLowerCase()
                             .includes(term.toLocaleLowerCase())
                     )
                 )
@@ -201,6 +212,8 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
                 setObserveFiltred(
                     data.filter(
                         observe => observe[strField1].toString().toLocaleLowerCase()
+                            .includes(term.toLocaleLowerCase()) ||
+                            observe[strField2].toLocaleLowerCase()
                             .includes(term.toLocaleLowerCase())
                     )
                 )
@@ -209,6 +222,8 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
                 setObserveFiltred(
                     data.filter(
                         observe => observe[strField1].toString().toLocaleLowerCase()
+                            .includes(term.toLocaleLowerCase())||
+                            observe[strField2].toLocaleLowerCase()
                             .includes(term.toLocaleLowerCase())
                     )
                 )
@@ -268,7 +283,7 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
                     form?.['m38:DL_OBSERVADOR'] && (titleAnimationValue.value = -5);
                     form?.['m38:DL_OBSERVADOR'] && (heightAnimationValue.value = 20);
                 }
-               
+
                 break;
             case 'DLHR_APS':
                 if (data[0] !== undefined &&

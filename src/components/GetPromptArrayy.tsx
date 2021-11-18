@@ -21,16 +21,21 @@ export const GetPromptArray = (promptypedata:promptType ) => {
 
 
         function isPromptObserve(object: any): object is PromptObserveType {
+          
             return 'PromptObserve' in object;
         }
-
-        if (isPromptObserve(prompt)) {
-           /*  setPromptObserveList({ ...PromptObserveList, ...prompt.PromptObserve! }); */
-            const ArrayEquip = prompt.PromptObserve!['soapenv:Envelope']?.['soapenv:Body']?.DLHR_OBSERVE_PROMPT![promptypedata.type!];
-            
-            /* const oneEquip: any[] = [ !Array.isArray(ArrayEquip) ? ArrayEquip:[]] */;
-            setPromptArray( Array.isArray(ArrayEquip) ? ArrayEquip:[ArrayEquip] )            
-        }
+              
+         if (prompt!==null)
+         {
+            if (isPromptObserve(prompt)) {
+                /*  setPromptObserveList({ ...PromptObserveList, ...prompt.PromptObserve! }); */
+                 const ArrayEquip = prompt.PromptObserve!['soapenv:Envelope']?.['soapenv:Body']?.DLHR_OBSERVE_PROMPT![promptypedata.type!];
+                 
+                 /* const oneEquip: any[] = [ !Array.isArray(ArrayEquip) ? ArrayEquip:[]] */;
+                 setPromptArray( Array.isArray(ArrayEquip) ? ArrayEquip:[ArrayEquip] )            
+             }
+         }   
+       
     }
  
 useEffect(() => {

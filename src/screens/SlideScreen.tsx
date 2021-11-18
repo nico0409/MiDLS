@@ -9,6 +9,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { StackScreenProps } from '@react-navigation/stack';
 import { colors } from '../Themes/DlsTheme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import CheckBox from '@react-native-community/checkbox';
 
 interface Props extends StackScreenProps<any, any> { };
 
@@ -17,6 +18,9 @@ export const SlidesScreen = ({ navigation }: Props) => {
     const [activIndex, setActivIndex] = useState(0);
     const { width: screenWidth } = Dimensions.get('window');
     const carouselRef = useRef(null);
+
+    //CheckBox
+    const [toggleCheckBox, setToggleCheckBox] = useState(false)
 
     const renderItem = (item: Slide) => {
 
@@ -74,6 +78,12 @@ export const SlidesScreen = ({ navigation }: Props) => {
         };
     });
 
+    const checkBoxAnimStyle = useAnimatedStyle(() => {
+        return {
+            opacity: withTiming(opacity.value, { duration: 300 })
+        };
+    });
+
     const runWidthAnimation = () => {
         widthText.value = 100;
         padLeftText.value = 20;
@@ -81,8 +91,13 @@ export const SlidesScreen = ({ navigation }: Props) => {
     }
 
     const finalActionEvents = async () => {
-        await AsyncStorage.setItem('welcomeScreenLoaded', 'loaded');
-        navigation.replace("EmplidObserveScreen");
+        toggleCheckBox &&
+            await AsyncStorage.setItem('welcomeScreenLoaded', 'loaded');
+
+        toggleCheckBox ?
+            navigation.replace("EmplidObserveScreen")
+            :
+            navigation.navigate("EmplidObserveScreen")
     }
 
     return (
@@ -107,6 +122,26 @@ export const SlidesScreen = ({ navigation }: Props) => {
                     index === items.length - 1 && runWidthAnimation()
                 }}
             />
+
+            <Animated.View style={[{
+                flexDirection: 'row',
+                paddingHorizontal: 36,
+                alignItems: 'center'
+            },
+                checkBoxAnimStyle]}>
+                <CheckBox
+                    value={toggleCheckBox}
+                    tintColors={{ true: colors.dlsBluePrimary, false: colors.dlsBtonColosWhite }}
+                    style={{ transform: [{ scaleX: 1.1 }, { scaleY: 1.1 }] }}
+                    onValueChange={(newValue) => {
+                        setToggleCheckBox(newValue)
+                    }}
+                />
+                <Text style={{ color: 'white'/* , fontWeight: 'bold' */, fontSize: 16 }}>
+                    No volver a mostrar
+                </Text>
+            </Animated.View>
+
             <View style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
