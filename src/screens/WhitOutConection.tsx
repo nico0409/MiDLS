@@ -8,7 +8,7 @@ export const WhitOutConection = () => {
             backgroundColor: 'white',
             flex: 1
         }}>
-            <Backgrond srcImg="" />
+            <Backgrond srcImg="../assets/collage50pn.png" />
             <View style={styles.butonContainer}>
                 <TouchableOpacity activeOpacity={0.3}
                     style={styles.button}

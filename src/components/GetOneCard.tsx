@@ -27,9 +27,8 @@ export const GetOneCard = async (OneCard: InterfGetOnesCard) => {
                 SOAPAction: 'GET.V1'
             }
         }).then(
-            dta => {
-
-                respuesta = parse(dta.data)
+            res => {              
+                respuesta = parse(decodeURIComponent(encodeURIComponent(res.data)))
             }
 
         ))

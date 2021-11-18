@@ -1,82 +1,59 @@
-import React, { useState } from 'react'
-import { View, Text, Button } from 'react-native';
-import RNPickerSelect from 'react-native-picker-select';
-import DateTimePickerModal from "react-native-modal-datetime-picker";
-import Icon from 'react-native-vector-icons/Ionicons';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { colors } from '../Themes/DlsTheme';
+import React, { useContext, useState } from 'react'
+import { View, ScrollView, StyleSheet, } from 'react-native';
 import { PickerSelect } from './PickerSelect';
-import CheckBox from '@react-native-community/checkbox';
+import { objUseForm } from '../interfaces/prompInterfaces';
+import { Prompt } from './Prompt';
+import { AuthContext } from '../context/formContext/AuthContext';
+import { DatePickerSelect } from './DatePickerSelect';
 
+interface Props {
+    form: objUseForm;
+    onChange: (value: string, field: keyof objUseForm) => void;
+    busunitErrorAnim: boolean;
+    origenErrorAnim: boolean;
+    turnoErrorAnim: boolean;
+    equipErrorAnim: boolean;
+    clientesErrorAnim: boolean;
+    sectorErrorAnim: boolean;
+}
 
-export const CreateObservePageOne = () => {
+export const CreateObservePageOne = ({ form, onChange, busunitErrorAnim, origenErrorAnim, turnoErrorAnim, equipErrorAnim, clientesErrorAnim, sectorErrorAnim }: Props) => {
 
-    /*     const [state, setstate] = useState({
-            label: 'Unidad de negocio',
-            value: null,
-        }) */
+    const { emplidSelect } = useContext(AuthContext)
 
-    const [date, setDate] = useState('--/--/----');
-
-    const deportes = [
-        { label: 'Football', value: 'football' },
-        { label: 'Baseball', value: 'baseball' },
-        { label: 'Hockey', value: 'hockey' },
-        { label: 'Basket', value: 'basket' },
-    ]
-
-    //datePicker
-    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-
-    const showDatePicker = () => {
-        setDatePickerVisibility(true);
-    };
-
-    const hideDatePicker = () => {
-        setDatePickerVisibility(false);
-    };
-
-    const handleConfirm = (date: any) => {
-        setDate(date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear());
-        hideDatePicker();
-    };
-
-    //CheckBox
-    const [toggleCheckBox, setToggleCheckBox] = useState(false)
-
+    const { setCardDescr, cardDescr } = useContext(AuthContext);
+    
     return (
-        <View>
+        <ScrollView>
 
-            <PickerSelect placeholder="Unidad de negocio" item={deportes} />
+            <View style={{ alignItems: 'center' }}>
 
-            <View style={{ flexDirection: 'row' }}>
-                <Text style={{ color: 'white', fontSize: 20 }}>{date}</Text>
-                <TouchableOpacity
-                    onPress={showDatePicker}>
-                    <Icon name="calendar" size={30} color={colors.dlsYellowSecondary} />
-                </TouchableOpacity>
+                <PickerSelect placeholder="Unidad de negocio" type="DLHR_EMPL_BUSSINES_UNIT" onChange={onChange} setCardDescr={setCardDescr} cardDescr={cardDescr} emplid={emplidSelect.fieldValue1} activeBorderError={busunitErrorAnim} />
+
+                <DatePickerSelect onChange={onChange} cardDescr={cardDescr} setCardDescr={setCardDescr} />
+
+                <PickerSelect placeholder="Origen" type="DLHR_ORIGEN" onChange={onChange} activeBorderError={origenErrorAnim} />
+
+                <Prompt onChange={onChange} promptType={{ type: 'DLHR_EQUIP_TBL' }} setCardDescr={setCardDescr} cardDescr={cardDescr} activeBorderError={equipErrorAnim} />
+
+                <PickerSelect placeholder="Turno" type="DLHR_TURNO" onChange={onChange} setCardDescr={setCardDescr} cardDescr={cardDescr} activeBorderError={turnoErrorAnim} />
+
+                <Prompt onChange={onChange} promptType={{ type: 'DLHR_CUSTOMER' }} activeBorderError={clientesErrorAnim} />
+
+                <Prompt onChange={onChange} promptType={{ type: 'DLHR_SECTOR' }} activeBorderError={sectorErrorAnim} />
+
+                <Prompt form={form} onChange={onChange} promptType={{ type: 'DLHR_OBSERVE_EMPLID' }} />
+
+                <PickerSelect placeholder="Puesto" type={"DLHR_PUESTO"} onChange={onChange} />
+
             </View>
 
-            <PickerSelect placeholder="Origen" item={deportes} />
-
-            <PickerSelect placeholder="Turno" item={deportes} />
-
-            <View style={{ flexDirection: 'row' , alignItems: 'center'}}>
-            <CheckBox
-                disabled={false}
-                value={toggleCheckBox}
-                onValueChange={(newValue) => setToggleCheckBox(newValue)}
-            />
-            <Text>A destacar</Text>
-            </View>
-
-            <DateTimePickerModal
-                isVisible={isDatePickerVisible}
-                mode="date"
-                onConfirm={handleConfirm}
-                onCancel={hideDatePicker}
-            />
-
-        </View>
+        </ScrollView>
     )
 }
+
+const styles = StyleSheet.create({
+    marginField: {
+        marginVertical: 12
+    }
+});

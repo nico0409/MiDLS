@@ -6,6 +6,7 @@ import PSDB from '../api/PSDB';
 
 export const GetPrompt = async () => {
 
+
    let respuesta: PromptObserveType = {}
 
 
@@ -26,26 +27,26 @@ export const GetPrompt = async () => {
          headers:
          {
             'Content-Type': 'text/xml',
-            SOAPAction: 'DLHR_APP_PROMPT.v1'
+            SOAPAction: 'DLHR_APP_PROMPT.v1',
+            
          }
       }).then(res => {
 
 
-
-
+         console.log("recivio prompt");
+         
+        
+   
          respuesta = {
-            PromptObserve:parse(res.data),
+            PromptObserve:parse(decodeURIComponent(escape(res.data))),
          type:'PromptObserveType'
          };
+       
 
-
-         let empleado = respuesta.PromptObserve?.['soapenv:Envelope']!['soapenv:Body']!.DLHR_OBSERVE_PROMPT!.DLHR_OBSERVE_EMPLID;
-
-         /* (Array.isArray(empleado))?
-           console.log(empleado[0].NOMBRE):
-           console.log(empleado!.NOMBRE); */
-
-      }).catch(err => { console.log(err) });
+ 
+      }).catch(err => { 
+         console.log("error prompt");
+         console.log(err) });
    return respuesta;
 }
 

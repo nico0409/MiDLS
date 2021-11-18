@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react'
-import { SafeAreaView, Dimensions, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useRef, useState, useContext, useEffect } from 'react'
+import { SafeAreaView, Dimensions, View, Text, TouchableOpacity, StyleSheet, Platform, ToastAndroid, Alert } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import Carousel from 'react-native-snap-carousel';
 import StepIndicator from 'react-native-step-indicator';
@@ -7,6 +7,10 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { colors } from '../Themes/DlsTheme';
 import { CreateObservePageOne } from '../components/CreateObservePageOne';
 import { CreateObservePageTwo } from '../components/CreateObservePageTwo';
+import { initialObsFormData } from '../data/initialObsFormData';
+import { stepIndicatorStyles } from '../data/stepIndicatorStyles';
+import { AuthContext } from '../context/formContext/AuthContext';
+import { initialObsCardDescr } from '../data/initialObsCardDescr';
 
 interface DataTemp {
     namepage: string;
@@ -17,6 +21,8 @@ interface Props extends StackScreenProps<any, any> { };
 const windowWidth = Dimensions.get('window').width;
 
 export const CreateObserveScreen = ({ navigation }: Props) => {
+
+    const { form, onChange, emplidSelect, setCardDescr, setFormValue } = useContext(AuthContext);
 
     const carouselRef = useRef(null);
 
@@ -31,40 +37,70 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
         namepage: 'pagina2',
     }]
 
-    const firstIndicatorStyles = {
-        stepIndicatorSize: 30,
-        currentStepIndicatorSize: 40,
-        separatorStrokeWidth: 3,
-        separatorStrokeUnfinishedWidth: 3,
-        separatorStrokeFinishedWidth: 3,
-        currentStepStrokeWidth: 5,
-        stepStrokeWidth: 3,
-        separatorFinishedColor: '#4aae4f',
-        separatorUnFinishedColor: '#a4d4a5',
-        stepIndicatorFinishedColor: '#4aae4f',
-        stepIndicatorUnFinishedColor: '#a4d4a5',
-        stepIndicatorCurrentColor: '#ffffff',
-        stepIndicatorLabelFontSize: 15,
-        currentStepIndicatorLabelFontSize: 15,
-        stepIndicatorLabelCurrentColor: '#000000',
-        stepIndicatorLabelFinishedColor: '#ffffff',
-        stepIndicatorLabelUnFinishedColor: 'rgba(255,255,255,0.5)',
-        labelColor: '#666666',
-        labelSize: 12,
-        currentStepLabelColor: '#4aae4f',
-    };
+    //states de validacion
+    const [busunitErrorAnim, setBusunitErrorAnim] = useState(false);
+    const [origenErrorAnim, setOrigenErrorAnim] = useState(false);
+    const [turnoErrorAnim, setTurnoErrorAnim] = useState(false);
+    const [equipErrorAnim, setEquipErrorAnim] = useState(false);
+    const [clientesErrorAnim, setClientesErrorAnim] = useState(false);
+    const [sectorErrorAnim, setSectorErrorAnim] = useState(false);
+
+    const nextButton = () => {
+        if (activeIndex === 1) {
+            navigation.navigate('CreateObserveQuestionsPage');
+        } else {
+
+            !form["m38:BUSINESS_UNIT"] && setBusunitErrorAnim(true);
+            !form["m38:DL_ORIGEN"] && setOrigenErrorAnim(true);
+            !form["m38:DL_TURNO"] && setTurnoErrorAnim(true);
+            !form["m38:DL_EQUIPMENT_ID"] && setEquipErrorAnim(true);
+            !form["m38:DL_CUSTOMER_ID"] && setClientesErrorAnim(true);
+            !form["m38:DL_SECTOR_ID"] && setSectorErrorAnim(true);
+
+            if (!form["m38:BUSINESS_UNIT"] || !form["m38:DL_ORIGEN"] || !form["m38:DL_TURNO"] || !form["m38:DL_EQUIPMENT_ID"] || !form["m38:DL_CUSTOMER_ID"] || !form["m38:DL_SECTOR_ID"]) {
+                const msg = "Para continuar debe ingresar datos en los campos resaltados en rojo.";
+                if (Platform.OS === 'android') {
+                    ToastAndroid.showWithGravityAndOffset(msg,
+                        ToastAndroid.LONG,
+                        ToastAndroid.TOP,
+                        25,
+                        50)
+                } else {
+                    Alert.alert(msg);
+                }
+            } else {
+                setBackButton(true);
+                // @ts-ignore
+                carouselRef.current.snapToNext();
+            }
+        }
+    }
 
     const renderItem = (item: DataTemp, index: number) => {
         return (
             <>
                 {index === 0 ?
-                    <CreateObservePageOne />
+                    <CreateObservePageOne
+                        form={form}
+                        onChange={onChange}
+                        busunitErrorAnim={busunitErrorAnim}
+                        origenErrorAnim={origenErrorAnim}
+                        turnoErrorAnim={turnoErrorAnim}
+                        equipErrorAnim={equipErrorAnim}
+                        clientesErrorAnim={clientesErrorAnim}
+                        sectorErrorAnim={sectorErrorAnim}
+                    />
                     :
-                    <CreateObservePageTwo />
+                    <CreateObservePageTwo form={form} onChange={onChange} />
                 }
             </>
         )
     }
+
+    useEffect(() => {
+        setCardDescr({...initialObsCardDescr, ...{ DL_OBSERVADOR: emplidSelect.fieldValue1 } })
+        setFormValue({ ...initialObsFormData, ...{ "m38:DL_OBSERVADOR": emplidSelect.fieldValue1 } })
+    }, [])
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -73,7 +109,10 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
                 <View style={{ height: 60, width: '100%', flexDirection: 'row', alignItems: 'center' }}>
 
                     <TouchableOpacity
-                        onPress={() => navigation.pop()}
+                        onPress={() =>
+                            /* navigation.replace('TarjetaObserveScreen',{name:emplidSelect.fieldValue2,emplid:emplidSelect.fieldValue1}) */
+                            navigation.pop()
+                        }
                     >
                         <Icon name="chevron-back-outline" size={40} color={colors.dlsYellowSecondary} />
                     </TouchableOpacity>
@@ -83,9 +122,8 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
                 <View style={{ paddingBottom: 10, marginHorizontal: 20 }}>
                     <StepIndicator
                         stepCount={5}
-                        customStyles={firstIndicatorStyles}
+                        customStyles={stepIndicatorStyles}
                         currentPosition={activeIndex}
-                        labels={['Paso 1', 'Paso 2']}
                     /* renderLabel={renderLabel} */
                     /* onPress={onStepPress} */
                     />
@@ -123,15 +161,7 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
 
                     <TouchableOpacity
                         style={styles.nextPage}
-                        onPress={() => {
-                            if (activeIndex === 1){
-                                navigation.navigate('CreateObserveQuestionsPage');
-                            }else{
-                                setBackButton(true);
-                                // @ts-ignore
-                                carouselRef.current.snapToNext();
-                            }
-                        }}
+                        onPress={nextButton}
                     >
                         <Text style={{ color: 'white', fontSize: 20 }}>Siguiente</Text>
                     </TouchableOpacity>

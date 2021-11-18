@@ -1,53 +1,40 @@
 import React, { useState, useEffect } from 'react'
-import { View, StyleSheet, Text, Platform, StyleProp, ViewStyle, TextInput, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Platform, StyleProp, ViewStyle, TextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import IconAwesome from 'react-native-vector-icons/FontAwesome';
 import { useDebouncedValue } from '../hooks/useDebouncedValue';
 import { colors } from '../Themes/DlsTheme';
 
-
-
-
-
-
 interface Props {
-    onDebounce: (value: string) => void
-    style?: StyleProp<ViewStyle>
-    //setisVisible?:React.Dispatch<React.SetStateAction<boolean>>
-    placeholder?:string
-    term?:string
+    onDebounce: (value: string) => void;
+    style?: StyleProp<ViewStyle>;
+    placeholder?: string;
+    term?: string;
+    onSeeFlatList: (value: React.SetStateAction<boolean>) => void;
 }
 
-export const SearchInput = ({ style, onDebounce,placeholder ,term}: Props) => {
+export const SearchInput = ({ style, onDebounce, placeholder, term, onSeeFlatList }: Props) => {
 
     const [textValue, setTextValue] = useState('')
     const debouncedValue = useDebouncedValue(textValue)
-    
+
     useEffect(() => {
         onDebounce(debouncedValue)
 
     }, [debouncedValue])
 
-    useEffect(() => {
+    /* useEffect(() => {
         setTextValue(term!)
-       
-    }, [term])
+
+    }, [term]) */
+
     return (
         <View style={{
             ...styles.container,
             ...style as any
         }}>
-          {/*   <TouchableOpacity
-            onPress={()=>{setisVisible(true)}}>
-            <IconAwesome
-                name="filter"
-                color='white'
-                size={25}
-            />
-            </TouchableOpacity> */}
             <View style={styles.textBackground}>
                 <TextInput
-                    placeholder={placeholder?placeholder:''}
+                    placeholder={placeholder ? placeholder : ''}
                     style={{
                         ...styles.textInput,
                         top: (Platform.OS === 'ios' ? 0 : 2)
@@ -55,7 +42,10 @@ export const SearchInput = ({ style, onDebounce,placeholder ,term}: Props) => {
                     autoCapitalize="none"
                     autoCorrect={false}
                     value={textValue}
-                    onChangeText={setTextValue}
+                    onChangeText={(value) => {
+                        setTextValue(value);
+                        onSeeFlatList(false);
+                    }}
                 />
                 <Icon
                     name="search-outline"
@@ -69,7 +59,7 @@ export const SearchInput = ({ style, onDebounce,placeholder ,term}: Props) => {
 
 const styles = StyleSheet.create({
     container: {
-        
+
         justifyContent: 'center',
         alignItems: 'center',
         shadowColor: 'rgba(0,0,0,0.5)',
@@ -79,8 +69,8 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.27,
         shadowRadius: 4.65,
-         
-       elevation:15
+
+        elevation: 15
 
     },
     textBackground: {

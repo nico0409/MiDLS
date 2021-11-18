@@ -1,0 +1,1 @@
+export const nroTarjetaEmpty = "N/A";

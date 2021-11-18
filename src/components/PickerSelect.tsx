@@ -1,141 +1,178 @@
-import React from 'react'
-import { View } from 'react-native'
-import RNSingleSelect, {
-    ISingleSelectDataType,
-} from "@freakycoder/react-native-single-select";
-import { StatusBar, SafeAreaView, Dimensions } from "react-native";
-
-const { width: ScreenWidth } = Dimensions.get("window");
-
-const staticData: Array<ISingleSelectDataType> = [
-    {
-        id: 0,
-        value: "Euismod Justo",
-        imageSource: require("../assets/money.png"),
-    },
-    {
-        id: 1,
-        value: "Risus Venenatis",
-        imageSource: require("../assets/beer.png"),
-    },
-    {
-        id: 2,
-        value: "Vestibulum Ullamcorper",
-        imageSource: require("../assets/party.png"),
-    },
-    {
-        id: 3,
-        value: "Lorem Nibh",
-        imageSource: require("../assets/food-and-restaurant.png"),
-    },
-    {
-        id: 4,
-        value: "Ligula Amet",
-        imageSource: require("../assets/guitar.png"),
-    },
-];
-
-
-export const PickerSelect = () => {
-    const [dynamicData, setDynamicData] = React.useState<
-        Array<ISingleSelectDataType>
-    >([]);
-
-    React.useEffect(() => {
-        setTimeout(() => {
-            setDynamicData(staticData);
-        }, 2000);
-    });
-    return (
-
-        <View
-            style={{
-                
-                //backgroundColor: "#454851",
-                 backgroundColor: "#eceef3",
-                height:200,
-                justifyContent: "center",
-            }}>
-            <View
-                style={{
-                    shadowRadius: 12,
-                    shadowOpacity: 0.1,
-                    shadowColor: "#757575",
-                    shadowOffset: {
-                        width: 0,
-                        height: 3,
-                    },
-                }}
-            >
-                <RNSingleSelect
-                    darkMode
-                    data={dynamicData}
-                    width={ScreenWidth * 0.9}
-                    searchEnabled={false}
-                    menuBarContainerWidth={ScreenWidth * 0.9}
-                    onSelect={(selectedItem: ISingleSelectDataType) =>
-                        console.log("SelectedItem: ", selectedItem)
-                    }
-                />
-                 <RNSingleSelect
-                    darkMode
-                    data={dynamicData}
-                    width={ScreenWidth * 0.9}
-                    searchEnabled={false}
-                    menuBarContainerWidth={ScreenWidth * 0.9}
-                    onSelect={(selectedItem: ISingleSelectDataType) =>
-                        console.log("SelectedItem: ", selectedItem)
-                    }
-                />
-            </View>
-        </View>
-    )
-}
-
-/* import React, { useState } from 'react'
-import { View, Text, Animated } from 'react-native';
-import RNPickerSelect from 'react-native-picker-select';
+import React, { useState, useEffect } from 'react';
+import RNSingleSelect, { ISingleSelectDataType } from "@freakycoder/react-native-single-select";
+import { Dimensions, Text, View } from 'react-native';
+import { promptType, DlhrBussinesUnit, DlhrOrigen, DlhrPuesto, DlhrTurno, M38GetCompIntfcDLHRTAOBSERVCIResponse, objUseForm, DlhrAps, DlhrAllObserve } from '../interfaces/prompInterfaces';
+import { GetPromptArray } from './GetPromptArrayy';
+import Animated, { useSharedValue, useAnimatedStyle, withSpring, withTiming } from 'react-native-reanimated';
 
 interface Props {
     placeholder: string;
-    item: item[]
-    itmeSelect?:number
+    type: "DLHR_EMPL_BUSSINES_UNIT" | "DLHR_TURNO" | "DLHR_ORIGEN" | "DLHR_PUESTO" | "DLHR_APS";
+    onChange: (value: string, field: keyof objUseForm) => void;
+    form?: M38GetCompIntfcDLHRTAOBSERVCIResponse;
+    emplid?: string;
+    setCardDescr?: React.Dispatch<React.SetStateAction<DlhrAllObserve>>;
+    cardDescr?: DlhrAllObserve;
+    activeBorderError?: boolean;
+    disabled?: boolean;
 }
 
-interface item {
-    label: string ;
-    value: string;
+interface DlhrPromptsDet extends DlhrOrigen, DlhrPuesto, DlhrTurno, DlhrBussinesUnit, DlhrAps { };
+
+const { width: ScreenWidth } = Dimensions.get("window");
+
+export const PickerSelect = ({ placeholder, type, onChange, form, setCardDescr, cardDescr, emplid, activeBorderError = false, disabled = false }: Props) => {
+
+    const promptType: promptType = { type };
+    const [selectedItem, setSelectedItem] = useState<ISingleSelectDataType>()
+    const { PromptObArray } = GetPromptArray(promptType);
+    let itemselect: ISingleSelectDataType;
+    let data: ISingleSelectDataType[];
+    let fieldData: keyof objUseForm;
+    let descr: string;
+
+    const titleAnimationValue = useSharedValue(25);
+    const heightAnimationValue = useSharedValue(0);
+
+    if (PromptObArray[0] !== undefined) {
+
+        let allArrayC: DlhrPromptsDet[];
+
+        /* Unidad de Negocio */
+        if (type === "DLHR_EMPL_BUSSINES_UNIT") {
+            const businessUArrayC: any = PromptObArray.filter(
+                item => item.DLHR_OBSERVE_EMPLID?.EMPLID == emplid
+            )[0].DLHR_BUSSINES_UNIT;
+            allArrayC = Array.isArray(businessUArrayC) ? businessUArrayC : [businessUArrayC];
+        } else {
+            allArrayC = Array.isArray(PromptObArray) ? PromptObArray : [PromptObArray];
+        }
+
+        data = allArrayC!.map(
+            (item, index) => {
+                let dataItem;
+                switch (type) {
+                    case "DLHR_ORIGEN":
+                        dataItem = item.ORIGEN;
+                        fieldData = "m38:DL_ORIGEN";
+                        descr = item.DESCR
+                        if (form?.['m38:DL_ORIGEN'] === item.ORIGEN.toString()) {
+                            itemselect = { id: index, value: item.DESCR, data: { dataItem, fieldData } }
+                        }
+                        form?.['m38:DL_ORIGEN'] && (titleAnimationValue.value = -5);
+                        form?.['m38:DL_ORIGEN'] && (heightAnimationValue.value = 20);
+                        break;
+                    case "DLHR_PUESTO":
+                        dataItem = item.DL_PUESTO;
+                        fieldData = "m38:DL_PUESTO";
+                        descr = item.DESCR
+                        if (form?.['m38:DL_PUESTO'] === item.DL_PUESTO) {
+                            itemselect = { id: index, value: item.DESCR, data: { dataItem, fieldData } }
+                        }
+                        form?.['m38:DL_PUESTO'] && (titleAnimationValue.value = -5);
+                        form?.['m38:DL_PUESTO'] && (heightAnimationValue.value = 20);
+                        break;
+                    case "DLHR_TURNO":
+                        dataItem = item.DL_TURNO;
+                        fieldData = "m38:DL_TURNO";
+                        descr = item.DESCR
+                        if (form?.['m38:DL_TURNO'] == item.DL_TURNO.toString()) {
+                            itemselect = { id: index, value: item.DESCR, data: { dataItem, fieldData } }
+                        }
+                        form?.['m38:DL_TURNO'] && (titleAnimationValue.value = -5);
+                        form?.['m38:DL_TURNO'] && (heightAnimationValue.value = 20);
+                        break;
+                    case "DLHR_EMPL_BUSSINES_UNIT":
+                        dataItem = item.UNIDAD_DE_NEGOCIO;
+                        fieldData = "m38:BUSINESS_UNIT";
+                        descr = item.DESCR
+                        if (form?.['m38:BUSINESS_UNIT'] === item.UNIDAD_DE_NEGOCIO) {
+                            itemselect = { id: index, value: item.DESCR, data: { dataItem, fieldData } }
+                        }
+                        form?.['m38:BUSINESS_UNIT'] && (titleAnimationValue.value = -5);
+                        form?.['m38:BUSINESS_UNIT'] && (heightAnimationValue.value = 20);
+                        break;
+                }
+                return { id: index, value: descr, data: { dataItem, fieldData } }
+            })
+    } else {
+        data = [];
+    }
+
+    useEffect(() => {
+        form !== undefined && setSelectedItem(itemselect)
+    }, [PromptObArray])
+
+    const changeDescr = (value: string, descr: string) => {
+        if (type === 'DLHR_TURNO') {
+            setCardDescr!({ ...cardDescr, ...{ DL_TURNO: value, TURNO_DESCR: descr } })
+        } else
+            if (type === 'DLHR_EMPL_BUSSINES_UNIT') {
+                setCardDescr!({ ...cardDescr, ...{ BUSINESS_UNIT: value, BUSINES_DESCR: descr } })
+            }
+    }
+
+    const [isItemChanged, setIsItemChanged] = useState(false);
+
+    const borderAnimationValue = useSharedValue(0);
+
+    const borderAnimationStyle = useAnimatedStyle(() => {
+        return {
+            borderWidth: withSpring(borderAnimationValue.value, { damping: 8 })
+        }
+    })
+
+    const titleAnimationStyle = useAnimatedStyle(() => {
+        return {
+            height: withTiming(heightAnimationValue.value, { duration: 300 }),
+            transform: [{ translateY: withTiming(titleAnimationValue.value, { duration: 300 }) }]
+        }
+    })
+
+    useEffect(() => {
+        if (activeBorderError) {
+            borderAnimationValue.value = 3;
+        }
+    }, [activeBorderError]);
+
+    useEffect(() => {
+        if (isItemChanged) {
+            titleAnimationValue.value = -5;
+            heightAnimationValue.value = 20;
+            borderAnimationValue.value = 0
+        }
+    }, [isItemChanged]);
+
+    return (
+        <View style={{ marginVertical: 10 }}>
+
+            <Animated.View style={[{ paddingLeft: 10 }, titleAnimationStyle]}>
+                <Text style={{ color: 'white', fontWeight: 'bold' }}>{placeholder}</Text>
+            </Animated.View>
+
+            <Animated.View pointerEvents={disabled ? "none" : "auto"} style={[{ marginVertical: 0, borderColor: 'red', borderRadius: 20 }, borderAnimationStyle]}>
+
+                <RNSingleSelect
+                    darkMode
+                    disableAbsolute={false}
+                    initialValue={selectedItem}
+                    placeholder={placeholder}
+                    data={data}
+                    width={ScreenWidth * 0.87}
+                    searchEnabled={false}
+                    menuBarContainerWidth={ScreenWidth * 0.87}
+                    onSelect={(selectedItem: ISingleSelectDataType) => {
+                        onChange(selectedItem.data.dataItem, selectedItem.data.fieldData);
+                        setCardDescr === undefined ? {} : changeDescr(selectedItem.data.dataItem, selectedItem.value);
+                        setSelectedItem(selectedItem);
+                        setIsItemChanged(true)
+                    }}
+                />
+                {disabled &&
+                    <View style={{ height: '100%', width: '15%', backgroundColor: '#2b2c32', position: 'absolute', right: 0, borderRadius: 50 }} />
+                }
+            </Animated.View>
+
+        </View>
+    )
 }
-
-export const PickerSelect = ({ placeholder, item }: Props) => {
-
-    const [state, setstate] = useState({
-        label: placeholder,
-        value: null,
-        color: 'blue',
-})
-
-const deportes=[
-    { label: 'Football', value: 'football' },
-    { label: 'Baseball', value: 'baseball' },
-    { label: 'Hockey', value: 'hockey' },
-]
-
-
-console.log('test4',state);
-
-return (
-    <View style={{}}>
-        <RNPickerSelect
-        onValueChange={(value) => setstate({...state,value,label:deportes.find(function(element){return element.value===value})?.label!})}
-        placeholder={{ label: state.label,
-            value: state.value,
-            color: 'blue', }}
-        items={deportes}
-
-    />
-      <Text style={{width: '100%', height: 60, position: 'absolute', bottom: 0, left: 0}}>{' '}</Text>
-    </View>
-)
-}
- */

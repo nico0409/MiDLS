@@ -1,5 +1,7 @@
+import { useNetInfo } from '@react-native-community/netinfo'
 import React,{ createContext, useReducer,useState, useEffect } from 'react'
 import { authReducer, AuthState } from './authReducer'
+import { SendObserveStorage } from '../components/SendObserveStorage';
 
 
 
@@ -13,8 +15,8 @@ type AuthContextProps={
     removeError:()=>void;
     changeURLNews:(url:string)=>void;
     changeURLProfile:(url:string)=>void;
-
-   
+    reloadCardList:boolean
+    setReloadCardList:React.Dispatch<React.SetStateAction<boolean>>
 
 }
 
@@ -27,8 +29,29 @@ type AuthContextProps={
 export const AuthContext= createContext({} as AuthContextProps)
 
 
+
 export const AuthProvider=({children}:any)=>{
 
+    const { isConnected } = useNetInfo();
+
+    const [reloadCardList,setReloadCardList] = useState(false);
+
+    console.log("reload",reloadCardList);
+    
+ const sendObserve= async()=>{
+    await SendObserveStorage();
+    setReloadCardList(true);
+ }
+
+useEffect(() => {
+ 
+   if (isConnected===true){
+       console.log("enviando storage");
+       
+    sendObserve();
+   }
+    
+}, [isConnected])
 
 
     //const [currentUrl, setCurrentUrl] = useState('')
@@ -39,7 +62,7 @@ export const AuthProvider=({children}:any)=>{
    const changeURLNews=(url:string)=>{
 
         currentUrlNews=url;
-       // console.log(currentUrlNews);
+      
     }
     const changeURLProfile =(url:string)=>{
 
@@ -86,7 +109,8 @@ export const AuthProvider=({children}:any)=>{
             changeURLProfile,
             currentUrlNews,
             currentUrlProfile,
-            
+            reloadCardList,
+            setReloadCardList
             
         }}>
             {children}

@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ActivityIndicator } from 'react-native';
 import WebView from 'react-native-webview';
 
 import { useNetInfo } from '@react-native-community/netinfo';
@@ -10,7 +10,10 @@ import { WhitOutConection } from './WhitOutConection';
 
 export const MapScreen = () => {
   const { isConnected } = useNetInfo();
-  return (
+
+  return (<View/>) 
+}
+  /*return (
 
     <View style={[styless.containerWebView, { paddingTop: 0 }]}>
 
@@ -20,12 +23,15 @@ export const MapScreen = () => {
           source={{ uri: 'https://www.google.com/maps/d/u/0/embed?mid=1RstH1PUHyNfyMUr0KSTgThfmuDLvGwIs' }}
         />
         :
-        <WhitOutConection />
+        <View style={{ position: 'absolute', alignSelf: 'center' }}>
+          <ActivityIndicator size={35} color="rgba(245,217,47,1)" ></ActivityIndicator>
+        </View>
+
       }
-      
+
     </View>
 
   )
 }
-
+*/
 

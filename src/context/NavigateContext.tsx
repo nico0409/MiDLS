@@ -1,7 +1,7 @@
 import React, { createContext, useState } from 'react'
 import { MaterialTopTabNavigationProp, MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
 import { ParamListBase } from '@react-navigation/native';
-import { Navigation } from '../../../peliculasAPP/src/navigation/Navigation';
+
 import { AuthProvider } from './AuthContext';
 
 

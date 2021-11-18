@@ -1,14 +1,27 @@
 import { useState } from 'react';
+import { M38GetCompIntfcDLHRTAOBSERVCIResponse } from '../interfaces/prompInterfaces';
 
 export const useForm = <T extends Object>( initState: T ) => {
     
     const [state, setState] = useState( initState );
+     const [stateSend, setStateSend] = useState<M38GetCompIntfcDLHRTAOBSERVCIResponse>();  
 
     const onChange = ( value: string, field: keyof T ) => {
-        setState({
+
+      
+        
+         setState({
             ...state,
             [field]: value
-        });
+        }); 
+
+
+
+         setStateSend({
+            ...stateSend,
+            [field]: value
+        });  
+     
     }
     const setFormValue=(form:T)=>{
             setState({
@@ -22,6 +35,9 @@ export const useForm = <T extends Object>( initState: T ) => {
         form: state,
         onChange,
         setFormValue,
+         stateSend, 
+         setStateSend,
+        
     }
 
 }

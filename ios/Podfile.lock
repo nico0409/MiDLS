@@ -338,6 +338,8 @@ PODS:
     - React-Core
   - RNDateTimePicker (3.5.2):
     - React-Core
+  - RNDeviceInfo (8.4.4):
+    - React-Core
   - RNGestureHandler (1.10.3):
     - React-Core
   - RNReanimated (2.3.0-beta.1):
@@ -372,6 +374,8 @@ PODS:
   - RNScreens (3.4.0):
     - React-Core
     - React-RCTImage
+  - RNSVG (12.1.1):
+    - React
   - RNVectorIcons (8.1.0):
     - React-Core
   - Yoga (1.14.0)
@@ -438,9 +442,11 @@ DEPENDENCIES:
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
   - "RNCPicker (from `../node_modules/@react-native-picker/picker`)"
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
+  - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -536,12 +542,16 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-picker/picker"
   RNDateTimePicker:
     :path: "../node_modules/@react-native-community/datetimepicker"
+  RNDeviceInfo:
+    :path: "../node_modules/react-native-device-info"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNSVG:
+    :path: "../node_modules/react-native-svg"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
   Yoga:
@@ -597,9 +607,11 @@ SPEC CHECKSUMS:
   RNCMaskedView: 0e1bc4bfa8365eba5fbbb71e07fbdc0555249489
   RNCPicker: f7a40b21b915b7a187624d52f52b7bc2f73ea413
   RNDateTimePicker: 7658208086d86d09e1627b5c34ba0cf237c60140
+  RNDeviceInfo: 98cc93d4b3b09b33e784b751f04d414065a61fd4
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNReanimated: ac4231e7a905f98bf1b719081f7cd230531a24e2
   RNScreens: 21b73c94c9117e1110a79ee0ee80c93ccefed8ce
+  RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
   Yoga: a7de31c64fe738607e7a3803e3f591a4b1df7393
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
