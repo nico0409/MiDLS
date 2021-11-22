@@ -137,9 +137,13 @@ export const SlidesScreen = ({ navigation }: Props) => {
                         setToggleCheckBox(newValue)
                     }}
                 />
-                <Text style={{ color: 'white'/* , fontWeight: 'bold' */, fontSize: 16 }}>
-                    No volver a mostrar
-                </Text>
+                <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() => { setToggleCheckBox(!toggleCheckBox) }}>
+                    <Text style={{ color: 'white'/* , fontWeight: 'bold' */, fontSize: 16 }}>
+                        No volver a mostrar
+                    </Text>
+                </TouchableOpacity>
             </Animated.View>
 
             <View style={{
