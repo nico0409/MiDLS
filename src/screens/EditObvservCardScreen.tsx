@@ -13,7 +13,7 @@ import { UseOneGetObserve } from '../hooks/UseOneGetObserve';
 import List, { List as ListModel } from "../components/AcordionList/List";
 import { colors } from '../Themes/DlsTheme';
 import { EditObservCard } from '../components/EditObserveCard';
-import {AuthContext as AuthcontextGeneral} from '../context/AuthContext'
+import { AuthContext as AuthcontextGeneral } from '../context/AuthContext'
 import SpInAppUpdates, {
     NeedsUpdateResponse,
     IAUUpdateKind,
@@ -78,9 +78,9 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
 
     const { height, width } = useWindowDimensions();
 
-    
-    console.log("inicial",stateSend);
-   
+
+    console.log("inicial", stateSend);
+
 
 
     const menus: MeuItemType[] = [
@@ -130,22 +130,37 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
 
                 </View>
                 {!isloading ?
-                    <>
-                        <View style={styles.containerTitle}>
-                            <Text style={styles.title}>{`Tarjeta Número:`}</Text>
-                            <Text style={styles.title}>{`${form['m38:DL_NTARJETA']}`}</Text>
-                        </View>
 
-                        <ScrollView ref={scrollViewRef} scrollEnabled={false} showsVerticalScrollIndicator={false}>
+                    form['m38:DL_NTARJETA'] === undefined ?
+                        <>
+                            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', alignContent: 'center', paddingHorizontal: 35 }}>
+                                <View>
+                                    <Text style={{ color: 'white', fontSize: 40, textAlign: 'center', marginBottom: 20, fontWeight: 'bold' }}>
+                                        No se ha podido cargar los detalles correctamente.
+                                    </Text>
+                                    <Text style={{ color: 'white', fontSize: 26, textAlign: 'center', marginBottom: 20 }}>
+                                        Es posible que se detectara una conexión a internet y la tarjeta se haya enviado automáticamente. Puede volver a la lista de tarjetas y verificar que la suya se encuentre allí.
+                                    </Text>
+                                </View>
+                            </View>
+                        </>
+                        :
+                        <>
+                            <View style={styles.containerTitle}>
+                                <Text style={styles.title}>{`Tarjeta Número:`}</Text>
+                                <Text style={styles.title}>{`${form['m38:DL_NTARJETA']}`}</Text>
+                            </View>
 
-                            <List {...{ list }} MeuItemType={menus[0]} form={form} onChange={onChange} scrollViewRef={scrollViewRef} cardOffline={route.params.cardOffline} />
-                            <List {...{ list: list2 }} MeuItemType={menus[1]} form={form} onChange={onChange} scrollViewRef={scrollViewRef} cardOffline={route.params.cardOffline} />
-                            <List {...{ list: list3 }} MeuItemType={menus[2]} form={form} onChange={onChange} scrollViewRef={scrollViewRef} cardOffline={route.params.cardOffline} />
-                            <List {...{ list: list4 }} MeuItemType={menus[3]} form={form} onChange={onChange} scrollViewRef={scrollViewRef} cardOffline={route.params.cardOffline} />
-                        </ScrollView>
-                    </>
+                            <ScrollView ref={scrollViewRef} scrollEnabled={false} showsVerticalScrollIndicator={false}>
+
+                                <List {...{ list }} MeuItemType={menus[0]} form={form} onChange={onChange} scrollViewRef={scrollViewRef} cardOffline={route.params.cardOffline} />
+                                <List {...{ list: list2 }} MeuItemType={menus[1]} form={form} onChange={onChange} scrollViewRef={scrollViewRef} cardOffline={route.params.cardOffline} />
+                                <List {...{ list: list3 }} MeuItemType={menus[2]} form={form} onChange={onChange} scrollViewRef={scrollViewRef} cardOffline={route.params.cardOffline} />
+                                <List {...{ list: list4 }} MeuItemType={menus[3]} form={form} onChange={onChange} scrollViewRef={scrollViewRef} cardOffline={route.params.cardOffline} />
+                            </ScrollView>
+                        </>
                     :
-                    <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+                    <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1, backgroundColor: colors.dlsGrayPrimary }}>
                         <Chase size={48} color="#FFF" />
                     </View>
                 }

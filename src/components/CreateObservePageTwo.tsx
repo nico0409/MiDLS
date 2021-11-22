@@ -79,7 +79,8 @@ export const CreateObservePageTwo = ({ form, onChange }: Props) => {
                     alignItems: 'center',
                     width: '100%',
                     justifyContent: 'space-between',
-                    paddingHorizontal: 25
+                    paddingHorizontal: 30,
+                    marginBottom:50
                 }}>
                     <Text style={{ color: colors.dlsTextwhite, fontSize: 15 }}>A destacar</Text>
                     <CheckBox
