@@ -159,7 +159,7 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef, cardOffline 
                 form={form}
                 onChange={onChange}
                 promptType={{ type: 'DLHR_OBSERVE_EMPLID' }}
-                disabled={cardOffline}
+                disabled={true}
               />
               <PickerSelect
                 form={form}

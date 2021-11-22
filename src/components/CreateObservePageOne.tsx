@@ -42,7 +42,7 @@ export const CreateObservePageOne = ({ form, onChange, busunitErrorAnim, origenE
 
                 <Prompt onChange={onChange} promptType={{ type: 'DLHR_SECTOR' }} activeBorderError={sectorErrorAnim} />
 
-                <Prompt form={form} onChange={onChange} promptType={{ type: 'DLHR_OBSERVE_EMPLID' }} />
+                <Prompt form={form} onChange={onChange} promptType={{ type: 'DLHR_OBSERVE_EMPLID' }} disabled={true}/>
 
                 <PickerSelect placeholder="Puesto" type={"DLHR_PUESTO"} onChange={onChange} />
 
