@@ -51,19 +51,24 @@ export const NewsScreen = ({ navigation, route }: Props) => {
           <ActivityIndicator size={35} color="rgba(245,217,47,1)" ></ActivityIndicator>
         </View>
       }
-      {route.params!.needsUpdate && !load &&
+      {route.params.needsUpdate && !load &&
         < AwesomeAlert
         show={showAlert}
         showProgress={false}
         title="Aviso"
-        message="MI DLS necesita actualizarse a una nueva versión, ¿desea hacerlo ahora?"
-        closeOnTouchOutside={true}
-        closeOnHardwareBackPress={true}
-        showCancelButton={true}
+        message={route.params.lockScreen ? 
+          "MiDLS necesita actualizarse a una nueva versión. Por favor, presione el botón para poder continuar."
+          :
+          "MiDLS necesita actualizarse a una nueva versión, ¿desea hacerlo ahora?"}
+        closeOnTouchOutside={!route.params.lockScreen}
+        closeOnHardwareBackPress={!route.params.lockScreen}
+        showCancelButton={!route.params.lockScreen}
         showConfirmButton={true}
         cancelText="No"
-        confirmText="Si"
+        confirmText={route.params.lockScreen ?"Actualizar": "Si"}
         confirmButtonColor='#00875F'
+        cancelButtonStyle={{paddingHorizontal: 30}}
+        confirmButtonStyle={{paddingHorizontal: 30}}
         onCancelPressed={() => {
          
           setShowAlert(false)

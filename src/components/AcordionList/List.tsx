@@ -116,7 +116,11 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef, cardOffline 
                 disabled={cardOffline}
               />
 
-              <DatePickerSelect onChange={onChange} disabled={cardOffline} />
+              <DatePickerSelect
+                form={form}
+                onChange={onChange}
+                disabled={cardOffline}
+              />
 
               <PickerSelect
                 form={form}
@@ -155,7 +159,7 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef, cardOffline 
                 form={form}
                 onChange={onChange}
                 promptType={{ type: 'DLHR_OBSERVE_EMPLID' }}
-                disabled={cardOffline}
+                disabled={true}
               />
               <PickerSelect
                 form={form}

@@ -32,7 +32,10 @@ import { SendObserveStorage } from '../components/SendObserveStorage';
 
 export type DrawerRoutParams = {
 
-  TopTapNavigator: { needsUpdate: boolean }
+  TopTapNavigator: {
+    needsUpdate: boolean,
+    lockScreen: boolean
+  }
 }
 
 
@@ -52,8 +55,9 @@ const NavigateState = ({ children }: { children: JSX.Element | JSX.Element[] }) 
 
 export const DrawerNavigation = () => {
   const { isConnected } = useNetInfo();
-  const [needsUpdate, setNeedsUpdate] = useState(false)
-  const [endGetPrompt, setendGetPrompt] = useState(false)
+  const [needsUpdate, setNeedsUpdate] = useState(false);
+  const [lockScreen, setLockScreen] = useState(false);
+  const [endGetPrompt, setendGetPrompt] = useState(false);
 
   useEffect(() => {
 
@@ -81,7 +85,8 @@ export const DrawerNavigation = () => {
 
     /*   await SendObserveStorage(); */
     Asingstorage(prompts, await GetPrompt());
-    setNeedsUpdate(await CheckUpdateAndroid());
+    /* setNeedsUpdate(await CheckUpdateAndroid()); */
+    await CheckUpdateAndroid({ setNeedsUpdate, setLockScreen });
     SplashScreen.hide();
     setendGetPrompt(true);
   }
@@ -100,7 +105,7 @@ export const DrawerNavigation = () => {
           // drawerContent={(props: any) => <DrawerMenu {...props} />}
           drawerContent={(props: any) => <MenuInterno {...props} />}
         >
-          <Drawer.Screen name="TopTapNavigator" component={TopTapNavigator} initialParams={{ needsUpdate }} />
+          <Drawer.Screen name="TopTapNavigator" component={TopTapNavigator} initialParams={{ needsUpdate, lockScreen }} />
           {/*   <Drawer.Screen name="TopTapNavigator" component={TopTapNavigator} /> */}
           <Drawer.Screen name="ContactScreen" component={ContactScreen} />
           <Drawer.Screen name="RrhhScreen" component={RrhhScreen} />

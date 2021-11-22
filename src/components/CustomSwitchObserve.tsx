@@ -53,7 +53,7 @@ export const CustomSwitchObserve = ({ title, onChange, switchType, form, disable
                 alignItems: 'center', marginVertical: 10,
                 width: '100%',
                 justifyContent: 'space-between',
-                paddingHorizontal: 25
+                paddingHorizontal: 30
             }}>
             <Text style={{ color: colors.dlsTextwhite, fontSize: 15 }}>{title}</Text>
             <Switch
