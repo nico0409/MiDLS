@@ -20,10 +20,10 @@ export const DatePickerSelect = ({ onChange, form, cardDescr, setCardDescr, disa
     const dateInitial = new Date();
 
     const formatearFechaEnCodigo = (dateString: string) => {
-        let dateToFormat = dateString.split(/[\s-:]/);
+        let dateToFormat = dateString.split(/[\s-:/]/);
         return new Date(parseInt(dateToFormat![0]), (parseInt(dateToFormat![1], 10) - 1), parseInt(dateToFormat![2], 10))
     }
-
+        
     const [date, setDate] = useState(form?.['m38:DL_IDENTIF_DT'] ? formatearFechaEnCodigo(form?.['m38:DL_IDENTIF_DT']) : dateInitial);
 
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
