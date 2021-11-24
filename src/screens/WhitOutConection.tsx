@@ -15,7 +15,7 @@ export const WhitOutConection = () => {
                     onPress={() => { }}
                 >
                     <Text style={styles.buttonText}>
-                        Sin Coneccion
+                    Sin conexión
                     </Text>
                 </TouchableOpacity>
 

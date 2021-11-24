@@ -48,13 +48,13 @@ export const TopTapNavigator = ({ navigation, route }: Props) => {
           
 
         }}
-
+          initialRouteName='NewsScreen'
         screenOptions={({ route }) => ({
           tabBarIcon: ({ color, focused }) => {
 
             let iconName: string = '';
             switch (route.name) {
-              case 'NewScreen':
+              case 'NewsScreen':
                 iconName = 'newspaper'
                 break;
               case 'MapScreen':
@@ -74,9 +74,9 @@ export const TopTapNavigator = ({ navigation, route }: Props) => {
         })}
 
       >
-        <Tab.Screen name="NewScreen" component={NewsScreen} options={{ title: 'Home' }} />
+        <Tab.Screen name="NewsScreen" component={NewsScreen} options={{ title: 'Home' }} />
         <Tab.Screen name="MapScreen" component={MapScreen} />
-        <Tab.Screen name="MyProfileScreen" component={MyProfileScreen} />
+        <Tab.Screen name="MyProfileScreen" component={MyProfileScreen}  />
       </Tab.Navigator>
 
     </SafeAreaView>

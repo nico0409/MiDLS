@@ -1,9 +1,14 @@
+import { ImageSourcePropType } from "react-native";
+
 export interface PropsRedes {
     type: 'icon' | 'image';
-    nameOrUrl: string;
+    nameIcon: string;
+    owner:'DLS'|'ARCHER';
+    requireImage?: ImageSourcePropType;
     color?: string;
     size?: number;
     descr?: string;
+    
 };
 
 export interface DataRedes {

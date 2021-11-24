@@ -39,7 +39,7 @@ export const AuthProvider=({children}:any)=>{
    const changeURLNews=(url:string)=>{
 
         currentUrlNews=url;
-        console.log(currentUrlNews);
+       // console.log(currentUrlNews);
     }
     const changeURLProfile =(url:string)=>{
 
