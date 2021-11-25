@@ -39,7 +39,7 @@ export const Rulegold = ({ form, questiontType, onChange }: Props) => {
                 borderColor: colors.dlsGrayPrimary
             }}
             style={{ marginVertical: 10 }}
-            textStyle={{ fontFamily: "JosefinSans-Regular", textDecorationLine: "none",color:'white' }}
+            textStyle={{ fontFamily: "Stag-Semibold", textDecorationLine: "none",color:'white' }}
             iconImageStyle={{ height: 20, width: 20 }}
             onPress={(isChecked: boolean) => { onChange(isChecked ? 'Y' : 'N', data[0].field) }}
         />
