@@ -13,7 +13,7 @@ import { UseOneGetObserve } from '../hooks/UseOneGetObserve';
 import List, { List as ListModel } from "../components/AcordionList/List";
 import { colors } from '../Themes/DlsTheme';
 import { EditObservCard } from '../components/EditObserveCard';
-import {AuthContext as AuthcontextGeneral} from '../context/AuthContext'
+import { AuthContext as AuthcontextGeneral } from '../context/AuthContext'
 import SpInAppUpdates, {
     NeedsUpdateResponse,
     IAUUpdateKind,
@@ -23,7 +23,7 @@ import SpInAppUpdates, {
 
 
 
-interface Props extends StackScreenProps<RoutstackParams, 'EditObvservCardScreen'> { };
+
 
 const list: ListModel = {
     name: "Registro",
@@ -57,6 +57,7 @@ const list4: ListModel = {
     ],
 };
 
+interface Props extends StackScreenProps<RoutstackParams, 'EditObvservCardScreen'> { };
 export const EditObvservCardScreen = ({ navigation, route }: Props) => {
 
     const { setReloadCardList } = useContext(AuthcontextGeneral)
@@ -78,9 +79,9 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
 
     const { height, width } = useWindowDimensions();
 
-    
-    console.log("inicial",stateSend);
-   
+
+
+
 
 
     const menus: MeuItemType[] = [
@@ -106,7 +107,7 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
             Alert.alert(msg);
         }
     }
-
+    
     return (
 
         < View style={{ flex: 1 }}>
@@ -114,7 +115,7 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
                 <View style={{ height: '10%', width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
 
                     <TouchableOpacity
-                        onPress={() => { /* route.params.cardOffline ? navigation.pop(4) : */ navigation.pop() }}
+                        onPress={() => { navigation.pop() }}
                     >
                         <Icon name="chevron-back-outline" size={40} color={colors.dlsYellowSecondary} />
                     </TouchableOpacity>
@@ -133,15 +134,18 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
                     <>
                         <View style={styles.containerTitle}>
                             <Text style={styles.title}>{`Tarjeta Número:`}</Text>
-                            <Text style={styles.title}>{`${form['m38:DL_NTARJETA']}`}</Text>
+                               <Text style={styles.title}>{`${form['m38:DL_NTARJETA']}`}</Text> 
                         </View>
+                        <ScrollView ref={scrollViewRef}  scrollEnabled={false} showsVerticalScrollIndicator={false} >
+                         
 
-                        <ScrollView ref={scrollViewRef} scrollEnabled={false} showsVerticalScrollIndicator={false}>
-
-                            <List {...{ list }} MeuItemType={menus[0]} form={form} onChange={onChange} scrollViewRef={scrollViewRef} cardOffline={route.params.cardOffline} />
+                             
+                             <List {...{ list }} MeuItemType={menus[0]} form={form} onChange={onChange} scrollViewRef={scrollViewRef} cardOffline={route.params.cardOffline} />
                             <List {...{ list: list2 }} MeuItemType={menus[1]} form={form} onChange={onChange} scrollViewRef={scrollViewRef} cardOffline={route.params.cardOffline} />
                             <List {...{ list: list3 }} MeuItemType={menus[2]} form={form} onChange={onChange} scrollViewRef={scrollViewRef} cardOffline={route.params.cardOffline} />
-                            <List {...{ list: list4 }} MeuItemType={menus[3]} form={form} onChange={onChange} scrollViewRef={scrollViewRef} cardOffline={route.params.cardOffline} />
+                            <List {...{ list: list4 }} MeuItemType={menus[3]} form={form} onChange={onChange} scrollViewRef={scrollViewRef} cardOffline={route.params.cardOffline} /> 
+
+                           
                         </ScrollView>
                     </>
                     :
@@ -153,7 +157,6 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
         </View>
     )
 }
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,

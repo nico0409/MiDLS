@@ -61,25 +61,44 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef, cardOffline 
   const scrollto = () => {
     switch (MeuItemType.MeuItemType) {
       case 'Registro':
-        scrollViewRef?.current?.scrollTo({ y: 40, animated: true })
+        
+        setOpen((prev) => !prev);  
+        setTimeout(() => {
+          scrollViewRef?.current?.scrollTo({ y: 40, animated: true });  
+        }, 200);
         break;
       case 'Comentarios':
-        scrollViewRef?.current?.scrollTo({ y: 160, animated: true })
+        
+        setOpen((prev) => !prev)  ;
+  setTimeout(() => {
+  scrollViewRef?.current?.scrollTo({ y: 160, animated: true });  
+}, 200);
         break;
       case 'Preguntas':
-        scrollViewRef?.current?.scrollTo({ y: 300, animated: true })
+        setOpen((prev) => !prev)  ;
+        setTimeout(() => {
+          scrollViewRef?.current?.scrollTo({ y: 300, animated: true });  
+        }, 200);
+        
         break;
       case 'ReglasOro':
-        scrollViewRef?.current?.scrollTo({ y: 420, animated: true })
+        setOpen((prev) => !prev)  ;
+
+        setTimeout(() => {
+          scrollViewRef?.current?.scrollTo({ y: 420, animated: true });  
+        }, 200);
+ 
         break;
     }
   }
 
-  console.log("cardOffline: " + cardOffline);
+
+
+
 
   return (
     <>
-      <TouchableWithoutFeedback onPress={() => { setOpen((prev) => !prev), scrollto() }}>
+      <TouchableWithoutFeedback onPress={() => { scrollto() }}>
         <Animated.View
           style={[
             styles.container,

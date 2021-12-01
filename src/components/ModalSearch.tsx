@@ -82,7 +82,7 @@ setPlaceHolder({...typeSearh})
                     borderRadius: 15,
                     shadowOpacity: 0.25,
                     top:90,
-                    left:30
+                    right:30
 
 
 

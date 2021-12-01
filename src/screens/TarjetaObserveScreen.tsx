@@ -54,10 +54,7 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
             fieldValue1: route.params!.emplid,
             fieldValue2: route.params!.name
         })
-    /*  const y = new Animated.Value(0);
- 
-     const onScroll = Animated.event([{ nativeEvent: { contentOffset: { y } } }],
-         { useNativeDriver: true }) */
+
 
     const [seeFlatList, setSeeFlatList] = useState(true);
 
@@ -164,11 +161,11 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
         <SafeAreaView style={{ flex: 1, backgroundColor: colors.dlsGrayPrimary }}>
 
             <View style={styless.header}>
-                {/* <TouchableOpacity onPress={() => navigation.goBack()} >
+                <TouchableOpacity onPress={() => navigation.goBack()} >
                     <Icon name="caret-back-outline"
                         color={colors.dlsYellowSecondary}
                         size={35} />
-                </TouchableOpacity> */}
+                </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => setstatePropmpEmp(true)}
                 >
@@ -187,18 +184,20 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
 
             <View style={{
                 marginHorizontal: 20,
-                /* position: 'absolute',
-                zIndex: 999, */
+                top: 55,
+                position: 'absolute',
+                zIndex: 999,
+                flexDirection: 'row'
             }}>
 
 
                 <SearchInput
                     onDebounce={(value) => setTerm(value)}
                     style={{
-                        position: 'absolute',
-                        zIndex: 997,
+
+
                         width: ScreenWidt - 80,
-                        left: 30,
+
                         borderRadius: 100,
                         top: (Platform.OS === 'ios') ? top : top + 10
                     }
@@ -209,14 +208,12 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
 
                 />
                 <View style={{
-                    zIndex: 999,
+
                     height: 50,
                     width: 40,
                     justifyContent: 'center',
                     alignItems: 'center',
-                    position: 'absolute',
-                    left: -10,
-                    top: 6,
+
                 }}>
                     <TouchableOpacity
 
@@ -244,7 +241,7 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
 
 
 
-            <View >
+            <View>
 
                 {
                     (term.length !== 0) ?
@@ -260,7 +257,7 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
                                     : <></>
                 }
 
-                <View style={{ marginVertical: 50 }}>
+                {<View style={{ marginVertical: 50 }}>
 
                     {seeFlatList && !isloading ?
                         <Wallet term={term}
@@ -278,7 +275,7 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
                             <Chase size={48} color="#FFF" />
                         </View>
                     }
-                </View>
+                </View>}
 
 
             </View>
@@ -316,11 +313,10 @@ const styless = StyleSheet.create({
 
     header: {
         marginVertical: 10,
+        marginHorizontal: 20,
         paddingTop: 10,
-        paddingLeft: 20,
-
-        flexDirection: 'row-reverse',
-
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         alignItems: 'center'
     }
 
