@@ -3,12 +3,13 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { SafeAreaView, View, StyleSheet, Dimensions } from 'react-native';
 import Animated, { useSharedValue, withTiming, withDelay, useAnimatedStyle, interpolate, interpolateColor } from 'react-native-reanimated';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { colors } from '../Themes/DlsTheme';
+import { colors} from '../Themes/DlsTheme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import StepIndicator from 'react-native-step-indicator';
 import { FadeQuestionsScreen } from './FadeQuestionsScreen';
 import { stepIndicatorStyles } from '../data/stepIndicatorStyles';
 import { QuestionCarousel } from '../interfaces/QuestionInterfaces';
+import { CarouselForQuestions } from './CarouselForQuestions';
 
 interface Props extends StackScreenProps<any, any> { };
 
@@ -21,29 +22,27 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
 
     const dataCarousel: QuestionCarousel[] = [{
         index: 2,
-        questions: [{ questionsRGold: [{ type: '1' }] },
+        questions: [ { questionsRGold: [{ type: '1' }] },
         { questionsRGold: [{ type: '2' }] },
         { questionsRGold: [{ type: '3' }] },
-        { questionsRGold: [{ type: '4' }] }]
-    }, {
-        index: 3,
-        questions: [{ questionsRGold: [{ type: '5' }] },
+        { questionsRGold: [{ type: '4' }] },
+        { questionsRGold: [{ type: '5' }] },
         { questionsRGold: [{ type: '6' }] },
         { questionsRGold: [{ type: '7' }] },
-        { questionsRGold: [{ type: '8' }] }]
-    }, {
-        index: 4,
-        questions: [{ questionsRGold: [{ type: '1' }, { type: '2' }, { type: '3' }, { type: '4' }] }
+        { questionsRGold: [{ type: '8' }] }, 
+        { questionsRGold: [{ type: '1' }, { type: '2' }, { type: '3' }, { type: '4' }] }
             , { questionsRGold: [{ type: '5' }, { type: '6' }, { type: '7' }, { type: '8' }, { type: '9' }] }]
-        /*  questions: [{questionType:[{ type: '2' }]},
-         {questionType:[{ type: '3' }]}] */
+
     }];
 
+    let page =2;
+    
+    
     const [activeIndex, setActiveIndex] = useState(2);
-
+    console.log(activeIndex);
     const [moveCarousel, setMoveCarousel] = useState(1);
-    const [moveCarousel2, setMoveCarousel2] = useState(1);
-    const [moveCarousel3, setMoveCarousel3] = useState(1);
+   /*  const [moveCarousel2, setMoveCarousel2] = useState(1);
+    const [moveCarousel3, setMoveCarousel3] = useState(1); */
 
     //animacion de fondo
     const animatedBGCircleValue = useSharedValue(0);
@@ -131,12 +130,12 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
 
         animatedBGCircleValue.value = nextPrev === 'next' ? 0 : 1;
         animatedBGCircleValue.value = withTiming(nextPrev === 'next' ? 1 : 0, { duration }, () => {
-            opacityPagesValue.value = withDelay(200,withTiming(0, { duration: 200 }))
+            opacityPagesValue.value = withDelay(200, withTiming(0, { duration: 200 }))
         });
 
         animatedBGColorValue.value = withTiming((activeIndex % 2) === 0 ? 1 : 0, { duration });
 
-        setTrasladeCarousel(nextPrev === 'next' ? trasladeCarousel - windowWidth : trasladeCarousel + windowWidth);
+       /*  setTrasladeCarousel(nextPrev === 'next' ? trasladeCarousel - windowWidth : trasladeCarousel + windowWidth); */
 
         //para iconos
         setCurrentColor(currentColor === colors.dlsGrayPrimary ? colors.dlsYellowSecondary : colors.dlsGrayPrimary);
@@ -147,24 +146,26 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
     const onPress = () => {
         switch (activeIndex) {
             case 2:
-                if (moveCarousel === dataCarousel.find(item => item.index === activeIndex)?.questions.length) {
+                if (moveCarousel === 4) {
+                    setMoveCarousel(moveCarousel + 1);
                     runAnimation('next');
                 } else {
                     setMoveCarousel(moveCarousel + 1);
                 }
                 break;
             case 3:
-                if (moveCarousel2 === dataCarousel.find(item => item.index === activeIndex)?.questions.length) {
+                if (moveCarousel == 8) {
+                    setMoveCarousel(moveCarousel + 1);
                     runAnimation('next');
                 } else {
-                    setMoveCarousel2(moveCarousel2 + 1)
+                    setMoveCarousel(moveCarousel+ 1)
                 }
                 break;
             case 4:
-                if (moveCarousel3 === dataCarousel.find(item => item.index === activeIndex)?.questions.length) {
+                if (moveCarousel === 10) {
                     navigation.navigate('CreateObserveFinalPage');
                 } else {
-                    setMoveCarousel3(moveCarousel3 + 1)
+                    setMoveCarousel(moveCarousel + 1)
                 }
                 break;
         }
@@ -181,17 +182,19 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
                 }
                 break;
             case 3:
-                if (moveCarousel2 === 1) {
+                if (moveCarousel === 5) {
+                    setMoveCarousel(moveCarousel - 1)
                     runAnimation('prev');
                 } else {
-                    setMoveCarousel2(moveCarousel2 - 1)
+                    setMoveCarousel(moveCarousel - 1)
                 }
                 break;
             case 4:
-                if (moveCarousel3 === 1) {
+                if (moveCarousel === 9) {
+                    setMoveCarousel(moveCarousel - 1)
                     runAnimation('prev');
                 } else {
-                    setMoveCarousel3(moveCarousel3 - 1)
+                    setMoveCarousel(moveCarousel - 1)
                 }
                 break;
         }
@@ -249,16 +252,13 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
                 </View>
 
                 {/* margin bottom es lo que ocupa el circulo de animación - no quitar */}
-                <View style={{ flex: 1, marginBottom: 200 }}>
-                    <FadeQuestionsScreen
-                        dataCarousel={dataCarousel}
+                <Animated.View style={[{ flex: 1, marginBottom: 200 },opacityPagesStyle]}>
+                    <CarouselForQuestions
+                        data={dataCarousel[0].questions}
                         moveCarousel={moveCarousel}
-                        moveCarousel2={moveCarousel2}
-                        moveCarousel3={moveCarousel3}
-                        trasladeCarousel={trasladeCarousel}
-                        opacityPagesStyle={opacityPagesStyle}
+                        indexScreen={activeIndex}
                     />
-                </View>
+                </Animated.View>
 
             </View>
 

@@ -11,44 +11,41 @@ const windowWidth = Dimensions.get('window').width;
 interface Props {
     data: questionsRGold[];
     moveCarousel: number;
-    moveCarousel2: number;
-    moveCarousel3: number;
     indexScreen: number
 }
 
-export const CarouselForQuestions = ({ data, moveCarousel, moveCarousel2, moveCarousel3, indexScreen }: Props) => {
+export const CarouselForQuestions = ({ data, moveCarousel, indexScreen }: Props) => {
 
     const [activeIndex, setActiveIndex] = useState(0);
 
     const carouselRef = useRef(null);
 
-    const { form, onChange } = useContext(AuthContext);
+    const [paginationArray, setpaginationArray] = useState([1,2,3,4])
 
+    const { form, onChange } = useContext(AuthContext);
+    
+    
+    
     useEffect(() => {
 
-        switch (indexScreen) {
-            case 2:
                 // @ts-ignore
                 carouselRef.current.snapToItem(moveCarousel - 1, true);
-                break;
-            case 3:
-                // @ts-ignore
-                carouselRef.current.snapToItem(moveCarousel2 - 1, true);
-                break;
-            case 4:
-                // @ts-ignore
-                carouselRef.current.snapToItem(moveCarousel3 - 1, true);
-                break;
-        }
-
-    }, [moveCarousel, moveCarousel2, moveCarousel3])
+                
+    }, [moveCarousel])
+   
+    useEffect(() => {
+       indexScreen===4&& setpaginationArray([1,2])
+    }, [indexScreen])
+    
 
     const renderItem = (item: questionsRGold) => {
 
+        
         switch (indexScreen) {
-            case undefined:
-                return (<></>)
+          case undefined:
+                return (<></>) 
             case 4:
+                console.log("item",item);
                 return (<View style={{
                     marginTop: 24,
                     marginHorizontal:'10%'}}>
@@ -68,8 +65,8 @@ export const CarouselForQuestions = ({ data, moveCarousel, moveCarousel2, moveCa
             default:
                 return (
                     <QuestionsCmp questiontType={item.questionsRGold![0]} form={form} onChange={onChange} />
-                );
-        }
+                ); 
+        } 
     }
 
     return (
@@ -86,8 +83,8 @@ export const CarouselForQuestions = ({ data, moveCarousel, moveCarousel2, moveCa
                 }}
             />
             <Pagination
-                dotsLength={data.length}
-                activeDotIndex={activeIndex}
+                dotsLength={paginationArray.length}
+                activeDotIndex={indexScreen===2?activeIndex:indexScreen===3?activeIndex-4:activeIndex-8}
                 containerStyle={{ paddingTop: 5, paddingBottom: 30 }}
                 dotStyle={{
                     width: 10,
