@@ -67,12 +67,12 @@ export const FlatListItemPrompt = ({ setemplid,
         >
             <View style={styles.container}>
                 <View>
-                    <Text style={styles.itemText}>
+                    <Text style={{...styles.itemText,marginLeft:15}}>
                         {field1}
                     </Text>
                 </View>
                 {(promptType.type !== 'DLHR_APS') &&
-                    <View style={{ width: '60%' }}>
+                    <View style={{ width: '65%' }}>
                         <Text style={styles.itemText}>
                             {field2}
                         </Text>
@@ -92,7 +92,6 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     itemText: {
-        marginLeft: 10,
         fontSize: 20,
         fontFamily: 'StagSans-Light',
         color: colors.dlsTextwhite,

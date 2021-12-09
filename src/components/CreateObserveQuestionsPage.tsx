@@ -12,9 +12,10 @@ import { QuestionCarousel } from '../interfaces/QuestionInterfaces';
 
 interface Props extends StackScreenProps<any, any> { };
 
+const { width: windowWidth, height: windowsHeight } = Dimensions.get('window');
+
 const duration = 1000;
-const circleSize = 100;
-const windowWidth = Dimensions.get('window').width;
+const circleSize = windowsHeight <= 593 ? 70 : 100;
 
 export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
 
@@ -131,7 +132,7 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
 
         animatedBGCircleValue.value = nextPrev === 'next' ? 0 : 1;
         animatedBGCircleValue.value = withTiming(nextPrev === 'next' ? 1 : 0, { duration }, () => {
-            opacityPagesValue.value = withDelay(200,withTiming(0, { duration: 200 }))
+            opacityPagesValue.value = withDelay(200, withTiming(0, { duration: 200 }))
         });
 
         animatedBGColorValue.value = withTiming((activeIndex % 2) === 0 ? 1 : 0, { duration });
@@ -175,7 +176,6 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
             case 2:
                 if (moveCarousel === 1) {
                     navigation.pop();
-                    console.log("vuelvo a pagina");
                 } else {
                     setMoveCarousel(moveCarousel - 1);
                 }
@@ -249,7 +249,13 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
                 </View>
 
                 {/* margin bottom es lo que ocupa el circulo de animación - no quitar */}
-                <View style={{ flex: 1, marginBottom: 200 }}>
+                <View style={{
+                    flex: 1,
+                    marginBottom: windowsHeight <= 760 ?
+                        windowsHeight <= 593 ? '25%' : '35%'
+                        :
+                        200
+                }}>
                     <FadeQuestionsScreen
                         dataCarousel={dataCarousel}
                         moveCarousel={moveCarousel}
@@ -276,7 +282,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'center',
         padding: 8,
-        paddingBottom: 100,
+        paddingBottom: windowsHeight <= 760 ? '10%' : 100,
         backgroundColor: colors.dlsGrayPrimary
     },
     circle: {
@@ -286,8 +292,8 @@ const styles = StyleSheet.create({
         backgroundColor: colors.dlsYellowSecondary
     },
     circleButton: {
-        height: 100,
-        width: 100,
+        height: windowsHeight <= 593 ? 70 : 100,
+        width: windowsHeight <= 593 ? 70 : 100,
         borderRadius: 50,
         justifyContent: 'center',
         alignItems: 'center'

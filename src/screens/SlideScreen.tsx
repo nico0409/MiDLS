@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { Dimensions, Image, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Dimensions, Image, Text, View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { useSharedValue, useAnimatedStyle, withTiming, withDelay } from 'react-native-reanimated';
@@ -32,7 +32,7 @@ export const SlidesScreen = ({ navigation }: Props) => {
                 justifyContent: 'center'
             }}>
 
-                <View style={{ width: '100%', height: '60%', padding: 30 }}>
+                <View style={{ width: '100%', height: '50%', paddingVertical: 10, paddingHorizontal: 30 }}>
                     <View style={{
                         backgroundColor: 'white',
                         width: '100%',
@@ -51,15 +51,17 @@ export const SlidesScreen = ({ navigation }: Props) => {
                     </View>
                 </View>
 
-                <View style={{ paddingHorizontal: 40 }}>
+                <View style={{ paddingHorizontal: 30 }}>
                     <Text style={{
                         ...styles.title,
                         color: 'white'
                     }}>{item.title}</Text>
-                    <Text style={{
-                        ...styles.subtitle,
-                        color: 'white'
-                    }}>{item.desc}</Text>
+                    <ScrollView>
+                        <Text style={{
+                            ...styles.subtitle,
+                            color: 'white'
+                        }}>{item.desc}</Text>
+                    </ScrollView>
                 </View>
 
             </View>

@@ -14,9 +14,9 @@ interface Props {
     isVisible: boolean
     setisVisible: React.Dispatch<React.SetStateAction<boolean>>
     setTerm: React.Dispatch<React.SetStateAction<string>>
-    setPlaceHolder:React.Dispatch<React.SetStateAction<fieldSearchType>>
+    setPlaceHolder: React.Dispatch<React.SetStateAction<fieldSearchType>>
 }
-export const ModalSearch = ({ isVisible, setisVisible, setTerm,setPlaceHolder }: Props) => {
+export const ModalSearch = ({ isVisible, setisVisible, setTerm, setPlaceHolder }: Props) => {
     const [searchValue, setsearchValue] = useState(0)
     const [typeSearh, setTypeSearch] = useState<fieldSearchType>({
         type: 'DLHR_NTARJETA',
@@ -27,20 +27,22 @@ export const ModalSearch = ({ isVisible, setisVisible, setTerm,setPlaceHolder }:
 
         switch (Value) {
             case 0:
-                setTypeSearch!({  type: 'DLHR_NTARJETA',
-                label: 'Numero de tarjeta'})
+                setTypeSearch!({
+                    type: 'DLHR_NTARJETA',
+                    label: 'Numero de tarjeta'
+                })
                 break;
             case 1:
-                setTypeSearch!({ type: 'DLHR_BUSSINES',label:'Unidadad de negocio' })
+                setTypeSearch!({ type: 'DLHR_BUSSINES', label: 'Unidadad de negocio' })
                 break;
             case 2:
-                setTypeSearch!({ type: 'DLHR_EQUIPO' ,label:'Equipo'})
+                setTypeSearch!({ type: 'DLHR_EQUIPO', label: 'Equipo' })
                 break;
             case 3:
-                setTypeSearch!({ type: 'DLHR_FECHA',label:'Fecha' })
+                setTypeSearch!({ type: 'DLHR_FECHA', label: 'Fecha' })
                 break;
             case 4:
-                setTypeSearch!({ type: 'DLHR_TURNO',label:'Turno' })
+                setTypeSearch!({ type: 'DLHR_TURNO', label: 'Turno' })
                 break;
             default:
                 break;
@@ -50,7 +52,7 @@ export const ModalSearch = ({ isVisible, setisVisible, setTerm,setPlaceHolder }:
 
     useEffect(() => {
         setTerm('');
-setPlaceHolder({...typeSearh})
+        setPlaceHolder({ ...typeSearh })
     }, [typeSearh])
 
     return (
@@ -61,16 +63,16 @@ setPlaceHolder({...typeSearh})
                 onRequestClose={() => { setisVisible(!isVisible); }}
             >
                 <TouchableOpacity
-                    style={{ flex: 1 ,backgroundColor: 'rgba(0,0,0,0.5)'}}
+                    style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)' }}
                     activeOpacity={1}
                     onPressOut={() => { setisVisible(false) }}
                 />
 
                 {/* contenido del modal */}
                 <View style={{
-                    backgroundColor:colors.dlsGrayPrimary,
-                    width: 190,
-                    height: 230,
+                    backgroundColor: colors.dlsGrayPrimary,
+                    width: 230,
+                    height: 200,
                     position: 'absolute',
                     justifyContent: 'center',
                     alignItems: 'center',
@@ -81,14 +83,12 @@ setPlaceHolder({...typeSearh})
                     elevation: 10,
                     borderRadius: 15,
                     shadowOpacity: 0.25,
-                    top:90,
-                    left:30
-
-
+                    top: 90,
+                    left: 30,
 
                 }}>
 
-                  {/*   <RadioForm
+                    {/*   <RadioForm
                         radio_props={listSearchOptions}
                         initial={searchValue}
                         onPress={(value) => { setsearchValue!(value), changeType(value), setisVisible(false) }}
@@ -97,40 +97,40 @@ setPlaceHolder({...typeSearh})
                         labelColor={colors.dlsTextwhite}
                          /> */}
 
-<RadioForm
-  formHorizontal={false}
-  animation={true}
-  initial={searchValue}
- 
->
- {
-    listSearchOptions.map((obj, i) => (
-      <RadioButton labelHorizontal={true} key={i} >
-        {/*  You can set RadioButtonLabel before RadioButtonInput */}
-        <RadioButtonInput
-          obj={obj}
-          index={i}
-           isSelected={searchValue=== i} 
-          onPress={(value) => { setsearchValue!(value), changeType(value) , setisVisible(false) }}
-          buttonInnerColor={colors.dlsBluePrimary}
-          buttonOuterColor={ colors.dlsBtonColosWhite}
-          
-          buttonOuterSize={25}
-          buttonStyle={{backgroundColor:colors.dlsGrayPrimary}}
-          buttonWrapStyle={{marginLeft: 5}}
-        />
-        <RadioButtonLabel
-          obj={obj}
-          index={i}
-          labelHorizontal={true}
-          onPress={(value) => { setsearchValue!(value), changeType(value) ,   setisVisible(false)}}
-          labelStyle={{fontSize: 17, color: colors.dlsTextwhite}}
-         
-        />
-      </RadioButton>
-    ))
-  }  
-</RadioForm>
+                    <RadioForm
+                        formHorizontal={false}
+                        animation={true}
+                        initial={searchValue}
+
+                    >
+                        {
+                            listSearchOptions.map((obj, i) => (
+                                <RadioButton labelHorizontal={true} key={i} >
+                                    {/*  You can set RadioButtonLabel before RadioButtonInput */}
+                                    <RadioButtonInput
+                                        obj={obj}
+                                        index={i}
+                                        isSelected={searchValue === i}
+                                        onPress={(value) => { setsearchValue!(value), changeType(value), setisVisible(false) }}
+                                        buttonInnerColor={colors.dlsBluePrimary}
+                                        buttonOuterColor={colors.dlsBtonColosWhite}
+
+                                        buttonOuterSize={25}
+                                        buttonStyle={{ backgroundColor: colors.dlsGrayPrimary }}
+                                        buttonWrapStyle={{ marginLeft: 5 }}
+                                    />
+                                    <RadioButtonLabel
+                                        obj={obj}
+                                        index={i}
+                                        labelHorizontal={true}
+                                        onPress={(value) => { setsearchValue!(value), changeType(value), setisVisible(false) }}
+                                        labelStyle={{ fontSize: 17, color: colors.dlsTextwhite }}
+
+                                    />
+                                </RadioButton>
+                            ))
+                        }
+                    </RadioForm>
 
                 </View>
 

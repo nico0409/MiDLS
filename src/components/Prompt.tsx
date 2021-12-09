@@ -361,7 +361,7 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
                 }}
             >
                 <TouchableOpacity
-                    style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.4)', }}
+                    style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.4)'}}
                     activeOpacity={1}
                     onPressOut={() => { setisVisible(false) }}
                 >
@@ -369,16 +369,15 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
 
                 <View style={{
                     ...styles.conteinerModal,
-                    top: height * 0.15,
-                    left: width * 0.1,
-                    height: height * 0.5,
-                    width: width * 0.8,
-
+                    alignSelf:'center',
+                    height: height * 0.6,
+                    width: width * 0.95,
+                    top:'20%'
                 }}>
                     <View style={{
                         ...styles.cardPrompt,
-                        height: height * 0.5,
-                        width: width * 0.8,
+                        height: height * 0.6,
+                        width: '100%',
                         backgroundColor: colors.dlsGrayPrimary
                     }}>
                         <SearchInput
@@ -394,8 +393,9 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
 
                         <View style={{
                             top: 25,
-                            height: height * 0.4,
-
+                            height: height * 0.5,
+                            paddingVertical:5,
+                            borderRadius:20,
                             backgroundColor: colors.dlsGrayPrimary
                         }}>
                             {seeFlatList &&
@@ -443,7 +443,7 @@ const styles = StyleSheet.create({
             height: 10
         },
         elevation: 10,
-        borderRadius: 15,
+        borderRadius: 20,
         shadowOpacity: 0.25
 
     },
@@ -456,7 +456,7 @@ const styles = StyleSheet.create({
         height: 50,
         width: width * 0.87,
 
-        borderRadius: 15,
+        borderRadius: 20,
         backgroundColor: '#2b2c32',
         justifyContent: 'space-between',
         paddingLeft: 15,

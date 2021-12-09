@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
-import { Dimensions, Text, View } from 'react-native';
+import { Dimensions, ScrollView, Text, View } from 'react-native';
 import { QuestionsCmp } from './Questions';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { questionsRGold } from '../interfaces/QuestionInterfaces';
@@ -49,7 +49,7 @@ export const CarouselForQuestions = ({ data, moveCarousel, moveCarousel2, moveCa
             case undefined:
                 return (<></>)
             case 4:
-                return (<View style={{
+                return (<ScrollView style={{
                     marginTop: 24,
                     marginHorizontal:'10%'}}>
                     <Text style={{color:'white',fontSize:18,fontWeight:'bold',paddingBottom:10}}>Reglas de Oro</Text>
@@ -60,14 +60,18 @@ export const CarouselForQuestions = ({ data, moveCarousel, moveCarousel2, moveCa
                             </View>
                         )
                     })}
-                </View>)
+                </ScrollView>)
             case 3:
                 return (
+                    <ScrollView>
                     <QuestionsCmp questiontType={item.questionsRGold![0]} form={form} onChange={onChange} darkText/>
+                    </ScrollView>
                 );
             default:
                 return (
+                    <ScrollView>
                     <QuestionsCmp questiontType={item.questionsRGold![0]} form={form} onChange={onChange} />
+                    </ScrollView>
                 );
         }
     }

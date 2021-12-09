@@ -42,19 +42,6 @@ export const CreateObservePageTwo = ({ form, onChange }: Props) => {
 
                 <CustomSwitchObserve title="¿Aplico interrupción de tareas?" onChange={onChange} switchType="m38:DL_POLITINTERTAREA" />
 
-                <CustomSwitchObserve title="Requiere APS de seguimiento" onChange={onChange} switchType="m38:DL_REQAPSSEG" />
-
-                {form["m38:DL_REQAPSSEG"] === 'Y' &&
-                <View>
-                    <Prompt
-                        form={form}
-                        onChange={onChange}
-                        promptType={{ type: 'DLHR_APS' }}
-                    />
-                    <RalationchipBtn form={form} />
-                    </View>
-                }
-
                 <CustomSwitchObserve title="Cuasi accidente" onChange={onChange} switchType="m38:DL_CUASIACC" />
 
                 {form["m38:DL_CUASIACC"] === 'Y' &&
@@ -80,7 +67,6 @@ export const CreateObservePageTwo = ({ form, onChange }: Props) => {
                     width: '100%',
                     justifyContent: 'space-between',
                     paddingHorizontal: 30,
-                    marginBottom:50
                 }}>
                     <Text style={{ color: colors.dlsTextwhite, fontSize: 15 }}>A destacar</Text>
                     <CheckBox
@@ -93,6 +79,27 @@ export const CreateObservePageTwo = ({ form, onChange }: Props) => {
                             onChange(newValue ? 'Y' : 'N', 'm38:DL_ADESTACAR');
                         }}
                     />
+                </View>
+
+                <CustomSwitchObserve title="Requiere APS de seguimiento *" onChange={onChange} switchType="m38:DL_REQAPSSEG" />
+
+                {form["m38:DL_REQAPSSEG"] === 'Y' &&
+                    <View>
+                        <Prompt
+                            form={form}
+                            onChange={onChange}
+                            promptType={{ type: 'DLHR_APS' }}
+                        />
+                        <View style={{ marginVertical: 10 }}>
+                            <RalationchipBtn form={form} />
+                        </View>
+                    </View>
+                }
+
+                <View style={{marginHorizontal:30}}>
+                    <Text style={{ color: 'white' }}>
+                        * No es necesario que cargues los datos del número y responsable si no lo conocés. Podés guardar y enviar la tarjeta de todos modos.
+                    </Text>
                 </View>
 
             </View >

@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
         backgroundColor: colors.dlsBtonColosWhite,
         borderRadius: 50,
         height: 40,
-        width: 280,
+        width: '90%',
         paddingHorizontal: 20,
         marginHorizontal: 10,
         justifyContent: 'center',

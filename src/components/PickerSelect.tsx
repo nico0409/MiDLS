@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import RNSingleSelect, { ISingleSelectDataType } from "@freakycoder/react-native-single-select";
+import RNSingleSelect, { ISingleSelectDataType } from "../libs/react-native-single-select";
 import { Dimensions, Text, View } from 'react-native';
 import { promptType, DlhrBussinesUnit, DlhrOrigen, DlhrPuesto, DlhrTurno, M38GetCompIntfcDLHRTAOBSERVCIResponse, objUseForm, DlhrAps, DlhrAllObserve } from '../interfaces/prompInterfaces';
 import { GetPromptArray } from './GetPromptArrayy';
@@ -160,6 +160,8 @@ export const PickerSelect = ({ placeholder, type, onChange, form, setCardDescr, 
                     data={data}
                     width={ScreenWidth * 0.87}
                     searchEnabled={false}
+                    placeholderTextColor="white"
+                    menuItemTextStyle={{color:'white'}}
                     menuBarContainerWidth={ScreenWidth * 0.87}
                     onSelect={(selectedItem: ISingleSelectDataType) => {
                         onChange(selectedItem.data.dataItem, selectedItem.data.fieldData);
