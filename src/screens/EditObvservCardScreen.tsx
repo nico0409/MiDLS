@@ -136,7 +136,7 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
                             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', alignContent: 'center', paddingHorizontal: 35 }}>
                                 <View>
                                     <Text style={{ color: 'white', fontSize: 40, textAlign: 'center', marginBottom: 20, fontWeight: 'bold' }}>
-                                        No se ha podido cargar los detalles correctamente.
+                                        No se han podido cargar los detalles correctamente.
                                     </Text>
                                     <Text style={{ color: 'white', fontSize: 26, textAlign: 'center', marginBottom: 20 }}>
                                         Es posible que se detectara una conexión a internet y la tarjeta se haya enviado automáticamente. Puede volver a la lista de tarjetas y verificar que la suya se encuentre allí.
