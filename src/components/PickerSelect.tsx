@@ -171,7 +171,7 @@ export const PickerSelect = ({ placeholder, type, onChange, form, setCardDescr, 
                     }}
                 />
                 {disabled &&
-                    <View style={{ height: '100%', width: '15%', backgroundColor: '#2b2c32', position: 'absolute', right: 0, borderRadius: 50 }} />
+                    <View style={{ height: 50, width: 50, backgroundColor: '#2b2c32', position: 'absolute', right: 0, borderRadius: 50 }} />
                 }
             </Animated.View>
 
