@@ -132,7 +132,7 @@ export const SlidesScreen = ({ navigation }: Props) => {
                 <CheckBox
                     value={toggleCheckBox}
                     tintColors={{ true: colors.dlsBluePrimary, false: colors.dlsBtonColosWhite }}
-                    style={{ transform: [{ scaleX: 1.1 }, { scaleY: 1.1 }] }}
+                    style={{ transform: [{ scaleX: 1 }, { scaleY: 1}] }}
                     onValueChange={(newValue) => {
                         setToggleCheckBox(newValue)
                     }}

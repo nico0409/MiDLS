@@ -266,12 +266,14 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef, cardOffline 
                   alignItems: 'center',
                   width: '100%',
                   justifyContent: 'space-between',
-                  paddingHorizontal: 25
+                  paddingLeft:25,
+                  paddingRight:35,
+                  
                 }}>
                 <Text style={{ color: colors.dlsTextwhite, fontSize: 15 }}>A destacar</Text>
                 <CheckBox
                   tintColors={{ true: (cardOffline ? '#adb5bd' : colors.dlsYellowSecondary), false: colors.dlsBtonColosWhite }}
-                  style={{ transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }] }}
+                  style={{ transform: [{ scaleX: 1 }, { scaleY: 1}] }}
                   disabled={false}
                   value={toggleCheckBox}
                   onValueChange={(newValue) => {
