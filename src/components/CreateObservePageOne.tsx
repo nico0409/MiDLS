@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import { View, ScrollView, StyleSheet, } from 'react-native';
 import { PickerSelect } from './PickerSelect';
 import { objUseForm } from '../interfaces/prompInterfaces';
@@ -22,9 +22,11 @@ export const CreateObservePageOne = ({ form, onChange, busunitErrorAnim, origenE
     const { emplidSelect } = useContext(AuthContext)
 
     const { setCardDescr, cardDescr } = useContext(AuthContext);
-    
+
+    const scrollViewRef = useRef<ScrollView>(null);
+
     return (
-        <ScrollView>
+        <ScrollView ref={scrollViewRef}>
 
             <View style={{ alignItems: 'center' }}>
 
@@ -36,15 +38,15 @@ export const CreateObservePageOne = ({ form, onChange, busunitErrorAnim, origenE
 
                 <Prompt onChange={onChange} promptType={{ type: 'DLHR_EQUIP_TBL' }} setCardDescr={setCardDescr} cardDescr={cardDescr} activeBorderError={equipErrorAnim} />
 
-                <PickerSelect placeholder="Turno" type="DLHR_TURNO" onChange={onChange} setCardDescr={setCardDescr} cardDescr={cardDescr} activeBorderError={turnoErrorAnim} />
+                <PickerSelect placeholder="Turno" type="DLHR_TURNO" onChange={onChange} setCardDescr={setCardDescr} cardDescr={cardDescr} activeBorderError={turnoErrorAnim} scrollViewRef={scrollViewRef}/>
 
                 <Prompt onChange={onChange} promptType={{ type: 'DLHR_CUSTOMER' }} activeBorderError={clientesErrorAnim} />
 
                 <Prompt onChange={onChange} promptType={{ type: 'DLHR_SECTOR' }} activeBorderError={sectorErrorAnim} />
 
-                <Prompt form={form} onChange={onChange} promptType={{ type: 'DLHR_OBSERVE_EMPLID' }} />
+                <Prompt form={form} onChange={onChange} promptType={{ type: 'DLHR_OBSERVE_EMPLID' }} disabled={true}/>
 
-                <PickerSelect placeholder="Puesto" type={"DLHR_PUESTO"} onChange={onChange} />
+                <PickerSelect placeholder="Puesto" type={"DLHR_PUESTO"} onChange={onChange} scrollViewRef={scrollViewRef}/>
 
             </View>
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Text, TouchableOpacity, View, StyleSheet, Dimensions } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { DlhrAllObserve, objUseForm } from '../interfaces/prompInterfaces';
+import { DlhrAllObserve, M38GetCompIntfcDLHRTAOBSERVCIResponse, objUseForm } from '../interfaces/prompInterfaces';
 import { colors } from '../Themes/DlsTheme';
 
 interface Props {
@@ -10,17 +10,21 @@ interface Props {
     cardDescr?: DlhrAllObserve;
     setCardDescr?: React.Dispatch<React.SetStateAction<DlhrAllObserve>>;
     disabled?: boolean;
+    form?: M38GetCompIntfcDLHRTAOBSERVCIResponse
 }
 
 const { width } = Dimensions.get('window')
 
-export const DatePickerSelect = ({ onChange, cardDescr, setCardDescr, disabled = false }: Props) => {
-
-    //datePicker
+export const DatePickerSelect = ({ onChange, form, cardDescr, setCardDescr, disabled = false }: Props) => {
 
     const dateInitial = new Date();
 
-    const [date, setDate] = useState(dateInitial);
+    const formatearFechaEnCodigo = (dateString: string) => {
+        let dateToFormat = dateString.split(/[\s-:/]/);
+        return new Date(parseInt(dateToFormat![0]), (parseInt(dateToFormat![1], 10) - 1), parseInt(dateToFormat![2], 10))
+    }
+        
+    const [date, setDate] = useState(form?.['m38:DL_IDENTIF_DT'] ? formatearFechaEnCodigo(form?.['m38:DL_IDENTIF_DT']) : dateInitial);
 
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
@@ -38,18 +42,19 @@ export const DatePickerSelect = ({ onChange, cardDescr, setCardDescr, disabled =
         let yyyy = date.getFullYear();
 
         let dateFormated = yyyy + '/' + mm + '/' + dd
-        
+
         hideDatePicker();
-        
-        setCardDescr&&setCardDescr({ ...cardDescr, ...{DL_IDENTIF_DT: dateFormated } })
+
+        setCardDescr && setCardDescr({ ...cardDescr, ...{ DL_IDENTIF_DT: dateFormated } })
         setDate(date);
-        
-        
+
+
         onChange(dateFormated, 'm38:DL_IDENTIF_DT');
 
     };
 
     const formattedDate = (d = new Date) => {
+
         let month = String(d.getMonth() + 1);
         let day = String(d.getDate());
         const year = String(d.getFullYear());

@@ -44,6 +44,13 @@
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
 				<true/>
 			</dict>
+			<key>midls.dls-archer.com</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+			</dict>
 			<key>www.dls-tst-peoplesoft.com</key>
 			<dict>
 				<key>NSIncludesSubdomains</key>

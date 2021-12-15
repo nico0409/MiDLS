@@ -1,5 +1,5 @@
 import React from 'react'
-import BouncyCheckbox from "react-native-bouncy-checkbox";
+import BouncyCheckbox from "../libs/react-native-bouncy-checkbox";
 import { goldRuleData } from '../data/QuestionsData';
 import { M38GetCompIntfcDLHRTAOBSERVCIResponse, objUseForm } from '../interfaces/prompInterfaces';
 import { ruleGold, ruleType } from '../interfaces/QuestionInterfaces';

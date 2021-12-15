@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Dimensions, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
+import { Dimensions, Platform, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 
 import Animated from "react-native-reanimated";
 import { mix, useTransition } from "react-native-redash/src/v1/";
@@ -32,13 +32,13 @@ interface ListProps {
   form: M38GetCompIntfcDLHRTAOBSERVCIResponse;
   onChange: (value: string, field: keyof M38GetCompIntfcDLHRTAOBSERVCIResponse) => void;
   scrollViewRef?: React.RefObject<ScrollView>;
-  cardOffline?: boolean;
+  displayOnly?: boolean;
 }
 
 const { height: heightDimension } = Dimensions.get('window');
 //37,5
 
-export default ({ form, onChange, list, MeuItemType, scrollViewRef, cardOffline }: ListProps) => {
+export default ({ form, onChange, list, MeuItemType, scrollViewRef, displayOnly }: ListProps) => {
 
   const LIST_ITEM_HEIGHT = heightDimension * 0.68;
   const { interpolateNode } = Animated;
@@ -47,7 +47,7 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef, cardOffline 
   const { emplidSelect } = useContext(AuthContext);
   const height = mix(transition, 0, LIST_ITEM_HEIGHT * 1);
   const bottomRadius = interpolateNode(transition, {
-    inputRange: [0, 16 / 400],
+    inputRange: [0, 16 / 420],
     outputRange: [8, 0],
   });
 
@@ -62,39 +62,39 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef, cardOffline 
     switch (MeuItemType.MeuItemType) {
       case 'Registro':
         
+        
         setOpen((prev) => !prev);  
         setTimeout(() => {
-          scrollViewRef?.current?.scrollTo({ y: 40, animated: true });  
+          scrollViewRef?.current?.scrollTo({ y: heightDimension <= 593 ? heightDimension <= 534 ? 0 : 20 : 40, animated: true })
         }, 200);
         break;
       case 'Comentarios':
         
         setOpen((prev) => !prev)  ;
   setTimeout(() => {
-  scrollViewRef?.current?.scrollTo({ y: 160, animated: true });  
+    scrollViewRef?.current?.scrollTo({ y: heightDimension <= 593 ? heightDimension <= 534 ? 100 : 120 : 160, animated: true })
 }, 200);
+        
         break;
       case 'Preguntas':
         setOpen((prev) => !prev)  ;
         setTimeout(() => {
-          scrollViewRef?.current?.scrollTo({ y: 300, animated: true });  
+          scrollViewRef?.current?.scrollTo({ y: heightDimension <= 593 ? heightDimension <= 534 ? 200 : 240 : 300, animated: true }) 
         }, 200);
+        
         
         break;
       case 'ReglasOro':
+        
         setOpen((prev) => !prev)  ;
 
         setTimeout(() => {
-          scrollViewRef?.current?.scrollTo({ y: 420, animated: true });  
+          scrollViewRef?.current?.scrollTo({ y: heightDimension <= 593 ? heightDimension <= 534 ? 300 : 340 : 420, animated: true })
         }, 200);
  
         break;
     }
   }
-
-
-
-
 
   return (
     <>
@@ -132,162 +132,176 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef, cardOffline 
                 type="DLHR_EMPL_BUSSINES_UNIT"
                 onChange={onChange}
                 emplid={emplidSelect.fieldValue1}
-                disabled={cardOffline}
+                disabled={displayOnly}
               />
 
-              <DatePickerSelect onChange={onChange} disabled={cardOffline} />
+              <DatePickerSelect
+                form={form}
+                onChange={onChange}
+                disabled={displayOnly}
+              />
 
               <PickerSelect
                 form={form}
                 placeholder="Origen"
                 type="DLHR_ORIGEN"
                 onChange={onChange}
-                disabled={cardOffline}
+                disabled={displayOnly}
               />
               <Prompt
                 form={form}
                 onChange={onChange}
                 promptType={{ type: 'DLHR_EQUIP_TBL' }}
-                disabled={cardOffline}
+                disabled={displayOnly}
               />
               <PickerSelect
                 form={form}
                 placeholder="Turno"
                 type="DLHR_TURNO"
                 onChange={onChange}
-                disabled={cardOffline}
+                disabled={displayOnly}
               />
               <Prompt
                 form={form}
                 onChange={onChange}
                 promptType={{ type: 'DLHR_CUSTOMER' }}
-                disabled={cardOffline}
+                disabled={displayOnly}
               />
               <Prompt
                 form={form}
                 onChange={onChange}
                 promptType={{ type: 'DLHR_SECTOR' }}
-                disabled={cardOffline}
+                disabled={displayOnly}
               />
 
               <Prompt
                 form={form}
                 onChange={onChange}
                 promptType={{ type: 'DLHR_OBSERVE_EMPLID' }}
-                disabled={cardOffline}
+                disabled={true}
               />
               <PickerSelect
                 form={form}
                 placeholder="Puesto"
                 type={"DLHR_PUESTO"}
                 onChange={onChange}
-                disabled={cardOffline}
+                disabled={displayOnly}
               />
             </View>
           )}
           {MeuItemType.MeuItemType === 'Comentarios' && (
-            <View style={{ alignItems: 'center' }}>
-              <InputModal
-                placeholder={"Descripción del Acto / Condición "}
-                textSelect={""}
-                type={'DL_DESCACTO'}
-                onChange={onChange}
-                form={form}
-                disabled={cardOffline}
-              />
-              <InputModal
-                placeholder={"Acción para evitar reiteración"}
-                textSelect={"gtyty"}
-                type={'DL_ACCEVITREIT'}
-                onChange={onChange}
-                form={form}
-                disabled={cardOffline}
-              />
-              <CustomSwitchObserve
-                title="¿Aplico interrupción de tareas?"
-                onChange={onChange}
-                switchType="m38:DL_POLITINTERTAREA"
-                form={form}
-                disabled={cardOffline}
-              />
-              <CustomSwitchObserve
-                title="Requiere APS de seguimiento"
-                onChange={onChange}
-                switchType="m38:DL_REQAPSSEG"
-                form={form}
-                disabled={cardOffline}
-              />
-
-              {form["m38:DL_REQAPSSEG"] === 'Y' &&
-                <View>
-
-                  <Prompt
-                    form={form}
-                    onChange={onChange}
-                    promptType={{ type: 'DLHR_APS' }}
-                    disabled={cardOffline}
-                  />
-
-                  <RalationchipBtn form={form} />
-                </View>
-              }
-
-              <CustomSwitchObserve
-                title="Cuasi accidente"
-                onChange={onChange}
-                switchType="m38:DL_CUASIACC"
-                form={form}
-                disabled={cardOffline}
-              />
-
-              {form["m38:DL_CUASIACC"] === 'Y' &&
-                <View>
-                  <InputModal
-                    placeholder={"Más Detalles"}
-                    type={'PTLT_DETAILS'}
-                    onChange={onChange}
-                    form={form}
-                    disabled={cardOffline}
-                  />
-                  <InputModal
-                    placeholder={"Accion"}
-                    type={'DL_ACCION'}
-                    onChange={onChange}
-                    form={form}
-                    disabled={cardOffline}
-                  />
-                </View>
-              }
-
-              <View
-                pointerEvents={cardOffline ? "none" : "auto"}
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  width: '100%',
-                  justifyContent: 'space-between',
-                  paddingLeft:25,
-                  paddingRight:35,
-                  
-                }}>
-                <Text style={{ color: colors.dlsTextwhite, fontSize: 15 }}>A destacar</Text>
-                <CheckBox
-                  tintColors={{ true: (cardOffline ? '#adb5bd' : colors.dlsYellowSecondary), false: colors.dlsBtonColosWhite }}
-                  style={{ transform: [{ scaleX: 1 }, { scaleY: 1}] }}
-                  disabled={false}
-                  value={toggleCheckBox}
-                  onValueChange={(newValue) => {
-                    setToggleCheckBox(newValue);
-                    onChange(newValue ? 'Y' : 'N', 'm38:DL_ADESTACAR');
-                  }}
+            <ScrollView>
+              <View style={{ alignItems: 'center' }}>
+                <InputModal
+                  placeholder={"Descripción del Acto / Condición "}
+                  textSelect={""}
+                  type={'DL_DESCACTO'}
+                  onChange={onChange}
+                  form={form}
+                  disabled={displayOnly}
                 />
-              </View>
+                <InputModal
+                  placeholder={"Acción para evitar reiteración"}
+                  textSelect={"gtyty"}
+                  type={'DL_ACCEVITREIT'}
+                  onChange={onChange}
+                  form={form}
+                  disabled={displayOnly}
+                />
+                <CustomSwitchObserve
+                  title="¿Aplico interrupción de tareas?"
+                  onChange={onChange}
+                  switchType="m38:DL_POLITINTERTAREA"
+                  form={form}
+                  disabled={displayOnly}
+                />
 
-            </View>
+                <CustomSwitchObserve
+                  title="Cuasi accidente"
+                  onChange={onChange}
+                  switchType="m38:DL_CUASIACC"
+                  form={form}
+                  disabled={displayOnly}
+                />
+
+                {form["m38:DL_CUASIACC"] === 'Y' &&
+                  <View>
+                    <InputModal
+                      placeholder={"Más Detalles"}
+                      type={'PTLT_DETAILS'}
+                      onChange={onChange}
+                      form={form}
+                      disabled={displayOnly}
+                    />
+                    <InputModal
+                      placeholder={"Accion"}
+                      type={'DL_ACCION'}
+                      onChange={onChange}
+                      form={form}
+                      disabled={displayOnly}
+                    />
+                  </View>
+                }
+
+                <View
+                  pointerEvents={displayOnly ? "none" : "auto"}
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    width: '100%',
+                    justifyContent: 'space-between',
+                    paddingHorizontal: 30,
+                    marginVertical: Platform.OS==='ios'?10:0
+                  }}>
+                  <Text style={{ color: colors.dlsTextwhite, fontSize: 15 }}>A destacar</Text>
+                  <CheckBox
+                    tintColors={{ true: (displayOnly ? '#adb5bd' : colors.dlsYellowSecondary), false: colors.dlsBtonColosWhite }}
+                    style={{ transform: [{ scaleX: 1 }, { scaleY: 1 }] }}
+                    disabled={false}
+                    value={toggleCheckBox}
+                    onValueChange={(newValue) => {
+                      setToggleCheckBox(newValue);
+                      onChange(newValue ? 'Y' : 'N', 'm38:DL_ADESTACAR');
+                    }}
+                  />
+                </View>
+
+                <CustomSwitchObserve
+                  title="Requiere APS de seguimiento *"
+                  onChange={onChange}
+                  switchType="m38:DL_REQAPSSEG"
+                  form={form}
+                  disabled={displayOnly}
+                />
+
+                {form["m38:DL_REQAPSSEG"] === 'Y' &&
+                  <View>
+
+                    <Prompt
+                      form={form}
+                      onChange={onChange}
+                      promptType={{ type: 'DLHR_APS' }}
+                      disabled={displayOnly}
+                    />
+
+                    <View style={{ marginVertical: 10 }}>
+                      <RalationchipBtn form={form} />
+                    </View>
+                  </View>
+                }
+
+                <View style={{ marginHorizontal: 30, marginBottom: 50 }}>
+                  <Text style={{ color: 'white' }}>
+                    * No es necesario que cargues los datos del número y responsable si no lo conocés. Podés guardar y enviar la tarjeta de todos modos.
+                  </Text>
+                </View>
+
+              </View>
+            </ScrollView>
           )}
           {MeuItemType.MeuItemType === 'Preguntas' && (
             <>
-              <View pointerEvents={cardOffline ? "none" : "auto"} style={{ marginBottom: 40 }}>
+              <View pointerEvents={displayOnly ? "none" : "auto"} style={{ marginBottom: 40 }}>
                 <QuestionsCmp form={form} questiontType={{ type: '1' }} onChange={onChange} />
                 <QuestionsCmp form={form} questiontType={{ type: '2' }} onChange={onChange} />
                 <QuestionsCmp form={form} questiontType={{ type: '3' }} onChange={onChange} />
@@ -300,7 +314,7 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef, cardOffline 
             </>
           )}
           {MeuItemType.MeuItemType === 'ReglasOro' && (
-            <View pointerEvents={cardOffline ? "none" : "auto"} style={{ marginTop: 10, marginHorizontal: '15%', marginBottom: 20 }}>
+            <View pointerEvents={displayOnly ? "none" : "auto"} style={{ marginTop: 10, marginHorizontal: '15%', marginBottom: 20 }}>
               <Rulegold form={form} onChange={onChange} questiontType={{ type: '1' }} />
               <Rulegold form={form} onChange={onChange} questiontType={{ type: '2' }} />
               <Rulegold form={form} onChange={onChange} questiontType={{ type: '3' }} />
@@ -321,7 +335,7 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef, cardOffline 
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 60,
+    marginTop: heightDimension <= 593 ? heightDimension <= 535 ? 35 : 45 : 60,
     backgroundColor: colors.dlsBotonBlack,
     padding: 16,
     borderTopLeftRadius: 8,

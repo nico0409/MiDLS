@@ -41,9 +41,9 @@ interface Props extends MaterialTopTabScreenProps <ParamListBase,'PersonaScreen'
   }
  }, [state])
  
- return (<View/>) 
-}
-  /*return (
+  
+
+  return (
     <View style={styless.containerWebView}>
         {isConnected &&
          <WebView
@@ -63,4 +63,3 @@ interface Props extends MaterialTopTabScreenProps <ParamListBase,'PersonaScreen'
          )
 }
 
-*/

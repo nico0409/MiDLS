@@ -270,7 +270,8 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
                             alignItems: 'center',
                             justifyContent: 'center',
                             height: ScreenHeight * 0.80,
-                            width: ScreenWidt
+                            width: ScreenWidt,
+                            backgroundColor:colors.dlsGrayPrimary
                         }}>
                             <Chase size={48} color="#FFF" />
                         </View>

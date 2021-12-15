@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { Dimensions, Image, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Dimensions, Image, Text, View, StyleSheet, TouchableOpacity, ScrollView, Platform } from 'react-native';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { useSharedValue, useAnimatedStyle, withTiming, withDelay } from 'react-native-reanimated';
@@ -22,6 +22,7 @@ export const SlidesScreen = ({ navigation }: Props) => {
     //CheckBox
     const [toggleCheckBox, setToggleCheckBox] = useState(false)
 
+    
     const renderItem = (item: Slide) => {
 
         return (
@@ -32,7 +33,7 @@ export const SlidesScreen = ({ navigation }: Props) => {
                 justifyContent: 'center'
             }}>
 
-                <View style={{ width: '100%', height: '60%', padding: 30 }}>
+                <View style={{ width: '100%', height: '50%', paddingVertical: 10, paddingHorizontal: 30 }}>
                     <View style={{
                         backgroundColor: 'white',
                         width: '100%',
@@ -45,21 +46,23 @@ export const SlidesScreen = ({ navigation }: Props) => {
                             style={{
                                 width: '100%',
                                 height: '100%',
-                                resizeMode: 'center'
+                                resizeMode: 'contain'
                             }}
                         />
                     </View>
                 </View>
 
-                <View style={{ paddingHorizontal: 40 }}>
+                <View style={{ paddingHorizontal: 30 }}>
                     <Text style={{
                         ...styles.title,
                         color: 'white'
                     }}>{item.title}</Text>
-                    <Text style={{
-                        ...styles.subtitle,
-                        color: 'white'
-                    }}>{item.desc}</Text>
+                    <ScrollView>
+                        <Text style={{
+                            ...styles.subtitle,
+                            color: 'white'
+                        }}>{item.desc}</Text>
+                    </ScrollView>
                 </View>
 
             </View>
@@ -126,20 +129,29 @@ export const SlidesScreen = ({ navigation }: Props) => {
             <Animated.View style={[{
                 flexDirection: 'row',
                 paddingHorizontal: 36,
-                alignItems: 'center'
+                alignItems: 'center',
+
+
             },
                 checkBoxAnimStyle]}>
-                <CheckBox
-                    value={toggleCheckBox}
-                    tintColors={{ true: colors.dlsBluePrimary, false: colors.dlsBtonColosWhite }}
-                    style={{ transform: [{ scaleX: 1 }, { scaleY: 1}] }}
-                    onValueChange={(newValue) => {
-                        setToggleCheckBox(newValue)
-                    }}
-                />
-                <Text style={{ color: 'white'/* , fontWeight: 'bold' */, fontSize: 16 }}>
-                    No volver a mostrar
-                </Text>
+                <View style={{  marginRight: Platform.OS==='ios'?15:0}}>
+                    <CheckBox
+
+                        value={toggleCheckBox}
+                        tintColors={{ true: colors.dlsBluePrimary, false: colors.dlsBtonColosWhite }}
+                        style={{ transform: [{ scaleX: 1 }, { scaleY: 1 }] }}
+                        onValueChange={(newValue) => {
+                            setToggleCheckBox(newValue)
+                        }}
+                    />
+                </View>
+                <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() => { setToggleCheckBox(!toggleCheckBox) }}>
+                    <Text style={{ color: 'white'/* , fontWeight: 'bold' */, fontSize: 16 }}>
+                        No volver a mostrar
+                    </Text>
+                </TouchableOpacity>
             </Animated.View>
 
             <View style={{

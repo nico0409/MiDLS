@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react'
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, Platform } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import { ScrollView } from 'react-native-gesture-handler';
 import { objUseForm } from '../interfaces/prompInterfaces';
@@ -42,19 +42,6 @@ export const CreateObservePageTwo = ({ form, onChange }: Props) => {
 
                 <CustomSwitchObserve title="¿Aplico interrupción de tareas?" onChange={onChange} switchType="m38:DL_POLITINTERTAREA" />
 
-                <CustomSwitchObserve title="Requiere APS de seguimiento" onChange={onChange} switchType="m38:DL_REQAPSSEG" />
-
-                {form["m38:DL_REQAPSSEG"] === 'Y' &&
-                <View>
-                    <Prompt
-                        form={form}
-                        onChange={onChange}
-                        promptType={{ type: 'DLHR_APS' }}
-                    />
-                    <RalationchipBtn form={form} />
-                    </View>
-                }
-
                 <CustomSwitchObserve title="Cuasi accidente" onChange={onChange} switchType="m38:DL_CUASIACC" />
 
                 {form["m38:DL_CUASIACC"] === 'Y' &&
@@ -79,12 +66,13 @@ export const CreateObservePageTwo = ({ form, onChange }: Props) => {
                     alignItems: 'center',
                     width: '100%',
                     justifyContent: 'space-between',
-                    paddingHorizontal: 25
+                    paddingHorizontal: 30,
+                    marginVertical: Platform.OS==='ios'?10:0 
                 }}>
                     <Text style={{ color: colors.dlsTextwhite, fontSize: 15 }}>A destacar</Text>
                     <CheckBox
                         tintColors={{ true: colors.dlsYellowSecondary, false: colors.dlsBtonColosWhite }}
-                        style={{ transform: [{ scaleX: 1.1 }, { scaleY: 1.1 }] }}
+                        style={{ transform: [{ scaleX: 1 }, { scaleY: 1}] }}
                         disabled={false}
                         value={toggleCheckBox}
                         onValueChange={(newValue) => {
@@ -92,6 +80,27 @@ export const CreateObservePageTwo = ({ form, onChange }: Props) => {
                             onChange(newValue ? 'Y' : 'N', 'm38:DL_ADESTACAR');
                         }}
                     />
+                </View>
+
+                <CustomSwitchObserve title="Requiere APS de seguimiento *" onChange={onChange} switchType="m38:DL_REQAPSSEG" />
+
+                {form["m38:DL_REQAPSSEG"] === 'Y' &&
+                    <View>
+                        <Prompt
+                            form={form}
+                            onChange={onChange}
+                            promptType={{ type: 'DLHR_APS' }}
+                        />
+                        <View style={{ marginVertical: 10 }}>
+                            <RalationchipBtn form={form} />
+                        </View>
+                    </View>
+                }
+
+                <View style={{marginHorizontal:30}}>
+                    <Text style={{ color: 'white' }}>
+                        * No es necesario que cargues los datos del número y responsable si no lo conocés. Podés guardar y enviar la tarjeta de todos modos.
+                    </Text>
                 </View>
 
             </View >

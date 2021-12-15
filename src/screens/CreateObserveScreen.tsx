@@ -98,7 +98,7 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
     }
 
     useEffect(() => {
-        setCardDescr({...initialObsCardDescr, ...{ DL_OBSERVADOR: emplidSelect.fieldValue1 } })
+        setCardDescr({ ...initialObsCardDescr, ...{ DL_OBSERVADOR: emplidSelect.fieldValue1 } })
         setFormValue({ ...initialObsFormData, ...{ "m38:DL_OBSERVADOR": emplidSelect.fieldValue1 } })
     }, [])
 
@@ -109,10 +109,16 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
                 <View style={{ height: 60, width: '100%', flexDirection: 'row', alignItems: 'center' }}>
 
                     <TouchableOpacity
-                        onPress={() =>
+                        onPress={() => {
                             /* navigation.replace('TarjetaObserveScreen',{name:emplidSelect.fieldValue2,emplid:emplidSelect.fieldValue1}) */
-                            navigation.pop()
-                        }
+                            if (activeIndex > 0) {
+                                setBackButton(false);
+                                // @ts-ignore
+                                carouselRef.current.snapToPrev();
+                            } else {
+                                navigation.pop();
+                            }
+                        }}
                     >
                         <Icon name="chevron-back-outline" size={40} color={colors.dlsYellowSecondary} />
                     </TouchableOpacity>
