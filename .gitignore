@@ -23,7 +23,8 @@ DerivedData
 
 # Android/IntelliJ
 #
-build/
+android/build/
+android/app/build/
 .idea
 .gradle
 local.properties
