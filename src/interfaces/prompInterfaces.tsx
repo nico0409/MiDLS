@@ -80,6 +80,7 @@ export interface DlhrObservePrompt {
 
 export interface DlhrAps {
   DL_ACTION_NBR?: string;
+  BUSINESSUNIT?:string;
   EMPLID?: string;
   NOMBRE?: string;
 }

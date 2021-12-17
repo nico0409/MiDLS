@@ -1,0 +1,392 @@
+{
+  "program": {
+    "fileInfos": {
+      "../../node_modules/typescript/lib/lib.es5.d.ts": {
+        "version": "70ae6416528e68c2ee7b62892200d2ca631759943d4429f8b779b947ff1e124d",
+        "signature": "70ae6416528e68c2ee7b62892200d2ca631759943d4429f8b779b947ff1e124d",
+        "affectsGlobalScope": true
+      },
+      "../../node_modules/typescript/lib/lib.es2015.d.ts": {
+        "version": "dc47c4fa66b9b9890cf076304de2a9c5201e94b740cffdf09f87296d877d71f6",
+        "signature": "dc47c4fa66b9b9890cf076304de2a9c5201e94b740cffdf09f87296d877d71f6",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/typescript/lib/lib.es2015.core.d.ts": {
+        "version": "63e0cc12d0f77394094bd19e84464f9840af0071e5b9358ced30511efef1d8d2",
+        "signature": "63e0cc12d0f77394094bd19e84464f9840af0071e5b9358ced30511efef1d8d2",
+        "affectsGlobalScope": true
+      },
+      "../../node_modules/typescript/lib/lib.es2015.collection.d.ts": {
+        "version": "43fb1d932e4966a39a41b464a12a81899d9ae5f2c829063f5571b6b87e6d2f9c",
+        "signature": "43fb1d932e4966a39a41b464a12a81899d9ae5f2c829063f5571b6b87e6d2f9c",
+        "affectsGlobalScope": true
+      },
+      "../../node_modules/typescript/lib/lib.es2015.generator.d.ts": {
+        "version": "cdccba9a388c2ee3fd6ad4018c640a471a6c060e96f1232062223063b0a5ac6a",
+        "signature": "cdccba9a388c2ee3fd6ad4018c640a471a6c060e96f1232062223063b0a5ac6a",
+        "affectsGlobalScope": true
+      },
+      "../../node_modules/typescript/lib/lib.es2015.iterable.d.ts": {
+        "version": "42f5e41e5893da663dbf0394268f54f1da4b43dc0ddd2ea4bf471fe5361d6faf",
+        "signature": "42f5e41e5893da663dbf0394268f54f1da4b43dc0ddd2ea4bf471fe5361d6faf",
+        "affectsGlobalScope": true
+      },
+      "../../node_modules/typescript/lib/lib.es2015.promise.d.ts": {
+        "version": "0b7a905675e6cb4211c128f0a3aa47d414b275180a299a9aad5d3ec298abbfc4",
+        "signature": "0b7a905675e6cb4211c128f0a3aa47d414b275180a299a9aad5d3ec298abbfc4",
+        "affectsGlobalScope": true
+      },
+      "../../node_modules/typescript/lib/lib.es2015.proxy.d.ts": {
+        "version": "dfff68b3c34338f6b307a25d4566de15eed7973b0dc5d69f9fde2bcac1c25315",
+        "signature": "dfff68b3c34338f6b307a25d4566de15eed7973b0dc5d69f9fde2bcac1c25315",
+        "affectsGlobalScope": true
+      },
+      "../../node_modules/typescript/lib/lib.es2015.reflect.d.ts": {
+        "version": "cb609802a8698aa28b9c56331d4b53f590ca3c1c3a255350304ae3d06017779d",
+        "signature": "cb609802a8698aa28b9c56331d4b53f590ca3c1c3a255350304ae3d06017779d",
+        "affectsGlobalScope": true
+      },
+      "../../node_modules/typescript/lib/lib.es2015.symbol.d.ts": {
+        "version": "3013574108c36fd3aaca79764002b3717da09725a36a6fc02eac386593110f93",
+        "signature": "3013574108c36fd3aaca79764002b3717da09725a36a6fc02eac386593110f93",
+        "affectsGlobalScope": true
+      },
+      "../../node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts": {
+        "version": "4670208dd7da9d6c774ab1b75c1527a810388c7989c4905de6aaea8561cb9dce",
+        "signature": "4670208dd7da9d6c774ab1b75c1527a810388c7989c4905de6aaea8561cb9dce",
+        "affectsGlobalScope": true
+      },
+      "../../node_modules/tslib/tslib.d.ts": {
+        "version": "4576b4e61049f5ffd7c9e935cf88832e089265bdb15ffc35077310042cbbbeea",
+        "signature": "4576b4e61049f5ffd7c9e935cf88832e089265bdb15ffc35077310042cbbbeea",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/react-native/globals.d.ts": {
+        "version": "44ae1263bb526f9f08419f9532e10d39b9cca5564f0481362ce8b4cbf1def8d9",
+        "signature": "44ae1263bb526f9f08419f9532e10d39b9cca5564f0481362ce8b4cbf1def8d9",
+        "affectsGlobalScope": true
+      },
+      "../../node_modules/@types/react-native/legacy-properties.d.ts": {
+        "version": "818a9a35cf844bd8380e9273b8ed82023c614164d0975f096b8c9b680730cbc3",
+        "signature": "818a9a35cf844bd8380e9273b8ed82023c614164d0975f096b8c9b680730cbc3",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/react-native/batchedbridge.d.ts": {
+        "version": "496293b62091a5bfb97dac7a0055f3e73dfc7b8d8c220000ecf68635c0bef790",
+        "signature": "496293b62091a5bfb97dac7a0055f3e73dfc7b8d8c220000ecf68635c0bef790",
+        "affectsGlobalScope": true
+      },
+      "../../node_modules/@types/react-native/devtools.d.ts": {
+        "version": "715ee74e86e7388d2923cd6377fafcf3f86bea534d5cb4c827a1603383fabdb3",
+        "signature": "715ee74e86e7388d2923cd6377fafcf3f86bea534d5cb4c827a1603383fabdb3",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/react-native/launchscreen.d.ts": {
+        "version": "234b97ac9af46707f2315ff395a9b340d37b7dbc8290d91f5d6bd97189d220f3",
+        "signature": "234b97ac9af46707f2315ff395a9b340d37b7dbc8290d91f5d6bd97189d220f3",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/react/global.d.ts": {
+        "version": "ecf78e637f710f340ec08d5d92b3f31b134a46a4fcf2e758690d8c46ce62cba6",
+        "signature": "ecf78e637f710f340ec08d5d92b3f31b134a46a4fcf2e758690d8c46ce62cba6",
+        "affectsGlobalScope": true
+      },
+      "../../node_modules/csstype/index.d.ts": {
+        "version": "4ee363f83d7be2202f34fcd84c44da71bf3a9329fee8a05f976f75083a52ea94",
+        "signature": "4ee363f83d7be2202f34fcd84c44da71bf3a9329fee8a05f976f75083a52ea94",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/prop-types/index.d.ts": {
+        "version": "f7b46d22a307739c145e5fddf537818038fdfffd580d79ed717f4d4d37249380",
+        "signature": "f7b46d22a307739c145e5fddf537818038fdfffd580d79ed717f4d4d37249380",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/scheduler/tracing.d.ts": {
+        "version": "f5a8b384f182b3851cec3596ccc96cb7464f8d3469f48c74bf2befb782a19de5",
+        "signature": "f5a8b384f182b3851cec3596ccc96cb7464f8d3469f48c74bf2befb782a19de5",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/react/index.d.ts": {
+        "version": "ef92cfb8590d2d68d539312d111098fffa651ca129e2fbf917d62ffa35b88f34",
+        "signature": "ef92cfb8590d2d68d539312d111098fffa651ca129e2fbf917d62ffa35b88f34",
+        "affectsGlobalScope": true
+      },
+      "../../node_modules/@types/react-native/index.d.ts": {
+        "version": "ff5eef6c117fcc756f56484103fa00e46d5d9765a83292e442cc6daf9ba06c73",
+        "signature": "ff5eef6c117fcc756f56484103fa00e46d5d9765a83292e442cc6daf9ba06c73",
+        "affectsGlobalScope": true
+      },
+      "../../lib/theme.ts": {
+        "version": "f927e83d96b224d0296e1e03f48d6120b05ee4f7e86c05518c2d46aeb4da41c3",
+        "signature": "5d29c0c807c1d299f9f2a114d218a184460040d72c2d3a4f480b47d6e9e6a2b3",
+        "affectsGlobalScope": false
+      },
+      "../../lib/components/icon.tsx": {
+        "version": "9114cda86064fa9fb34519a09e53b006e6728f7254e91ecf210635231b37b2c5",
+        "signature": "da1fee2335809608435bd5290601a423fe793d39ec8e66f1c224f2996a4d8f13",
+        "affectsGlobalScope": false
+      },
+      "../../lib/rnsingleselect.tsx": {
+        "version": "e6c9dd87f35ac11d888d76ff9d8b430c57c28dcfea303465bacb0f03a80cc7b4",
+        "signature": "77cf34ecf15cba6b19ded2ffee51c3cf68132f6d69c55fc2822dcfbe5d6353c5",
+        "affectsGlobalScope": false
+      },
+      "../../lib/rnsingleselect.style.ts": {
+        "version": "a3084e8f0857b8e6fc655d58e6410f2920a7478be0a1fd2ee563109d8274dca5",
+        "signature": "4a5715e52fc72a9c99c3101d5609de75974c332bf57b99c02451500d9b27f020",
+        "affectsGlobalScope": false
+      },
+      "../../lib/import-png.d.ts": {
+        "version": "28b236db78d84bc93ad92b5dc5cbd9c4f0192c3ae6d3f1cfac7d2b06c932729a",
+        "signature": "28b236db78d84bc93ad92b5dc5cbd9c4f0192c3ae6d3f1cfac7d2b06c932729a",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/eslint-visitor-keys/index.d.ts": {
+        "version": "725d9be2fd48440256f4deb00649adffdbc5ecd282b09e89d4e200663792c34c",
+        "signature": "725d9be2fd48440256f4deb00649adffdbc5ecd282b09e89d4e200663792c34c",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/json-schema/index.d.ts": {
+        "version": "0359682c54e487c4cab2b53b2b4d35cc8dea4d9914bc6abcdb5701f8b8e745a4",
+        "signature": "0359682c54e487c4cab2b53b2b4d35cc8dea4d9914bc6abcdb5701f8b8e745a4",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/parse-json/index.d.ts": {
+        "version": "2b8264b2fefd7367e0f20e2c04eed5d3038831fe00f5efbc110ff0131aab899b",
+        "signature": "2b8264b2fefd7367e0f20e2c04eed5d3038831fe00f5efbc110ff0131aab899b",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/scheduler/index.d.ts": {
+        "version": "74b0245c42990ed8a849df955db3f4362c81b13f799ebc981b7bec2d5b414a57",
+        "signature": "74b0245c42990ed8a849df955db3f4362c81b13f799ebc981b7bec2d5b414a57",
+        "affectsGlobalScope": false
+      }
+    },
+    "options": {
+      "target": 99,
+      "module": 1,
+      "lib": [
+        "lib.es2015.d.ts"
+      ],
+      "allowJs": true,
+      "jsx": 3,
+      "noImplicitAny": false,
+      "incremental": true,
+      "isolatedModules": true,
+      "strict": true,
+      "moduleResolution": 2,
+      "skipLibCheck": true,
+      "baseUrl": "../..",
+      "outDir": "./",
+      "noEmitHelpers": true,
+      "importHelpers": true,
+      "experimentalDecorators": true,
+      "allowSyntheticDefaultImports": true,
+      "esModuleInterop": true,
+      "declaration": true,
+      "sourceMap": true,
+      "configFilePath": "../../tsconfig.json"
+    },
+    "referencedMap": {
+      "../../lib/components/icon.tsx": [
+        "../../lib/import-png.d.ts",
+        "../../lib/theme.ts",
+        "../../node_modules/@types/react-native/index.d.ts",
+        "../../node_modules/@types/react/index.d.ts"
+      ],
+      "../../lib/rnsingleselect.style.ts": [
+        "../../lib/rnsingleselect.tsx",
+        "../../lib/theme.ts",
+        "../../node_modules/@types/react-native/index.d.ts"
+      ],
+      "../../lib/rnsingleselect.tsx": [
+        "../../lib/components/icon.tsx",
+        "../../lib/rnsingleselect.style.ts",
+        "../../lib/theme.ts",
+        "../../node_modules/@types/react-native/index.d.ts",
+        "../../node_modules/@types/react/index.d.ts"
+      ],
+      "../../node_modules/@types/react-native/devtools.d.ts": [
+        "../../node_modules/@types/react-native/devtools.d.ts"
+      ],
+      "../../node_modules/@types/react-native/index.d.ts": [
+        "../../node_modules/@types/react-native/batchedbridge.d.ts",
+        "../../node_modules/@types/react-native/devtools.d.ts",
+        "../../node_modules/@types/react-native/globals.d.ts",
+        "../../node_modules/@types/react-native/launchscreen.d.ts",
+        "../../node_modules/@types/react-native/legacy-properties.d.ts",
+        "../../node_modules/@types/react/index.d.ts"
+      ],
+      "../../node_modules/@types/react-native/legacy-properties.d.ts": [
+        "../../node_modules/@types/react-native/index.d.ts"
+      ],
+      "../../node_modules/@types/react/index.d.ts": [
+        "../../node_modules/@types/prop-types/index.d.ts",
+        "../../node_modules/@types/react/global.d.ts",
+        "../../node_modules/@types/scheduler/tracing.d.ts",
+        "../../node_modules/csstype/index.d.ts"
+      ]
+    },
+    "exportedModulesMap": {
+      "../../lib/components/icon.tsx": [
+        "../../node_modules/@types/react-native/index.d.ts",
+        "../../node_modules/@types/react/index.d.ts"
+      ],
+      "../../lib/rnsingleselect.style.ts": [
+        "../../lib/rnsingleselect.tsx",
+        "../../node_modules/@types/react-native/index.d.ts"
+      ],
+      "../../lib/rnsingleselect.tsx": [
+        "../../node_modules/@types/react-native/index.d.ts"
+      ],
+      "../../node_modules/@types/react-native/devtools.d.ts": [
+        "../../node_modules/@types/react-native/devtools.d.ts"
+      ],
+      "../../node_modules/@types/react-native/index.d.ts": [
+        "../../node_modules/@types/react-native/batchedbridge.d.ts",
+        "../../node_modules/@types/react-native/devtools.d.ts",
+        "../../node_modules/@types/react-native/globals.d.ts",
+        "../../node_modules/@types/react-native/launchscreen.d.ts",
+        "../../node_modules/@types/react-native/legacy-properties.d.ts",
+        "../../node_modules/@types/react/index.d.ts"
+      ],
+      "../../node_modules/@types/react-native/legacy-properties.d.ts": [
+        "../../node_modules/@types/react-native/index.d.ts"
+      ],
+      "../../node_modules/@types/react/index.d.ts": [
+        "../../node_modules/@types/prop-types/index.d.ts",
+        "../../node_modules/@types/react/global.d.ts",
+        "../../node_modules/@types/scheduler/tracing.d.ts",
+        "../../node_modules/csstype/index.d.ts"
+      ]
+    },
+    "semanticDiagnosticsPerFile": [
+      [
+        "../../lib/components/icon.tsx",
+        [
+          {
+            "file": "../../lib/components/icon.tsx",
+            "start": 1266,
+            "length": 6,
+            "code": 2322,
+            "category": 1,
+            "messageText": {
+              "messageText": "Type 'string | number | Source' is not assignable to type 'number | Value | AnimatedInterpolation | WithAnimatedObject<ImageURISource> | WithAnimatedArray<ImageURISource>'.",
+              "category": 1,
+              "code": 2322,
+              "next": [
+                {
+                  "messageText": "Type 'string' is not assignable to type 'number | Value | AnimatedInterpolation | WithAnimatedObject<ImageURISource> | WithAnimatedArray<ImageURISource>'.",
+                  "category": 1,
+                  "code": 2322
+                }
+              ]
+            },
+            "relatedInformation": [
+              {
+                "file": "../../node_modules/@types/react-native/index.d.ts",
+                "start": 130442,
+                "length": 6,
+                "messageText": "The expected type comes from property 'source' which is declared here on type 'IntrinsicAttributes & AnimatedProps<ImageProps & RefAttributes<Image>> & { children?: ReactNode; }'",
+                "category": 3,
+                "code": 6500
+              }
+            ]
+          }
+        ]
+      ],
+      "../../lib/import-png.d.ts",
+      "../../lib/rnsingleselect.style.ts",
+      [
+        "../../lib/rnsingleselect.tsx",
+        [
+          {
+            "file": "../../lib/rnsingleselect.tsx",
+            "start": 259,
+            "length": 22,
+            "messageText": "Cannot find module 'react-native-spinkit' or its corresponding type declarations.",
+            "category": 1,
+            "code": 2307
+          },
+          {
+            "file": "../../lib/rnsingleselect.tsx",
+            "start": 4987,
+            "length": 15,
+            "code": 2345,
+            "category": 1,
+            "messageText": {
+              "messageText": "Argument of type '{ value: string; }' is not assignable to parameter of type 'SetStateAction<ISingleSelectDataType | null>'.",
+              "category": 1,
+              "code": 2345,
+              "next": [
+                {
+                  "messageText": "Property 'id' is missing in type '{ value: string; }' but required in type 'ISingleSelectDataType'.",
+                  "category": 1,
+                  "code": 2741
+                }
+              ]
+            },
+            "relatedInformation": [
+              {
+                "file": "../../lib/rnsingleselect.tsx",
+                "start": 623,
+                "length": 2,
+                "messageText": "'id' is declared here.",
+                "category": 3,
+                "code": 2728
+              }
+            ]
+          },
+          {
+            "file": "../../lib/rnsingleselect.tsx",
+            "start": 7017,
+            "length": 15,
+            "code": 2322,
+            "category": 1,
+            "messageText": {
+              "messageText": "Type 'ImageStyle | undefined' is not assignable to type 'ImageStyle'.",
+              "category": 1,
+              "code": 2322,
+              "next": [
+                {
+                  "messageText": "Type 'undefined' is not assignable to type 'ImageStyle'.",
+                  "category": 1,
+                  "code": 2322
+                }
+              ]
+            }
+          }
+        ]
+      ],
+      "../../lib/theme.ts",
+      "../../node_modules/@types/eslint-visitor-keys/index.d.ts",
+      "../../node_modules/@types/json-schema/index.d.ts",
+      "../../node_modules/@types/parse-json/index.d.ts",
+      "../../node_modules/@types/prop-types/index.d.ts",
+      "../../node_modules/@types/react-native/batchedbridge.d.ts",
+      "../../node_modules/@types/react-native/devtools.d.ts",
+      "../../node_modules/@types/react-native/globals.d.ts",
+      "../../node_modules/@types/react-native/index.d.ts",
+      "../../node_modules/@types/react-native/launchscreen.d.ts",
+      "../../node_modules/@types/react-native/legacy-properties.d.ts",
+      "../../node_modules/@types/react/global.d.ts",
+      "../../node_modules/@types/react/index.d.ts",
+      "../../node_modules/@types/scheduler/index.d.ts",
+      "../../node_modules/@types/scheduler/tracing.d.ts",
+      "../../node_modules/csstype/index.d.ts",
+      "../../node_modules/tslib/tslib.d.ts",
+      "../../node_modules/typescript/lib/lib.es2015.collection.d.ts",
+      "../../node_modules/typescript/lib/lib.es2015.core.d.ts",
+      "../../node_modules/typescript/lib/lib.es2015.d.ts",
+      "../../node_modules/typescript/lib/lib.es2015.generator.d.ts",
+      "../../node_modules/typescript/lib/lib.es2015.iterable.d.ts",
+      "../../node_modules/typescript/lib/lib.es2015.promise.d.ts",
+      "../../node_modules/typescript/lib/lib.es2015.proxy.d.ts",
+      "../../node_modules/typescript/lib/lib.es2015.reflect.d.ts",
+      "../../node_modules/typescript/lib/lib.es2015.symbol.d.ts",
+      "../../node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts",
+      "../../node_modules/typescript/lib/lib.es5.d.ts"
+    ]
+  },
+  "version": "3.9.10"
+}
