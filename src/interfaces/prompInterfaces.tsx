@@ -312,3 +312,37 @@ export interface objUseForm {
   "m38:LASTUPDDTTM"?: string;
   "m38:LASTUPDOPRID"?: string;
 }
+
+
+export interface IosVersion {
+  "soapenv:Envelope"?: SoapenvEnvelopeIosVersion;
+}
+
+export interface SoapenvEnvelopeIosVersion {
+  "soapenv:Body": SoapenvBodyIosVersion;
+}
+
+export interface SoapenvBodyIosVersion {
+  DOC_TEST2?: DlhrIosVersion;
+}
+
+export interface DlhrIosVersion{
+  "request"?: string;
+}
+
+
+export interface IosVersionLink {
+  "soapenv:Envelope"?: SoapenvEnvelopeIosVersionLink;
+}
+
+export interface SoapenvEnvelopeIosVersionLink {
+  "soapenv:Body": SoapenvBodyIosVersionLink;
+}
+
+export interface SoapenvBodyIosVersionLink {
+  DLHR_RESPONSE_IOS_LINK?: DlhrIosVersionLink;
+}
+
+export interface DlhrIosVersionLink{
+  "LINK_IOS"?: string;
+}

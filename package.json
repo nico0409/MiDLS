@@ -24,6 +24,7 @@
     "@react-navigation/stack": "^5.14.5",
     "@types/react-native-snap-carousel": "^3.8.4",
     "axios": "^0.21.4",
+    "browserslist": "^4.19.1",
     "fast-xml-parser": "^3.20.0",
     "i": "^0.3.7",
     "radio-buttons-react-native": "^1.0.4",

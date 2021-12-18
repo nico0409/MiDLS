@@ -29,12 +29,14 @@ import { CheckUpdateAndroid } from '../components/CheckUpdateAndroid';
 /* import checkVersion from 'react-native-store-version'; */
 import { getVersion } from 'react-native-device-info';
 import { SendObserveStorage } from '../components/SendObserveStorage';
+import { CheckUpdateIos } from '../components/CheckUpdateIos';
 
 export type DrawerRoutParams = {
 
   TopTapNavigator: {
     needsUpdate: boolean,
-    lockScreen: boolean
+    lockScreen: boolean,
+    link:string
   }
 }
 
@@ -58,7 +60,11 @@ export const DrawerNavigation = () => {
   const [needsUpdate, setNeedsUpdate] = useState(false);
   const [lockScreen, setLockScreen] = useState(false);
   const [endGetPrompt, setendGetPrompt] = useState(false);
+ const [link, setLink] = useState("")
 
+
+ 
+ 
   useEffect(() => {
 
     if (isConnected !== null) {
@@ -81,12 +87,15 @@ export const DrawerNavigation = () => {
 
 
     const prompts: StorageTypes = { StorageType: 'prompt' };
-    /*  GetStorage({StorageType:'prompt'})===undefined && */
 
-    /*   await SendObserveStorage(); */
+
+
     Asingstorage(prompts, await GetPrompt());
-    /* setNeedsUpdate(await CheckUpdateAndroid()); */
+
     await CheckUpdateAndroid({ setNeedsUpdate, setLockScreen });
+    await CheckUpdateIos({ setNeedsUpdate, setLockScreen ,setLink});
+
+
     SplashScreen.hide();
     setendGetPrompt(true);
   }
@@ -105,7 +114,7 @@ export const DrawerNavigation = () => {
           // drawerContent={(props: any) => <DrawerMenu {...props} />}
           drawerContent={(props: any) => <MenuInterno {...props} />}
         >
-          <Drawer.Screen name="TopTapNavigator" component={TopTapNavigator} initialParams={{ needsUpdate, lockScreen }} />
+          <Drawer.Screen name="TopTapNavigator" component={TopTapNavigator} initialParams={{ needsUpdate, lockScreen ,link}} />
           {/*   <Drawer.Screen name="TopTapNavigator" component={TopTapNavigator} /> */}
           <Drawer.Screen name="ContactScreen" component={ContactScreen} />
           <Drawer.Screen name="RrhhScreen" component={RrhhScreen} />

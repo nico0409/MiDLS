@@ -10,10 +10,6 @@ interface Props {
 }
 
 export const CheckUpdateAndroid = async ({ setNeedsUpdate, setLockScreen }: Props) => {
-    // const { isConnected } = useNetInfo();
-
-    let needsUpdate: boolean = false;
-
 
 
     const init = async () => {
