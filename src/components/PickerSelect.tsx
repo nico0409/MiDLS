@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import RNSingleSelect, { ISingleSelectDataType } from "../libs/react-native-single-select";
-import { Dimensions, Text, View } from 'react-native';
+import { Dimensions, ScrollView, Text, View } from 'react-native';
 import { promptType, DlhrBussinesUnit, DlhrOrigen, DlhrPuesto, DlhrTurno, M38GetCompIntfcDLHRTAOBSERVCIResponse, objUseForm, DlhrAps, DlhrAllObserve } from '../interfaces/prompInterfaces';
 import { GetPromptArray } from './GetPromptArrayy';
 import Animated, { useSharedValue, useAnimatedStyle, withSpring, withTiming } from 'react-native-reanimated';
@@ -15,13 +15,14 @@ interface Props {
     cardDescr?: DlhrAllObserve;
     activeBorderError?: boolean;
     disabled?: boolean;
+    scrollViewRef?: React.RefObject<ScrollView>;
 }
 
 interface DlhrPromptsDet extends DlhrOrigen, DlhrPuesto, DlhrTurno, DlhrBussinesUnit, DlhrAps { };
 
 const { width: ScreenWidth } = Dimensions.get("window");
 
-export const PickerSelect = ({ placeholder, type, onChange, form, setCardDescr, cardDescr, emplid, activeBorderError = false, disabled = false }: Props) => {
+export const PickerSelect = ({ placeholder, type, onChange, form, setCardDescr, cardDescr, emplid, activeBorderError = false, disabled = false,scrollViewRef }: Props) => {
 
     const promptType: promptType = { type };
     const [selectedItem, setSelectedItem] = useState<ISingleSelectDataType>()
@@ -169,6 +170,7 @@ export const PickerSelect = ({ placeholder, type, onChange, form, setCardDescr, 
                         setSelectedItem(selectedItem);
                         setIsItemChanged(true)
                     }}
+                    scrollViewRef={scrollViewRef}
                 />
                 {disabled &&
                     <View style={{ height: 50, width: 50, backgroundColor: '#2b2c32', position: 'absolute', right: 0, borderRadius: 50 }} />

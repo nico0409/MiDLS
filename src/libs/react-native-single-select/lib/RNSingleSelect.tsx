@@ -28,6 +28,7 @@ import styles, {
   _placeholderTextStyle,
 } from "./RNSingleSelect.style";
 import { ThemeColors, DARK, LIGHT } from "./theme";
+import { useWindowDimensions } from 'react-native';
 
 export interface ISingleSelectDataType {
   id: number;
@@ -65,6 +66,7 @@ interface IProps {
   initialValue?: ISingleSelectDataType;
   onTextChange?: (text: string) => void;
   onSelect: (selectedItem: ISingleSelectDataType) => void;
+  scrollViewRef?: React.RefObject<ScrollView>;
 }
 
 const RNSingleSelect = (props: IProps) => {
