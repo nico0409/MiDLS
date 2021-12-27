@@ -9,10 +9,10 @@ import { GetLinkIos } from './GetLinkIos';
 interface Props {
     setNeedsUpdate: React.Dispatch<React.SetStateAction<boolean>>;
     setLockScreen: React.Dispatch<React.SetStateAction<boolean>>;
-    setLink:React.Dispatch<React.SetStateAction<string>>;
+    setLink: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export const CheckUpdateIos = async ({ setNeedsUpdate, setLockScreen ,setLink}: Props) => {
+export const CheckUpdateIos = async ({ setNeedsUpdate, setLockScreen, setLink }: Props) => {
 
     const init = async () => {
         try {
@@ -20,7 +20,9 @@ export const CheckUpdateIos = async ({ setNeedsUpdate, setLockScreen ,setLink}: 
             const versionDevice = getVersion()
 
             const veriosnNewIos = versionNew['soapenv:Envelope']?.['soapenv:Body'].DOC_TEST2?.request;
-            
+
+            console.log("veriosnNewIos: ", veriosnNewIos);
+            console.log("versionDevice: ", versionDevice);
 
             if (versionDevice !== veriosnNewIos) {
 
@@ -33,12 +35,18 @@ export const CheckUpdateIos = async ({ setNeedsUpdate, setLockScreen ,setLink}: 
                     setLockScreen(true);
 
                 }
-             setLink( (await GetLinkIos())['soapenv:Envelope']?.['soapenv:Body'].DLHR_RESPONSE_IOS_LINK?.LINK_IOS!);
+                let linkIos = (await GetLinkIos())['soapenv:Envelope']?.['soapenv:Body'].DLHR_RESPONSE_IOS_LINK?.LINK_IOS!;
+                if (linkIos) {
+                    setLink(linkIos)
+                } else {
+                    return false
+                }
+                //setLink( (await GetLinkIos())['soapenv:Envelope']?.['soapenv:Body'].DLHR_RESPONSE_IOS_LINK?.LINK_IOS!);
                 return true;
 
             } else return false;
         }
-        catch (e){
+        catch (e) {
             console.log(e);
             return false;
         }
@@ -47,9 +55,9 @@ export const CheckUpdateIos = async ({ setNeedsUpdate, setLockScreen ,setLink}: 
 
 
     if (Platform.OS == 'ios') {
- 
+
         setNeedsUpdate(await init())
-     
+
     }
 }
 
