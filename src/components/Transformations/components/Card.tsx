@@ -12,7 +12,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 const { width, height } = Dimensions.get("window");
 //const ratio = 228 / 362;
 export const CARD_WIDTH = width * 0.9;
-export const CARD_HEIGHT = (height * 0.3);
+export const CARD_HEIGHT = (height * 0.32);
 
 
 interface CardProps {
@@ -65,37 +65,79 @@ export default ({ setTerm, item, index }: CardProps) => {
             <Text style={styles.textValue}>{tarjeta.BUSINES_DESCR}</Text>
           </View>
 
-          <View style={{ flexDirection: 'row' }}>
-            <View style={styles.fieldContainer}>
-              <Text style={styles.textTitle}>Turno</Text>
-              <Text style={styles.textValue}>{tarjeta.TURNO_DESCR}</Text>
-            </View>
+          {height > 592 ?
+            <>
+              <View style={{ flexDirection: 'row' }}>
+                <View style={styles.fieldContainer}>
+                  <Text style={styles.textTitle}>Turno</Text>
+                  <Text style={styles.textValue}>{tarjeta.TURNO_DESCR}</Text>
+                </View>
 
-            <View style={styles.fieldContainer}>
-              <Text style={styles.textTitle}>Fecha Identificación</Text>
-              <Text style={styles.textValue}>{
-                tarjeta.DL_IDENTIF_DT!.substring(8, 10) + "/" +
-                tarjeta.DL_IDENTIF_DT!.substring(5, 7) + "/" +
-                tarjeta.DL_IDENTIF_DT!.substring(0, 4)
-              }
-              </Text>
-            </View>
-          </View>
+                <View style={styles.fieldContainer}>
+                  <Text style={styles.textTitle}>Fecha Identificación</Text>
+                  <Text style={styles.textValue}>{
+                    tarjeta.DL_IDENTIF_DT!.substring(8, 10) + "/" +
+                    tarjeta.DL_IDENTIF_DT!.substring(5, 7) + "/" +
+                    tarjeta.DL_IDENTIF_DT!.substring(0, 4)
+                  }
+                  </Text>
+                </View>
+              </View>
 
-          <View style={styles.fieldContainer}>
-            <Text style={styles.textTitle}>Equipo</Text>
-            <Text style={styles.textValue}>{
-              tarjeta.ID_EQUIPO_DESCR?.length! > 18 ?
-                tarjeta.ID_EQUIPO_DESCR?.substr(0, 18) + '...'
-                :
-                tarjeta.ID_EQUIPO_DESCR}
-            </Text>
-          </View>
+              <View style={styles.fieldContainer}>
+                <Text style={styles.textTitle}>Equipo</Text>
+                <Text style={styles.textValue}>{
+                  tarjeta.ID_EQUIPO_DESCR?.length! > 18 ?
+                    tarjeta.ID_EQUIPO_DESCR?.substr(0, 18) + '...'
+                    :
+                    tarjeta.ID_EQUIPO_DESCR}
+                </Text>
+              </View>
+            </>
+            :
+            <>
+              <View style={{ flexDirection: 'row' }}>
+                <View style={styles.fieldContainer}>
+                  <Text style={styles.textTitle}>Equipo</Text>
+                  <Text style={styles.textValue}>{
+                    height <= 535 ?
+                      tarjeta.ID_EQUIPO_DESCR?.length! > 9 ?
+                        tarjeta.ID_EQUIPO_DESCR?.substr(0, 9) + '...'
+                        :
+                        tarjeta.ID_EQUIPO_DESCR
+                      :
+                      tarjeta.ID_EQUIPO_DESCR?.length! > 10 ?
+                        tarjeta.ID_EQUIPO_DESCR?.substr(0, 10) + '...'
+                        :
+                        tarjeta.ID_EQUIPO_DESCR
+                  }
+                  </Text>
+                </View>
+
+                <View style={{
+                  marginTop: 5,
+                  marginLeft: 15
+                }}>
+                  <Text style={styles.textTitle}>Fecha Identificación</Text>
+                  <Text style={styles.textValue}>{
+                    tarjeta.DL_IDENTIF_DT!.substring(8, 10) + "/" +
+                    tarjeta.DL_IDENTIF_DT!.substring(5, 7) + "/" +
+                    tarjeta.DL_IDENTIF_DT!.substring(0, 4)
+                  }
+                  </Text>
+                </View>
+
+              </View>
+
+            </>
+          }
+
+
         </View>
       </LinearGradient>
       {/*  </View> */}
 
-      <View style={styles.iconContainer}>
+      <View style={[styles.iconContainer, height > 592 ? { bottom: 10 } : { top: 10 }]}>
         {tarjeta.NroTarjeta?.startsWith(nroTarjetaEmpty) ?
           <View style={{ paddingRight: 5 }}>
             <Icon name="cloud-offline" size={40} color="white" />
@@ -139,7 +181,6 @@ const styles = StyleSheet.create({
   }
   , iconContainer: {
     position: 'absolute',
-    bottom: 10,
     right: 10,
     overflow: 'hidden',
   }

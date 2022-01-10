@@ -89,16 +89,15 @@ export const ModalPromptEmplid = ({setemplid,setstatePropmpEmp,statePropmpEmp}:P
 
         <View style={{
             ...styles.conteinerModal,
-            top: height * 0.15,
-            left: width * 0.1,
-            height: height * 0.5,
-            width: width * 0.8,
-
+            height: height * 0.6,
+            width: width * 0.85,
+            alignSelf:'center',
+            top: '20%'
         }}>
             <View style={{
                 ...styles.cardPrompt,
-                height: height * 0.5,
-                width: width * 0.8,
+                height: height * 0.6,
+                width: width * 0.85,
                 backgroundColor: colors.dlsGrayPrimary
             }}>
 
@@ -115,8 +114,8 @@ export const ModalPromptEmplid = ({setemplid,setstatePropmpEmp,statePropmpEmp}:P
 
                 <View style={{
                     top: 25,
-                    height: height * 0.4,
-
+                    height: height * 0.50,
+                    paddingVertical:5,
                     backgroundColor: colors.dlsGrayPrimary
                 }}>
 

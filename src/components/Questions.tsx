@@ -4,7 +4,7 @@ import { M38GetCompIntfcDLHRTAOBSERVCIResponse, objUseForm } from '../interfaces
 
 import BouncyCheckboxGroup, {
   ICheckboxButton,
-} from "react-native-bouncy-checkbox-group";
+} from "../libs/react-native-bouncy-checkbox-group";
 
 import { QuestionsData } from '../data/QuestionsData';
 import { Questions, questionType } from "../interfaces/QuestionInterfaces";
@@ -93,7 +93,11 @@ export const QuestionsCmp = ({ form, questiontType, onChange, darkText = false }
               style={{ flexDirection: "column" }}
               initial={initialValue}
               onChange={(selectedItem: ICheckboxButton) => {
-                onChange(mapIndexToValue(selectedItem.id), data[0].field)
+                if(selectedItem===undefined){
+                  onChange('', data[0].field)
+                }else{
+                  onChange(mapIndexToValue(selectedItem.id), data[0].field)
+                }
               }}
             />
           </View>
@@ -106,7 +110,7 @@ export const QuestionsCmp = ({ form, questiontType, onChange, darkText = false }
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 24,
+    /* marginTop: 24, */
     marginHorizontal: '10%'
   }
 });

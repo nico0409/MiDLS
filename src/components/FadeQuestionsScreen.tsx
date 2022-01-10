@@ -7,8 +7,6 @@ import { transform } from '@babel/core';
 import { FlatList } from 'react-native-gesture-handler';
 
 interface Props {
-    /* animatedValueOp?: Animated.Value;
-    animatedValue?: Animated.Value; */
     dataCarousel: QuestionCarousel[];
     moveCarousel: number;
     moveCarousel2: number;
@@ -25,7 +23,8 @@ export const FadeQuestionsScreen = ({ dataCarousel, moveCarousel, moveCarousel2,
 
     return (
         <>
-            <Animated.View style={[{
+       {/*  eliminar */}
+            {/* <Animated.View style={[{
                 flex: 1,
                 flexDirection: 'row',
                 width: windowWidth * 3,
@@ -45,8 +44,6 @@ export const FadeQuestionsScreen = ({ dataCarousel, moveCarousel, moveCarousel2,
                                 <CarouselForQuestions
                                     data={element.questions}
                                     moveCarousel={moveCarousel}
-                                    moveCarousel2={moveCarousel2}
-                                    moveCarousel3={moveCarousel3}
                                     indexScreen={element.index}
                                 />
                             </View>
@@ -54,7 +51,7 @@ export const FadeQuestionsScreen = ({ dataCarousel, moveCarousel, moveCarousel2,
                     })
                 }
 
-            </Animated.View>
+            </Animated.View> */}
         </>
     )
 }

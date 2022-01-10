@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import { colors } from '../Themes/DlsTheme';
 import { AuthContext } from '../context/formContext/AuthContext';
-import {AuthContext as AuthcontextGeneral} from '../context/AuthContext'
+import { AuthContext as AuthcontextGeneral } from '../context/AuthContext'
 import { NewObservCard } from './NewObservCard';
 import Card from './Transformations/components/Card';
 
@@ -16,11 +16,15 @@ interface Props extends StackScreenProps<any, any> { };
 
 const { height } = Dimensions.get('window');
 
+const textDescrSize = height <= 535 ? 18 : 20;
+
+const textTitleSize = height <= 535 ? 32 : 40;
+
 export const CreateObserveFinalPage = ({ navigation }: Props) => {
 
-    const { form, cardDescr, setCardDescr} = useContext(AuthContext);
+    const { form, cardDescr, setCardDescr } = useContext(AuthContext);
 
-   const {setReloadCardList}=useContext(AuthcontextGeneral);
+    const { setReloadCardList } = useContext(AuthcontextGeneral);
 
     const [reqSended, setReqSended] = useState<'pending' | 'sended' | 'error'>('pending');
     const [errorType, setErrorType] = useState<'server' | 'network'>();
@@ -109,9 +113,9 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
 
             <Animated.View style={[styles.iconStatusContainer, animatedIconStatusStyle]}>
                 {reqSended === 'sended' ?
-                    <Icon name="checkmark-circle" size={140} color="white" />
+                    <Icon name="checkmark-circle" size={height <= 593 ? 110 : 140} color="white" />
                     :
-                    <Icon name="cloud-offline" size={140} color="white" />
+                    <Icon name="cloud-offline" size={height <= 593 ? 110 : 140} color="white" />
                 }
             </Animated.View>
 
@@ -120,7 +124,7 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
                     style={{ paddingRight: 10, paddingTop: 10 }}
                     onPress={() => {
                         /* navigation.replace('TarjetaObserveScreen',{name:emplidSelect.fieldValue2,emplid:emplidSelect.fieldValue1}) */
-                        navigation.removeListener('beforeRemove',()=>{});
+                        navigation.removeListener('beforeRemove', () => { });
                         navigation.pop(3)
                     }}>
                     <Icon name="home" size={40} color="white" />
@@ -128,29 +132,29 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
             </Animated.View>
 
             <Animated.View style={[styles.loadingContainer, animatedLoadingStyle]}>
-                <Chase size={140} color="white" />
+                <Chase size={height <= 593? height <= 593 ? 50 : 90 : 140} color="white" />
             </Animated.View>
 
             <Animated.View style={[{ backgroundColor: colors.dlsGrayPrimary, flex: 1, alignItems: 'center', justifyContent: 'space-evenly', borderTopLeftRadius: 60, borderTopRightRadius: 60 }, animatedCardStyle]}>
                 <View style={{ marginHorizontal: '10%' }}>
                     {reqSended === 'sended' ?
                         <>
-                            <Text style={{ color: 'white', fontSize: 40, fontWeight: 'bold' }}>Listo!</Text>
-                            <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>La tarjeta ha sido enviada correctamente.</Text>
+                            <Text style={{ color: 'white', fontSize: textTitleSize, fontWeight: 'bold' }}>Listo!</Text>
+                            <Text style={{ color: 'white', fontSize: textDescrSize, fontWeight: 'bold' }}>La tarjeta ha sido enviada correctamente.</Text>
                         </>
                         :
                         <>
                             {errorType === 'network' ?
                                 <>
-                                    <Text style={{ color: 'white', fontSize: 40, fontWeight: 'bold' }}>Ups!</Text>
-                                    <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>Error de conexión a Internet</Text>
-                                    <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>Cuando el dispositivo detecte una conexión, la tarjeta se enviará automaticamente.</Text>
+                                    <Text style={{ color: 'white', fontSize: textTitleSize, fontWeight: 'bold' }}>Ups!</Text>
+                                    <Text style={{ color: 'white', fontSize: textDescrSize, fontWeight: 'bold' }}>No hay conexión a internet.</Text>
+                                    <Text style={{ color: 'white', fontSize: textDescrSize, fontWeight: 'bold' }}>No te preocupes, la tarjeta se guardó y cuando el dispositivo detecte una conexión, la enviará automáticamente.</Text>
                                 </>
                                 :
                                 <>
-                                    <Text style={{ color: 'white', fontSize: 40, fontWeight: 'bold' }}>Ups!</Text>
-                                    <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>Error al intentar conectarse con el Servidor.</Text>
-                                    <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>Cuando el dispositivo detecte una conexión con el servidor, la tarjeta se enviará automaticamente.</Text>
+                                    <Text style={{ color: 'white', fontSize: textTitleSize, fontWeight: 'bold' }}>Ups!</Text>
+                                    <Text style={{ color: 'white', fontSize: textDescrSize, fontWeight: 'bold' }}>No hay conexión con el servidor.</Text>
+                                    <Text style={{ color: 'white', fontSize: textDescrSize, fontWeight: 'bold' }}>No te preocupes, la tarjeta se guardó y cuando el dispositivo detecte una conexión, la enviará automáticamente.</Text>
                                 </>
                             }
                         </>
@@ -174,7 +178,7 @@ const styles = StyleSheet.create({
     iconStatusContainer: {
         width: '100%',
         alignItems: 'center',
-        paddingTop: height * 0.10,
+        paddingTop: height <= 593 ? height * 0.05 : height * 0.10,
         position: 'absolute',
     },
     circleBackground: {

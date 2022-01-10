@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { View, Modal, Text, TouchableOpacity, FlatList, StyleSheet, Platform, Dimensions } from 'react-native';
 import { colors } from '../Themes/DlsTheme';
-import { promptType, promptField, objUseForm, M38GetCompIntfcDLHRTAOBSERVCIResponse, DlhrAllObserve } from '../interfaces/prompInterfaces';
+import { promptType, promptField, objUseForm, M38GetCompIntfcDLHRTAOBSERVCIResponse, DlhrAllObserve, DlhrEmplBussinesUnit } from '../interfaces/prompInterfaces';
 import { SearchInput } from './SearchInput';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { GetPromptArray } from './GetPromptArrayy';
 import { FlatListItemPrompt } from './FlatlisItemPrompt';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Animated, { useAnimatedStyle, useSharedValue, withDelay, withSpring, withTiming } from 'react-native-reanimated';
+import { AuthContext } from '../context/formContext/AuthContext';
+
 
 interface Props {
     onChange?: (value: string, field: keyof objUseForm) => void;
@@ -28,6 +30,8 @@ const { width, height } = Dimensions.get("window");
 
 export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, cardDescr, activeBorderError = false, initialValue, disabled = false }: Props) => {
 
+    const typebussines: promptType = { type: 'DLHR_EMPL_BUSSINES_UNIT' }
+
     const { top } = useSafeAreaInsets();
 
     const [term, setTerm] = useState('')
@@ -36,12 +40,17 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
 
     const { PromptObArray } = GetPromptArray(promptType)
 
-    const [isVisible, setisVisible] = useState(false)
+    const { PromptObArray: PromptBusinessunit } = GetPromptArray(typebussines)
 
+    const [isVisible, setisVisible] = useState(false)
+    const { emplidSelect } = useContext(AuthContext);
     const [seeFlatList, setSeeFlatList] = useState(true);
 
 
-    let regex = "/^[a-zA-Z]*$/";
+
+    const BuArray: DlhrEmplBussinesUnit[] = PromptBusinessunit.filter(item => item.DLHR_OBSERVE_EMPLID.EMPLID === emplidSelect.fieldValue1);
+
+
 
     let strPLaceHolder = ''
     switch (promptType.type) {
@@ -163,7 +172,19 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
         case 'DLHR_EMPL_BUSSINES_UNIT':
             data = PromptObArray.map(item => { return item.DLHR_OBSERVE_EMPLID });
             break;
+        case 'DLHR_APS':
+            if (BuArray[0] !== undefined) {
+                const businessUArrayC = BuArray[0].DLHR_BUSSINES_UNIT
+                const allArrayC = Array.isArray(businessUArrayC) ? businessUArrayC : [businessUArrayC];
 
+                data = PromptObArray.filter(aps => {
+
+                    return allArrayC.filter(item => item?.UNIDAD_DE_NEGOCIO === aps?.BUSINESSUNIT).length > 0
+                })
+
+            }
+
+            break;
         default:
             data = PromptObArray;
 
@@ -176,24 +197,24 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
         }
         switch (promptType.type) {
             case 'DLHR_EMPL_BUSSINES_UNIT':
-                    setObserveFiltred(
-                        data.filter(
-                            observe => observe[strField1].toLocaleLowerCase()
-                                .includes(term.toLocaleLowerCase())||
-                                observe[strField2].toLocaleLowerCase()
+                setObserveFiltred(
+                    data.filter(
+                        observe => observe[strField1].toLocaleLowerCase()
+                            .includes(term.toLocaleLowerCase()) ||
+                            observe[strField2].toLocaleLowerCase()
                                 .includes(term.toLocaleLowerCase())
-                        )
                     )
+                )
 
                 break;
             case 'DLHR_EQUIP_TBL':
-             
+
                 setObserveFiltred(
                     data.filter(
                         observe => observe[strField1].toString().toLocaleLowerCase()
                             .includes(term.toLocaleLowerCase()) ||
                             observe[strField2].toLocaleLowerCase()
-                            .includes(term.toLocaleLowerCase())
+                                .includes(term.toLocaleLowerCase())
                     )
                 )
                 break;
@@ -202,9 +223,9 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
                 setObserveFiltred(
                     data.filter(
                         observe => observe[strField1].toString().toLocaleLowerCase()
-                            .includes(term.toLocaleLowerCase())||
+                            .includes(term.toLocaleLowerCase()) ||
                             observe[strField2].toLocaleLowerCase()
-                            .includes(term.toLocaleLowerCase())
+                                .includes(term.toLocaleLowerCase())
                     )
                 )
                 break;
@@ -214,7 +235,7 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
                         observe => observe[strField1].toString().toLocaleLowerCase()
                             .includes(term.toLocaleLowerCase()) ||
                             observe[strField2].toLocaleLowerCase()
-                            .includes(term.toLocaleLowerCase())
+                                .includes(term.toLocaleLowerCase())
                     )
                 )
                 break;
@@ -222,9 +243,9 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
                 setObserveFiltred(
                     data.filter(
                         observe => observe[strField1].toString().toLocaleLowerCase()
-                            .includes(term.toLocaleLowerCase())||
+                            .includes(term.toLocaleLowerCase()) ||
                             observe[strField2].toLocaleLowerCase()
-                            .includes(term.toLocaleLowerCase())
+                                .includes(term.toLocaleLowerCase())
                     )
                 )
                 break;
@@ -361,7 +382,7 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
                 }}
             >
                 <TouchableOpacity
-                    style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.4)', }}
+                    style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.4)' }}
                     activeOpacity={1}
                     onPressOut={() => { setisVisible(false) }}
                 >
@@ -369,16 +390,15 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
 
                 <View style={{
                     ...styles.conteinerModal,
-                    top: height * 0.15,
-                    left: width * 0.1,
-                    height: height * 0.5,
-                    width: width * 0.8,
-
+                    alignSelf: 'center',
+                    height: height * 0.6,
+                    width: width * 0.95,
+                    top: '20%'
                 }}>
                     <View style={{
                         ...styles.cardPrompt,
-                        height: height * 0.5,
-                        width: width * 0.8,
+                        height: height * 0.6,
+                        width: '100%',
                         backgroundColor: colors.dlsGrayPrimary
                     }}>
                         <SearchInput
@@ -394,8 +414,9 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
 
                         <View style={{
                             top: 25,
-                            height: height * 0.4,
-
+                            height: height * 0.5,
+                            paddingVertical: 5,
+                            borderRadius: 20,
                             backgroundColor: colors.dlsGrayPrimary
                         }}>
                             {seeFlatList &&
@@ -443,7 +464,7 @@ const styles = StyleSheet.create({
             height: 10
         },
         elevation: 10,
-        borderRadius: 15,
+        borderRadius: 20,
         shadowOpacity: 0.25
 
     },
@@ -456,7 +477,7 @@ const styles = StyleSheet.create({
         height: 50,
         width: width * 0.87,
 
-        borderRadius: 15,
+        borderRadius: 20,
         backgroundColor: '#2b2c32',
         justifyContent: 'space-between',
         paddingLeft: 15,

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useContext } from 'react';
-import { View, useWindowDimensions, StyleSheet, Text, TouchableOpacity, Platform, ToastAndroid, Alert } from 'react-native';
+import { View, useWindowDimensions, StyleSheet, Text, TouchableOpacity, Platform, ToastAndroid, Alert, Modal } from 'react-native';
 
 import { StackScreenProps } from '@react-navigation/stack';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -14,74 +14,66 @@ import List, { List as ListModel } from "../components/AcordionList/List";
 import { colors } from '../Themes/DlsTheme';
 import { EditObservCard } from '../components/EditObserveCard';
 import { AuthContext as AuthcontextGeneral } from '../context/AuthContext'
-import SpInAppUpdates, {
-    NeedsUpdateResponse,
-    IAUUpdateKind,
-    StartUpdateOptions,
-} from 'sp-react-native-in-app-updates';
 
 
 
 
-interface Props extends StackScreenProps<RoutstackParams, 'EditObvservCardScreen'> { };
+
 
 const list: ListModel = {
     name: "Registro",
     items: [
-        { name: "Nathaniel Fitzgerald", points: "$3.45" },
-
+        { name: " ", points: "0" },
     ],
 };
 
 const list2: ListModel = {
     name: "Comentarios",
     items: [
-        { name: "Nathaniel Fitzgerald", points: "$3.45" },
-
+        { name: " ", points: "0" },
     ],
 };
 
 const list3: ListModel = {
     name: "Preguntas",
     items: [
-        { name: "Nathaniel Fitzgerald", points: "$3.45" },
-
+        { name: " ", points: "0" },
     ],
 };
 
 const list4: ListModel = {
     name: "Reglas de oro",
     items: [
-        { name: "Nathaniel Fitzgerald", points: "0" },
-
+        { name: " ", points: "0" },
     ],
 };
 
+interface Props extends StackScreenProps<RoutstackParams, 'EditObvservCardScreen'> { };
 export const EditObvservCardScreen = ({ navigation, route }: Props) => {
 
-    const { setReloadCardList } = useContext(AuthcontextGeneral)
+    const { setReloadCardList } = useContext(AuthcontextGeneral);
 
     const { isloading, loadObserveCard, form, onChange, stateSend } = UseOneGetObserve(route.params);
 
-    const [editAble, setEditAble] = useState(false)
-    const [initialState, setinitialState] = useState<M38GetCompIntfcDLHRTAOBSERVCIResponse | undefined>()
-    const scrollViewRef = useRef<ScrollView>(null)
+    const [editEnabled, setEditEnabled] = useState(false);
+    const [saveEnabled, setSaveEnabled] = useState(false);
+    const [visibleModal, setVisibleModal] = useState(false);
+    const [messageModal, setMessageModal] = useState('');
+    const [initialState, setinitialState] = useState<M38GetCompIntfcDLHRTAOBSERVCIResponse | undefined>();
+    const scrollViewRef = useRef<ScrollView>(null);
 
     useEffect(() => {
         setinitialState(stateSend);
     }, [isloading])
 
     useEffect(() => {
-        if (initialState !== undefined && JSON.stringify(stateSend) !== JSON.stringify(initialState))
-            setEditAble(true)
+        if (initialState !== undefined && JSON.stringify(stateSend) !== JSON.stringify(initialState)) {
+            //setEditAble(true) esto se activa cuando hay un cambio
+            setSaveEnabled(true)
+        }
     }, [stateSend])
 
     const { height, width } = useWindowDimensions();
-
-
-    console.log("inicial", stateSend);
-
-
 
     const menus: MeuItemType[] = [
         { MeuItemType: 'Registro' },
@@ -90,41 +82,79 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
         { MeuItemType: 'ReglasOro' },
     ]
 
-
     const alertSend = (sended: boolean) => {
-        let msg = ''
+        let msg = '';
 
         if (sended) {
-            msg = 'Tarjeta Guardada'
-            setEditAble(false)
+            msg = 'Tarjeta guardada exitosamente.';
+            setMessageModal(msg);
+            setEditEnabled(false);
+            setSaveEnabled(false);
         } else {
-            msg = 'Error en modificacion'
+            msg = 'No se pudo procesar la modificación, intente nuevamente.';
+            setMessageModal(msg);
         }
-        if (Platform.OS === 'android') {
-            ToastAndroid.show(msg, ToastAndroid.SHORT)
+        setVisibleModal(true)
+
+        /* if (Platform.OS === 'android') {
+            ToastAndroid.show(msg, ToastAndroid.SHORT);
         } else {
             Alert.alert(msg);
-        }
+        } */
     }
-
+    
     return (
-
-        < View style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
             <View style={{ ...styles.container, height: height }}>
                 <View style={{ height: '10%', width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
 
                     <TouchableOpacity
-                        onPress={() => { /* route.params.cardOffline ? navigation.pop(4) : */ navigation.pop() }}
+                        onPress={() => { navigation.pop() }}
                     >
                         <Icon name="chevron-back-outline" size={40} color={colors.dlsYellowSecondary} />
                     </TouchableOpacity>
 
-                    {!route.params.cardOffline &&
+                    {(route.params.cardOffline)===true? <></>:
+                     editEnabled ?
                         <TouchableOpacity
-                            disabled={!editAble}
-                            onPress={() => EditObservCard({ form: stateSend!, alertSend, setReloadCardList })}
+                            disabled={!saveEnabled}
+                            onPress={() => {
+                                EditObservCard({ form: stateSend!, alertSend, setReloadCardList })
+                            }}
                         >
-                            <AwesomeIcon name="edit" size={30} color={editAble ? colors.dlsYellowSecondary : colors.dlsBtonColosWhite} />
+                            <View style={{ flexDirection: 'row' }}>
+                                <Text style={{
+                                    color: 'white',
+                                    alignSelf: 'center',
+                                    paddingRight: 10,
+                                    fontSize: 17,
+                                    fontWeight: 'bold'
+                                }}
+                                >
+                                    Guardar
+                                </Text>
+                                <AwesomeIcon name="save" size={30} color={saveEnabled ? colors.dlsYellowSecondary : colors.dlsWhiteBackGround} />
+                            </View>
+                        </TouchableOpacity>
+                        :
+                        <TouchableOpacity
+                            onPress={() => {
+                                setEditEnabled(true)
+                            }}
+                        >
+                            <View style={{ flexDirection: 'row' }}>
+                                <Text style={{
+                                    color: 'white',
+                                    alignSelf: 'center',
+                                    paddingRight: 10,
+                                    fontSize: 17,
+                                    fontWeight: 'bold'
+                                }}
+                                >
+                                    Editar
+                                </Text>
+                                <AwesomeIcon name="edit" size={30} color={colors.dlsYellowSecondary} />
+                            </View>
                         </TouchableOpacity>
                     }
 
@@ -152,11 +182,10 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
                             </View>
 
                             <ScrollView ref={scrollViewRef} scrollEnabled={false} showsVerticalScrollIndicator={false}>
-
-                                <List {...{ list }} MeuItemType={menus[0]} form={form} onChange={onChange} scrollViewRef={scrollViewRef} cardOffline={route.params.cardOffline} />
-                                <List {...{ list: list2 }} MeuItemType={menus[1]} form={form} onChange={onChange} scrollViewRef={scrollViewRef} cardOffline={route.params.cardOffline} />
-                                <List {...{ list: list3 }} MeuItemType={menus[2]} form={form} onChange={onChange} scrollViewRef={scrollViewRef} cardOffline={route.params.cardOffline} />
-                                <List {...{ list: list4 }} MeuItemType={menus[3]} form={form} onChange={onChange} scrollViewRef={scrollViewRef} cardOffline={route.params.cardOffline} />
+                                <List {...{ list }} MeuItemType={menus[0]} form={form} onChange={onChange} scrollViewRef={scrollViewRef} displayOnly={!editEnabled} />
+                                <List {...{ list: list2 }} MeuItemType={menus[1]} form={form} onChange={onChange} scrollViewRef={scrollViewRef} displayOnly={!editEnabled} />
+                                <List {...{ list: list3 }} MeuItemType={menus[2]} form={form} onChange={onChange} scrollViewRef={scrollViewRef} displayOnly={!editEnabled} />
+                                <List {...{ list: list4 }} MeuItemType={menus[3]} form={form} onChange={onChange} scrollViewRef={scrollViewRef} displayOnly={!editEnabled} />
                             </ScrollView>
                         </>
                     :
@@ -164,11 +193,56 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
                         <Chase size={48} color="#FFF" />
                     </View>
                 }
+
+                <Modal
+                    animationType='slide'
+                    transparent
+                    visible={visibleModal}
+                >
+
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
+                        <View style={{
+                            width: '80%',
+                            height: '30%',
+                            backgroundColor: '#1C1C20',
+                            borderRadius: 30,
+                            shadowColor: "#000",
+                            shadowOffset: {
+                                width: 0,
+                                height: 6,
+                            },
+                            shadowOpacity: 0.39,
+                            shadowRadius: 8.30,
+                            elevation: 13,
+                        }}>
+                            <View style={{ flex: 1, justifyContent: 'space-between' }}>
+                                <View style={{ flex:1, marginHorizontal: 10, justifyContent: 'center' }}>
+                                    <Text style={{ color: 'white', textAlign: 'center', fontSize: 26, fontWeight: 'bold' }}>
+                                        {messageModal}
+                                    </Text>
+                                </View>
+                                <TouchableOpacity
+                                    onPress={() => { setVisibleModal(false) }}
+                                    style={{
+                                        height: '25%',
+                                        borderColor: 'white',
+                                        borderWidth: 4,
+                                        borderRadius: 20,
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        margin: 15
+                                    }}
+                                >
+                                    <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 16 }}>Cerrar Ventana</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
             </View>
         </View>
     )
 }
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
