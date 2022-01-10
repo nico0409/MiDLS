@@ -132,7 +132,7 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef, displayOnly 
                 type="DLHR_EMPL_BUSSINES_UNIT"
                 onChange={onChange}
                 emplid={emplidSelect.fieldValue1}
-                disabled={displayOnly}
+                disabled={true}
               />
 
               <DatePickerSelect

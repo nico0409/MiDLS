@@ -178,10 +178,10 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
                 const allArrayC = Array.isArray(businessUArrayC) ? businessUArrayC : [businessUArrayC];
 
                 data = PromptObArray.filter(aps => {
-
                     return allArrayC.filter(item => item?.UNIDAD_DE_NEGOCIO === aps?.BUSINESSUNIT).length > 0
                 })
 
+                data = data.filter(item => item?.BUSINESSUNIT === form?.['m38:BUSINESS_UNIT']);
             }
 
             break;
@@ -307,6 +307,7 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
 
                 break;
             case 'DLHR_APS':
+
                 if (data[0] !== undefined &&
                     form !== undefined) {
                     const item = data.filter(
@@ -321,6 +322,16 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
                 break;
         }
     }, [data])
+
+    useEffect(() => {
+        switch (promptType.type) {
+            case 'DLHR_APS':
+                onChange !== undefined && onChange('',"m38:DL_NUM_APS")
+                setplaceHolder(strPLaceHolder);
+                
+                break;
+        }
+    }, [form?.['m38:BUSINESS_UNIT']])
 
     const [isItemChanged, setIsItemChanged] = useState(false);
 

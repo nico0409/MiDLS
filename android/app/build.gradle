@@ -141,7 +141,7 @@ android {
         applicationId "com.midls"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 22
+        versionCode 23
         versionName "1.7.13"
     }
     splits {
