@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext, useRef } from 'react'
 import { View, Modal, Text, TouchableOpacity, FlatList, StyleSheet, Platform, Dimensions } from 'react-native';
 import { colors } from '../Themes/DlsTheme';
 import { promptType, promptField, objUseForm, M38GetCompIntfcDLHRTAOBSERVCIResponse, DlhrAllObserve, DlhrEmplBussinesUnit } from '../interfaces/prompInterfaces';
@@ -46,7 +46,7 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
     const { emplidSelect } = useContext(AuthContext);
     const [seeFlatList, setSeeFlatList] = useState(true);
 
-
+    const lastBUChanged = useRef("");
 
     const BuArray: DlhrEmplBussinesUnit[] = PromptBusinessunit.filter(item => item.DLHR_OBSERVE_EMPLID.EMPLID === emplidSelect.fieldValue1);
 
@@ -324,13 +324,20 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
     }, [data])
 
     useEffect(() => {
-        switch (promptType.type) {
-            case 'DLHR_APS':
-                onChange !== undefined && onChange('',"m38:DL_NUM_APS")
-                setplaceHolder(strPLaceHolder);
-                
-                break;
+
+        if (lastBUChanged.current !== "" && lastBUChanged.current !== form?.['m38:BUSINESS_UNIT'] ) {
+            switch (promptType.type) {
+                case 'DLHR_APS':
+                    onChange !== undefined && onChange('', "m38:DL_NUM_APS")
+                    setplaceHolder(strPLaceHolder);
+
+                    break;
+            }
         }
+
+        lastBUChanged.current = form?.['m38:BUSINESS_UNIT'] === undefined ? "" : form?.['m38:BUSINESS_UNIT'];
+
+        
     }, [form?.['m38:BUSINESS_UNIT']])
 
     const [isItemChanged, setIsItemChanged] = useState(false);
