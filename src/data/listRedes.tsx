@@ -9,7 +9,7 @@ export const listRedesDLS: DataRedes[] = [
             type: 'image',
             owner: 'DLS',
             nameIcon: '',
-            requireImage: require('../assets/Logo_DLSNegativo.png'),
+            requireImage: require('../assets/Logo_DLSNegativo_sf.png'),
             color: colors.dlsYellowSecondary,
             size: 40,
             descr: 'dls-archer.com'

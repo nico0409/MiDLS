@@ -55,7 +55,7 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
     let strPLaceHolder = ''
     switch (promptType.type) {
         case 'DLHR_EMPL_BUSSINES_UNIT':
-            strPLaceHolder = 'Emplid'
+            strPLaceHolder = 'Empleado'
             break;
         case 'DLHR_EQUIP_TBL':
             strPLaceHolder = 'Equipos'
