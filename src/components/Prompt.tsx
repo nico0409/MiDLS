@@ -46,7 +46,7 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
     const { emplidSelect } = useContext(AuthContext);
     const [seeFlatList, setSeeFlatList] = useState(true);
 
-    const lastBUChanged = useRef("");
+    const [effectApsEjecutado, setEffectApsEjecutado] = useState(false);
 
     const BuArray: DlhrEmplBussinesUnit[] = PromptBusinessunit.filter(item => item.DLHR_OBSERVE_EMPLID.EMPLID === emplidSelect.fieldValue1);
 
@@ -323,9 +323,10 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
         }
     }, [data])
 
+
     useEffect(() => {
 
-        if (lastBUChanged.current !== "" && lastBUChanged.current !== form?.['m38:BUSINESS_UNIT'] ) {
+        if (effectApsEjecutado)
             switch (promptType.type) {
                 case 'DLHR_APS':
                     onChange !== undefined && onChange('', "m38:DL_NUM_APS")
@@ -333,11 +334,9 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
 
                     break;
             }
-        }
+            
+        !effectApsEjecutado && setEffectApsEjecutado(true)
 
-        lastBUChanged.current = form?.['m38:BUSINESS_UNIT'] === undefined ? "" : form?.['m38:BUSINESS_UNIT'];
-
-        
     }, [form?.['m38:BUSINESS_UNIT']])
 
     const [isItemChanged, setIsItemChanged] = useState(false);
