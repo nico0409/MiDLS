@@ -82,7 +82,7 @@ export const MenuInterno = (DrawerNavigation: DrawerContentComponentProps<Drawer
             height: '100%',
           }} />
           <View style={styless.skewable} />
-          <Text style={styless.textSkew}>#DLS2021SomosEnergía</Text>
+          <Text style={styless.textSkew}>#DLS2022EnergíaQueImpulsa</Text>
         </View>
 
 
@@ -218,7 +218,7 @@ export const styless = StyleSheet.create({
     borderTopRightRadius: 50,
   },
   skewContainer: {
-    width: '65%',
+    width: '80%',
     height: '30%',
     alignItems: 'center',
     justifyContent: 'center',
