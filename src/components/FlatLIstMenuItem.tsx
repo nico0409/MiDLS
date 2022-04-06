@@ -1,37 +1,45 @@
-import { useNavigation } from '@react-navigation/core';
-import { useTheme, Theme, ParamListBase } from '@react-navigation/native';
 import React, { useContext } from 'react'
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Linking } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { MenuItem } from '../interfaces/appInterfaces';
 import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types';
 import { colors } from '../Themes/DlsTheme';
-import { MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
 import { NavigationContext } from '../context/NavigateContext';
-import { menuItems } from '../data/MenuItems';
-
+import SendIntentAndroid from 'react-native-send-intent';
 
 interface Props {
     menuItem: MenuItem
     navigation?: DrawerNavigationHelpers
 }
 
-
 export const FlatLIstMenuItem = ({ menuItem, navigation }: Props) => {
-    const {setstate} = useContext(NavigationContext)
-    //const navigation2= useNavigation();
+    const { setstate } = useContext(NavigationContext)
+
+    const openExtApp = () => {
+
+        SendIntentAndroid.isAppInstalled("com.urbetrack.fslite").then(isInstalled => {
+
+            isInstalled ?
+                SendIntentAndroid.openApp("com.urbetrack.fslite", {}).then(wasOpened => { console.log("wasOpened: ", wasOpened) })
+                :
+                Linking.openURL("market://details?id=com.urbetrack.fslite");
+
+        });
+    }
 
     //const {colors}=useTheme()
     return (
         <TouchableOpacity activeOpacity={0.5}
             onPress={() => {
-                navigation!.jumpTo(menuItem.components)
-                ,menuItem.components==='TopTapNavigator'&& setstate(true)
-         
-       }
-    }
-           
-            
+
+                if (menuItem.components === 'linkExternalApp') {
+                    openExtApp();
+                } else {
+                    navigation!.jumpTo(menuItem.components)
+                        , menuItem.components === 'TopTapNavigator' && setstate(true)
+                }
+            }
+            }
         >
             <View style={styles.container}>
                 <Icon
@@ -62,7 +70,7 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         fontSize: 18,
         fontFamily: 'StagSans-Light',
-        
+
         color: colors.dlsYellowSecondary,
         /* fontStyle: 'italic',*/
     },
