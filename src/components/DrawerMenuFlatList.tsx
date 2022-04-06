@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { DrawerContentComponentProps, DrawerContentOptions, DrawerContentScrollView } from '@react-navigation/drawer';
-import { View, Image, FlatList, StyleSheet, TouchableOpacity, Text, Modal , Dimensions, Linking} from 'react-native';
+import { View, Image, FlatList, StyleSheet, TouchableOpacity, Text, Modal , Dimensions} from 'react-native';
 import { menuItems } from '../data/MenuItems';
 import { FlatLIstMenuItem } from './FlatLIstMenuItem';
 import { ItemSeparator } from './ItemSeparator';
@@ -11,7 +11,6 @@ import { Contact } from './Contact';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { RedesContent } from './RedesContent';
 import { color } from 'react-native-reanimated';
-import SendIntentAndroid from 'react-native-send-intent';
 
 const { height } = Dimensions.get('window');
 
@@ -21,19 +20,6 @@ export const MenuInterno = (DrawerNavigation: DrawerContentComponentProps<Drawer
 
   const { navigation } = DrawerNavigation;
   const [isVisible, setIsVisible] = useState(false);
-
-const openExtApp = () =>{
-  // Linking.openURL("market://details?id=com.urbetrack.fslite");
-
-  SendIntentAndroid.isAppInstalled("com.urbetrack.fslite").then(isInstalled => {
-
-    isInstalled ? 
-    SendIntentAndroid.openApp("com.urbetrack.fslite",{}).then(wasOpened => {console.log("wasOpened: ",wasOpened)})
-    :
-    Linking.openURL("market://details?id=com.urbetrack.fslite");
-
-  });
-}
 
   return (
 
@@ -116,13 +102,6 @@ const openExtApp = () =>{
         />
       </View>
       <View style={{ alignItems: 'center', paddingBottom: 30 }}>
-
-        <TouchableOpacity
-           onPress={openExtApp}
-        >
-          <Text style={styless.textModal}>Abrir app externa</Text>
-        </TouchableOpacity>
-
         <TouchableOpacity
            onPress={() => (navigation.toggleDrawer(),
             setIsVisible(true))}
