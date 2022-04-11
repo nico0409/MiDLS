@@ -28,25 +28,24 @@ export const GetPrompt = async () => {
          {
             'Content-Type': 'text/xml',
             SOAPAction: 'DLHR_APP_PROMPT.v1',
-            
+
          }
       }).then(res => {
 
 
-         console.log("recivio prompt");
-         
-        
-   
-         respuesta = {
-            PromptObserve:parse(decodeURIComponent(escape(res.data))),
-         type:'PromptObserveType'
-         };
-       
 
- 
-      }).catch(err => { 
-         console.log("error prompt");
-         console.log(err) });
+
+
+
+         respuesta = {
+            PromptObserve: parse(decodeURIComponent(escape(res.data))),
+            type: 'PromptObserveType'
+         };
+
+
+
+      }).catch(err => {
+      });
    return respuesta;
 }
 

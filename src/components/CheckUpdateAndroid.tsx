@@ -18,7 +18,7 @@ export const CheckUpdateAndroid = async ({ setNeedsUpdate, setLockScreen }: Prop
                 version: getVersion(), // app local version
                 androidStoreURL: 'https://play.google.com/store/apps/details?id=com.midls',
             });
-            console.log(check);
+
             if (check.result === "new") {
                 let oldVersArr = check.local.split('.');
                 let newVersArr = check.remote.split('.');
@@ -32,7 +32,7 @@ export const CheckUpdateAndroid = async ({ setNeedsUpdate, setLockScreen }: Prop
                 return true;
             } else return false;
         } catch (e) {
-            console.log(e);
+            ;
             return false;
         }
 

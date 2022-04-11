@@ -40,7 +40,7 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
 
 
     const [activeIndex, setActiveIndex] = useState(2);
-    console.log(activeIndex);
+
     const [moveCarousel, setMoveCarousel] = useState(1);
     /*  const [moveCarousel2, setMoveCarousel2] = useState(1);
      const [moveCarousel3, setMoveCarousel3] = useState(1); */

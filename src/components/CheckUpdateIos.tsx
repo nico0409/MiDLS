@@ -21,8 +21,7 @@ export const CheckUpdateIos = async ({ setNeedsUpdate, setLockScreen, setLink }:
 
             const veriosnNewIos = versionNew['soapenv:Envelope']?.['soapenv:Body'].DOC_TEST2?.request;
 
-            console.log("veriosnNewIos: ", veriosnNewIos);
-            console.log("versionDevice: ", versionDevice);
+
 
             if (versionDevice !== veriosnNewIos) {
 
@@ -47,7 +46,7 @@ export const CheckUpdateIos = async ({ setNeedsUpdate, setLockScreen, setLink }:
             } else return false;
         }
         catch (e) {
-            console.log(e);
+
             return false;
         }
 

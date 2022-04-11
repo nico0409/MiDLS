@@ -22,7 +22,7 @@ interface Params {
    setErrorType: React.Dispatch<React.SetStateAction<"server" | "network" | undefined>>;
 }
 
-export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingValue, cardDescr, setCardDescr, setReloadCardList,setErrorType }: Params) => {
+export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingValue, cardDescr, setCardDescr, setReloadCardList, setErrorType }: Params) => {
 
    var defaultOptions = {
       attributeNamePrefix: "@_",
@@ -79,17 +79,14 @@ export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingVal
 
       }).catch(async (err) => {
 
-         console.log("err---------------------------------------------------");
-         console.log(JSON.stringify(err));
-         console.log(err.message);
+
 
          const arrayFormsOffline: any = await GetStorage({ StorageType: 'offlineObserveCards' });
          const arrayCardsDescrOffline: any = await GetStorage({ StorageType: 'offlineObserveCardsDescr' });
 
-               console.log(arrayFormsOffline);
-               console.log(arrayCardsDescrOffline);
-               
-               
+
+
+
          const newCardDescr = {
             ...cardDescr,
             ...{ NroTarjeta: nroTarjetaEmpty + ((arrayCardsDescrOffline ? (arrayCardsDescrOffline.length + 1) : 1).toString()) }
@@ -116,7 +113,7 @@ export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingVal
             await Asingstorage({ StorageType: 'offlineObserveCardsDescr' }, arrayCardDescrOffline);
          }
 
-         setErrorType(err.message === "Network Error" ? 'network': 'server');
+         setErrorType(err.message === "Network Error" ? 'network' : 'server');
          runAnimation(false);
       });
 }

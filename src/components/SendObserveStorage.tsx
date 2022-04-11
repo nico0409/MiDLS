@@ -10,24 +10,24 @@ export const SendObserveStorage = async () => {
     function isofflineObserveCard(object: any): object is objUseForm[] {
         return true
     }
-    let data:any;
-    
-    
-    data=await GetStorage({ StorageType: 'offlineObserveCards' })
-   
-    
-if (data!==null){
-    if (isofflineObserveCard(data)) {
-        console.log("entrando a enviar");
-        
-           for  (let index = data.length-1; index >=0; index--) {
-              
-             await  SendOnservCardStorage({ data, index})       
-                }
-           
-           
-       }
-}
-    
+    let data: any;
+
+
+    data = await GetStorage({ StorageType: 'offlineObserveCards' })
+
+
+    if (data !== null) {
+        if (isofflineObserveCard(data)) {
+
+
+            for (let index = data.length - 1; index >= 0; index--) {
+
+                await SendOnservCardStorage({ data, index })
+            }
+
+
+        }
+    }
+
 
 }

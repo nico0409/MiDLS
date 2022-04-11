@@ -20,7 +20,7 @@ export const FlatLIstMenuItem = ({ menuItem, navigation }: Props) => {
         SendIntentAndroid.isAppInstalled("com.urbetrack.fslite").then(isInstalled => {
 
             isInstalled ?
-                SendIntentAndroid.openApp("com.urbetrack.fslite", {}).then(wasOpened => { console.log("wasOpened: ", wasOpened) })
+                SendIntentAndroid.openApp("com.urbetrack.fslite", {}).then(wasOpened => { })
                 :
                 Linking.openURL("market://details?id=com.urbetrack.fslite");
 
