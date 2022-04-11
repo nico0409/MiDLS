@@ -44,12 +44,12 @@ export const GetStorage = async ({ StorageType }: StorageTypes) => {
 
         case 'emplid':
             const emplid: storageEmplid = JSON.parse(Datos!)
-            return emplid
+            return emplid;
+
         case 'signInStatus':
             const signInStatus: statusAuthStorage = JSON.parse(Datos!)
-            console.log("signInStatus", signInStatus);
+            return signInStatus;
 
-            return signInStatus
         default:
             return null;
 

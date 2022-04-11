@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { createStackNavigator, StackScreenProps } from '@react-navigation/stack';
 import { TarjetaObserveScreen } from '../screens/TarjetaObserveScreen';
 import { CreateObserveScreen } from '../screens/CreateObserveScreen';
-import { SafeAreaView, StyleSheet } from 'react-native';
 import { CreateObserveQuestionsPage } from '../components/CreateObserveQuestionsPage';
 import { colors } from '../Themes/DlsTheme';
 import { EmplidObserveScreen } from '../screens/EmplidObserveScreen';
@@ -15,6 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Loading } from '../components/Loading';
 import { AuthContext } from '../context/AuthContext';
 import { GetStorage } from '../components/Storage';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 
 export type RoutstackParams = {
@@ -23,6 +24,9 @@ export type RoutstackParams = {
     TarjetaObserveScreen: { name: string, emplid: string }
 
 }
+
+
+interface Props extends StackScreenProps<any, any> { };
 
 const FormContext = ({ children }: { children: JSX.Element | JSX.Element[] }) => {
     return (
@@ -34,10 +38,7 @@ const FormContext = ({ children }: { children: JSX.Element | JSX.Element[] }) =>
 
 const Stack = createStackNavigator();
 
-
-
-
-export const StackNavigatorObserve = () => {
+export const StackNavigatorObserve = ({ navigation }: Props) => {
 
 
     const [showWelcomeScreen, setShowWelcomeScreen] = useState(false);
@@ -48,16 +49,16 @@ export const StackNavigatorObserve = () => {
 
 
     const getsAuthStorage = async () => {
-        const statusStorage = await GetStorage({ StorageType: 'signInStatus' })
 
-        function isAuthStorage(object: any): object is statusAuthStorage[] {
+        function isAuthStorage(object: any): object is statusAuthStorage {
             return true
         }
 
+        const statusStorage = await GetStorage({ StorageType: 'signInStatus' });
 
         if (statusStorage !== null) {
             if (isAuthStorage(statusStorage)) {
-                return statusStorage[0].status === true || authContext.status === 'authenticated' ? true : false
+                return statusStorage.status === true || authContext.status === 'authenticated' ? true : false
 
             }
         } else {
@@ -65,12 +66,12 @@ export const StackNavigatorObserve = () => {
         }
     }
 
-    console.log("authContext", authContext.status);
-
     useEffect(() => {
+
         getsAuthStorage().then(res => {
             setisLogin(!res);
         })
+
     }, [authContext.status])
 
     const checkStorage = async () => {
@@ -78,7 +79,6 @@ export const StackNavigatorObserve = () => {
             /* console.log("entro a loaded: " + await AsyncStorage.getItem('welcomeScreenLoaded')); */
         } else {
             setShowWelcomeScreen(true);
-            console.log("entro a null");
         }
         setIsLoading(false);
     }
@@ -87,12 +87,29 @@ export const StackNavigatorObserve = () => {
         checkStorage()
     }, [])
 
+    const noLogin = () => {
+        return (
+            <View style={{ flex: 1}}>
+                <TouchableOpacity onPress={navigation.goBack} style={{ paddingTop: 5 }}>
+                    <Icon name="chevron-back-outline" size={40} color={colors.dlsYellowSecondary} />
+                </TouchableOpacity>
+
+                <View style={{flex: 1,justifyContent:'center',alignContent:'center' }}>
+                    <Text style={{ color: 'white',marginHorizontal:50,fontSize:32,fontFamily:'Stag-Semibold' }}>
+                        Para  poder  ingresar  a  la  función  de  las  Tarjetas  Observe,  debe  iniciar  sesión  a  MiDls  Mobile  al  menos  una  vez.
+                        </Text>
+                </View>
+
+            </View>
+        )
+    }
+
     return (
         <FormContext>
             <SafeAreaView style={styles.container}>
                 {isLogin ?
                     // carga pantalla de aviso  de que no esta logueado
-                    <Loading />
+                    noLogin()
                     : isLoading ?
                         <Loading />
                         :
