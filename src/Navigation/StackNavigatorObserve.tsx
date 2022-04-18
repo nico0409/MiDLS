@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import { createStackNavigator, StackScreenProps } from '@react-navigation/stack';
 import { TarjetaObserveScreen } from '../screens/TarjetaObserveScreen';
 import { CreateObserveScreen } from '../screens/CreateObserveScreen';
@@ -89,15 +89,34 @@ export const StackNavigatorObserve = ({ navigation }: Props) => {
 
     const noLogin = () => {
         return (
-            <View style={{ flex: 1}}>
+            <View style={{ flex: 1 }}>
                 <TouchableOpacity onPress={navigation.goBack} style={{ paddingTop: 5 }}>
                     <Icon name="chevron-back-outline" size={40} color={colors.dlsYellowSecondary} />
                 </TouchableOpacity>
 
-                <View style={{flex: 1,justifyContent:'center',alignContent:'center' }}>
-                    <Text style={{ color: 'white',marginHorizontal:50,fontSize:32,fontFamily:'Stag-Semibold' }}>
-                        Para  poder  ingresar  a  la  función  de  las  Tarjetas  Observe,  debe  iniciar  sesión  a  MiDls  Mobile  al  menos  una  vez.
+                <View style={{ flex: 1}}>
+                    <View style={{
+                        height: '50%',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        
+                    }}>
+                        <Image source={require('../assets/login_img.png')}
+                            style={{
+                                width: '80%',
+                                height: '80%',
+                                resizeMode: 'contain',
+                                borderRadius: 50
+                            }}
+                        />
+                    </View>
+
+                    <View style={{ flex: 1,paddingTop:20}}>
+                        <Text style={{ color: 'white', paddingHorizontal: 35,fontSize: 32, fontFamily: 'Stag-Semibold',textAlign:'center'}}>
+                            Por  favor  inicie  sesión  en  la  aplicación  para  poder  utilizar  esta  funcionalidad.
                         </Text>
+                    </View>
+
                 </View>
 
             </View>

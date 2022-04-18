@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Text, View, StyleSheet, TouchableOpacity, Linking } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Linking,Platform,Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { MenuItem } from '../interfaces/appInterfaces';
 import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types';
@@ -33,7 +33,8 @@ export const FlatLIstMenuItem = ({ menuItem, navigation }: Props) => {
             onPress={() => {
 
                 if (menuItem.components === 'linkExternalApp') {
-                    openExtApp();
+                    Platform.OS==='ios' ? 
+                    Alert.alert("Esta aplicación aún no está disponible para dispositivos iPhone.") : openExtApp();
                 } else {
                     navigation!.jumpTo(menuItem.components)
                         , menuItem.components === 'TopTapNavigator' && setstate(true)
