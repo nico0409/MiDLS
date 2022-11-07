@@ -66,6 +66,8 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Podrás realizar fotos para asignarlas a tu perfil. Puedes cambiar esto cuando quieras en la configuración del dispositivo.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>UIAppFonts</key>

@@ -49,9 +49,11 @@ export const FlatLIstMenuItem = ({ menuItem, navigation }: Props) => {
                     color={colors.dlsYellowSecondary}
 
                 />
+                <View style={styles.boxText}>
                 <Text style={styles.itemText}>
                     {menuItem.name}
                 </Text>
+                </View>
                 <View style={{ flex: 1 }}></View>
                 <Icon
                     name="chevron-forward-outline"
@@ -68,11 +70,15 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     itemText: {
-        marginLeft: 10,
         fontSize: 18,
         fontFamily: 'StagSans-Light',
 
         color: colors.dlsYellowSecondary,
         /* fontStyle: 'italic',*/
     },
+    boxText: {
+        marginLeft: 10,
+        width:'70%'
+    },
+    
 });

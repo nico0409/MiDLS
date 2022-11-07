@@ -2,7 +2,7 @@ import { MenuItem } from '../interfaces/appInterfaces';
 import { Platform } from 'react-native';
 
 export const menuItems:MenuItem[]=[{
-    name:'Consulta RRHH',
+    name:'Recepción Consultas de Empleados',
     icon:'chatbubble-ellipses-outline',
     components:'RrhhScreen'
 },{
