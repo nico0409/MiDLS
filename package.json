@@ -29,7 +29,7 @@
     "i": "^0.3.7",
     "radio-buttons-react-native": "^1.0.4",
     "react": "^17.0.1",
-    "react-native": "0.64.1",
+    "react-native": "0.64.4",
     "react-native-animated-spinkit": "^1.5.2",
     "react-native-awesome-alerts": "^1.5.2",
     "react-native-device-info": "^8.4.4",
