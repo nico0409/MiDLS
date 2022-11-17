@@ -208,19 +208,20 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef, displayOnly 
                   form={form}
                   disabled={displayOnly}
                 />
-                <CustomSwitchObserve
-                  title="¿Aplico interrupción de tareas?"
-                  onChange={onChange}
-                  switchType="m38:DL_POLITINTERTAREA"
+
+                <PickerSelect 
                   form={form}
+                  placeholder="¿Aplico interrupción de tareas?" 
+                  type="DLHR_POLITINTERTAREA" 
+                  onChange={onChange} 
                   disabled={displayOnly}
                 />
 
-                <CustomSwitchObserve
-                  title="Cuasi accidente"
-                  onChange={onChange}
-                  switchType="m38:DL_CUASIACC"
+                <PickerSelect 
                   form={form}
+                  placeholder="Cuasi accidente" 
+                  type="DLHR_CUASIACC" 
+                  onChange={onChange} 
                   disabled={displayOnly}
                 />
 
@@ -265,12 +266,12 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef, displayOnly 
                     }}
                   />
                 </View>
-
-                <CustomSwitchObserve
-                  title="Requiere APS de seguimiento *"
-                  onChange={onChange}
-                  switchType="m38:DL_REQAPSSEG"
+                
+                <PickerSelect 
                   form={form}
+                  placeholder="Requiere APS de seguimiento *" 
+                  type="DLHR_REQAPSSEG" 
+                  onChange={onChange} 
                   disabled={displayOnly}
                 />
 

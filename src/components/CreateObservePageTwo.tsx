@@ -9,13 +9,17 @@ import { colors } from '../Themes/DlsTheme';
 import { Prompt } from './Prompt';
 import { InputModal } from './InputModal';
 import { RalationchipBtn } from './RalationchipBtn';
+import { PickerSelect } from './PickerSelect';
 
 interface Props {
     form: objUseForm;
     onChange: (value: string, field: keyof objUseForm) => void;
+    poliInterTareaErrorAnim: boolean;
+    cuasiAccErrorAnim: boolean;
+    reqApsErrorAnim: boolean;
 }
 
-export const CreateObservePageTwo = ({ form, onChange }: Props) => {
+export const CreateObservePageTwo = ({ form, onChange,poliInterTareaErrorAnim, cuasiAccErrorAnim, reqApsErrorAnim }: Props) => {
 
     //CheckBox
     const [toggleCheckBox, setToggleCheckBox] = useState(false)
@@ -40,9 +44,9 @@ export const CreateObservePageTwo = ({ form, onChange }: Props) => {
                     form={form}
                 />
 
-                <CustomSwitchObserve title="¿Aplico interrupción de tareas?" onChange={onChange} switchType="m38:DL_POLITINTERTAREA" />
+                <PickerSelect placeholder="¿Aplico interrupción de tareas?" type="DLHR_POLITINTERTAREA" onChange={onChange} activeBorderError={poliInterTareaErrorAnim} />
 
-                <CustomSwitchObserve title="Cuasi accidente" onChange={onChange} switchType="m38:DL_CUASIACC" />
+                <PickerSelect placeholder="Cuasi accidente" type="DLHR_CUASIACC" onChange={onChange} activeBorderError={cuasiAccErrorAnim} />
 
                 {form["m38:DL_CUASIACC"] === 'Y' &&
                     <View>
@@ -82,7 +86,7 @@ export const CreateObservePageTwo = ({ form, onChange }: Props) => {
                     />
                 </View>
 
-                <CustomSwitchObserve title="Requiere APS de seguimiento *" onChange={onChange} switchType="m38:DL_REQAPSSEG" />
+                <PickerSelect placeholder="Requiere APS de seguimiento *" type="DLHR_REQAPSSEG" onChange={onChange} activeBorderError={reqApsErrorAnim} />
 
                 {form["m38:DL_REQAPSSEG"] === 'Y' &&
                     <View>

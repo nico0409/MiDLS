@@ -31,7 +31,7 @@ export type Fields = {
 }
 export type promptType = {
 
-  type?: 'DLHR_EMPL_BUSSINES_UNIT' | 'DLHR_ORIGEN' | 'DLHR_CUSTOMER' | 'DLHR_EQUIP_TBL' | 'DLHR_OBSERVE_EMPLID' | 'DLHR_PUESTO' | 'DLHR_SECTOR' | 'DLHR_APS' | 'DLHR_TURNO'
+  type?: 'DLHR_EMPL_BUSSINES_UNIT' | 'DLHR_ORIGEN' | 'DLHR_CUSTOMER' | 'DLHR_EQUIP_TBL' | 'DLHR_OBSERVE_EMPLID' | 'DLHR_PUESTO' | 'DLHR_SECTOR' | 'DLHR_APS' | 'DLHR_TURNO' | 'DLHR_POLITINTERTAREA' | 'DLHR_REQAPSSEG' | 'DLHR_CUASIACC';
 
 }
 
@@ -131,6 +131,21 @@ export interface DlhrSector {
 
 export interface DlhrTurno {
   DL_TURNO: number;
+  DESCR: string;
+}
+
+export interface DlPoliInterTarea {
+  DL_POLITINTERTAREA: string;
+  DESCR: string;
+}
+
+export interface DlReqAps {
+  DL_REQAPSSEG: string;
+  DESCR: string;
+}
+
+export interface DlCuasiAcc {
+  DL_CUASIACC: string;
   DESCR: string;
 }
 
