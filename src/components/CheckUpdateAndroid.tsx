@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
-import { getVersion } from 'react-native-device-info';
+import DeviceInfo from 'react-native-device-info';
 import { Platform } from 'react-native';
-import { useNetInfo } from '@react-native-community/netinfo';
-import checkVersion from 'react-native-store-version';
+/*import checkVersion from 'react-native-store-version';*/
+import { checkVersion } from "react-native-check-version";
 
 interface Props {
     setNeedsUpdate: React.Dispatch<React.SetStateAction<boolean>>;
@@ -11,17 +11,15 @@ interface Props {
 
 export const CheckUpdateAndroid = async ({ setNeedsUpdate, setLockScreen }: Props) => {
 
-
     const init = async () => {
-        try {
-            const check = await checkVersion({
-                version: getVersion(), // app local version
-                androidStoreURL: 'https://play.google.com/store/apps/details?id=com.midls',
-            });
 
-            if (check.result === "new") {
-                let oldVersArr = check.local.split('.');
-                let newVersArr = check.remote.split('.');
+        try {
+
+            const check = await checkVersion({platform: 'android'});
+            
+            if (check.needsUpdate === true) {
+                let oldVersArr = DeviceInfo.getVersion().split('.');
+                let newVersArr = check.version.split('.');
 
                 if (parseInt(newVersArr[0]) > parseInt(oldVersArr[0])) {
                     setLockScreen(true);
@@ -35,21 +33,12 @@ export const CheckUpdateAndroid = async ({ setNeedsUpdate, setLockScreen }: Prop
             ;
             return false;
         }
-
-
     };
-
 
     if (Platform.OS == 'android') {
 
-
-        //            if (isConnected === true) {
-
-        //needsUpdate  =await init()
         setNeedsUpdate(await init())
-        //          }
 
     }
-
     /* return needsUpdate */
 }

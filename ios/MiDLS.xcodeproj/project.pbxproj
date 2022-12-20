@@ -569,7 +569,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 25;
 				DEVELOPMENT_TEAM = 99D83VMBDG;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = MiDLS/Info.plist;
@@ -578,7 +578,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8.14;
+				MARKETING_VERSION = 1.9.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -601,15 +601,16 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 25;
 				DEVELOPMENT_TEAM = 99D83VMBDG;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 99D83VMBDG;
 				INFOPLIST_FILE = MiDLS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8.14;
+				MARKETING_VERSION = 1.9.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -618,6 +619,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.MiDLSArcher;
 				PRODUCT_NAME = MiDLS;
 				PROVISIONING_PROFILE_SPECIFIER = MidlsProfilename;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = MiDlsProfile15Dic;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

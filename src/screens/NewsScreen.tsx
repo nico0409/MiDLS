@@ -2,7 +2,6 @@
 import React, { useEffect, useContext } from 'react';
 import { View, ActivityIndicator, Linking, Platform } from 'react-native';
 import { MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
-import { ParamListBase, useNavigation, useRoute } from '@react-navigation/native';
 import { WebView } from 'react-native-webview';
 import { styless } from '../Themes/DlsTheme';
 import { AuthContext } from '../context/AuthContext';
@@ -50,7 +49,7 @@ export const NewsScreen = ({ navigation, route }: Props) => {
           <ActivityIndicator size={35} color="rgba(245,217,47,1)" ></ActivityIndicator>
         </View>
       }
-      {route.params.needsUpdate && !load &&
+      {route.params.needsUpdate &&
         < AwesomeAlert
           show={showAlert}
           showProgress={false}
@@ -75,14 +74,12 @@ export const NewsScreen = ({ navigation, route }: Props) => {
           }}
           onConfirmPressed={() => {
             {
-              const GOOGLE_PACKAGE_NAME = 'com.midls';
              
-              const link = 'Apps.apple.com';
+              const linkApple = 'Apps.apple.com';
               Platform.OS === 'android' ?
-                Linking.openURL(`market://details?id=${GOOGLE_PACKAGE_NAME}`)
+                Linking.openURL("market://details?id=com.midls")
                 :
 
-                console.log(route.params.link);
                 Linking.canOpenURL(route.params.link).then(supported => {
                 
                   

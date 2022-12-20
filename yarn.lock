@@ -1014,7 +1014,7 @@
     hermes-profile-transformer "^0.0.6"
     ip "^1.1.5"
 
-"@react-native-community/cli-platform-android@^5.0.1", "@react-native-community/cli-platform-android@^5.0.1-alpha.0":
+"@react-native-community/cli-platform-android@^5.0.1", "@react-native-community/cli-platform-android@^5.0.1-alpha.1":
   version "5.0.1"
   resolved "https://registry.npmjs.org/@react-native-community/cli-platform-android/-/cli-platform-android-5.0.1.tgz"
   integrity sha512-qv9GJX6BJ+Y4qvV34vgxKwwN1cnveXUdP6y2YmTW7XoAYs5YUzKqHajpY58EyucAL2y++6+573t5y4U/9IIoww==
@@ -1030,10 +1030,10 @@
     slash "^3.0.0"
     xmldoc "^1.1.2"
 
-"@react-native-community/cli-platform-ios@^5.0.1-alpha.0":
-  version "5.0.1"
-  resolved "https://registry.npmjs.org/@react-native-community/cli-platform-ios/-/cli-platform-ios-5.0.1.tgz"
-  integrity sha512-Nr/edBEYJfElgBNvjDevs2BuDicsvQaM8nYkTGgp33pyuCZRBxsYxQqfsNmnLalTzcYaebjWj6AnjUSxzQBWqg==
+"@react-native-community/cli-platform-ios@^5.0.1-alpha.1":
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-ios/-/cli-platform-ios-5.0.2.tgz#62485534053c0dad28a67de188248de177f4b0fb"
+  integrity sha512-IAJ2B3j2BTsQUJZ4R6cVvnTbPq0Vza7+dOgP81ISz2BKRtQ0VqNFv+VOALH2jLaDzf4t7NFlskzIXFqWqy2BLg==
   dependencies:
     "@react-native-community/cli-tools" "^5.0.1"
     chalk "^3.0.0"
@@ -1077,9 +1077,9 @@
   dependencies:
     ora "^3.4.0"
 
-"@react-native-community/cli@^5.0.1-alpha.0":
+"@react-native-community/cli@^5.0.1-alpha.1":
   version "5.0.1"
-  resolved "https://registry.npmjs.org/@react-native-community/cli/-/cli-5.0.1.tgz"
+  resolved "https://registry.yarnpkg.com/@react-native-community/cli/-/cli-5.0.1.tgz#1f7a66d813d5daf102e593f3c550650fa0cc8314"
   integrity sha512-9VzSYUYSEqxEH5Ib2UNSdn2eyPiYZ4T7Y79o9DKtRBuSaUIwbCUdZtIm+UUjBpLS1XYBkW26FqL8/UdZDmQvXw==
   dependencies:
     "@react-native-community/cli-debugger-ui" "^5.0.1"
@@ -1785,6 +1785,14 @@ axios@^0.21.4:
   integrity sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==
   dependencies:
     follow-redirects "^1.14.0"
+
+axios@^0.27.2:
+  version "0.27.2"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.27.2.tgz#207658cc8621606e586c85db4b41a750e756d972"
+  integrity sha512-t+yRIyySRTp/wua5xEr+z1q60QmLq8ABsS5O9Me1AsE5dfKqgnCFzwiCZZ/cGNd1lq4/7akDWMxdhVlucjmnOQ==
+  dependencies:
+    follow-redirects "^1.14.9"
+    form-data "^4.0.0"
 
 babel-core@^7.0.0-bridge.0:
   version "7.0.0-bridge.0"
@@ -3237,6 +3245,11 @@ follow-redirects@^1.14.0:
   resolved "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.14.4.tgz"
   integrity sha512-zwGkiSXC1MUJG/qmeIFH2HBJx9u0V46QGUe3YR1fXG8bXQxq7fLj0RjLZQ5nubr9qNJUZrH+xUcwXEoXNpfS+g==
 
+follow-redirects@^1.14.9:
+  version "1.15.2"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.2.tgz#b460864144ba63f2681096f274c4e57026da2c13"
+  integrity sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA==
+
 for-in@^1.0.2:
   version "1.0.2"
   resolved "https://registry.npmjs.org/for-in/-/for-in-1.0.2.tgz"
@@ -3246,6 +3259,15 @@ form-data@^3.0.0:
   version "3.0.1"
   resolved "https://registry.npmjs.org/form-data/-/form-data-3.0.1.tgz"
   integrity sha512-RHkBKtLWUVwd7SqRIvCZMEvAMoGUp0XU+seQiZejj0COz3RI3hWP4sCv3gZWWLjJTd7rGwcsF5eKZGii0r/hbg==
+  dependencies:
+    asynckit "^0.4.0"
+    combined-stream "^1.0.8"
+    mime-types "^2.1.12"
+
+form-data@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/form-data/-/form-data-4.0.0.tgz#93919daeaf361ee529584b9b31664dc12c9fa452"
+  integrity sha512-ETEklSGi5t0QMZuiXoA/Q6vcnxcLQP5vdugSpuAyi6SVGi2clPPp+xgEhuMaHC+zGgn31Kd235W35f7Hykkaww==
   dependencies:
     asynckit "^0.4.0"
     combined-stream "^1.0.8"
@@ -5715,6 +5737,13 @@ react-native-awesome-alerts@^1.5.2:
   dependencies:
     prop-types "^15.7.2"
 
+react-native-check-version@^1.0.20:
+  version "1.0.20"
+  resolved "https://registry.yarnpkg.com/react-native-check-version/-/react-native-check-version-1.0.20.tgz#3c8e5adea93ddc4e35f1267437b1b09af65a6ff6"
+  integrity sha512-6j65iI62zzkzs2SHzTLXOQr7TP1h4td7a3nh1QQdQ3TsCIMa8ptgp4gA/7bx8CtZuiURGQCL06r/lt9OjC23Xg==
+  dependencies:
+    axios "^0.27.2"
+
 react-native-codegen@^0.0.6:
   version "0.0.6"
   resolved "https://registry.npmjs.org/react-native-codegen/-/react-native-codegen-0.0.6.tgz"
@@ -5729,7 +5758,12 @@ react-native-device-info@^0.9.3:
   resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-0.9.9.tgz#42490719b8be2b8ffe689f3c74d56884ca05c0d7"
   integrity sha1-QkkHGbi+K4/+aJ88dNVohMoFwNc=
 
-react-native-device-info@^8.1.2, react-native-device-info@^8.4.4:
+react-native-device-info@^10.3.0:
+  version "10.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-10.3.0.tgz#6bab64d84d3415dd00cc446c73ec5e2e61fddbe7"
+  integrity sha512-/ziZN1sA1REbJTv5mQZ4tXggcTvSbct+u5kCaze8BmN//lbxcTvWsU6NQd4IihLt89VkbX+14IGc9sVApSxd/w==
+
+react-native-device-info@^8.1.2:
   version "8.4.4"
   resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-8.4.4.tgz#afd27e72de5e91b0d97c3c3b7f55c36c2c4af0f7"
   integrity sha512-poTzcGYTodYdHIzstaQnl2ftsqg2G4ApRv7tG/Omhux3WlMyjlaXXSsIngAd354QyN4XRgOlQsev0eOUzGtu/Q==
@@ -5893,15 +5927,15 @@ react-native-webview@^11.6.5:
     escape-string-regexp "2.0.0"
     invariant "2.2.4"
 
-react-native@0.64.1:
-  version "0.64.1"
-  resolved "https://registry.npmjs.org/react-native/-/react-native-0.64.1.tgz"
-  integrity sha512-jvSj+hNAfwvhaSmxd5KHJ5HidtG0pDXzoH6DaqNpU74g3CmAiA8vuk58B5yx/DYuffGq6PeMniAcwuh3Xp4biQ==
+react-native@0.64.4:
+  version "0.64.4"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.64.4.tgz#f9870f6951378421881cc66f6b5a6451bef7254d"
+  integrity sha512-nxYt/NrTmGyW6+tOd+Hqp4O8uJ2LLZkN7ispMPDprAq7bwvLkF/GXmDQCZHAEyqXuhIztTtMX41KqFQ6UMCUJQ==
   dependencies:
     "@jest/create-cache-key-function" "^26.5.0"
-    "@react-native-community/cli" "^5.0.1-alpha.0"
-    "@react-native-community/cli-platform-android" "^5.0.1-alpha.0"
-    "@react-native-community/cli-platform-ios" "^5.0.1-alpha.0"
+    "@react-native-community/cli" "^5.0.1-alpha.1"
+    "@react-native-community/cli-platform-android" "^5.0.1-alpha.1"
+    "@react-native-community/cli-platform-ios" "^5.0.1-alpha.1"
     "@react-native/assets" "1.0.0"
     "@react-native/normalize-color" "1.0.0"
     "@react-native/polyfills" "1.0.0"
