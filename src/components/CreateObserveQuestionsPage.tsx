@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
-import { SafeAreaView, View, StyleSheet, Dimensions } from 'react-native';
+import { SafeAreaView, View, StyleSheet, Dimensions, Platform, ToastAndroid, Alert } from 'react-native';
 import Animated, { useSharedValue, withTiming, withDelay, useAnimatedStyle, interpolate, interpolateColor } from 'react-native-reanimated';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { colors } from '../Themes/DlsTheme';
@@ -10,6 +10,7 @@ import { FadeQuestionsScreen } from './FadeQuestionsScreen';
 import { stepIndicatorStyles } from '../data/stepIndicatorStyles';
 import { QuestionCarousel } from '../interfaces/QuestionInterfaces';
 import { CarouselForQuestions } from './CarouselForQuestions';
+import { AuthContext } from '../context/formContext/AuthContext';
 
 interface Props extends StackScreenProps<any, any> { };
 
@@ -20,6 +21,21 @@ const circleSize = windowsHeight <= 593 ? 70 : 100;
 
 export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
 
+
+    const { form } = useContext(AuthContext);
+
+    const categoryErrorMessage = () => {
+        const msg = "Debe seleccionar al menos una categoría.";
+                if (Platform.OS === 'android') {
+                    ToastAndroid.showWithGravityAndOffset(msg,
+                        ToastAndroid.LONG,
+                        ToastAndroid.TOP,
+                        25,
+                        50)
+                } else {
+                    Alert.alert(msg);
+                }
+    }
 
     const dataCarousel: QuestionCarousel[] = [{
         index: 2,
@@ -145,6 +161,15 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
     }
 
     const onPress = () => {
+        console.log("activeIndex");
+        console.log(activeIndex);
+        console.log("moveCarousel");
+        console.log(moveCarousel);
+        console.log("form[m38:DL_MEDIOAMB]");
+        console.log(form['m38:DL_MEDIOAMB']);
+        
+        
+        
         switch (activeIndex) {
             case 2:
                 if (moveCarousel === 4) {
@@ -156,8 +181,24 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
                 break;
             case 3:
                 if (moveCarousel == 8) {
-                    setMoveCarousel(moveCarousel + 1);
-                    runAnimation('next');
+                    if(form['m38:DL_ORIGEN'] !== "S"){
+                        if(!form['m38:DL_EQPROTPER'] &&
+                         !form['m38:DL_PROCTRAB'] &&
+                         !form['m38:DL_EQYHERR']  &&
+                         !form['m38:DL_REACCPERS']  &&
+                         !form['m38:DL_ORDYLIMPIE']  &&
+                         !form['m38:DL_MEDIOAMB']  &&
+                         !form['m38:DL_POSIPERS']  &&
+                         !form['m38:DL_CONTYPER'] ){
+                            categoryErrorMessage();
+                        }else{
+                            setMoveCarousel(moveCarousel + 1);
+                            runAnimation('next');
+                        }
+                    }else{
+                        setMoveCarousel(moveCarousel + 1);
+                        runAnimation('next');
+                    }
                 } else {
                     setMoveCarousel(moveCarousel + 1)
                 }
