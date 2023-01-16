@@ -14,6 +14,8 @@ import { AuthContext } from '../context/formContext/AuthContext';
 
 interface Props extends StackScreenProps<any, any> { };
 
+type messageParam = 'RuleGold' | 'Questions';
+
 const { width: windowWidth, height: windowsHeight } = Dimensions.get('window');
 
 const duration = 1000;
@@ -24,8 +26,15 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
 
     const { form } = useContext(AuthContext);
 
-    const categoryErrorMessage = () => {
-        const msg = "Debe seleccionar al menos una categoría.";
+    const questionsErrorMessage = (messageType:messageParam) => {
+
+        var messageStrType = 'categoría';
+
+        if(messageType === 'RuleGold'){
+            messageStrType = 'Regla de Oro';
+        }
+
+        const msg = "Debe seleccionar al menos una " + messageStrType + ".";
                 if (Platform.OS === 'android') {
                     ToastAndroid.showWithGravityAndOffset(msg,
                         ToastAndroid.LONG,
@@ -35,7 +44,7 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
                 } else {
                     Alert.alert(msg);
                 }
-    }
+    };
 
     const dataCarousel: QuestionCarousel[] = [{
         index: 2,
@@ -165,9 +174,6 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
         console.log(activeIndex);
         console.log("moveCarousel");
         console.log(moveCarousel);
-        console.log("form[m38:DL_MEDIOAMB]");
-        console.log(form['m38:DL_MEDIOAMB']);
-        
         
         
         switch (activeIndex) {
@@ -190,7 +196,7 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
                          !form['m38:DL_MEDIOAMB']  &&
                          !form['m38:DL_POSIPERS']  &&
                          !form['m38:DL_CONTYPER'] ){
-                            categoryErrorMessage();
+                            questionsErrorMessage('Questions');
                         }else{
                             setMoveCarousel(moveCarousel + 1);
                             runAnimation('next');
@@ -205,7 +211,23 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
                 break;
             case 4:
                 if (moveCarousel === 10) {
+                    if(form['m38:DL_ORIGEN'] !== "S"){
+                        if(form['m38:DL_SEG_VIAL']!=='Y' &&
+                        form['m38:DL_TRBJ_ALT']!=='Y' &&
+                        form['m38:DL_LN_FUEGO']!=='Y' &&
+                        form['m38:DL_ESPAC_CONFIN']!=='Y' &&
+                        form['m38:DL_HER_EQUIP']!=='Y' &&
+                        form['m38:DL_AIS_ENERG']!=='Y' &&
+                        form['m38:DL_OP_IZADO']!=='Y' &&
+                        form['m38:DL_PERM_TRABAJO']!=='Y' &&
+                        form['m38:DL_MAN_CAMBIO']!=='Y'){
+                            questionsErrorMessage('RuleGold');
+                        }else{
+                        navigation.navigate('CreateObserveFinalPage');
+                        }
+                    }else{
                     navigation.navigate('CreateObserveFinalPage');
+                    };
                 } else {
                     setMoveCarousel(moveCarousel + 1)
                 }

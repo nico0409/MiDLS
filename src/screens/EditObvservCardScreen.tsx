@@ -49,6 +49,9 @@ const list4: ListModel = {
 };
 
 interface Props extends StackScreenProps<RoutstackParams, 'EditObvservCardScreen'> { };
+
+type messageParam = 'RuleGold' | 'Questions';
+
 export const EditObvservCardScreen = ({ navigation, route }: Props) => {
 
     const { setReloadCardList } = useContext(AuthcontextGeneral);
@@ -102,7 +105,61 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
             Alert.alert(msg);
         } */
     }
-    
+    const questionsErrorMessage = (messageType:messageParam) => {
+
+        var messageStrType = 'categoría en la sección Preguntas';
+
+        if(messageType === 'RuleGold'){
+            messageStrType = 'Regla de Oro';
+        }
+
+        const msg = "Debe seleccionar al menos una " + messageStrType + ".";
+                if (Platform.OS === 'android') {
+                    ToastAndroid.showWithGravityAndOffset(msg,
+                        ToastAndroid.LONG,
+                        ToastAndroid.TOP,
+                        25,
+                        50)
+                } else {
+                    Alert.alert(msg);
+                }
+    };
+
+    const validateQuestions = () =>{
+        if(form['m38:DL_ORIGEN'] !== "S"){
+
+            if(!form['m38:DL_EQPROTPER'] &&
+            !form['m38:DL_PROCTRAB'] &&
+            !form['m38:DL_EQYHERR']  &&
+            !form['m38:DL_REACCPERS']  &&
+            !form['m38:DL_ORDYLIMPIE']  &&
+            !form['m38:DL_MEDIOAMB']  &&
+            !form['m38:DL_POSIPERS']  &&
+            !form['m38:DL_CONTYPER'] ){
+                questionsErrorMessage('Questions');
+                return;
+            };
+
+            if(form['m38:DL_SEG_VIAL']!=='Y' &&
+                form['m38:DL_TRBJ_ALT']!=='Y' &&
+                form['m38:DL_LN_FUEGO']!=='Y' &&
+                form['m38:DL_ESPAC_CONFIN']!=='Y' &&
+                form['m38:DL_HER_EQUIP']!=='Y' &&
+                form['m38:DL_AIS_ENERG']!=='Y' &&
+                form['m38:DL_OP_IZADO']!=='Y' &&
+                form['m38:DL_PERM_TRABAJO']!=='Y' &&
+                form['m38:DL_MAN_CAMBIO']!=='Y'){
+                questionsErrorMessage('RuleGold');
+                return;
+            };
+
+            EditObservCard({ form: stateSend!, alertSend, setReloadCardList })
+
+        }else{
+            EditObservCard({ form: stateSend!, alertSend, setReloadCardList })
+        }
+    };
+
     return (
         <View style={{ flex: 1 }}>
             <View style={{ ...styles.container, height: height }}>
@@ -119,7 +176,7 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
                         <TouchableOpacity
                             disabled={!saveEnabled}
                             onPress={() => {
-                                EditObservCard({ form: stateSend!, alertSend, setReloadCardList })
+                                validateQuestions();
                             }}
                         >
                             <View style={{ flexDirection: 'row' }}>
