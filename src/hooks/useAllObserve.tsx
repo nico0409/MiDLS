@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 
 import { DlhrAllObserve, StorageTypes } from '../interfaces/prompInterfaces';
 import { GetAllObserve } from '../components/GetAllObserve';
-import { GetStorage } from '../components/Storage';
+import { Asingstorage, GetStorage } from '../components/Storage';
 
 import { AuthContext as AuthcontextGeneral } from '../context/AuthContext'
 
@@ -11,12 +11,13 @@ export const useAllObserve = (emplid: string, isFocused: boolean) => {
     const [isloading, setIsloading] = useState(true)
     const [allObserveList, setObserveList] = useState<DlhrAllObserve[]>([])
     const allboserve: StorageTypes = { StorageType: 'allObserve' };
+    const [isErrorResponse, setIsErrorResponse] = useState(false);
 
     const { reloadCardList, setReloadCardList } = useContext(AuthcontextGeneral)
 
     const loadAllObserve = async () => {
         setIsloading(true);
-        const resp = await GetAllObserve('', emplid)
+        const resp = await GetAllObserve('', emplid, setIsErrorResponse);
         const arrayObserve = resp.AllObserve?.['soapenv:Envelope']?.['soapenv:Body'].DLHR_ALL_OBSERVE_COLL.DLHR_ALL_OBSERVE;
         const oneObserve: DlhrAllObserve[] = [];
         const observe: DlhrAllObserve = {}
@@ -28,16 +29,26 @@ export const useAllObserve = (emplid: string, isFocused: boolean) => {
 
         const offlineCardsList: any = await GetStorage({ StorageType: 'offlineObserveCardsDescr' });
 
-
-
-        if (offlineCardsList === null) {
+        /* if (offlineCardsList === null) {
             setObserveList(newAllObserveList)
         } else if (newAllObserveList[0].BUSINESS_UNIT! === undefined) {
             setObserveList(offlineCardsList)
         } else {
             setObserveList([...offlineCardsList, ...newAllObserveList])
-        }
+        } */
 
+        if (isErrorResponse) {
+            setObserveList(offlineCardsList);
+        } else {
+            if (newAllObserveList[0].BUSINESS_UNIT! === undefined) {
+                offlineCardsList && setObserveList(offlineCardsList);
+            } else {
+                offlineCardsList === null ? setObserveList(newAllObserveList)
+                    : setObserveList([...offlineCardsList, ...newAllObserveList]);
+            }
+
+            Asingstorage({ StorageType: 'lastTObsUpdateDttm' }, { dateUpd: new Date().toString() });
+        }
 
         setIsloading(false)
 
@@ -47,8 +58,8 @@ export const useAllObserve = (emplid: string, isFocused: boolean) => {
         loadAllObserve();
     }, [])
 
-    useEffect(() => {     
-            reloadCardList && loadAllObserve(),
+    useEffect(() => {
+        reloadCardList && loadAllObserve(),
             reloadCardList && setReloadCardList(false);
     }, [isFocused])
 

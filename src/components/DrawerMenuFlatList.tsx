@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { DrawerContentComponentProps, DrawerContentOptions, DrawerContentScrollView } from '@react-navigation/drawer';
-import { View, Image, FlatList, StyleSheet, TouchableOpacity, Text, Modal , Dimensions} from 'react-native';
+import { View, Image, FlatList, StyleSheet, TouchableOpacity, Text, Modal, Dimensions } from 'react-native';
 import { menuItems } from '../data/MenuItems';
 import { FlatLIstMenuItem } from './FlatLIstMenuItem';
 import { ItemSeparator } from './ItemSeparator';
@@ -10,6 +10,7 @@ import { colors } from '../Themes/DlsTheme';
 import { Contact } from './Contact';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { RedesContent } from './RedesContent';
+import { DeviceInfoContent } from './DeviceInfoContent';
 import { color } from 'react-native-reanimated';
 
 const { height } = Dimensions.get('window');
@@ -20,6 +21,7 @@ export const MenuInterno = (DrawerNavigation: DrawerContentComponentProps<Drawer
 
   const { navigation } = DrawerNavigation;
   const [isVisible, setIsVisible] = useState(false);
+  const [isVisible2, setIsVisible2] = useState(false);
 
   return (
 
@@ -101,54 +103,73 @@ export const MenuInterno = (DrawerNavigation: DrawerContentComponentProps<Drawer
           ItemSeparatorComponent={() => <ItemSeparator />}
         />
       </View>
-      <View style={{ alignItems: 'center', paddingBottom: 30 }}>
+      <View style={{ alignItems: 'center', paddingBottom: 30, flexDirection: 'row', justifyContent: 'space-around' }}>
         <TouchableOpacity
-           onPress={() => (navigation.toggleDrawer(),
+          onPress={() => (/* navigation.toggleDrawer(), */
             setIsVisible(true))}
         >
+
           <View style={{ flexDirection: 'row' }}>
             <Text style={styless.textModal} >Visítanos</Text>
             <Icon
               name='globe-outline'
               size={20}
               color={colors.dlsBluePrimary}
-
-
             />
           </View>
+
           <Modal
-            animationType="slide"
+            animationType="fade"
             visible={isVisible}
             transparent={true}
           >
             <View style={styless.modalContainer}>
               <View style={styless.modalBackground}>
 
-                   <View style={styless.titleContainer}> 
-                   </View>  
-                   <TouchableOpacity
-                    style={styless.closebtn}
-                    onPress={() => setIsVisible(false)}
-                  >
-                    <Icon name="close-outline" size={30} color={colors.dlsYellowSecondary} />
-                  </TouchableOpacity>
-                   
-
+                <View style={styless.titleContainer}>
+                </View>
+                <TouchableOpacity
+                  style={styless.closebtn}
+                  onPress={() => setIsVisible(false)}
+                >
+                  <Icon name="close-outline" size={30} color={colors.dlsYellowSecondary} />
+                </TouchableOpacity>
                 <RedesContent />
-
-                {/* <View style={styles.footerContainer}>
-                            <TouchableOpacity
-                                style={styles.botonRedesClose}
-                                onPress={() => setIsVisible(false)}>
-                                <Text style={styles.textFooterBtn}>Cerrar Ventana</Text>
-                            </TouchableOpacity>
-                        </View> */}
-
               </View>
             </View>
           </Modal>
+
         </TouchableOpacity>
-        {/*  <Contact/> */}
+
+        <TouchableOpacity
+          onPress={() => { setIsVisible2(true) }}
+        >
+          <Icon
+            name='md-information-circle'
+            size={30}
+            color={colors.dlsYellowSecondary}
+          />
+
+          <Modal
+            animationType="fade"
+            visible={isVisible2}
+            transparent={true}
+          >
+            <View style={styless.modalContainer}>
+              <View style={{...styless.modalBackground,height:'70%',width:'85%'}}>
+
+                <TouchableOpacity
+                  style={styless.closebtn}
+                  onPress={() => setIsVisible2(false)}
+                >
+                  <Icon name="close-outline" size={30} color={colors.dlsYellowSecondary} />
+                </TouchableOpacity>
+                <DeviceInfoContent />
+              </View>
+            </View>
+          </Modal>
+
+        </TouchableOpacity>
       </View>
     </View>
 
@@ -168,10 +189,8 @@ export const styless = StyleSheet.create({
     width: '100%',
     height: '100%',
     resizeMode: 'stretch',
-    
-
-
-  }, container: {
+  },
+   container: {
     alignItems: 'center',
     paddingVertical: 20
   },
@@ -189,7 +208,7 @@ export const styless = StyleSheet.create({
   },
   modalBackground: {
     backgroundColor: colors.dlsGrayPrimary,
-    height: '35%',
+    height: '50%',
     width: '95%',
     borderRadius: 28,
     shadowColor: "#000",
@@ -208,9 +227,9 @@ export const styless = StyleSheet.create({
     fontSize: 20
   },
   titleContainer: {
-    
+
     backgroundColor: colors.dlsGrayPrimary,
-    
+
     height: '10%',
     alignItems: 'center',
     justifyContent: 'center',
@@ -281,15 +300,15 @@ export const styless = StyleSheet.create({
     position: 'absolute',
     right: 10,
     top: 10,
-    height:'15%',
-    width:50,
-    zIndex:9,
-    justifyContent:'center',
-    alignItems:'center'
-    
-    
-    
-    
+    height: '15%',
+    width: 50,
+    zIndex: 9,
+    justifyContent: 'center',
+    alignItems: 'center'
+
+
+
+
   },
 
 });

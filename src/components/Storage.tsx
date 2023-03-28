@@ -1,29 +1,28 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { StorageTypes, AllObserveType, PromptObserveType, objUseForm, DlhrAllObserve, statusAuthStorage } from '../interfaces/prompInterfaces';
+import { StorageTypes, AllObserveType, PromptObserveType, objUseForm, DlhrAllObserve, statusAuthStorage, lastDataUpdateDttm, lastTObsUpdateDttm } from '../interfaces/prompInterfaces';
 import { storageEmplid } from '../interfaces/storageInterface';
 
 export const Asingstorage = async ({ StorageType }: StorageTypes, data: Object | Object[]) => {
     console.log("entrando a asignar", StorageType, data);
-
 
     StorageType === 'prompt' ?
         data.hasOwnProperty("PromptObserve") &&
         await AsyncStorage.setItem(StorageType, JSON.stringify(data)) :
         await AsyncStorage.setItem(StorageType, JSON.stringify(data))
 
+    if (StorageType === 'prompt'){
+        data.hasOwnProperty("PromptObserve") && await AsyncStorage.setItem(StorageType, JSON.stringify(data));
 
-
-
-
-
+        await AsyncStorage.setItem('lastDataUpdateDttm', JSON.stringify({dateUpd:new Date().toString()}));
+    }else{
+        await AsyncStorage.setItem(StorageType, JSON.stringify(data))
+    }
 
 }
 
 export const GetStorage = async ({ StorageType }: StorageTypes) => {
+
     const Datos = await AsyncStorage.getItem(StorageType);
-
-
-
 
     switch (StorageType) {
         case 'allObserve':
@@ -49,6 +48,14 @@ export const GetStorage = async ({ StorageType }: StorageTypes) => {
         case 'signInStatus':
             const signInStatus: statusAuthStorage = JSON.parse(Datos!)
             return signInStatus;
+
+        case 'lastDataUpdateDttm':
+            const lastDataUpdateDttm: lastDataUpdateDttm = JSON.parse(Datos!)
+            return lastDataUpdateDttm;
+
+        case 'lastTObsUpdateDttm':
+            const lastTObsUpdateDttm: lastTObsUpdateDttm = JSON.parse(Datos!)
+            return lastTObsUpdateDttm;
 
         default:
             return null;

@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Text, View, StyleSheet, FlatList, TouchableOpacity, Modal, Dimensions } from 'react-native';
+import React, { useEffect, useState } from 'react'
+import { Text, View, StyleSheet, FlatList, TouchableOpacity, Modal, Dimensions,Platform } from 'react-native';
 
 import WebView from 'react-native-webview';
 
@@ -10,14 +10,13 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { FlatListRedes } from './FlatListRedes';
 import { color } from 'react-native-reanimated';
 
+
 const { height } = Dimensions.get("window");
 
 export const RedesContent = () => {
 
     const [isVisible, setIsVisible] = useState(false);
     const [pressedRow, setPressedRow] = useState(0);
-
-
 
     return (
         <View style={styles.container}>
