@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Text, View, Dimensions, SafeAreaView, Platform, FlatList, TouchableOpacity, Animated, StyleSheet } from 'react-native';
 import { SearchInput } from '../components/SearchInput';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -15,7 +15,8 @@ import { ModalPromptEmplid } from '../components/ModalPromptEmplid';
 
 import { useIsFocused } from '@react-navigation/native';
 import { useNetInfo } from '@react-native-community/netinfo';
-import { opacity } from '../libs/react-native-redash/src/v1/Colors';
+
+import { AuthContext as AuthcontextGeneral } from '../context/AuthContext'
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
 
@@ -37,7 +38,7 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
 
 
 
-    const { allObserveList, isloading, loadAllObserve } = useAllObserve(route.params!.emplid, useIsFocused())
+    const { allObserveList, isloading, loadAllObserve } = useAllObserve(route.params!.emplid)
 
 
 
@@ -130,7 +131,18 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
         if (isConnected === true) {
 
         }
-    }, [isConnected])
+    }, [isConnected]);
+
+    useEffect(() => {
+        loadAllObserve();
+    }, []);
+
+    const { reloadCardList, setReloadCardList } = useContext(AuthcontextGeneral)
+
+    useEffect(() => {
+        reloadCardList && loadAllObserve(),
+            reloadCardList && setReloadCardList(false);
+    }, [useIsFocused()]) ;
 
     const customImgAddObsv = () => {
         return (

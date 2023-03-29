@@ -5,15 +5,16 @@ import { storageEmplid } from '../interfaces/storageInterface';
 export const Asingstorage = async ({ StorageType }: StorageTypes, data: Object | Object[]) => {
     console.log("entrando a asignar", StorageType, data);
 
-    StorageType === 'prompt' ?
+    /* StorageType === 'prompt' ?
         data.hasOwnProperty("PromptObserve") &&
         await AsyncStorage.setItem(StorageType, JSON.stringify(data)) :
-        await AsyncStorage.setItem(StorageType, JSON.stringify(data))
+        await AsyncStorage.setItem(StorageType, JSON.stringify(data)) */
 
     if (StorageType === 'prompt'){
         data.hasOwnProperty("PromptObserve") && await AsyncStorage.setItem(StorageType, JSON.stringify(data));
 
         await AsyncStorage.setItem('lastDataUpdateDttm', JSON.stringify({dateUpd:new Date().toString()}));
+        
     }else{
         await AsyncStorage.setItem(StorageType, JSON.stringify(data))
     }

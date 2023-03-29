@@ -150,26 +150,27 @@ export const MenuInterno = (DrawerNavigation: DrawerContentComponentProps<Drawer
             color={colors.dlsYellowSecondary}
           />
 
-          <Modal
+        </TouchableOpacity>
+
+        <Modal
             animationType="fade"
             visible={isVisible2}
             transparent={true}
           >
             <View style={styless.modalContainer}>
-              <View style={{...styless.modalBackground,height:'70%',width:'85%'}}>
+              {/* <View style={{...styless.modalBackground,height:'70%',width:'85%'}}> */}
 
                 <TouchableOpacity
-                  style={styless.closebtn}
+                  style={styless.closebtn2}
                   onPress={() => setIsVisible2(false)}
                 >
                   <Icon name="close-outline" size={30} color={colors.dlsYellowSecondary} />
                 </TouchableOpacity>
                 <DeviceInfoContent />
-              </View>
+              {/* </View> */}
             </View>
           </Modal>
-
-        </TouchableOpacity>
+          
       </View>
     </View>
 
@@ -305,10 +306,16 @@ export const styless = StyleSheet.create({
     zIndex: 9,
     justifyContent: 'center',
     alignItems: 'center'
-
-
-
-
+  },
+  closebtn2: {
+    position: 'absolute',
+    right: 5,
+    top: 0,
+    height: '15%',
+    width: 50,
+    zIndex: 9,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 
 });

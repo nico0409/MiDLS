@@ -51,9 +51,7 @@ export const DrawerNavigation = () => {
   const [lockScreen, setLockScreen] = useState(false);
   const [endGetPrompt, setendGetPrompt] = useState(false);
   const [link, setLink] = useState("");
-
-
- 
+  const [isErrorResponse,setIsErrorResponse] = useState(false); 
  
   useEffect(() => {
 
@@ -80,7 +78,7 @@ export const DrawerNavigation = () => {
 
 
 
-    Asingstorage(prompts, await GetPrompt());
+    Asingstorage(prompts, await GetPrompt(setIsErrorResponse));
 
     await CheckUpdateAndroid({ setNeedsUpdate, setLockScreen });
     await CheckUpdateIos({ setNeedsUpdate, setLockScreen ,setLink});
