@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { DeviceID } from '../interfaces/deviceIdInterface';
 import { StorageTypes, AllObserveType, PromptObserveType, objUseForm, DlhrAllObserve, statusAuthStorage, lastDataUpdateDttm, lastTObsUpdateDttm } from '../interfaces/prompInterfaces';
 import { storageEmplid } from '../interfaces/storageInterface';
 
@@ -57,6 +58,10 @@ export const GetStorage = async ({ StorageType }: StorageTypes) => {
         case 'lastTObsUpdateDttm':
             const lastTObsUpdateDttm: lastTObsUpdateDttm = JSON.parse(Datos!)
             return lastTObsUpdateDttm;
+
+        case 'deviceId':
+                const deviceId: DeviceID = JSON.parse(Datos!)
+                return deviceId;
 
         default:
             return null;

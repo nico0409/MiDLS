@@ -3,6 +3,8 @@ import React, { createContext, useReducer, useState, useEffect } from 'react'
 import { authReducer, AuthState } from './authReducer'
 import { SendObserveStorage } from '../components/SendObserveStorage';
 import { Asingstorage } from '../components/Storage';
+import { StorageTypes } from '../interfaces/prompInterfaces';
+import { GetPrompt } from '../components/GetPrompt';
 
 
 
@@ -97,6 +99,20 @@ export const AuthProvider = ({ children }: any) => {
     };
     const logOut = () => { };
     const removeError = () => { };
+
+    const [isErrorResponse,setIsErrorResponse] = useState(false);
+    
+    const timeOutAction = async() =>{
+        const prompts: StorageTypes = { StorageType: 'prompt' };
+
+        await Asingstorage(prompts, await GetPrompt(setIsErrorResponse));
+        console.log("time out ejecutado-------");
+        
+    };
+
+    useEffect(()=>{
+        /* setTimeout(timeOutAction,120000); */
+    },[]);
 
     return (
         <AuthContext.Provider value={{

@@ -15,22 +15,23 @@ import { colors } from '../Themes/DlsTheme';
 import { NavigateProvider } from '../context/NavigateContext';
 import { StorageTypes } from '../interfaces/prompInterfaces';
 import { GetPrompt } from '../components/GetPrompt';
-import { Asingstorage } from '../components/Storage';
+import { Asingstorage, GetStorage } from '../components/Storage';
 import { StackNavigatorObserve } from './StackNavigatorObserve';
 import { CheckUpdateAndroid } from '../components/CheckUpdateAndroid';
 /* import checkVersion from 'react-native-store-version'; */
 import { CheckUpdateIos } from '../components/CheckUpdateIos';
+import { useDeviceInfo } from '../hooks/useDeviceInfo';
+import { GetDeviceId } from '../components/GetDeviceId';
+import { getDeviceInfo } from '../components/getDeviceInfo';
 
 export type DrawerRoutParams = {
 
   TopTapNavigator: {
     needsUpdate: boolean,
     lockScreen: boolean,
-    link:string
+    link: string
   }
 }
-
-
 
 const Drawer = createDrawerNavigator();
 
@@ -42,21 +43,20 @@ const NavigateState = ({ children }: { children: JSX.Element | JSX.Element[] }) 
   )
 }
 
-
-
-
 export const DrawerNavigation = () => {
   const { isConnected } = useNetInfo();
   const [needsUpdate, setNeedsUpdate] = useState(false);
   const [lockScreen, setLockScreen] = useState(false);
   const [endGetPrompt, setendGetPrompt] = useState(false);
   const [link, setLink] = useState("");
-  const [isErrorResponse,setIsErrorResponse] = useState(false); 
- 
+  const [isErrorResponse, setIsErrorResponse] = useState(false);
+
   useEffect(() => {
 
     if (isConnected !== null) {
       if (isConnected === true) {
+        console.log("SE EJECUTO GET PROMPTS");
+
         GetPrompts();
 
       }
@@ -68,20 +68,26 @@ export const DrawerNavigation = () => {
 
     }
 
-
   }, [isConnected])
 
   const GetPrompts = async () => {
 
-
     const prompts: StorageTypes = { StorageType: 'prompt' };
-
-
 
     Asingstorage(prompts, await GetPrompt(setIsErrorResponse));
 
+    const { deviceId, deviceName, brand, model, externalIp } = await getDeviceInfo();
+
+    if (!deviceId) {
+
+      const deviceId: StorageTypes = { StorageType: 'deviceId' };
+
+      Asingstorage(deviceId, await GetDeviceId(deviceName, brand, model, externalIp));
+
+    }
+
     await CheckUpdateAndroid({ setNeedsUpdate, setLockScreen });
-    await CheckUpdateIos({ setNeedsUpdate, setLockScreen ,setLink});
+    await CheckUpdateIos({ setNeedsUpdate, setLockScreen, setLink });
 
 
     SplashScreen.hide();
@@ -102,7 +108,7 @@ export const DrawerNavigation = () => {
           // drawerContent={(props: any) => <DrawerMenu {...props} />}
           drawerContent={(props: any) => <MenuInterno {...props} />}
         >
-          <Drawer.Screen name="TopTapNavigator" component={TopTapNavigator} initialParams={{ needsUpdate, lockScreen ,link}} />
+          <Drawer.Screen name="TopTapNavigator" component={TopTapNavigator} initialParams={{ needsUpdate, lockScreen, link }} />
           {/*   <Drawer.Screen name="TopTapNavigator" component={TopTapNavigator} /> */}
           <Drawer.Screen name="ContactScreen" component={ContactScreen} />
           <Drawer.Screen name="RrhhScreen" component={RrhhScreen} />

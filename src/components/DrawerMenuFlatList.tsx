@@ -153,24 +153,24 @@ export const MenuInterno = (DrawerNavigation: DrawerContentComponentProps<Drawer
         </TouchableOpacity>
 
         <Modal
-            animationType="fade"
-            visible={isVisible2}
-            transparent={true}
-          >
-            <View style={styless.modalContainer}>
-              {/* <View style={{...styless.modalBackground,height:'70%',width:'85%'}}> */}
+          animationType="fade"
+          visible={isVisible2}
+          transparent={true}
+        >
+          <View style={styless.modalContainer}>
+            <View style={styless.modalBackground2}>
 
-                <TouchableOpacity
-                  style={styless.closebtn2}
-                  onPress={() => setIsVisible2(false)}
-                >
-                  <Icon name="close-outline" size={30} color={colors.dlsYellowSecondary} />
-                </TouchableOpacity>
-                <DeviceInfoContent />
-              {/* </View> */}
+              <TouchableOpacity
+                style={styless.closebtn2}
+                onPress={() => setIsVisible2(false)}
+              >
+                <Icon name="close-outline" size={30} color={colors.dlsYellowSecondary} />
+              </TouchableOpacity>
+              <DeviceInfoContent />
             </View>
-          </Modal>
-          
+          </View>
+        </Modal>
+
       </View>
     </View>
 
@@ -191,7 +191,7 @@ export const styless = StyleSheet.create({
     height: '100%',
     resizeMode: 'stretch',
   },
-   container: {
+  container: {
     alignItems: 'center',
     paddingVertical: 20
   },
@@ -307,11 +307,24 @@ export const styless = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  modalBackground2: {
+    backgroundColor: colors.dlsGrayPrimary,
+    height: '80%',
+    width: '85%',
+    borderRadius: 28,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+    elevation: 6,
+  },
   closebtn2: {
     position: 'absolute',
     right: 5,
-    top: 0,
-    height: '15%',
+    height: '10%',
     width: 50,
     zIndex: 9,
     justifyContent: 'center',

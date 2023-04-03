@@ -4,20 +4,19 @@ import { Chase } from 'react-native-animated-spinkit';
 import DeviceInfo from 'react-native-device-info';
 import { NetworkInfo } from 'react-native-network-info';
 import { useAllObserve } from '../hooks/useAllObserve';
-import { lastDataUpdateDttm, lastTObsUpdateDttm, StorageTypes } from '../interfaces/prompInterfaces';
+import { useDeviceInfo } from '../hooks/useDeviceInfo';
+import { lastDataUpdateDttm, lastTObsUpdateDttm, StorageTypes, deviceId } from '../interfaces/prompInterfaces';
 import { storageEmplid } from '../interfaces/storageInterface';
 import { colors } from '../Themes/DlsTheme';
-import { GetAllObserve } from './GetAllObserve';
+import { GetDeviceId } from './GetDeviceId';
 import { GetPrompt } from './GetPrompt';
 import { SendObserveStorage } from './SendObserveStorage';
 import { Asingstorage, GetStorage } from './Storage';
 
 export const DeviceInfoContent = () => {
 
-    const [brand, setBrand] = useState('');
-    const [deviceName, setDeviceName] = useState('');
-    const [model, setModel] = useState('');
-    const [externalIp, setExternalIp] = useState('');
+    const { deviceId,brand, deviceName, model, externalIp } = useDeviceInfo();
+
     const [lastUpdDataDate, setLastUpdDataDate] = useState('-');
     const [lastTObsUpdateDttm, setLastTObsUpdateDttm] = useState('-');
     const [isLoadingData, setIsLoadingData] = useState(false);
@@ -101,17 +100,6 @@ export const DeviceInfoContent = () => {
     };
 
     useEffect(() => {
-        setBrand(DeviceInfo.getBrand());
-
-        DeviceInfo.getDeviceName().then((deviceName) => {
-            setDeviceName(deviceName);
-        });
-
-        setModel(DeviceInfo.getModel());
-
-        NetworkInfo.getIPV4Address().then(ipV4Addres => {
-            ipV4Addres && setExternalIp(ipV4Addres);
-        });
 
         getData(true);
 
@@ -124,6 +112,10 @@ export const DeviceInfoContent = () => {
             </View>
 
             <View style={styles.detailContainer}>
+                <View style={styles.fieldContainer}>
+                    <Text style={styles.fieldTextStyle}>ID Dispositivo:</Text>
+                    <Text style={styles.valueTextStyle}>{deviceId}</Text>
+                </View>
                 <View style={styles.fieldContainer}>
                     <Text style={styles.fieldTextStyle}>Nombre:</Text>
                     <Text style={styles.valueTextStyle}>{deviceName}</Text>
@@ -168,18 +160,8 @@ export const DeviceInfoContent = () => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: colors.dlsGrayPrimary,
-        height: '75%',
-        width: '85%',
-        borderRadius: 28,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 3,
-        },
-        shadowOpacity: 0.27,
-        shadowRadius: 4.65,
-        elevation: 6,
+        height: '100%',
+        width: '100%',
         alignItems: 'center',
         justifyContent: 'space-evenly',
         flexDirection: 'column'
