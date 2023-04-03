@@ -102,15 +102,23 @@ const deleteFunction = async (data: any, dataDescr: any, item: number) => {
 
 export const DeleteStorage = async (items: number) => {
 
-
     const data = await GetStorage({ StorageType: 'offlineObserveCards' });
     const dataDescr = await GetStorage({ StorageType: 'offlineObserveCardsDescr' });
     await deleteFunction(data, dataDescr, items);
 
-
-
-
-
-
-
 }
+
+export const UpdateErrorState = async(item:number) =>{
+
+    function isofflineObserveCardDescr(object: any): object is DlhrAllObserve[] {
+        return true
+    }
+
+    const dataDescr = await GetStorage({ StorageType: 'offlineObserveCardsDescr' });
+
+    if (isofflineObserveCardDescr(dataDescr)){
+        dataDescr[item].ERR_TYPE = 'SERVER';
+    }
+
+    dataDescr && Asingstorage({ StorageType: 'offlineObserveCardsDescr' }, dataDescr);
+};

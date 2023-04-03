@@ -11,9 +11,11 @@ export const SendObserveStorage = async () => {
         return true
     }
     let data: any;
+    let dataDescr: any;
 
 
     data = await GetStorage({ StorageType: 'offlineObserveCards' })
+    dataDescr = await GetStorage({ StorageType: 'offlineObserveCardsDescr' })
 
 
     if (data !== null) {
@@ -21,8 +23,8 @@ export const SendObserveStorage = async () => {
 
 
             for (let index = data.length - 1; index >= 0; index--) {
-
-                await SendOnservCardStorage({ data, index })
+                dataDescr[index].ERR_TYPE === 'NETWORK' &&
+                    await SendOnservCardStorage({ data, index });
             }
 
 

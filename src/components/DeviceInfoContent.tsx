@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Chase } from 'react-native-animated-spinkit';
-import DeviceInfo from 'react-native-device-info';
-import { NetworkInfo } from 'react-native-network-info';
 import { useAllObserve } from '../hooks/useAllObserve';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
-import { lastDataUpdateDttm, lastTObsUpdateDttm, StorageTypes, deviceId } from '../interfaces/prompInterfaces';
+import { lastDataUpdateDttm, lastTObsUpdateDttm, StorageTypes } from '../interfaces/prompInterfaces';
 import { storageEmplid } from '../interfaces/storageInterface';
 import { colors } from '../Themes/DlsTheme';
-import { GetDeviceId } from './GetDeviceId';
 import { GetPrompt } from './GetPrompt';
 import { SendObserveStorage } from './SendObserveStorage';
 import { Asingstorage, GetStorage } from './Storage';

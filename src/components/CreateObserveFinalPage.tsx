@@ -4,7 +4,7 @@ import { View, Dimensions, StyleSheet, TouchableOpacity, Text, BackHandler } fro
 import { StackScreenProps } from '@react-navigation/stack';
 import { Chase } from 'react-native-animated-spinkit';
 import Animated, { useSharedValue, useAnimatedStyle, withTiming, withSpring, withDelay } from 'react-native-reanimated';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { colors } from '../Themes/DlsTheme';
 import { AuthContext } from '../context/formContext/AuthContext';
@@ -27,7 +27,7 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
     const { setReloadCardList } = useContext(AuthcontextGeneral);
 
     const [reqSended, setReqSended] = useState<'pending' | 'sended' | 'error'>('pending');
-    const [errorType, setErrorType] = useState<'server' | 'network'>();
+    const [errorType, setErrorType] = useState<'SERVER' | 'NETWORK'>();
     const [bgCircleColor, setBgCircleColor] = useState('grey');
 
     const opacityHomeValue = useSharedValue(0);
@@ -113,9 +113,12 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
 
             <Animated.View style={[styles.iconStatusContainer, animatedIconStatusStyle]}>
                 {reqSended === 'sended' ?
-                    <Icon name="checkmark-circle" size={height <= 593 ? 110 : 140} color="white" />
+                    <Icon name="check-circle-outline" size={height <= 593 ? 110 : 140} color="white" />
                     :
-                    <Icon name="cloud-offline" size={height <= 593 ? 110 : 140} color="white" />
+                    errorType === 'NETWORK' ?
+                    <Icon name="wifi-off" size={height <= 593 ? 110 : 140} color="white" />
+                    :
+                    <Icon name="cloud-off" size={height <= 593 ? 110 : 140} color="white" />
                 }
             </Animated.View>
 
@@ -144,7 +147,7 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
                         </>
                         :
                         <>
-                            {errorType === 'network' ?
+                            {errorType === 'NETWORK' ?
                                 <>
                                     <Text style={{ color: 'white', fontSize: textTitleSize, fontWeight: 'bold' }}>Ups!</Text>
                                     <Text style={{ color: 'white', fontSize: textDescrSize, fontWeight: 'bold' }}>No hay conexión a internet.</Text>
@@ -153,8 +156,8 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
                                 :
                                 <>
                                     <Text style={{ color: 'white', fontSize: textTitleSize, fontWeight: 'bold' }}>Ups!</Text>
-                                    <Text style={{ color: 'white', fontSize: textDescrSize, fontWeight: 'bold' }}>No hay conexión con el servidor.</Text>
-                                    <Text style={{ color: 'white', fontSize: textDescrSize, fontWeight: 'bold' }}>No te preocupes, la tarjeta se guardó y cuando el dispositivo detecte una conexión, la enviará automáticamente.</Text>
+                                    <Text style={{ color: 'white', fontSize: textDescrSize, fontWeight: 'bold' }}>Hubo un problema con el servidor.</Text>
+                                    <Text style={{ color: 'white', fontSize: textDescrSize, fontWeight: 'bold' }}>No te preocupes, la tarjeta se guardó, revisala o contactá con un administrador.</Text>
                                 </>
                             }
                         </>

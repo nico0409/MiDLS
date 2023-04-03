@@ -4,7 +4,7 @@ import { ConvertXML } from '../../helpers/ConvertXML';
 import PSDB from '../api/PSDB';
 import { AuthContext } from '../context/AuthContext';
 import { objUseForm } from '../interfaces/prompInterfaces'
-import { DeleteStorage } from './Storage';
+import { DeleteStorage, UpdateErrorState } from './Storage';
 
 
 interface Params {
@@ -13,6 +13,7 @@ interface Params {
 }
 export const SendOnservCardStorage = async ({ data, index }: Params) => {
 
+console.log("se ejecuta send one card de storage");
 
 
     const form = data[index]
@@ -45,29 +46,21 @@ export const SendOnservCardStorage = async ({ data, index }: Params) => {
 </soapenv:Envelope>`;
 
 
-
-    try {
-        const resp = await PSDB.post('/CI_DLHR_TA_OBSERV_CI.1.wsdl',
-            xmls,
+    const resp = await PSDB.post('/CI_DLHR_TA_OBSERV_CI.1.wsdl',
+        xmls,
+        {
+            headers:
             {
-                headers:
-                {
-                    'Content-Type': 'text/xml',
-                    SOAPAction: 'Create.V1'
-                }
-            })
-
-        if (resp.status === 200) {
-
-
+                'Content-Type': 'text/xml',
+                SOAPAction: 'Create.V1'
+            }
+        }).then(async () => {
 
             await DeleteStorage(index);
-
-
-        }
-    } catch (error) {
-
-
-    }
+        }).catch( (err) =>{
+            if(err.response){
+                UpdateErrorState(index);
+            }
+        });
 
 }

@@ -19,7 +19,7 @@ interface Params {
    cardDescr: DlhrAllObserve;
    setCardDescr: React.Dispatch<React.SetStateAction<DlhrAllObserve>>;
    setReloadCardList: React.Dispatch<React.SetStateAction<boolean>>;
-   setErrorType: React.Dispatch<React.SetStateAction<"server" | "network" | undefined>>;
+   setErrorType: React.Dispatch<React.SetStateAction<'SERVER' | 'NETWORK' | undefined>>;
 }
 
 export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingValue, cardDescr, setCardDescr, setReloadCardList, setErrorType }: Params) => {
@@ -51,9 +51,16 @@ export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingVal
    </soapenv:Body>\
    </soapenv:Envelope>`;
 
-   const runAnimation = (sended: boolean) => {
-      setBgCircleColor(sended ? '#4ad66d' : 'orange');
-      setReqSended(sended ? 'sended' : 'error');
+   const runAnimation = (sended: boolean, errorType?: 'NETWORK' | 'SERVER') => {
+      sended &&
+         setBgCircleColor('#4ad66d'),
+         setReqSended('sended');
+
+      !sended && 
+         setBgCircleColor(errorType === "NETWORK" ? 'orange': '#E2302D'),
+         setReqSended('error');
+      
+
       loadingValue.value = height;
    }
 
@@ -79,17 +86,16 @@ export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingVal
 
       }).catch(async (err) => {
 
-
-
          const arrayFormsOffline: any = await GetStorage({ StorageType: 'offlineObserveCards' });
          const arrayCardsDescrOffline: any = await GetStorage({ StorageType: 'offlineObserveCardsDescr' });
 
 
-
-
          const newCardDescr = {
             ...cardDescr,
-            ...{ NroTarjeta: nroTarjetaEmpty + ((arrayCardsDescrOffline ? (arrayCardsDescrOffline.length + 1) : 1).toString()) }
+            ...{
+               NroTarjeta: nroTarjetaEmpty + ((arrayCardsDescrOffline ? (arrayCardsDescrOffline.length + 1) : 1).toString()),
+               ERR_TYPE: err.response ? 'SERVER' : 'NETWORK'
+            }
          }
 
          const newForm = {
@@ -113,7 +119,7 @@ export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingVal
             await Asingstorage({ StorageType: 'offlineObserveCardsDescr' }, arrayCardDescrOffline);
          }
 
-         setErrorType(err.message === "Network Error" ? 'network' : 'server');
-         runAnimation(false);
+         setErrorType(err.response ? 'SERVER' : 'NETWORK');
+         runAnimation(false,err.response ? 'SERVER' : 'NETWORK');
       });
 }

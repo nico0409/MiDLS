@@ -15,6 +15,7 @@ export const useAllObserve = (emplid: string) => {
     const loadAllObserve = async () => {
         if (emplid) {
             setIsloading(true);
+            setErrorResponse(false);
             const resp = await GetAllObserve('', emplid, setErrorResponse);
             const arrayObserve = resp.AllObserve?.['soapenv:Envelope']?.['soapenv:Body'].DLHR_ALL_OBSERVE_COLL.DLHR_ALL_OBSERVE;
             const oneObserve: DlhrAllObserve[] = [];

@@ -5,7 +5,7 @@ import PSDB from '../api/PSDB';
 
 
 
-export const GetAllObserve = async (fecha: string, emplid: string,setIsErrorResponse: React.Dispatch<React.SetStateAction<boolean>>) => {
+export const GetAllObserve = async (fecha: string, emplid: string, setIsErrorResponse: React.Dispatch<React.SetStateAction<boolean>>) => {
 
    let respuesta: AllObserveType = {}
 
@@ -37,13 +37,14 @@ export const GetAllObserve = async (fecha: string, emplid: string,setIsErrorResp
          }
       }).then(res => {
 
-
-
-
          respuesta = {
             AllObserve: parse(decodeURIComponent(escape(res.data))),
             type: 'AllObserveType'
          }
-      }).catch(err => { setIsErrorResponse(true)});
+      }).catch(err => {
+
+         setIsErrorResponse(true)
+
+      });
    return respuesta;
 }

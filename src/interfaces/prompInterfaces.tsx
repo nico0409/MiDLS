@@ -199,6 +199,11 @@ export interface DlhrAllObserve {
   DL_PUESTO?: string;
   PUESTO_DESCR?: string;
   DL_ADESTACAR?: string;
+  ERR_TYPE?: string;
+}
+
+export interface ErrType {
+  errorType: 'NETWORK' | 'SERVER'
 }
 
 export interface TarjetaObserve {

@@ -5,7 +5,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { DlhrAllObserve } from '../../../interfaces/prompInterfaces';
 import { colors } from "../../../Themes/DlsTheme";
 import { nroTarjetaEmpty } from "../../../data/nroTarjetaEmpty";
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 
 
@@ -27,11 +27,33 @@ export default ({ setTerm, item, index }: CardProps) => {
   const tarjeta: DlhrAllObserve = { ...item }
 
   const bgLgColor = () => {
-    if (tarjeta.NroTarjeta?.startsWith(nroTarjetaEmpty)) {
+    /* if (tarjeta.NroTarjeta?.startsWith(nroTarjetaEmpty)) {
       return ['#D67002', '#FFD000']
     } else {
       return ['#00799B', '#1BE1F7']
+    } */
+
+    /* if (tarjeta.ERR_TYPE === 'SERVER'||tarjeta.ERR_TYPE ==='NETWORK') {
+      return ['#D67002', '#FFD000']
+    } else {
+      return ['#00799B', '#1BE1F7']
+    } */
+    if (tarjeta.ERR_TYPE) {
+      switch (tarjeta.ERR_TYPE) {
+        case 'NETWORK':
+          return ['#D67002', '#FFD000'];
+          break;
+        case 'SERVER':
+          return ['#E2302D', '#FF823F'];
+          break;
+        default:
+          return ['#E2302D', '#FF823F'];
+
+      }
+    } else {
+      return ['#00799B', '#1BE1F7'];
     }
+
   }
 
   return (
@@ -138,12 +160,18 @@ export default ({ setTerm, item, index }: CardProps) => {
       {/*  </View> */}
 
       <View style={[styles.iconContainer, height > 592 ? { bottom: 10 } : { top: 10 }]}>
-        {tarjeta.NroTarjeta?.startsWith(nroTarjetaEmpty) ?
-          <View style={{ paddingRight: 5 }}>
-            <Icon name="cloud-offline" size={40} color="white" />
-          </View>
+        {tarjeta.ERR_TYPE ?
+
+          tarjeta.ERR_TYPE === 'NETWORK' ?
+            <View style={{ paddingRight: 5 }}>
+              <Icon name="wifi-off" size={40} color="white" />
+            </View>
+            :
+            <View style={{ paddingRight: 5 }}>
+              <Icon name="cloud-off" size={40} color="white" />
+            </View>
           :
-          <Icon name="checkmark-circle" size={50} color="white" />
+          <Icon name="check-circle-outline" size={50} color="white" />
         }
       </View>
 
