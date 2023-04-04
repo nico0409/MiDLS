@@ -10,9 +10,10 @@ interface Props {
    form: M38GetCompIntfcDLHRTAOBSERVCIResponse;
    alertSend: (sended: boolean, typeError?: 'NETWORK' | 'SERVER') => void;
    setReloadCardList: React.Dispatch<React.SetStateAction<boolean>>;
+   setIsLoadingResponse: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const EditObservCard = ({ form, alertSend,setReloadCardList }: Props) => {
+export const EditObservCard = ({ form, alertSend,setReloadCardList,setIsLoadingResponse }: Props) => {
 
 
 
@@ -59,10 +60,14 @@ export const EditObservCard = ({ form, alertSend,setReloadCardList }: Props) => 
          res.status===200?alertSend(true):alertSend(false)
          setReloadCardList(true);
 
+         setIsLoadingResponse(false);      
+
 
       }).catch(err => {
 
          alertSend(false,err.response ? 'SERVER': 'NETWORK');  
+
+         setIsLoadingResponse(false);      
       }) 
 
 }

@@ -11,12 +11,12 @@ export const Asingstorage = async ({ StorageType }: StorageTypes, data: Object |
         await AsyncStorage.setItem(StorageType, JSON.stringify(data)) :
         await AsyncStorage.setItem(StorageType, JSON.stringify(data)) */
 
-    if (StorageType === 'prompt'){
+    if (StorageType === 'prompt') {
         data.hasOwnProperty("PromptObserve") && await AsyncStorage.setItem(StorageType, JSON.stringify(data));
 
-        await AsyncStorage.setItem('lastDataUpdateDttm', JSON.stringify({dateUpd:new Date().toString()}));
-        
-    }else{
+        await AsyncStorage.setItem('lastDataUpdateDttm', JSON.stringify({ dateUpd: new Date().toString() }));
+
+    } else {
         await AsyncStorage.setItem(StorageType, JSON.stringify(data))
     }
 
@@ -60,8 +60,8 @@ export const GetStorage = async ({ StorageType }: StorageTypes) => {
             return lastTObsUpdateDttm;
 
         case 'deviceId':
-                const deviceId: DeviceID = JSON.parse(Datos!)
-                return deviceId;
+            const deviceId: DeviceID = JSON.parse(Datos!)
+            return deviceId;
 
         default:
             return null;
@@ -108,7 +108,8 @@ export const DeleteStorage = async (items: number) => {
 
 }
 
-export const UpdateErrorState = async(item:number) =>{
+
+export const UpdateErrorState = async (item: number) => {
 
     function isofflineObserveCardDescr(object: any): object is DlhrAllObserve[] {
         return true
@@ -116,9 +117,45 @@ export const UpdateErrorState = async(item:number) =>{
 
     const dataDescr = await GetStorage({ StorageType: 'offlineObserveCardsDescr' });
 
-    if (isofflineObserveCardDescr(dataDescr)){
+    if (isofflineObserveCardDescr(dataDescr)) {
         dataDescr[item].ERR_TYPE = 'SERVER';
     }
 
     dataDescr && Asingstorage({ StorageType: 'offlineObserveCardsDescr' }, dataDescr);
 };
+
+
+export const DeleteStorageById = async (idTarjeta: string) => {
+
+    function isofflineObserveCards(object: any): object is objUseForm[] {
+        return true
+    }
+    function isofflineObserveCardDescr(object: any): object is DlhrAllObserve[] {
+        return true
+    }
+
+    const data = await GetStorage({ StorageType: 'offlineObserveCards' });
+    const dataDescr = await GetStorage({ StorageType: 'offlineObserveCardsDescr' });
+
+    if (isofflineObserveCards(data)) {
+        const newArrayData = data.filter(item => item['m38:DL_NTARJETA'] !== idTarjeta);
+    
+        if (newArrayData.length === 0) {
+            await AsyncStorage.removeItem('offlineObserveCards');
+        } else {
+            await Asingstorage({ StorageType: 'offlineObserveCards' }, newArrayData);
+        }
+    }
+
+    if (isofflineObserveCardDescr(dataDescr)) {
+        const newArrayData = dataDescr.filter(item =>  item.NroTarjeta !== idTarjeta);
+
+        if (newArrayData.length === 0) {
+            await AsyncStorage.removeItem('offlineObserveCardsDescr');
+        } else {
+            await Asingstorage({ StorageType: 'offlineObserveCardsDescr' }, newArrayData);
+        }
+    }
+
+
+}

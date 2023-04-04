@@ -14,6 +14,7 @@ import List, { List as ListModel } from "../components/AcordionList/List";
 import { colors } from '../Themes/DlsTheme';
 import { EditObservCard } from '../components/EditObserveCard';
 import { AuthContext as AuthcontextGeneral } from '../context/AuthContext'
+import { NewObservCardPnlEdit } from '../components/NewObservCardPnlEdit';
 
 
 
@@ -58,6 +59,8 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
 
     const { isloading, loadObserveCard, form, onChange, stateSend } = UseOneGetObserve(route.params);
 
+    const [isLoadingResponse, setIsLoadingResponse] = useState(false);
+    const [errorType, setErrorType] = useState<string>(route.params.cardOffline!);
     const [editEnabled, setEditEnabled] = useState(false);
     const [saveEnabled, setSaveEnabled] = useState(false);
     const [visibleModal, setVisibleModal] = useState(false);
@@ -101,14 +104,8 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
             }
             setMessageModal(msg);
         }
-        setVisibleModal(true)
-
-        /* if (Platform.OS === 'android') {
-            ToastAndroid.show(msg, ToastAndroid.SHORT);
-        } else {
-            Alert.alert(msg);
-        } */
     }
+
     const questionsErrorMessage = (messageType: messageParam) => {
 
         var messageStrType = 'categoría en la sección Preguntas';
@@ -130,6 +127,17 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
     };
 
     const validateQuestions = () => {
+
+        const sendRequest = () =>{
+            setVisibleModal(true);
+            setIsLoadingResponse(true);
+
+            errorType === 'SERVER' ?
+                NewObservCardPnlEdit({ form, alertSend, setReloadCardList, onChange, formStateSend: stateSend!, setErrorType,setIsLoadingResponse })
+                :
+                EditObservCard({ form: stateSend!, alertSend, setReloadCardList,setIsLoadingResponse });
+        }
+
         if (form['m38:DL_ORIGEN'] !== "S") {
 
             if (!form['m38:DL_EQPROTPER'] &&
@@ -157,10 +165,10 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
                 return;
             };
 
-            EditObservCard({ form: stateSend!, alertSend, setReloadCardList })
+            sendRequest();
 
         } else {
-            EditObservCard({ form: stateSend!, alertSend, setReloadCardList })
+            sendRequest();
         }
     };
 
@@ -170,7 +178,9 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
                 <View style={{ height: '10%', width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
 
                     <TouchableOpacity
-                        onPress={() => { navigation.pop() }}
+                        onPress={() => {
+                            navigation.pop();
+                        }}
                     >
                         <Icon name="chevron-back-outline" size={40} color={colors.dlsYellowSecondary} />
                     </TouchableOpacity>
@@ -256,16 +266,18 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
                 }
 
                 <Modal
-                    animationType='slide'
+                    animationType='fade'
                     transparent
                     visible={visibleModal}
                 >
 
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
+                    <View style={{
+                        flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.6)',
+                    }}>
                         <View style={{
                             width: '80%',
                             height: '50%',
-                            backgroundColor: '#1C1C20',
+                            backgroundColor: colors.dlsGrayPrimary,
                             borderRadius: 30,
                             shadowColor: "#000",
                             shadowOffset: {
@@ -276,26 +288,32 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
                             shadowRadius: 8.30,
                             elevation: 13,
                         }}>
-                            <View style={{ flex: 1, justifyContent: 'space-between' }}>
-                                <View style={{ flex: 1, marginHorizontal: 10, justifyContent: 'center' }}>
-                                    <Text style={{ color: 'white', textAlign: 'center', fontSize: 26, fontWeight: 'bold' }}>
-                                        {messageModal}
-                                    </Text>
+                            {isLoadingResponse ?
+                                <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+                                    <Chase size={60} color="white" />
                                 </View>
-                                <TouchableOpacity
-                                    onPress={() => { setVisibleModal(false) }}
-                                    style={{
-                                        height: '25%',
-                                        backgroundColor: 'orange',
-                                        borderRadius: 34,
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        margin: 15
-                                    }}
-                                >
-                                    <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 24 }}>Cerrar Ventana</Text>
-                                </TouchableOpacity>
-                            </View>
+                                :
+                                <View style={{ flex: 1, justifyContent: 'space-between' }}>
+                                    <View style={{ flex: 1, marginHorizontal: 10, justifyContent: 'center' }}>
+                                        <Text style={{ color: 'white', textAlign: 'center', fontSize: 26, fontWeight: 'bold' }}>
+                                            {messageModal}
+                                        </Text>
+                                    </View>
+                                    <TouchableOpacity
+                                        onPress={() => { setVisibleModal(false) }}
+                                        style={{
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            position:'absolute',
+                                            top:15,
+                                            right:15
+                                        }}
+                                    >
+                                    <Icon name="close-outline" size={40} color={colors.dlsYellowSecondary} />
+                                    </TouchableOpacity>
+                                </View>
+                            }
+
                         </View>
                     </View>
                 </Modal>
