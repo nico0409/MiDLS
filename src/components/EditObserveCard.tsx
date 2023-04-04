@@ -8,7 +8,7 @@ import { ConvertXML } from '../../helpers/ConvertXML';
 
 interface Props {
    form: M38GetCompIntfcDLHRTAOBSERVCIResponse;
-   alertSend: (sended: boolean) => void;
+   alertSend: (sended: boolean, typeError?: 'NETWORK' | 'SERVER') => void;
    setReloadCardList: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -60,6 +60,9 @@ export const EditObservCard = ({ form, alertSend,setReloadCardList }: Props) => 
          setReloadCardList(true);
 
 
-      }).catch(err => {alertSend(false)  }) 
+      }).catch(err => {
+
+         alertSend(false,err.response ? 'SERVER': 'NETWORK');  
+      }) 
 
 }

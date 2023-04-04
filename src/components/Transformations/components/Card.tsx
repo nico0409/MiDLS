@@ -65,7 +65,7 @@ export default ({ setTerm, item, index }: CardProps) => {
             busineesUnit: tarjeta.BUSINESS_UNIT,
             IdentifDt: tarjeta.DL_IDENTIF_DT,
             Ntarjeta: tarjeta.NroTarjeta,
-            cardOffline: tarjeta.NroTarjeta?.startsWith(nroTarjetaEmpty)
+            cardOffline: tarjeta.ERR_TYPE
           });
         setTerm !== undefined ? setTerm('') : {}
       }}

@@ -15,7 +15,7 @@ export interface InterfGetOnesCard {
   busineesUnit?: string,
   IdentifDt?: string,
   Ntarjeta?: string,
-  cardOffline?: boolean
+  cardOffline?: string
 }
 export type Fields = {
 

@@ -85,7 +85,7 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
         { MeuItemType: 'ReglasOro' },
     ]
 
-    const alertSend = (sended: boolean) => {
+    const alertSend = (sended: boolean, typeError?: 'NETWORK' | 'SERVER') => {
         let msg = '';
 
         if (sended) {
@@ -94,7 +94,11 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
             setEditEnabled(false);
             setSaveEnabled(false);
         } else {
-            msg = 'No se pudo procesar la modificación, intente nuevamente.';
+            if (typeError === 'NETWORK') {
+                msg = 'No se pudo procesar el cambio. Hubo un problema de comunicación, verifique su conexión e intente nuevamente.';
+            } else {
+                msg = 'No se pudo procesar el cambio. Su solicitud tuvo un problema con el servidor, comuníquese con el administrador.';
+            }
             setMessageModal(msg);
         }
         setVisibleModal(true)
@@ -105,57 +109,57 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
             Alert.alert(msg);
         } */
     }
-    const questionsErrorMessage = (messageType:messageParam) => {
+    const questionsErrorMessage = (messageType: messageParam) => {
 
         var messageStrType = 'categoría en la sección Preguntas';
 
-        if(messageType === 'RuleGold'){
+        if (messageType === 'RuleGold') {
             messageStrType = 'Regla de Oro';
         }
 
         const msg = "Debe seleccionar al menos una " + messageStrType + ".";
-                if (Platform.OS === 'android') {
-                    ToastAndroid.showWithGravityAndOffset(msg,
-                        ToastAndroid.LONG,
-                        ToastAndroid.TOP,
-                        25,
-                        50)
-                } else {
-                    Alert.alert(msg);
-                }
+        if (Platform.OS === 'android') {
+            ToastAndroid.showWithGravityAndOffset(msg,
+                ToastAndroid.LONG,
+                ToastAndroid.TOP,
+                25,
+                50)
+        } else {
+            Alert.alert(msg);
+        }
     };
 
-    const validateQuestions = () =>{
-        if(form['m38:DL_ORIGEN'] !== "S"){
+    const validateQuestions = () => {
+        if (form['m38:DL_ORIGEN'] !== "S") {
 
-            if(!form['m38:DL_EQPROTPER'] &&
-            !form['m38:DL_PROCTRAB'] &&
-            !form['m38:DL_EQYHERR']  &&
-            !form['m38:DL_REACCPERS']  &&
-            !form['m38:DL_ORDYLIMPIE']  &&
-            !form['m38:DL_MEDIOAMB']  &&
-            !form['m38:DL_POSIPERS']  &&
-            !form['m38:DL_CONTYPER'] ){
+            if (!form['m38:DL_EQPROTPER'] &&
+                !form['m38:DL_PROCTRAB'] &&
+                !form['m38:DL_EQYHERR'] &&
+                !form['m38:DL_REACCPERS'] &&
+                !form['m38:DL_ORDYLIMPIE'] &&
+                !form['m38:DL_MEDIOAMB'] &&
+                !form['m38:DL_POSIPERS'] &&
+                !form['m38:DL_CONTYPER']) {
                 questionsErrorMessage('Questions');
                 return;
             };
 
-            if(form['m38:DL_SEG_VIAL']!=='Y' &&
-                form['m38:DL_TRBJ_ALT']!=='Y' &&
-                form['m38:DL_LN_FUEGO']!=='Y' &&
-                form['m38:DL_ESPAC_CONFIN']!=='Y' &&
-                form['m38:DL_HER_EQUIP']!=='Y' &&
-                form['m38:DL_AIS_ENERG']!=='Y' &&
-                form['m38:DL_OP_IZADO']!=='Y' &&
-                form['m38:DL_PERM_TRABAJO']!=='Y' &&
-                form['m38:DL_MAN_CAMBIO']!=='Y'){
+            if (form['m38:DL_SEG_VIAL'] !== 'Y' &&
+                form['m38:DL_TRBJ_ALT'] !== 'Y' &&
+                form['m38:DL_LN_FUEGO'] !== 'Y' &&
+                form['m38:DL_ESPAC_CONFIN'] !== 'Y' &&
+                form['m38:DL_HER_EQUIP'] !== 'Y' &&
+                form['m38:DL_AIS_ENERG'] !== 'Y' &&
+                form['m38:DL_OP_IZADO'] !== 'Y' &&
+                form['m38:DL_PERM_TRABAJO'] !== 'Y' &&
+                form['m38:DL_MAN_CAMBIO'] !== 'Y') {
                 questionsErrorMessage('RuleGold');
                 return;
             };
 
             EditObservCard({ form: stateSend!, alertSend, setReloadCardList })
 
-        }else{
+        } else {
             EditObservCard({ form: stateSend!, alertSend, setReloadCardList })
         }
     };
@@ -171,48 +175,48 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
                         <Icon name="chevron-back-outline" size={40} color={colors.dlsYellowSecondary} />
                     </TouchableOpacity>
 
-                    {(route.params.cardOffline)===true? <></>:
-                     editEnabled ?
-                        <TouchableOpacity
-                            disabled={!saveEnabled}
-                            onPress={() => {
-                                validateQuestions();
-                            }}
-                        >
-                            <View style={{ flexDirection: 'row' }}>
-                                <Text style={{
-                                    color: 'white',
-                                    alignSelf: 'center',
-                                    paddingRight: 10,
-                                    fontSize: 17,
-                                    fontWeight: 'bold'
+                    {route.params.cardOffline === 'NETWORK' ? <></> :
+                        editEnabled ?
+                            <TouchableOpacity
+                                disabled={!saveEnabled}
+                                onPress={() => {
+                                    validateQuestions();
                                 }}
-                                >
-                                    Guardar
-                                </Text>
-                                <AwesomeIcon name="save" size={30} color={saveEnabled ? colors.dlsYellowSecondary : colors.dlsWhiteBackGround} />
-                            </View>
-                        </TouchableOpacity>
-                        :
-                        <TouchableOpacity
-                            onPress={() => {
-                                setEditEnabled(true)
-                            }}
-                        >
-                            <View style={{ flexDirection: 'row' }}>
-                                <Text style={{
-                                    color: 'white',
-                                    alignSelf: 'center',
-                                    paddingRight: 10,
-                                    fontSize: 17,
-                                    fontWeight: 'bold'
+                            >
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={{
+                                        color: 'white',
+                                        alignSelf: 'center',
+                                        paddingRight: 10,
+                                        fontSize: 17,
+                                        fontWeight: 'bold'
+                                    }}
+                                    >
+                                        Guardar
+                                    </Text>
+                                    <AwesomeIcon name="save" size={30} color={saveEnabled ? colors.dlsYellowSecondary : colors.dlsWhiteBackGround} />
+                                </View>
+                            </TouchableOpacity>
+                            :
+                            <TouchableOpacity
+                                onPress={() => {
+                                    setEditEnabled(true)
                                 }}
-                                >
-                                    Editar
-                                </Text>
-                                <AwesomeIcon name="edit" size={30} color={colors.dlsYellowSecondary} />
-                            </View>
-                        </TouchableOpacity>
+                            >
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={{
+                                        color: 'white',
+                                        alignSelf: 'center',
+                                        paddingRight: 10,
+                                        fontSize: 17,
+                                        fontWeight: 'bold'
+                                    }}
+                                    >
+                                        Editar
+                                    </Text>
+                                    <AwesomeIcon name="edit" size={30} color={colors.dlsYellowSecondary} />
+                                </View>
+                            </TouchableOpacity>
                     }
 
                 </View>
@@ -260,7 +264,7 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
                         <View style={{
                             width: '80%',
-                            height: '30%',
+                            height: '50%',
                             backgroundColor: '#1C1C20',
                             borderRadius: 30,
                             shadowColor: "#000",
@@ -273,7 +277,7 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
                             elevation: 13,
                         }}>
                             <View style={{ flex: 1, justifyContent: 'space-between' }}>
-                                <View style={{ flex:1, marginHorizontal: 10, justifyContent: 'center' }}>
+                                <View style={{ flex: 1, marginHorizontal: 10, justifyContent: 'center' }}>
                                     <Text style={{ color: 'white', textAlign: 'center', fontSize: 26, fontWeight: 'bold' }}>
                                         {messageModal}
                                     </Text>
@@ -282,15 +286,14 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
                                     onPress={() => { setVisibleModal(false) }}
                                     style={{
                                         height: '25%',
-                                        borderColor: 'white',
-                                        borderWidth: 4,
-                                        borderRadius: 20,
+                                        backgroundColor: 'orange',
+                                        borderRadius: 34,
                                         alignItems: 'center',
                                         justifyContent: 'center',
                                         margin: 15
                                     }}
                                 >
-                                    <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 16 }}>Cerrar Ventana</Text>
+                                    <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 24 }}>Cerrar Ventana</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>

@@ -221,8 +221,9 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
                         form['m38:DL_OP_IZADO']!=='Y' &&
                         form['m38:DL_PERM_TRABAJO']!=='Y' &&
                         form['m38:DL_MAN_CAMBIO']!=='Y'){
-                            navigation.navigate('CreateObserveFinalPage');
-                            /* questionsErrorMessage('RuleGold'); */
+                            /*para hacer pruebas sin validacion descomentar la linea de abajo y comentar la que le sigue(questionsErrorMessage) */
+                            /* navigation.navigate('CreateObserveFinalPage'); */
+                            questionsErrorMessage('RuleGold'); 
                         }else{
                         navigation.navigate('CreateObserveFinalPage');
                         }
