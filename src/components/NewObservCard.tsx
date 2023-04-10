@@ -1,5 +1,5 @@
 import { Dimensions } from 'react-native';
-import { SharedValue } from 'react-native-reanimated';
+import { SharedValue, log } from 'react-native-reanimated';
 import { j2xParser, parse } from 'fast-xml-parser';
 
 import PSDB from '../api/PSDB';
@@ -51,15 +51,17 @@ export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingVal
    </soapenv:Body>\
    </soapenv:Envelope>`;
 
-   const runAnimation = (sended: boolean, errorType?: 'NETWORK' | 'SERVER') => {
-      sended &&
-         setBgCircleColor('#4ad66d'),
-         setReqSended('sended');
-
-      !sended && 
-         setBgCircleColor(errorType === "NETWORK" ? 'orange': '#E2302D'),
-         setReqSended('error');
+   const runAnimation = async(sended: boolean, errorType?: 'NETWORK' | 'SERVER') => {
       
+         if(sended){
+            setBgCircleColor('#4ad66d');
+            setReqSended('sended');
+            console.log("SE HIZO SET SENDED TRUE");
+         }else{
+            setBgCircleColor(errorType === "NETWORK" ? 'orange': '#E2302D');
+            setReqSended('error');
+            console.log("SE HIZO SET SENDED ERROR");
+         }
 
       loadingValue.value = height;
    }
@@ -82,7 +84,8 @@ export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingVal
             ...cardDescr,
             ...{ NroTarjeta: resp['soapenv:Envelope']['soapenv:Body']['m38:Create__CompIntfc__DLHR_TA_OBSERV_CIResponse']['m38:detail']['m38:DLHR_TA_OBSERV_CI']['m38:DL_NTARJETA'] }
          })
-         runAnimation(true);
+         
+         await runAnimation(true);
 
       }).catch(async (err) => {
 
@@ -120,6 +123,6 @@ export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingVal
          }
 
          setErrorType(err.response ? 'SERVER' : 'NETWORK');
-         runAnimation(false,err.response ? 'SERVER' : 'NETWORK');
+         await runAnimation(false,err.response ? 'SERVER' : 'NETWORK');
       });
 }
