@@ -8,20 +8,16 @@ import { AuthContext } from '../context/AuthContext';
 import { useState } from 'react';
 import { NavigationContext } from '../context/NavigateContext';
 import AwesomeAlert from 'react-native-awesome-alerts';
-import { DrawerRoutParams } from '../Navigation/DrawerNavigation';
 import { useNetInfo } from '@react-native-community/netinfo';
 
 
-interface Props extends MaterialTopTabScreenProps<DrawerRoutParams, "TopTapNavigator"> { }
-
-export const NewsScreen = ({ navigation, route }: Props) => {
-  const { signIn, status, changeURLNews } = useContext(AuthContext)
+export const NewsScreen = () => {
+  const { signIn, status, changeURLNews, appNeedsUpdate, appLockScreen, appLinkUpdateIos } = useContext(AuthContext)
   const [load, setLoad] = useState(true)
   const { state, setNavigator, setstate } = useContext(NavigationContext)
   const [showAlert, setShowAlert] = useState(true)
 
   const { isConnected } = useNetInfo();
-
 
 
   useEffect(() => {
@@ -49,21 +45,21 @@ export const NewsScreen = ({ navigation, route }: Props) => {
           <ActivityIndicator size={35} color="rgba(245,217,47,1)" ></ActivityIndicator>
         </View>
       }
-      {route.params.needsUpdate &&
+      {appNeedsUpdate &&
         < AwesomeAlert
           show={showAlert}
           showProgress={false}
           title="Aviso"
-          message={route.params.lockScreen ?
+          message={appLockScreen ?
             "MiDLS necesita actualizarse a una nueva versión. Por favor, presione el botón para poder continuar."
             :
             "MiDLS necesita actualizarse a una nueva versión, ¿desea hacerlo ahora?"}
-          closeOnTouchOutside={!route.params.lockScreen}
-          closeOnHardwareBackPress={!route.params.lockScreen}
-          showCancelButton={!route.params.lockScreen}
+          closeOnTouchOutside={!appLockScreen}
+          closeOnHardwareBackPress={!appLockScreen}
+          showCancelButton={!appLockScreen}
           showConfirmButton={true}
           cancelText="No"
-          confirmText={route.params.lockScreen ? "Actualizar" : "Si"}
+          confirmText={appLockScreen ? "Actualizar" : "Si"}
           confirmButtonColor='#00875F'
           cancelButtonStyle={{ paddingHorizontal: 30 }}
           confirmButtonStyle={{ paddingHorizontal: 30 }}
@@ -74,35 +70,25 @@ export const NewsScreen = ({ navigation, route }: Props) => {
           }}
           onConfirmPressed={() => {
             {
-             
+
               const linkApple = 'Apps.apple.com';
               Platform.OS === 'android' ?
                 Linking.openURL("market://details?id=com.midls")
                 :
 
-                Linking.canOpenURL(route.params.link).then(supported => {
-                
-                  
-                   Linking.openURL(route.params.link).catch(err=>{
-                     console.log(err);
-                     
-                   })
+                Linking.canOpenURL(appLinkUpdateIos).then(supported => {
+
+
+                  Linking.openURL(appLinkUpdateIos).catch(err => {
+                    console.log(err);
+
+                  })
                     ;
                 }, (err) => console.log(err));
-
             }
-
           }}
-
         />
-
-
-
       }
-
     </View>
-
   )
 }
-
-

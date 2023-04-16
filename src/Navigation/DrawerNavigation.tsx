@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import SplashScreen from 'react-native-splash-screen'
@@ -18,20 +18,10 @@ import { GetPrompt } from '../components/GetPrompt';
 import { Asingstorage, GetStorage } from '../components/Storage';
 import { StackNavigatorObserve } from './StackNavigatorObserve';
 import { CheckUpdateAndroid } from '../components/CheckUpdateAndroid';
-/* import checkVersion from 'react-native-store-version'; */
 import { CheckUpdateIos } from '../components/CheckUpdateIos';
-import { useDeviceInfo } from '../hooks/useDeviceInfo';
 import { GetDeviceId } from '../components/GetDeviceId';
 import { getDeviceInfo } from '../components/getDeviceInfo';
-
-export type DrawerRoutParams = {
-
-  TopTapNavigator: {
-    needsUpdate: boolean,
-    lockScreen: boolean,
-    link: string
-  }
-}
+import { AuthContext } from '../context/AuthContext';
 
 const Drawer = createDrawerNavigator();
 
@@ -45,11 +35,13 @@ const NavigateState = ({ children }: { children: JSX.Element | JSX.Element[] }) 
 
 export const DrawerNavigation = () => {
   const { isConnected } = useNetInfo();
-  const [needsUpdate, setNeedsUpdate] = useState(false);
-  const [lockScreen, setLockScreen] = useState(false);
+  /* const [needsUpdate, setNeedsUpdate] = useState(false);
+  const [lockScreen, setLockScreen] = useState(false); */
   const [endGetPrompt, setendGetPrompt] = useState(false);
-  const [link, setLink] = useState("");
+  /* const [link, setLink] = useState(""); */
   const [isErrorResponse, setIsErrorResponse] = useState(false);
+
+  const {setAppNeedsUpdate, setAppLockScreen, setAppLinkUpdateIos} = useContext(AuthContext)
 
   useEffect(() => {
 
@@ -86,9 +78,8 @@ export const DrawerNavigation = () => {
 
     }
 
-    await CheckUpdateAndroid({ setNeedsUpdate, setLockScreen });
-    await CheckUpdateIos({ setNeedsUpdate, setLockScreen, setLink });
-
+    await CheckUpdateAndroid({ setAppNeedsUpdate, setAppLockScreen });
+    await CheckUpdateIos({ setAppNeedsUpdate, setAppLockScreen, setAppLinkUpdateIos });
 
     SplashScreen.hide();
     setendGetPrompt(true);
@@ -108,7 +99,7 @@ export const DrawerNavigation = () => {
           // drawerContent={(props: any) => <DrawerMenu {...props} />}
           drawerContent={(props: any) => <MenuInterno {...props} />}
         >
-          <Drawer.Screen name="TopTapNavigator" component={TopTapNavigator} initialParams={{ needsUpdate, lockScreen, link }} />
+          <Drawer.Screen name="TopTapNavigator" component={TopTapNavigator} />
           {/*   <Drawer.Screen name="TopTapNavigator" component={TopTapNavigator} /> */}
           <Drawer.Screen name="ContactScreen" component={ContactScreen} />
           <Drawer.Screen name="RrhhScreen" component={RrhhScreen} />

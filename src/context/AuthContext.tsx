@@ -3,13 +3,14 @@ import React, { createContext, useReducer, useState, useEffect } from 'react'
 import { authReducer, AuthState } from './authReducer'
 import { SendObserveStorage } from '../components/SendObserveStorage';
 import { Asingstorage, GetStorage } from '../components/Storage';
-import { StorageTypes } from '../interfaces/prompInterfaces';
+import { StorageTypes, lastDataUpdateDttm } from '../interfaces/prompInterfaces';
 import { GetPrompt } from '../components/GetPrompt';
 
 import BackgroundTimer from 'react-native-background-timer';
-import { log } from 'react-native-reanimated';
 import { useAllObserve } from '../hooks/useAllObserve';
 import { storageEmplid } from '../interfaces/storageInterface';
+import { CheckUpdateAndroid } from '../components/CheckUpdateAndroid';
+import { CheckUpdateIos } from '../components/CheckUpdateIos';
 
 
 
@@ -23,9 +24,14 @@ type AuthContextProps = {
     removeError: () => void;
     changeURLNews: (url: string) => void;
     changeURLProfile: (url: string) => void;
-    reloadCardList: boolean
-    setReloadCardList: React.Dispatch<React.SetStateAction<boolean>>
-
+    reloadCardList: boolean;
+    setReloadCardList: React.Dispatch<React.SetStateAction<boolean>>;
+    appNeedsUpdate: boolean;
+    setAppNeedsUpdate: React.Dispatch<React.SetStateAction<boolean>>;
+    appLockScreen: boolean;
+    setAppLockScreen: React.Dispatch<React.SetStateAction<boolean>>;
+    appLinkUpdateIos: string;
+    setAppLinkUpdateIos: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const authInitialState: AuthState = {
@@ -44,43 +50,37 @@ export const AuthProvider = ({ children }: any) => {
 
     const [reloadCardList, setReloadCardList] = useState(false);
 
+    const [appNeedsUpdate, setAppNeedsUpdate] = useState(false);
+    const [appLockScreen, setAppLockScreen] = useState(false);
+    const [appLinkUpdateIos, setAppLinkUpdateIos] = useState("");
 
+    const [isErrorResponse, setIsErrorResponse] = useState(false);
+
+    const [emplid, setEmplid] = useState('');
+    const { ErrorResponse, loadAllObserve } = useAllObserve(emplid);
+
+    let currentUrlNews = '';
+    let currentUrlProfile = '';
+    const [state, dispatch] = useReducer(authReducer, authInitialState);
 
     const sendObserve = async () => {
         await SendObserveStorage();
         setReloadCardList(true);
     }
 
-    useEffect(() => {
+    const logOut = () => { };
 
-        if (isConnected === true) {
-            console.log("enviando storage");
-
-            sendObserve();
-        }
-
-    }, [isConnected])
-
-
-    //const [currentUrl, setCurrentUrl] = useState('')
-    let currentUrlNews = ''
-    let currentUrlProfile = ''
-    const [state, dispatch] = useReducer(authReducer, authInitialState)
+    const removeError = () => { };
 
     const changeURLNews = (url: string) => {
-
         currentUrlNews = url;
-
     }
-    const changeURLProfile = (url: string) => {
 
+    const changeURLProfile = (url: string) => {
         currentUrlProfile = url;
     }
+
     const signIn = async () => {
-
-
-
-
 
         if ((currentUrlProfile.includes('https://midls.dls-archer.com/midls/user/') ||
             currentUrlNews.includes('https://midls.dls-archer.com/midls/noticias/') ||
@@ -96,55 +96,95 @@ export const AuthProvider = ({ children }: any) => {
         if (((currentUrlNews.includes('https://midls.dls-archer.com/midls/login/') ||
             currentUrlProfile.includes('https://midls.dls-archer.com/midls/login/')) && (state.status == 'authenticated' || state.status == 'checking'))) {
 
-
             dispatch({ type: 'logOut' })
         }
 
-
     };
-    const logOut = () => { };
-    const removeError = () => { };
 
-    const [isErrorResponse,setIsErrorResponse] = useState(false);
-    
-    const [emplid, setEmplid] = useState('');
-    const { ErrorResponse, loadAllObserve } = useAllObserve(emplid);
-    
-    const getEmplid = async() =>{
-            function valEmplid(object: any): object is storageEmplid {
-                return true
-            }
+    const getEmplid = async () => {
 
-            const getemplid = await GetStorage({ StorageType: 'emplid' });
-            if (getemplid !== null) {
-                if (valEmplid(getemplid)) {
-                    setEmplid(getemplid.emplid);
-                }
+        function valEmplid(object: any): object is storageEmplid { return true }
+
+        const getemplid = await GetStorage({ StorageType: 'emplid' });
+        if (getemplid !== null) {
+            if (valEmplid(getemplid)) {
+                setEmplid(getemplid.emplid);
             }
+        }
     }
 
-    const refreshData = async() =>{
-        const prompts: StorageTypes = { StorageType: 'prompt' };
+    const refreshData = async () => {
 
-        await getEmplid();
+        await CheckUpdateAndroid({ setAppNeedsUpdate, setAppLockScreen });
+        await CheckUpdateIos({ setAppNeedsUpdate, setAppLockScreen, setAppLinkUpdateIos });
 
-        await Asingstorage(prompts, await GetPrompt(setIsErrorResponse));
+        if (appLockScreen) {
 
-        if (emplid) {
-            await loadAllObserve();
-            await SendObserveStorage();
+            const prompts: StorageTypes = { StorageType: 'prompt' };
+
+            await getEmplid();
+
+            await Asingstorage(prompts, await GetPrompt(setIsErrorResponse));
+
+            if (emplid) {
+                await loadAllObserve();
+                await SendObserveStorage();
+            }
         }
-        
     };
 
-    useEffect(()=>{
-        BackgroundTimer.runBackgroundTimer(() => { 
-            console.log("se ejecuto background timer--------------------------------");
-            refreshData();
-            }, 
-            3600000);
-        /* setTimeout(timeOutAction,120000); */
-    },[]);
+    const validateCustomTime = async () => {
+
+        /* la función consiste en que pueda actualizar los datos entre los horarios de 5hs - 7hs(incluido), 13hs a 14hs(incluido) y 21hs a 22hs(incluido)*/
+
+        const actualDate = new Date();
+
+        function valDateIntfc(object: any): object is lastDataUpdateDttm { return true }
+
+        const lastDate = await GetStorage({ StorageType: 'lastDataUpdateDttm' });
+
+        if (lastDate !== null && valDateIntfc(lastDate)) {
+
+            const lastDateFormatted = new Date(lastDate.dateUpd);
+            const lastDateHour = lastDateFormatted.getHours();
+            const actualHour = actualDate.getHours();
+
+            if (lastDateFormatted.getFullYear() === actualDate.getFullYear() && lastDateFormatted.getMonth() === actualDate.getMonth() && lastDateFormatted.getDay() === actualDate.getDay()) {
+
+                if ((actualHour >= 5 && actualHour <= 7 && lastDateHour < 5) ||
+                    (actualHour >= 13 && actualHour <= 14 && lastDateHour < 13) ||
+                    (actualHour >= 21 && actualHour <= 22 && lastDateHour < 21)) {
+                    refreshData();
+                }
+
+            } else {
+                if ((actualHour >= 5 && actualHour <= 7) ||
+                    (actualHour >= 13 && actualHour <= 14) ||
+                    (actualHour >= 21 && actualHour <= 22)) {
+                    refreshData();
+                }
+            }
+        }
+    };
+
+    useEffect(() => {
+
+        if (isConnected === true) {
+            console.log("enviando storage");
+
+            sendObserve();
+        }
+
+    }, [isConnected])
+
+    useEffect(() => {
+
+        BackgroundTimer.runBackgroundTimer(() => {
+            console.log("se ejecuto background timer");
+            validateCustomTime();
+        }, 3600000); 
+
+    }, []);
 
     return (
         <AuthContext.Provider value={{
@@ -157,8 +197,13 @@ export const AuthProvider = ({ children }: any) => {
             currentUrlNews,
             currentUrlProfile,
             reloadCardList,
-            setReloadCardList
-
+            setReloadCardList,
+            appNeedsUpdate,
+            setAppNeedsUpdate,
+            appLockScreen,
+            setAppLockScreen,
+            appLinkUpdateIos,
+            setAppLinkUpdateIos
         }}>
             {children}
         </AuthContext.Provider>

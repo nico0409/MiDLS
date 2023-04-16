@@ -7,12 +7,12 @@ import { Platform } from 'react-native';
 import { GetLinkIos } from './GetLinkIos';
 
 interface Props {
-    setNeedsUpdate: React.Dispatch<React.SetStateAction<boolean>>;
-    setLockScreen: React.Dispatch<React.SetStateAction<boolean>>;
-    setLink: React.Dispatch<React.SetStateAction<string>>;
+    setAppNeedsUpdate: React.Dispatch<React.SetStateAction<boolean>>;
+    setAppLockScreen: React.Dispatch<React.SetStateAction<boolean>>;
+    setAppLinkUpdateIos: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export const CheckUpdateIos = async ({ setNeedsUpdate, setLockScreen, setLink }: Props) => {
+export const CheckUpdateIos = async ({ setAppNeedsUpdate, setAppLockScreen, setAppLinkUpdateIos }: Props) => {
 
     const init = async () => {
         try {
@@ -29,18 +29,17 @@ export const CheckUpdateIos = async ({ setNeedsUpdate, setLockScreen, setLink }:
                 let newVersArr = veriosnNewIos!.split('.');
 
                 if (parseInt(newVersArr[0]) > parseInt(oldVersArr[0])) {
-                    setLockScreen(true);
+                    setAppLockScreen(true);
                 } else if (parseInt(newVersArr[1]) > parseInt(oldVersArr[1])) {
-                    setLockScreen(true);
+                    setAppLockScreen(true);
 
                 }
                 let linkIos = (await GetLinkIos())['soapenv:Envelope']?.['soapenv:Body'].DLHR_RESPONSE_IOS_LINK?.LINK_IOS!;
                 if (linkIos) {
-                    setLink(linkIos)
+                    setAppLinkUpdateIos(linkIos)
                 } else {
                     return false
                 }
-                //setLink( (await GetLinkIos())['soapenv:Envelope']?.['soapenv:Body'].DLHR_RESPONSE_IOS_LINK?.LINK_IOS!);
                 return true;
 
             } else return false;
@@ -55,7 +54,7 @@ export const CheckUpdateIos = async ({ setNeedsUpdate, setLockScreen, setLink }:
 
     if (Platform.OS == 'ios') {
 
-        setNeedsUpdate(await init())
+        setAppNeedsUpdate(await init())
 
     }
 }

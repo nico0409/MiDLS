@@ -10,10 +10,9 @@ import { MapScreen } from '../screens/MapScreen';
 import { NewsScreen } from '../screens/NewsScreen';
 import { ToggleDrawerHeader } from '../components/ToggleDrawerHeader';
 import { colors } from '../Themes/DlsTheme';
-import { DrawerRoutParams } from './DrawerNavigation';
 
 
-interface Props extends DrawerScreenProps<DrawerRoutParams, "TopTapNavigator"> { };
+interface Props extends DrawerScreenProps<any, "TopTapNavigator"> { };
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -77,7 +76,7 @@ export const TopTapNavigator = ({ navigation, route }: Props) => {
         })}
 
       >
-        <Tab.Screen name="NewsScreen" component={NewsScreen} initialParams={route.params} options={{ title: 'Home' }}  />
+        <Tab.Screen name="NewsScreen" component={NewsScreen} options={{ title: 'Home' }}  />
         <Tab.Screen name="MapScreen" component={MapScreen} />
         <Tab.Screen name="MyProfileScreen" component={MyProfileScreen}  />
       </Tab.Navigator>
