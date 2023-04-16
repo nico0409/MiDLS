@@ -85,7 +85,7 @@ export const AuthProvider = ({ children }: any) => {
         if ((currentUrlProfile.includes('https://midls.dls-archer.com/midls/user/') ||
             currentUrlNews.includes('https://midls.dls-archer.com/midls/noticias/') ||
             currentUrlNews.includes('https://midls.dls-archer.com/midls/noticias-dls-buenos-aires/') ||
-            currentUrlNews.includes('https://midls.dls-archer.com/midls/mi-recibo/') ||
+            /* currentUrlNews.includes('https://midls.dls-archer.com/midls/mi-recibo/') || */
             currentUrlNews.includes('https://midls.dls-archer.com/midls/contacto-2/') ||
             currentUrlNews.includes('https://midls.dls-archer.com/midls/consultas-y-reclamos/')
         ) && state.status != 'authenticated') {
@@ -94,7 +94,9 @@ export const AuthProvider = ({ children }: any) => {
             dispatch({ type: 'signIn' })
         }
         if (((currentUrlNews.includes('https://midls.dls-archer.com/midls/login/') ||
-            currentUrlProfile.includes('https://midls.dls-archer.com/midls/login/')) && (state.status == 'authenticated' || state.status == 'checking'))) {
+            currentUrlNews.includes('https://midls.dls-archer.com/midls/login/?redirect_to=https%3A%2F%2Fmidls.dls-archer.com%2Fmidls%2Fuser%2F') ||
+            currentUrlProfile.includes('https://midls.dls-archer.com/midls/login/') ||
+            currentUrlProfile.includes('https://midls.dls-archer.com/midls/login/?redirect_to=https%3A%2F%2Fmidls.dls-archer.com%2Fmidls%2Fuser%2F')) && (state.status == 'authenticated' || state.status == 'checking'))) {
 
             dispatch({ type: 'logOut' })
         }
