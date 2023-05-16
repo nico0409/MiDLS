@@ -94,6 +94,8 @@ const deleteFunction = async (data: any, dataDescr: any, item: number) => {
         dataDescr.splice(item, 1)
         if (data.length === 0) {
             await AsyncStorage.removeItem('offlineObserveCardsDescr');
+            console.log("tarjeta en storage eliminada");
+            
         } else {
             Asingstorage({ StorageType: 'offlineObserveCardsDescr' }, dataDescr);
         }

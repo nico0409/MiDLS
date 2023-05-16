@@ -11,11 +11,11 @@ export const SendObserveStorage = async () => {
         return true
     }
     let data: any;
-    let dataDescr: any;
+    /* let dataDescr: any; */
 
 
     data = await GetStorage({ StorageType: 'offlineObserveCards' })
-    dataDescr = await GetStorage({ StorageType: 'offlineObserveCardsDescr' })
+    /* dataDescr = await GetStorage({ StorageType: 'offlineObserveCardsDescr' }) */
 
 
     if (data !== null) {
@@ -23,8 +23,10 @@ export const SendObserveStorage = async () => {
 
 
             for (let index = data.length - 1; index >= 0; index--) {
-                dataDescr[index].ERR_TYPE === 'NETWORK' &&
+                /* dataDescr[index].ERR_TYPE === 'NETWORK' && */
+                    console.log("se ejecuta send offline storage");
                     await SendOnservCardStorage({ data, index });
+                    
             }
 
 

@@ -13,7 +13,8 @@ interface Params {
 }
 export const SendOnservCardStorage = async ({ data, index }: Params) => {
 
-console.log("se ejecuta send one card de storage");
+
+    console.log("se ejecuta send one card de storage");
 
 
     const form = data[index]
@@ -55,10 +56,10 @@ console.log("se ejecuta send one card de storage");
                 SOAPAction: 'Create.V1'
             }
         }).then(async () => {
-
+            console.log("tarjeta enviada con exito");
             await DeleteStorage(index);
-        }).catch( (err) =>{
-            if(err.response){
+        }).catch((err) => {
+            if (err.response) {
                 UpdateErrorState(index);
             }
         });

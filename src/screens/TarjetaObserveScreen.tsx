@@ -137,12 +137,15 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
         loadAllObserve();
     }, []);
 
-    const { reloadCardList, setReloadCardList } = useContext(AuthcontextGeneral)
+    const { reloadCardList, setReloadCardList, backgroundRequestReload, setBackgroundRequestReload } = useContext(AuthcontextGeneral);
 
     useEffect(() => {
-        reloadCardList && loadAllObserve(),
-            reloadCardList && setReloadCardList(false);
-    }, [useIsFocused()]) ;
+        console.log("reloadCardList?: ", reloadCardList);
+
+        reloadCardList && loadAllObserve();
+        reloadCardList && setReloadCardList(false);
+        setBackgroundRequestReload(false);
+    }, [useIsFocused(), backgroundRequestReload]);
 
     const customImgAddObsv = () => {
         return (
@@ -283,7 +286,7 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
                             justifyContent: 'center',
                             height: ScreenHeight * 0.80,
                             width: ScreenWidt,
-                            backgroundColor:colors.dlsGrayPrimary
+                            backgroundColor: colors.dlsGrayPrimary
                         }}>
                             <Chase size={48} color="#FFF" />
                         </View>

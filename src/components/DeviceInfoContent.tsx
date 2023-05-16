@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Chase } from 'react-native-animated-spinkit';
 import { useAllObserve } from '../hooks/useAllObserve';
@@ -9,19 +9,18 @@ import { colors } from '../Themes/DlsTheme';
 import { GetPrompt } from './GetPrompt';
 import { SendObserveStorage } from './SendObserveStorage';
 import { Asingstorage, GetStorage } from './Storage';
+import { AuthContext } from '../context/AuthContext';
 
 export const DeviceInfoContent = () => {
 
     const { deviceId,brand, deviceName, model, externalIp } = useDeviceInfo();
+    const {setReloadCardList} = useContext(AuthContext)
 
     const [lastUpdDataDate, setLastUpdDataDate] = useState('-');
     const [lastTObsUpdateDttm, setLastTObsUpdateDttm] = useState('-');
     const [isLoadingData, setIsLoadingData] = useState(false);
     const [isErrorResponse, setIsErrorResponse] = useState(false);
     const [isErrorResponse2, setIsErrorResponse2] = useState(false);
-    const [emplid, setEmplid] = useState('');
-
-    const { ErrorResponse, loadAllObserve } = useAllObserve(emplid);
 
     const formattedDate = (d = new Date) => {
 
@@ -41,20 +40,7 @@ export const DeviceInfoContent = () => {
         return `${day}/${month}/${year} ${hour}:${minute}:${second}`;
     }
 
-    const getData = async (runEmplid: boolean) => {
-
-        if (runEmplid) {
-            function valEmplid(object: any): object is storageEmplid {
-                return true
-            }
-
-            const getemplid = await GetStorage({ StorageType: 'emplid' });
-            if (getemplid !== null) {
-                if (valEmplid(getemplid)) {
-                    setEmplid(getemplid.emplid);
-                }
-            }
-        }
+    const getData = async () => {
 
         function isAuthStorage(object: any): object is lastDataUpdateDttm {
             return true
@@ -86,19 +72,16 @@ export const DeviceInfoContent = () => {
 
         await Asingstorage(prompts, await GetPrompt(setIsErrorResponse));
 
-        if (emplid) {
-            await loadAllObserve();
-            setIsErrorResponse2(ErrorResponse);
-            await SendObserveStorage();
-        }
+        await SendObserveStorage();
 
+        setReloadCardList(true);
         setIsLoadingData(false);
-        getData(false);
+        getData();
     };
 
     useEffect(() => {
 
-        getData(true);
+        getData();
 
     }, []);
 

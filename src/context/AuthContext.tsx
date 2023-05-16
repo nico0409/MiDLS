@@ -32,6 +32,8 @@ type AuthContextProps = {
     setAppLockScreen: React.Dispatch<React.SetStateAction<boolean>>;
     appLinkUpdateIos: string;
     setAppLinkUpdateIos: React.Dispatch<React.SetStateAction<string>>;
+    backgroundRequestReload: boolean;
+    setBackgroundRequestReload: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const authInitialState: AuthState = {
@@ -49,6 +51,7 @@ export const AuthProvider = ({ children }: any) => {
     const { isConnected } = useNetInfo();
 
     const [reloadCardList, setReloadCardList] = useState(false);
+    const [backgroundRequestReload, setBackgroundRequestReload] = useState(false);
 
     const [appNeedsUpdate, setAppNeedsUpdate] = useState(false);
     const [appLockScreen, setAppLockScreen] = useState(false);
@@ -103,35 +106,34 @@ export const AuthProvider = ({ children }: any) => {
 
     };
 
-    const getEmplid = async () => {
-
-        function valEmplid(object: any): object is storageEmplid { return true }
-
-        const getemplid = await GetStorage({ StorageType: 'emplid' });
-        if (getemplid !== null) {
-            if (valEmplid(getemplid)) {
-                setEmplid(getemplid.emplid);
-            }
-        }
-    }
-
     const refreshData = async () => {
+        console.log("se inicia refresh data");
 
         await CheckUpdateAndroid({ setAppNeedsUpdate, setAppLockScreen });
         await CheckUpdateIos({ setAppNeedsUpdate, setAppLockScreen, setAppLinkUpdateIos });
 
-        if (appLockScreen) {
+        if (!appLockScreen) {
 
             const prompts: StorageTypes = { StorageType: 'prompt' };
 
-            await getEmplid();
-
             await Asingstorage(prompts, await GetPrompt(setIsErrorResponse));
 
-            if (emplid) {
-                await loadAllObserve();
-                await SendObserveStorage();
+            /* Get Emplid */
+            function valEmplid(object: any): object is storageEmplid { return true }
+
+            const getemplid = await GetStorage({ StorageType: 'emplid' });
+            console.log("getemplid: ",getemplid);
+            
+            if (getemplid !== null) {
+                if (valEmplid(getemplid) && getemplid.emplid) {
+                setEmplid(getemplid.emplid);
+                }
             }
+            
+            await SendObserveStorage();
+            await Asingstorage({ StorageType: 'lastTObsUpdateDttm' }, { dateUpd: new Date().toString() });
+            setReloadCardList(true);
+            setBackgroundRequestReload(true);
         }
     };
 
@@ -182,9 +184,10 @@ export const AuthProvider = ({ children }: any) => {
     useEffect(() => {
 
         BackgroundTimer.runBackgroundTimer(() => {
-            console.log("se ejecuto background timer");
-            validateCustomTime();
-        }, 3600000); 
+            console.log("se ejecuto background timer ", new Date());
+            refreshData();
+            /* validateCustomTime(); */
+        }, 3600000);
 
     }, []);
 
@@ -205,7 +208,9 @@ export const AuthProvider = ({ children }: any) => {
             appLockScreen,
             setAppLockScreen,
             appLinkUpdateIos,
-            setAppLinkUpdateIos
+            setAppLinkUpdateIos,
+            backgroundRequestReload,
+             setBackgroundRequestReload
         }}>
             {children}
         </AuthContext.Provider>
