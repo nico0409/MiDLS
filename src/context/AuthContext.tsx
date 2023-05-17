@@ -6,13 +6,14 @@ import { Asingstorage, GetStorage } from '../components/Storage';
 import { StorageTypes, lastDataUpdateDttm } from '../interfaces/prompInterfaces';
 import { GetPrompt } from '../components/GetPrompt';
 
-import BackgroundTimer from 'react-native-background-timer';
+/* import BackgroundTimer from 'react-native-background-timer'; */
 import { useAllObserve } from '../hooks/useAllObserve';
 import { storageEmplid } from '../interfaces/storageInterface';
 import { CheckUpdateAndroid } from '../components/CheckUpdateAndroid';
 import { CheckUpdateIos } from '../components/CheckUpdateIos';
 
-
+import BackgroundService from 'react-native-background-actions';
+/* import { AppState } from 'react-native'; */
 
 type AuthContextProps = {
     status: 'checking' | 'authenticated' | 'not-authenticated';
@@ -41,6 +42,21 @@ const authInitialState: AuthState = {
     errorMessage: '',
 }
 
+type options = {
+    taskName: string;
+    taskTitle: string;
+    taskDesc: string;
+    taskIcon: {
+        name: string;
+        type: string;
+        package?: string;
+    };
+    color?: string | undefined;
+    linkingURI?: string | undefined;
+    parameters: {
+        delay: number;
+    };
+}
 
 export const AuthContext = createContext({} as AuthContextProps)
 
@@ -122,14 +138,14 @@ export const AuthProvider = ({ children }: any) => {
             function valEmplid(object: any): object is storageEmplid { return true }
 
             const getemplid = await GetStorage({ StorageType: 'emplid' });
-            console.log("getemplid: ",getemplid);
-            
+            console.log("getemplid: ", getemplid);
+
             if (getemplid !== null) {
                 if (valEmplid(getemplid) && getemplid.emplid) {
-                setEmplid(getemplid.emplid);
+                    setEmplid(getemplid.emplid);
                 }
             }
-            
+
             await SendObserveStorage();
             await Asingstorage({ StorageType: 'lastTObsUpdateDttm' }, { dateUpd: new Date().toString() });
             setReloadCardList(true);
@@ -137,9 +153,9 @@ export const AuthProvider = ({ children }: any) => {
         }
     };
 
-    const validateCustomTime = async () => {
+    /* const validateCustomTime = async () => {
 
-        /* la función consiste en que pueda actualizar los datos entre los horarios de 5hs - 7hs(incluido), 13hs a 14hs(incluido) y 21hs a 22hs(incluido)*/
+        //la función consiste en que pueda actualizar los datos entre los horarios de 5hs - 7hs(incluido), 13hs a 14hs(incluido) y 21hs a 22hs(incluido)
 
         const actualDate = new Date();
 
@@ -169,7 +185,7 @@ export const AuthProvider = ({ children }: any) => {
                 }
             }
         }
-    };
+    }; */
 
     useEffect(() => {
 
@@ -181,13 +197,57 @@ export const AuthProvider = ({ children }: any) => {
 
     }, [isConnected])
 
+    //@ts-ignore
+    const sleep = (time: number) => new Promise((resolve) => setTimeout(() => resolve(), time));
+
+    const veryIntensiveTask = async (taskDataArguments: any) => {
+        // Example of an infinite loop task
+        console.log("BackgroundService.isRunning():", BackgroundService.isRunning());
+
+        let hours = new Date().getHours();
+        
+        await new Promise(async (resolve) => {
+            for (let i = 0; BackgroundService.isRunning(); i++) {
+                console.log(i, new Date());
+                //console.log("AppState:",AppState.currentState);
+                if (hours !== new Date().getHours()) {
+                    console.log("hours: ",hours," new Date().getHours(): ",new Date().getHours());
+                    
+                    hours = new Date().getHours();
+                    refreshData();
+                }
+                await sleep(60000);
+            }
+        });
+    };
+
+    const options = {
+        taskName: 'Mi Dls Sincronización',
+        taskTitle: 'Mi Dls',
+        taskDesc: 'Servicio de sincronización de datos Activo.',
+        taskIcon: {
+            name: 'ic_launcher',
+            type: 'mipmap',
+        },
+        linkingURI: '-',
+        parameters: {
+            delay: 1000,
+        },
+    };
+
     useEffect(() => {
 
-        BackgroundTimer.runBackgroundTimer(() => {
+        /* BackgroundTimer no funciona correctamente en Android 13, se utiliza Background Service en su reemplazo */
+        /* BackgroundTimer.runBackgroundTimer(() => {
             console.log("se ejecuto background timer ", new Date());
             refreshData();
-            /* validateCustomTime(); */
-        }, 3600000);
+        }, 600000); */
+        console.log("ejecutar back service");
+
+        BackgroundService.start(veryIntensiveTask, options);
+        /* BackgroundService.updateNotification({taskDesc: 'New ExampleTask description'}); // Only Android, iOS will ignore this call */
+        // iOS will also run everything here in the background until .stop() is called
+        //BackgroundService.stop();
 
     }, []);
 
@@ -210,7 +270,7 @@ export const AuthProvider = ({ children }: any) => {
             appLinkUpdateIos,
             setAppLinkUpdateIos,
             backgroundRequestReload,
-             setBackgroundRequestReload
+            setBackgroundRequestReload
         }}>
             {children}
         </AuthContext.Provider>
