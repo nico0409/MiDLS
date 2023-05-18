@@ -127,15 +127,12 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
     }, [emplid])
 
 
-    useEffect(() => {
+    /* useEffect(() => {
         if (isConnected === true) {
-
+            console.log("se ejecuta is connected");
+            
         }
-    }, [isConnected]);
-
-    useEffect(() => {
-        loadAllObserve();
-    }, []);
+    }, [isConnected]); */
 
     const { reloadCardList, setReloadCardList, backgroundRequestReload, setBackgroundRequestReload } = useContext(AuthcontextGeneral);
 

@@ -76,7 +76,6 @@ export const AuthProvider = ({ children }: any) => {
     const [isErrorResponse, setIsErrorResponse] = useState(false);
 
     const [emplid, setEmplid] = useState('');
-    const { ErrorResponse, loadAllObserve } = useAllObserve(emplid);
 
     let currentUrlNews = '';
     let currentUrlProfile = '';
@@ -85,6 +84,7 @@ export const AuthProvider = ({ children }: any) => {
     const sendObserve = async () => {
         await SendObserveStorage();
         setReloadCardList(true);
+        setBackgroundRequestReload(true);
     }
 
     const logOut = () => { };
@@ -208,10 +208,10 @@ export const AuthProvider = ({ children }: any) => {
         
         await new Promise(async (resolve) => {
             for (let i = 0; BackgroundService.isRunning(); i++) {
-                console.log(i, new Date());
+                //console.log(i, new Date());
                 //console.log("AppState:",AppState.currentState);
                 if (hours !== new Date().getHours()) {
-                    console.log("hours: ",hours," new Date().getHours(): ",new Date().getHours());
+                    //console.log("hours: ",hours," new Date().getHours(): ",new Date().getHours());
                     
                     hours = new Date().getHours();
                     refreshData();

@@ -4,7 +4,7 @@ import { StorageTypes, AllObserveType, PromptObserveType, objUseForm, DlhrAllObs
 import { storageEmplid } from '../interfaces/storageInterface';
 
 export const Asingstorage = async ({ StorageType }: StorageTypes, data: Object | Object[]) => {
-    console.log("entrando a asignar", StorageType, data);
+    //console.log("entrando a asignar", StorageType, data);
 
     /* StorageType === 'prompt' ?
         data.hasOwnProperty("PromptObserve") &&

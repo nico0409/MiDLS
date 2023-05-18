@@ -9,14 +9,13 @@ export const useAllObserve = (emplid: string) => {
     const [isloading, setIsloading] = useState(true)
     const [allObserveList, setObserveList] = useState<DlhrAllObserve[]>([])
     const allboserve: StorageTypes = { StorageType: 'allObserve' };
-    const [ErrorResponse, setErrorResponse] = useState(false);
 
 
     const loadAllObserve = async () => {
         if (emplid) {
             setIsloading(true);
-            setErrorResponse(false);
-            const resp = await GetAllObserve('', emplid, setErrorResponse);
+            let isError :boolean = false;
+            const resp = await GetAllObserve('', emplid, isError);
             const arrayObserve = resp.AllObserve?.['soapenv:Envelope']?.['soapenv:Body'].DLHR_ALL_OBSERVE_COLL.DLHR_ALL_OBSERVE;
             const oneObserve: DlhrAllObserve[] = [];
             const observe: DlhrAllObserve = {}
@@ -36,12 +35,15 @@ export const useAllObserve = (emplid: string) => {
                 setObserveList([...offlineCardsList, ...newAllObserveList])
             } */
 
-            if (ErrorResponse) {
+            if (isError) {
+                
                 offlineCardsList && setObserveList(offlineCardsList);
             } else {
                 if (newAllObserveList[0].BUSINESS_UNIT! === undefined) {
                     offlineCardsList && setObserveList(offlineCardsList);
                 } else {
+                    console.log(offlineCardsList);
+                    
                     offlineCardsList === null ? setObserveList(newAllObserveList)
                         : setObserveList([...offlineCardsList, ...newAllObserveList]);
                 }
@@ -68,7 +70,6 @@ export const useAllObserve = (emplid: string) => {
     return {
         allObserveList,
         isloading,
-        loadAllObserve,
-        ErrorResponse
+        loadAllObserve
     }
 }

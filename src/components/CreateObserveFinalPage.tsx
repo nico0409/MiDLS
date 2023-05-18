@@ -99,6 +99,26 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
         }, 2000);
     }, [])
 
+    const runNavigationPop = () =>{
+        navigation.removeListener('beforeRemove', () => { });
+        navigation.pop(3);
+    }
+
+    useEffect(() => {
+
+        console.log("se ejecuto errorType: ", errorType);
+
+        switch (errorType) {
+            case "NETWORK":
+            case "SERVER":
+                setTimeout(() => {
+                    console.log("se ejecuta set timeout navigation");
+                    runNavigationPop();
+                }, 8000)
+                break;
+        }
+    }, [errorType]);
+
     useEffect(() => {
         navigation.addListener('beforeRemove', (e) => {
             // Prevent default behavior of leaving the screen
@@ -116,26 +136,27 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
                     <Icon name="check-circle-outline" size={height <= 593 ? 110 : 140} color="white" />
                     :
                     errorType === 'NETWORK' ?
-                    <Icon name="wifi-off" size={height <= 593 ? 110 : 140} color="white" />
-                    :
-                    <Icon name="cloud-off" size={height <= 593 ? 110 : 140} color="white" />
+                        <Icon name="wifi-off" size={height <= 593 ? 110 : 140} color="white" />
+                        :
+                        <Icon name="cloud-off" size={height <= 593 ? 110 : 140} color="white" />
                 }
             </Animated.View>
 
             <Animated.View style={[{ width: '100%', alignItems: 'flex-end' }, animatedHomeIcon]}>
                 <TouchableOpacity
                     style={{ paddingRight: 10, paddingTop: 10 }}
-                    onPress={() => {
-                        /* navigation.replace('TarjetaObserveScreen',{name:emplidSelect.fieldValue2,emplid:emplidSelect.fieldValue1}) */
+                    /* onPress={() => {
                         navigation.removeListener('beforeRemove', () => { });
-                        navigation.pop(3)
-                    }}>
+                        navigation.pop(3);
+                    }} */
+                    onPress={runNavigationPop}
+                    >
                     <Icon name="home" size={40} color="white" />
                 </TouchableOpacity>
             </Animated.View>
 
             <Animated.View style={[styles.loadingContainer, animatedLoadingStyle]}>
-                <Chase size={height <= 593? height <= 593 ? 50 : 90 : 140} color="white" />
+                <Chase size={height <= 593 ? height <= 593 ? 50 : 90 : 140} color="white" />
             </Animated.View>
 
             <Animated.View style={[{ backgroundColor: colors.dlsGrayPrimary, flex: 1, alignItems: 'center', justifyContent: 'space-evenly', borderTopLeftRadius: 60, borderTopRightRadius: 60 }, animatedCardStyle]}>

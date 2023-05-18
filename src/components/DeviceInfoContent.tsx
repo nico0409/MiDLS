@@ -74,6 +74,7 @@ export const DeviceInfoContent = () => {
 
         await SendObserveStorage();
 
+        await Asingstorage({ StorageType: 'lastTObsUpdateDttm' }, { dateUpd: new Date().toString() });
         setReloadCardList(true);
         setIsLoadingData(false);
         getData();
