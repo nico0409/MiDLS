@@ -75,8 +75,6 @@ export const AuthProvider = ({ children }: any) => {
 
     const [isErrorResponse, setIsErrorResponse] = useState(false);
 
-    const [emplid, setEmplid] = useState('');
-
     let currentUrlNews = '';
     let currentUrlProfile = '';
     const [state, dispatch] = useReducer(authReducer, authInitialState);
@@ -133,18 +131,6 @@ export const AuthProvider = ({ children }: any) => {
             const prompts: StorageTypes = { StorageType: 'prompt' };
 
             await Asingstorage(prompts, await GetPrompt(setIsErrorResponse));
-
-            /* Get Emplid */
-            function valEmplid(object: any): object is storageEmplid { return true }
-
-            const getemplid = await GetStorage({ StorageType: 'emplid' });
-            console.log("getemplid: ", getemplid);
-
-            if (getemplid !== null) {
-                if (valEmplid(getemplid) && getemplid.emplid) {
-                    setEmplid(getemplid.emplid);
-                }
-            }
 
             await SendObserveStorage();
             await Asingstorage({ StorageType: 'lastTObsUpdateDttm' }, { dateUpd: new Date().toString() });
@@ -204,18 +190,26 @@ export const AuthProvider = ({ children }: any) => {
         // Example of an infinite loop task
         console.log("BackgroundService.isRunning():", BackgroundService.isRunning());
 
-        let hours = new Date().getHours();
-        
         await new Promise(async (resolve) => {
             for (let i = 0; BackgroundService.isRunning(); i++) {
-                //console.log(i, new Date());
-                //console.log("AppState:",AppState.currentState);
-                if (hours !== new Date().getHours()) {
-                    //console.log("hours: ",hours," new Date().getHours(): ",new Date().getHours());
-                    
-                    hours = new Date().getHours();
-                    refreshData();
+                
+                switch (new Date().getMinutes()) {
+                    case 0:
+                    case 5:
+                    case 10:
+                    case 15:
+                    case 25:
+                    case 30:
+                    case 35:
+                    case 40:
+                    case 45:
+                    case 55:
+                        console.log("se realizo refresh de background");
+                        
+                        refreshData();
+                        break;
                 }
+                //console.log("AppState:",AppState.currentState);
                 await sleep(60000);
             }
         });
