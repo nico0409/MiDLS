@@ -1,19 +1,17 @@
-import { useNetInfo } from '@react-native-community/netinfo'
-import React, { createContext, useReducer, useState, useEffect } from 'react'
+import React, { createContext, useReducer, useState, useEffect } from 'react';
+import { AppState } from 'react-native';
+import { useNetInfo } from '@react-native-community/netinfo';
 import { authReducer, AuthState } from './authReducer'
 import { SendObserveStorage } from '../components/SendObserveStorage';
 import { Asingstorage, GetStorage } from '../components/Storage';
-import { StorageTypes, lastDataUpdateDttm } from '../interfaces/prompInterfaces';
+import { StorageTypes, lastDataUpdateDttm, refreshLoadObserveBG } from '../interfaces/prompInterfaces';
 import { GetPrompt } from '../components/GetPrompt';
 
 /* import BackgroundTimer from 'react-native-background-timer'; */
-import { useAllObserve } from '../hooks/useAllObserve';
-import { storageEmplid } from '../interfaces/storageInterface';
 import { CheckUpdateAndroid } from '../components/CheckUpdateAndroid';
 import { CheckUpdateIos } from '../components/CheckUpdateIos';
 
 import BackgroundService from 'react-native-background-actions';
-/* import { AppState } from 'react-native'; */
 
 type AuthContextProps = {
     status: 'checking' | 'authenticated' | 'not-authenticated';
@@ -134,44 +132,61 @@ export const AuthProvider = ({ children }: any) => {
 
             await SendObserveStorage();
             await Asingstorage({ StorageType: 'lastTObsUpdateDttm' }, { dateUpd: new Date().toString() });
-            setReloadCardList(true);
-            setBackgroundRequestReload(true);
+            console.log("AppState:", AppState.currentState);
+            switch (AppState.currentState) {
+                case 'background':
+                case 'inactive':
+                    await Asingstorage({ StorageType: 'refreshLoadObserveBG' }, { refreshLoadObserve: true });
+                    break;
+                case 'active':
+                    setReloadCardList(true);
+                    setBackgroundRequestReload(true);
+                    break;
+                default:
+                    break;
+            }
+
+            //setReloadCardList(true);
+            //setBackgroundRequestReload(true);
         }
     };
 
-    /* const validateCustomTime = async () => {
+    const validateRefreshLoadObserveBG = async () => {
+        console.log("comienza a validar refresh interno");
+        
+        function validateObject(object: any): object is refreshLoadObserveBG {
+            return true
+        }
+        const getRefreshBGValue = await GetStorage({ StorageType: 'refreshLoadObserveBG' });
 
-        //la función consiste en que pueda actualizar los datos entre los horarios de 5hs - 7hs(incluido), 13hs a 14hs(incluido) y 21hs a 22hs(incluido)
+        if (getRefreshBGValue !== null) {
+            if (validateObject(getRefreshBGValue)) {
+                console.log("getRefreshBGValue.refreshLoadObserve", getRefreshBGValue.refreshLoadObserve);
 
-        const actualDate = new Date();
-
-        function valDateIntfc(object: any): object is lastDataUpdateDttm { return true }
-
-        const lastDate = await GetStorage({ StorageType: 'lastDataUpdateDttm' });
-
-        if (lastDate !== null && valDateIntfc(lastDate)) {
-
-            const lastDateFormatted = new Date(lastDate.dateUpd);
-            const lastDateHour = lastDateFormatted.getHours();
-            const actualHour = actualDate.getHours();
-
-            if (lastDateFormatted.getFullYear() === actualDate.getFullYear() && lastDateFormatted.getMonth() === actualDate.getMonth() && lastDateFormatted.getDay() === actualDate.getDay()) {
-
-                if ((actualHour >= 5 && actualHour <= 7 && lastDateHour < 5) ||
-                    (actualHour >= 13 && actualHour <= 14 && lastDateHour < 13) ||
-                    (actualHour >= 21 && actualHour <= 22 && lastDateHour < 21)) {
-                    refreshData();
-                }
-
-            } else {
-                if ((actualHour >= 5 && actualHour <= 7) ||
-                    (actualHour >= 13 && actualHour <= 14) ||
-                    (actualHour >= 21 && actualHour <= 22)) {
-                    refreshData();
-                }
+                getRefreshBGValue.refreshLoadObserve && setReloadCardList(true);
+                getRefreshBGValue.refreshLoadObserve && setBackgroundRequestReload(true);
+                getRefreshBGValue.refreshLoadObserve && await Asingstorage({ StorageType: 'refreshLoadObserveBG' }, { refreshLoadObserve: false });
             }
         }
-    }; */
+
+    }
+    const handleChange = (newState:any) =>{
+        console.log("se ejecuto handleChange");
+        
+        if (newState === 'active') {
+            validateRefreshLoadObserveBG();
+        }
+    }
+
+    useEffect(() => {
+        
+        validateRefreshLoadObserveBG();
+        AppState.addEventListener('change', handleChange);  
+      
+        return () => {
+          AppState.removeEventListener('change', handleChange);  
+        }
+    }, [])
 
     useEffect(() => {
 
@@ -188,11 +203,9 @@ export const AuthProvider = ({ children }: any) => {
 
     const veryIntensiveTask = async (taskDataArguments: any) => {
         // Example of an infinite loop task
-        console.log("BackgroundService.isRunning():", BackgroundService.isRunning());
-
         await new Promise(async (resolve) => {
             for (let i = 0; BackgroundService.isRunning(); i++) {
-                
+                console.log("BACKGROUND minute: ", i);
                 switch (new Date().getMinutes()) {
                     case 0:
                     case 5:
@@ -204,12 +217,9 @@ export const AuthProvider = ({ children }: any) => {
                     case 40:
                     case 45:
                     case 55:
-                        console.log("se realizo refresh de background");
-                        
                         refreshData();
                         break;
                 }
-                //console.log("AppState:",AppState.currentState);
                 await sleep(60000);
             }
         });
@@ -236,9 +246,13 @@ export const AuthProvider = ({ children }: any) => {
             console.log("se ejecuto background timer ", new Date());
             refreshData();
         }, 600000); */
-        console.log("ejecutar back service");
-
-        BackgroundService.start(veryIntensiveTask, options);
+        console.log("BackgroundService.isRunning():", BackgroundService.isRunning());
+        if (BackgroundService.isRunning()) {
+            console.log("servicio ya ejecutado");
+        } else {
+            console.log("ejecutar back service");
+            BackgroundService.start(veryIntensiveTask, options);
+        }
         /* BackgroundService.updateNotification({taskDesc: 'New ExampleTask description'}); // Only Android, iOS will ignore this call */
         // iOS will also run everything here in the background until .stop() is called
         //BackgroundService.stop();

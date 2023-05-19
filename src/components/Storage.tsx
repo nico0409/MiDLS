@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { DeviceID } from '../interfaces/deviceIdInterface';
-import { StorageTypes, AllObserveType, PromptObserveType, objUseForm, DlhrAllObserve, statusAuthStorage, lastDataUpdateDttm, lastTObsUpdateDttm } from '../interfaces/prompInterfaces';
+import { StorageTypes, AllObserveType, PromptObserveType, objUseForm, DlhrAllObserve, statusAuthStorage, lastDataUpdateDttm, lastTObsUpdateDttm, refreshLoadObserveBG } from '../interfaces/prompInterfaces';
 import { storageEmplid } from '../interfaces/storageInterface';
 
 export const Asingstorage = async ({ StorageType }: StorageTypes, data: Object | Object[]) => {
@@ -63,6 +63,10 @@ export const GetStorage = async ({ StorageType }: StorageTypes) => {
             const deviceId: DeviceID = JSON.parse(Datos!)
             return deviceId;
 
+        case 'refreshLoadObserveBG':
+            const refreshLoadObserveBG: refreshLoadObserveBG = JSON.parse(Datos!)
+            return refreshLoadObserveBG;
+
         default:
             return null;
 
@@ -95,7 +99,7 @@ const deleteFunction = async (data: any, dataDescr: any, item: number) => {
         if (data.length === 0) {
             await AsyncStorage.removeItem('offlineObserveCardsDescr');
             console.log("tarjeta en storage eliminada");
-            
+
         } else {
             Asingstorage({ StorageType: 'offlineObserveCardsDescr' }, dataDescr);
         }
@@ -141,7 +145,7 @@ export const DeleteStorageById = async (idTarjeta: string) => {
 
     if (isofflineObserveCards(data)) {
         const newArrayData = data.filter(item => item['m38:DL_NTARJETA'] !== idTarjeta);
-    
+
         if (newArrayData.length === 0) {
             await AsyncStorage.removeItem('offlineObserveCards');
         } else {
@@ -150,7 +154,7 @@ export const DeleteStorageById = async (idTarjeta: string) => {
     }
 
     if (isofflineObserveCardDescr(dataDescr)) {
-        const newArrayData = dataDescr.filter(item =>  item.NroTarjeta !== idTarjeta);
+        const newArrayData = dataDescr.filter(item => item.NroTarjeta !== idTarjeta);
 
         if (newArrayData.length === 0) {
             await AsyncStorage.removeItem('offlineObserveCardsDescr');

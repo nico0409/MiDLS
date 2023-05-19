@@ -19,9 +19,10 @@ interface CardProps {
   setTerm?: (string: string) => void
   index: number;
   item: any;
+  disabled?: boolean
 }
 
-export default ({ setTerm, item, index }: CardProps) => {
+export default ({ setTerm, item, index, disabled = false }: CardProps) => {
 
   const navigation = useNavigation();
   const tarjeta: DlhrAllObserve = { ...item }
@@ -58,6 +59,7 @@ export default ({ setTerm, item, index }: CardProps) => {
 
   return (
     <TouchableOpacity
+      disabled={disabled}
       activeOpacity={0.7}
       onPress={() => {
         navigation.navigate('EditObvservCardScreen',

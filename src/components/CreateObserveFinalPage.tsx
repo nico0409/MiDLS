@@ -185,7 +185,7 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
                     }
                 </View>
                 <View style={styles.cardContainer}>
-                    <Card index={1} item={cardDescr} />
+                    <Card index={1} item={cardDescr} disabled={errorType === 'NETWORK' || 'SERVER' ? true : false} />
                 </View>
             </Animated.View>
 
