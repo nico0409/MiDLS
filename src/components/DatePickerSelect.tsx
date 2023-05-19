@@ -4,6 +4,7 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { DlhrAllObserve, M38GetCompIntfcDLHRTAOBSERVCIResponse, objUseForm } from '../interfaces/prompInterfaces';
 import { colors } from '../Themes/DlsTheme';
+import moment from 'moment';
 
 interface Props {
     onChange: (value: string, field: keyof objUseForm) => void;
@@ -17,8 +18,10 @@ const { width } = Dimensions.get('window')
 
 export const DatePickerSelect = ({ onChange, form, cardDescr, setCardDescr, disabled = false }: Props) => {
 
-    const dateInitial = new Date();
-
+    //const dateInitial = new Date();
+    /* date picker tiene un problema para calcular la zona horaria, se investigo que para que tome el dia correcto, se debe definir el actual date pero debe ser a partir de las 3 am */
+    const dateInitial = new Date(moment().format('YYYY-MM-DD').concat('T04:00:00.000Z'));
+    
     const formatearFechaEnCodigo = (dateString: string) => {
         let dateToFormat = dateString.split(/[\s-:/]/);
         return new Date(parseInt(dateToFormat![0]), (parseInt(dateToFormat![1], 10) - 1), parseInt(dateToFormat![2], 10))
