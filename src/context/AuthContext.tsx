@@ -131,7 +131,7 @@ export const AuthProvider = ({ children }: any) => {
             await Asingstorage(prompts, await GetPrompt(setIsErrorResponse));
 
             await SendObserveStorage();
-            await Asingstorage({ StorageType: 'lastTObsUpdateDttm' }, { dateUpd: new Date().toString() });
+
             console.log("AppState:", AppState.currentState);
             switch (AppState.currentState) {
                 case 'background':
@@ -204,23 +204,30 @@ export const AuthProvider = ({ children }: any) => {
     const veryIntensiveTask = async (taskDataArguments: any) => {
         // Example of an infinite loop task
         await new Promise(async (resolve) => {
+            let lastMinuteReaded = 0;
             for (let i = 0; BackgroundService.isRunning(); i++) {
-                console.log("BACKGROUND minute: ", i);
-                switch (new Date().getMinutes()) {
+                let minute = new Date().getMinutes();
+                console.log("minute: ",minute,", lastMinuteReaded: ",lastMinuteReaded);
+                
+                switch (minute) {
                     case 0:
                     case 5:
                     case 10:
                     case 15:
+                    case 20:
                     case 25:
                     case 30:
                     case 35:
                     case 40:
                     case 45:
+                    case 50:
                     case 55:
-                        refreshData();
-                        break;
+                        if (lastMinuteReaded !== minute){
+                            lastMinuteReaded = minute;
+                            refreshData();
+                        }
                 }
-                await sleep(60000);
+                await sleep(30000);
             }
         });
     };

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { DeleteStorage, GetStorage } from './Storage'
+import { Asingstorage, DeleteStorage, GetStorage } from './Storage'
 import { objUseForm } from '../interfaces/prompInterfaces';
 import { SendOnservCardStorage } from './SendOnservCardStorage';
 
@@ -33,5 +33,6 @@ export const SendObserveStorage = async () => {
         }
     }
 
+    await Asingstorage({ StorageType: 'lastTObsUpdateDttm' }, { dateUpd: new Date().toString() });
 
 }
