@@ -3,7 +3,7 @@ import { nroTarjetaEmpty } from "./nroTarjetaEmpty";
 export const initialObsCardDescr ={
 BUSINESS_UNIT: '',
 BUSINES_DESCR: '',
-DL_IDENTIF_DT: new Date().toISOString().split('T')[0],
+DL_IDENTIF_DT: '',
 NroTarjeta: nroTarjetaEmpty,
 IDEquipo: '',
 ID_EQUIPO_DESCR: '',

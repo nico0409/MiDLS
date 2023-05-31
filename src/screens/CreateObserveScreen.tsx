@@ -11,6 +11,7 @@ import { initialObsFormData } from '../data/initialObsFormData';
 import { stepIndicatorStyles } from '../data/stepIndicatorStyles';
 import { AuthContext } from '../context/formContext/AuthContext';
 import { initialObsCardDescr } from '../data/initialObsCardDescr';
+import moment from 'moment';
 
 interface DataTemp {
     namepage: string;
@@ -114,8 +115,8 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
     }
 
     useEffect(() => {
-        setCardDescr({ ...initialObsCardDescr, ...{ DL_OBSERVADOR: emplidSelect.fieldValue1 } })
-        setFormValue({ ...initialObsFormData, ...{ "m38:DL_OBSERVADOR": emplidSelect.fieldValue1 } })
+        setCardDescr({ ...initialObsCardDescr, ...{ DL_OBSERVADOR: emplidSelect.fieldValue1,DL_IDENTIF_DT: moment().format('YYYY-MM-DD')} })
+        setFormValue({ ...initialObsFormData, ...{ "m38:DL_OBSERVADOR": emplidSelect.fieldValue1,"m38:DL_IDENTIF_DT": moment().format('YYYY-MM-DD') } })
     }, [])
 
     return (
