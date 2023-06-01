@@ -21,12 +21,9 @@ export const DatePickerSelect = ({ onChange, form, cardDescr, setCardDescr, disa
     //const dateInitial = new Date();
     /* date picker tiene un problema para calcular la zona horaria, se investigo que para que tome el dia correcto, se debe definir el actual date pero debe ser a partir de las 3 am */
     //const dateInitial = new Date(moment().format('YYYY-MM-DD').concat('T04:00:00.000Z'));
-
-    var d = new Date();
-
     //d.setHours(d.getHours() - (new Date()).getTimezoneOffset()/60);
 
-    const dateInitial = d;
+    const dateInitial = new Date();
     /* console.log("con dateInitial",dateInitial);
     console.log("moment().format();",moment().format('DD/MM/YYYY'));
     console.log("fecha card descr",form?.['m38:DL_IDENTIF_DT']);
