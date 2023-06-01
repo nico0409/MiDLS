@@ -10,6 +10,7 @@ import { GetPrompt } from './GetPrompt';
 import { SendObserveStorage } from './SendObserveStorage';
 import { Asingstorage, GetStorage } from './Storage';
 import { AuthContext } from '../context/AuthContext';
+import moment from 'moment';
 
 export const DeviceInfoContent = () => {
 
@@ -20,25 +21,7 @@ export const DeviceInfoContent = () => {
     const [lastTObsUpdateDttm, setLastTObsUpdateDttm] = useState('-');
     const [isLoadingData, setIsLoadingData] = useState(false);
     const [isErrorResponse, setIsErrorResponse] = useState(false);
-    const [isErrorResponse2, setIsErrorResponse2] = useState(false);
 
-    const formattedDate = (d = new Date) => {
-
-        let month = String(d.getMonth() + 1);
-        let day = String(d.getDate());
-        const year = String(d.getFullYear());
-        let hour = String(d.getHours());
-        let minute = String(d.getMinutes());
-        let second = String(d.getSeconds());
-
-        if (month.length < 2) month = '0' + month;
-        if (day.length < 2) day = '0' + day;
-        if (hour.length < 2) hour = '0' + hour;
-        if (minute.length < 2) minute = '0' + minute;
-        if (second.length < 2) second = '0' + second;
-
-        return `${day}/${month}/${year} ${hour}:${minute}:${second}`;
-    }
 
     const getData = async () => {
 
@@ -49,7 +32,8 @@ export const DeviceInfoContent = () => {
         const storageUpdDttmValue = await GetStorage({ StorageType: 'lastDataUpdateDttm' });
         if (storageUpdDttmValue !== null) {
             if (isAuthStorage(storageUpdDttmValue)) {
-                setLastUpdDataDate(formattedDate(new Date(storageUpdDttmValue.dateUpd)));
+                //setLastUpdDataDate(formattedDate(new Date(storageUpdDttmValue.dateUpd)));
+                setLastUpdDataDate(storageUpdDttmValue.dateUpd);
             }
         }
 
@@ -60,7 +44,8 @@ export const DeviceInfoContent = () => {
         const storageObsDttmValue = await GetStorage({ StorageType: 'lastTObsUpdateDttm' });
         if (storageObsDttmValue !== null) {
             if (isAuthStorage2(storageObsDttmValue)) {
-                setLastTObsUpdateDttm(formattedDate(new Date(storageObsDttmValue.dateUpd)));
+                //setLastTObsUpdateDttm(formattedDate(new Date(storageObsDttmValue.dateUpd)));
+                setLastTObsUpdateDttm(storageObsDttmValue.dateUpd);
             }
         }
     };
@@ -74,7 +59,9 @@ export const DeviceInfoContent = () => {
 
         await SendObserveStorage();
 
-        await Asingstorage({ StorageType: 'lastTObsUpdateDttm' }, { dateUpd: new Date().toString() });
+        //await Asingstorage({ StorageType: 'lastTObsUpdateDttm' }, { dateUpd: new Date().toString() });
+        await Asingstorage({ StorageType: 'lastTObsUpdateDttm' }, { dateUpd: moment().format('DD/MM/YYYY HH:mm:ss') });
+
         setReloadCardList(true);
         setIsLoadingData(false);
         getData();

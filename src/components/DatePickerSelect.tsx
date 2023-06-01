@@ -19,26 +19,18 @@ const { width } = Dimensions.get('window')
 export const DatePickerSelect = ({ onChange, form, cardDescr, setCardDescr, disabled = false }: Props) => {
 
     //const dateInitial = new Date();
-    /* date picker tiene un problema para calcular la zona horaria, se investigo que para que tome el dia correcto, se debe definir el actual date pero debe ser a partir de las 3 am */
-    //const dateInitial = new Date(moment().format('YYYY-MM-DD').concat('T04:00:00.000Z'));
-    //d.setHours(d.getHours() - (new Date()).getTimezoneOffset()/60);
-
-    const dateInitial = new Date();
-    /* console.log("con dateInitial",dateInitial);
-    console.log("moment().format();",moment().format('DD/MM/YYYY'));
-    console.log("fecha card descr",form?.['m38:DL_IDENTIF_DT']);
-    console.log("fecha form",cardDescr?.DL_IDENTIF_DT); */
-    
-    
-    
+    const dateInitial = new Date(moment().format());
     
     
     const formatearFechaEnCodigo = (dateString: string) => {
         
-        let dateToFormat = dateString.split(/[\s-:/]/);
-        let dateFormated = new Date(parseInt(dateToFormat![0]), (parseInt(dateToFormat![1], 10) - 1), parseInt(dateToFormat![2], 10));
+        console.log("dateSTRING: ",dateString);
+        
+        //let dateToFormat = dateString.split(/[\s-:/]/);
+        //let dateFormated = new Date(parseInt(dateToFormat![0]), (parseInt(dateToFormat![1], 10) - 1), parseInt(dateToFormat![2], 10));        
 
-        return dateFormated;
+        //return dateFormated;
+        return new Date(moment(dateString).format());
     }
         
     const [date, setDate] = useState(form?.['m38:DL_IDENTIF_DT'] ? formatearFechaEnCodigo(form?.['m38:DL_IDENTIF_DT']) : dateInitial);
@@ -58,13 +50,11 @@ export const DatePickerSelect = ({ onChange, form, cardDescr, setCardDescr, disa
         
         /*let dd = String(date.getDate()).padStart(2, '0');
         let mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
-        let yyyy = date.getFullYear();*/
+        let yyyy = date.getFullYear();
 
-        let dd = moment(date,'YYYY-MM-DD').format('D').padStart(2, '0');
-        let mm = moment(date,'YYYY-MM-DD').format('M').padStart(2, '0'); 
-        let yyyy = moment(date,'YYYY-MM-DD').format('Y');
+        let dateFormated = yyyy + '/' + mm + '/' + dd*/
 
-        let dateFormated = yyyy + '/' + mm + '/' + dd
+        let dateFormated = moment(date,'YYYY-MM-DD').format('DD/MM/YYYY');
 
         console.log("HANDLE CONFIRM dateFormated: ",dateFormated);
         
@@ -80,23 +70,20 @@ export const DatePickerSelect = ({ onChange, form, cardDescr, setCardDescr, disa
 
     const formattedDate = (d:Date) => {
 
+        console.log("date recibido: ",d);
+        console.log("date recibidoEN MOMENT: ",moment(d,'YYYY-MM-DD').format('DD/MM/YYYY'));
+        console.log(" recibidoEN MOMENT: ",moment().format('DD/MM/YYYY'));
+        
+        
         /* let month = String(d.getMonth() + 1);
         let day = String(d.getDate());
-        const year = String(d.getFullYear()); */
-        /* console.log('formattedDate:',moment(d));
-        console.log('formattedDate:',moment(d).format());
-        console.log('formattedDateformartd:',moment(d).format('D'));
-        console.log('formattedDateMonth:',moment(d).format('M'));
-        console.log('formattedDateYear:',moment(d).format('Y')); */
-        
-        let month = moment(d,'YYYY-MM-DD').format('M');
-        let day = moment(d,'YYYY-MM-DD').format('D');
-        const year = moment(d,'YYYY-MM-DD').format('Y'); 
+        const year = String(d.getFullYear()); 
 
         if (month.length < 2) month = '0' + month;
-        if (day.length < 2) day = '0' + day;
+        if (day.length < 2) day = '0' + day;*/
 
-        return `${day}/${month}/${year}`;
+        //return `${day}/${month}/${year}`;
+        return moment(d,'YYYY-MM-DD').format('DD/MM/YYYY');
     }
 
     return (

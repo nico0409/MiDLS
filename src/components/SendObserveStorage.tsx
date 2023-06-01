@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { Asingstorage, DeleteStorage, GetStorage } from './Storage'
 import { objUseForm } from '../interfaces/prompInterfaces';
 import { SendOnservCardStorage } from './SendOnservCardStorage';
+import moment from 'moment';
 
 
 export const SendObserveStorage = async () => {
@@ -33,6 +34,6 @@ export const SendObserveStorage = async () => {
         }
     }
 
-    await Asingstorage({ StorageType: 'lastTObsUpdateDttm' }, { dateUpd: new Date().toString() });
+    await Asingstorage({ StorageType: 'lastTObsUpdateDttm' }, { dateUpd: moment().format('DD/MM/YYYY HH:mm:ss') });
 
 }

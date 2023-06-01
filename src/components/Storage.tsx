@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { DeviceID } from '../interfaces/deviceIdInterface';
 import { StorageTypes, AllObserveType, PromptObserveType, objUseForm, DlhrAllObserve, statusAuthStorage, lastDataUpdateDttm, lastTObsUpdateDttm, refreshLoadObserveBG } from '../interfaces/prompInterfaces';
 import { storageEmplid } from '../interfaces/storageInterface';
+import moment from 'moment';
 
 export const Asingstorage = async ({ StorageType }: StorageTypes, data: Object | Object[]) => {
     //console.log("entrando a asignar", StorageType, data);
@@ -14,7 +15,7 @@ export const Asingstorage = async ({ StorageType }: StorageTypes, data: Object |
     if (StorageType === 'prompt') {
         data.hasOwnProperty("PromptObserve") && await AsyncStorage.setItem(StorageType, JSON.stringify(data));
 
-        await AsyncStorage.setItem('lastDataUpdateDttm', JSON.stringify({ dateUpd: new Date().toString() }));
+        await AsyncStorage.setItem('lastDataUpdateDttm', JSON.stringify({ dateUpd: moment().format('DD/MM/YYYY HH:mm:ss') }));
 
     } else {
         await AsyncStorage.setItem(StorageType, JSON.stringify(data))

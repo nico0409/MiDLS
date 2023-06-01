@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { DlhrAllObserve, StorageTypes } from '../interfaces/prompInterfaces';
 import { GetAllObserve } from '../components/GetAllObserve';
 import { Asingstorage, GetStorage } from '../components/Storage';
+import moment from 'moment';
 
 export const useAllObserve = (emplid: string) => {
 
@@ -48,7 +49,7 @@ export const useAllObserve = (emplid: string) => {
                         : setObserveList([...offlineCardsList, ...newAllObserveList]);
                 }
 
-                await Asingstorage({ StorageType: 'lastTObsUpdateDttm' }, { dateUpd: new Date().toString() });
+                await Asingstorage({ StorageType: 'lastTObsUpdateDttm' }, { dateUpd: moment().format('DD/MM/YYYY HH:mm:ss') });
             }
 
             setIsloading(false)
