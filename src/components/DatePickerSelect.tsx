@@ -54,7 +54,7 @@ export const DatePickerSelect = ({ onChange, form, cardDescr, setCardDescr, disa
 
         let dateFormated = yyyy + '/' + mm + '/' + dd*/
 
-        let dateFormated = moment(date,'YYYY-MM-DD').format('DD/MM/YYYY');
+        let dateFormated = moment(date,'YYYY-MM-DD').format('YYYY/MM/DD');
 
         console.log("HANDLE CONFIRM dateFormated: ",dateFormated);
         
