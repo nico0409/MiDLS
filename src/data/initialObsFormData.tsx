@@ -42,5 +42,10 @@ export const initialObsFormData = {
     "m38:CREATEDTTM": '',
     "m38:CREATEOPRID": '',
     "m38:LASTUPDDTTM": '',
-    "m38:LASTUPDOPRID": ''
+    "m38:LASTUPDOPRID": '',
+    "m38:DL_MIDLS_DTTM": '',
+    "m38:DL_PREV_COLOR_ST": 'B',
+    "m38:DL_DEFERRED_CARD": '',
+    "m38:DL_DEVICE_ID": '',
+    "m38:ERROR_MESSAGE_TXT": ''
 }

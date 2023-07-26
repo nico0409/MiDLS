@@ -118,16 +118,26 @@ export const DeleteStorage = async (items: number) => {
 
 export const UpdateErrorState = async (item: number) => {
 
+    function isofflineObserveCard(object: any): object is objUseForm[] {
+        return true
+    }
+
     function isofflineObserveCardDescr(object: any): object is DlhrAllObserve[] {
         return true
     }
 
+    const data = await GetStorage({ StorageType: 'offlineObserveCards' });
     const dataDescr = await GetStorage({ StorageType: 'offlineObserveCardsDescr' });
+
+    if (isofflineObserveCard(data)) {
+        data[item]['m38:DL_PREV_COLOR_ST'] = 'R';
+    }
 
     if (isofflineObserveCardDescr(dataDescr)) {
         dataDescr[item].ERR_TYPE = 'SERVER';
     }
 
+    data && Asingstorage({ StorageType: 'offlineObserveCards' }, data);
     dataDescr && Asingstorage({ StorageType: 'offlineObserveCardsDescr' }, dataDescr);
 };
 

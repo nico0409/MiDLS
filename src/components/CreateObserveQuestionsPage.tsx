@@ -11,6 +11,7 @@ import { stepIndicatorStyles } from '../data/stepIndicatorStyles';
 import { QuestionCarousel } from '../interfaces/QuestionInterfaces';
 import { CarouselForQuestions } from './CarouselForQuestions';
 import { AuthContext } from '../context/formContext/AuthContext';
+import moment from 'moment';
 
 interface Props extends StackScreenProps<any, any> { };
 
@@ -24,26 +25,26 @@ const circleSize = windowsHeight <= 593 ? 70 : 100;
 export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
 
 
-    const { form } = useContext(AuthContext);
+    const { form, onChange } = useContext(AuthContext);
 
-    const questionsErrorMessage = (messageType:messageParam) => {
+    const questionsErrorMessage = (messageType: messageParam) => {
 
         var messageStrType = 'categoría';
 
-        if(messageType === 'RuleGold'){
+        if (messageType === 'RuleGold') {
             messageStrType = 'Regla de Oro';
         }
 
         const msg = "Debe seleccionar al menos una " + messageStrType + ".";
-                if (Platform.OS === 'android') {
-                    ToastAndroid.showWithGravityAndOffset(msg,
-                        ToastAndroid.LONG,
-                        ToastAndroid.TOP,
-                        25,
-                        50)
-                } else {
-                    Alert.alert(msg);
-                }
+        if (Platform.OS === 'android') {
+            ToastAndroid.showWithGravityAndOffset(msg,
+                ToastAndroid.LONG,
+                ToastAndroid.TOP,
+                25,
+                50)
+        } else {
+            Alert.alert(msg);
+        }
     };
 
     const dataCarousel: QuestionCarousel[] = [{
@@ -174,8 +175,8 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
         console.log(activeIndex);
         console.log("moveCarousel");
         console.log(moveCarousel);
-        
-        
+
+
         switch (activeIndex) {
             case 2:
                 if (moveCarousel === 4) {
@@ -187,21 +188,21 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
                 break;
             case 3:
                 if (moveCarousel == 8) {
-                    if(form['m38:DL_ORIGEN'] !== "S"){
-                        if(!form['m38:DL_EQPROTPER'] &&
-                         !form['m38:DL_PROCTRAB'] &&
-                         !form['m38:DL_EQYHERR']  &&
-                         !form['m38:DL_REACCPERS']  &&
-                         !form['m38:DL_ORDYLIMPIE']  &&
-                         !form['m38:DL_MEDIOAMB']  &&
-                         !form['m38:DL_POSIPERS']  &&
-                         !form['m38:DL_CONTYPER'] ){
+                    if (form['m38:DL_ORIGEN'] !== "S") {
+                        if (!form['m38:DL_EQPROTPER'] &&
+                            !form['m38:DL_PROCTRAB'] &&
+                            !form['m38:DL_EQYHERR'] &&
+                            !form['m38:DL_REACCPERS'] &&
+                            !form['m38:DL_ORDYLIMPIE'] &&
+                            !form['m38:DL_MEDIOAMB'] &&
+                            !form['m38:DL_POSIPERS'] &&
+                            !form['m38:DL_CONTYPER']) {
                             questionsErrorMessage('Questions');
-                        }else{
+                        } else {
                             setMoveCarousel(moveCarousel + 1);
                             runAnimation('next');
                         }
-                    }else{
+                    } else {
                         setMoveCarousel(moveCarousel + 1);
                         runAnimation('next');
                     }
@@ -211,22 +212,25 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
                 break;
             case 4:
                 if (moveCarousel === 10) {
-                    if(form['m38:DL_ORIGEN'] !== "S"){
-                        if(form['m38:DL_SEG_VIAL']!=='Y' &&
-                        form['m38:DL_TRBJ_ALT']!=='Y' &&
-                        form['m38:DL_LN_FUEGO']!=='Y' &&
-                        form['m38:DL_ESPAC_CONFIN']!=='Y' &&
-                        form['m38:DL_HER_EQUIP']!=='Y' &&
-                        form['m38:DL_AIS_ENERG']!=='Y' &&
-                        form['m38:DL_OP_IZADO']!=='Y' &&
-                        form['m38:DL_PERM_TRABAJO']!=='Y' &&
-                        form['m38:DL_MAN_CAMBIO']!=='Y'){
-                            questionsErrorMessage('RuleGold'); 
-                        }else{
-                        navigation.navigate('CreateObserveFinalPage');
+                    if (form['m38:DL_ORIGEN'] !== "S") {
+                        if (form['m38:DL_SEG_VIAL'] !== 'Y' &&
+                            form['m38:DL_TRBJ_ALT'] !== 'Y' &&
+                            form['m38:DL_LN_FUEGO'] !== 'Y' &&
+                            form['m38:DL_ESPAC_CONFIN'] !== 'Y' &&
+                            form['m38:DL_HER_EQUIP'] !== 'Y' &&
+                            form['m38:DL_AIS_ENERG'] !== 'Y' &&
+                            form['m38:DL_OP_IZADO'] !== 'Y' &&
+                            form['m38:DL_PERM_TRABAJO'] !== 'Y' &&
+                            form['m38:DL_MAN_CAMBIO'] !== 'Y') {
+                            questionsErrorMessage('RuleGold');
+                        } else {
+                            onChange(moment().format('YYYY-MM-DD HH:mm:ss'), 'm38:DL_MIDLS_DTTM');
+                            navigation.navigate('CreateObserveFinalPage');
                         }
-                    }else{
-                    navigation.navigate('CreateObserveFinalPage');
+                    } else {
+
+                        onChange(moment().format('YYYY-MM-DD HH:mm:ss'), 'm38:DL_MIDLS_DTTM');
+                        navigation.navigate('CreateObserveFinalPage');
                     };
                 } else {
                     setMoveCarousel(moveCarousel + 1)

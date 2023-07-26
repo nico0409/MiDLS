@@ -12,6 +12,8 @@ import { stepIndicatorStyles } from '../data/stepIndicatorStyles';
 import { AuthContext } from '../context/formContext/AuthContext';
 import { initialObsCardDescr } from '../data/initialObsCardDescr';
 import moment from 'moment';
+import { GetStorage } from '../components/Storage';
+import { DeviceID } from '../interfaces/deviceIdInterface';
 
 interface DataTemp {
     namepage: string;
@@ -114,10 +116,29 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
         )
     }
 
+    const getDeviceId = async() => {
+
+        function valDeviceObj(object: any): object is DeviceID {
+            return true
+        }
+
+        const getDeviceId = await GetStorage({ StorageType: 'deviceId' });
+        if (getDeviceId !== null) {
+            if (valDeviceObj(getDeviceId)) {
+                console.log("device iDDDDDD;",getDeviceId['soapenv:Envelope']?.['soapenv:Body']?.DLHR_DEVICE_RESP?.dls_device_id!);
+                onChange(getDeviceId['soapenv:Envelope']?.['soapenv:Body']?.DLHR_DEVICE_RESP?.dls_device_id!,"m38:DL_DEVICE_ID")
+            }
+        }
+    }
+
     useEffect(() => {
         setCardDescr({ ...initialObsCardDescr, ...{ DL_OBSERVADOR: emplidSelect.fieldValue1,DL_IDENTIF_DT: moment().format('YYYY-MM-DD')} })
-        setFormValue({ ...initialObsFormData, ...{ "m38:DL_OBSERVADOR": emplidSelect.fieldValue1,"m38:DL_IDENTIF_DT": moment().format('YYYY-MM-DD') } })
+        setFormValue({ ...initialObsFormData, ...{ "m38:DL_OBSERVADOR": emplidSelect.fieldValue1,"m38:DL_IDENTIF_DT": moment().format('YYYY-MM-DD')} }) 
     }, [])
+
+    useEffect(()=>{
+    getDeviceId();
+    },[]);
 
     return (
         <SafeAreaView style={{ flex: 1 }}>

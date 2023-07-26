@@ -29,6 +29,7 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
     const [reqSended, setReqSended] = useState<'pending' | 'sended' | 'error'>('pending');
     const [errorType, setErrorType] = useState<'SERVER' | 'NETWORK'>();
     const [bgCircleColor, setBgCircleColor] = useState('grey');
+    const [startBackScreen,setStartBackScreen] = useState(false);
 
     const opacityHomeValue = useSharedValue(0);
     const loadingValue = useSharedValue(0);
@@ -95,7 +96,7 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
 
     useEffect(() => {
         setTimeout(() => {
-            NewObservCard({ form, setReqSended, setBgCircleColor, loadingValue, cardDescr, setCardDescr, setReloadCardList, setErrorType });
+            NewObservCard({ form, setReqSended, setBgCircleColor, loadingValue, cardDescr, setCardDescr, setReloadCardList, setErrorType, setStartBackScreen });
         }, 2000);
     }, [])
 
@@ -106,18 +107,24 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
 
     useEffect(() => {
 
-        console.log("se ejecuto errorType: ", errorType);
+        console.log("se ejecuto startBackScreen: ", startBackScreen);
 
-        switch (errorType) {
+        startBackScreen &&
+         setTimeout(() => {
+            console.log("se ejecuta set timeout");
+            runNavigationPop();
+        }, 8000);  
+
+        /* switch (errorType) {
             case "NETWORK":
             case "SERVER":
-                setTimeout(() => {
+                setTimeout(() => { 
                     console.log("se ejecuta set timeout navigation");
                     runNavigationPop();
                 }, 8000)
                 break;
-        }
-    }, [errorType]);
+        } */
+    }, [startBackScreen]);
 
     useEffect(() => {
         navigation.addListener('beforeRemove', (e) => {
@@ -185,7 +192,8 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
                     }
                 </View>
                 <View style={styles.cardContainer}>
-                    <Card index={1} item={cardDescr} disabled={errorType === 'NETWORK' || 'SERVER' ? true : false} />
+                    {/* <Card index={1} item={cardDescr} disabled={errorType === 'NETWORK' || 'SERVER' ? true : false} /> */}
+                    <Card index={1} item={cardDescr} disabled={true} />
                 </View>
             </Animated.View>
 

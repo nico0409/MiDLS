@@ -20,9 +20,10 @@ interface Params {
    setCardDescr: React.Dispatch<React.SetStateAction<DlhrAllObserve>>;
    setReloadCardList: React.Dispatch<React.SetStateAction<boolean>>;
    setErrorType: React.Dispatch<React.SetStateAction<'SERVER' | 'NETWORK' | undefined>>;
+   setStartBackScreen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingValue, cardDescr, setCardDescr, setReloadCardList, setErrorType }: Params) => {
+export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingValue, cardDescr, setCardDescr, setReloadCardList, setErrorType, setStartBackScreen}: Params) => {
 
    var defaultOptions = {
       attributeNamePrefix: "@_",
@@ -64,8 +65,11 @@ export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingVal
          }
 
       loadingValue.value = height;
+
+      setStartBackScreen(true);
    }
 
+ 
    setReloadCardList(true);
 
    PSDB.post('/CI_DLHR_TA_OBSERV_CI.1.wsdl',
@@ -79,7 +83,7 @@ export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingVal
       }).then(async (res) => {
 
          const resp: RespNewCard = parse(res.data);
-
+         
          setCardDescr({
             ...cardDescr,
             ...{ NroTarjeta: resp['soapenv:Envelope']['soapenv:Body']['m38:Create__CompIntfc__DLHR_TA_OBSERV_CIResponse']['m38:detail']['m38:DLHR_TA_OBSERV_CI']['m38:DL_NTARJETA'] }
@@ -103,7 +107,9 @@ export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingVal
 
          const newForm = {
             ...form,
-            ...{ "m38:DL_NTARJETA": nroTarjetaEmpty + ((arrayCardsDescrOffline ? (arrayCardsDescrOffline.length + 1) : 1).toString()) }
+            ...{ "m38:DL_NTARJETA": nroTarjetaEmpty + ((arrayCardsDescrOffline ? (arrayCardsDescrOffline.length + 1) : 1).toString()),
+                 "m38:DL_PREV_COLOR_ST": err.response ? 'R' : 'O',
+                 "m38:DL_DEFERRED_CARD": "Y"},
          }
 
 

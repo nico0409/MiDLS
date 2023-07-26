@@ -15,6 +15,7 @@ import { colors } from '../Themes/DlsTheme';
 import { EditObservCard } from '../components/EditObserveCard';
 import { AuthContext as AuthcontextGeneral } from '../context/AuthContext'
 import { NewObservCardPnlEdit } from '../components/NewObservCardPnlEdit';
+import { nroTarjetaEmpty } from '../data/nroTarjetaEmpty';
 
 
 
@@ -132,7 +133,7 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
             setVisibleModal(true);
             setIsLoadingResponse(true);
 
-            errorType === 'SERVER' ?
+            route.params.Ntarjeta?.substring(0,3) === nroTarjetaEmpty ?
                 NewObservCardPnlEdit({ form, alertSend, setReloadCardList, onChange, formStateSend: stateSend!, setErrorType,setIsLoadingResponse })
                 :
                 EditObservCard({ form: stateSend!, alertSend, setReloadCardList,setIsLoadingResponse });
