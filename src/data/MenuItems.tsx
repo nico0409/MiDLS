@@ -1,8 +1,8 @@
 import { MenuItem } from '../interfaces/appInterfaces';
 import { Platform } from 'react-native';
 
-const menuItemsAlt:MenuItem[]=[{
-    name:'Consulta RRHH',
+export const menuItems:MenuItem[]=[{
+    name:'Recepción Consultas de Empleados',
     icon:'chatbubble-ellipses-outline',
     components:'RrhhScreen'
 },{
@@ -21,7 +21,7 @@ const menuItemsAlt:MenuItem[]=[{
     components:'StackNavigatorObserve'
 },
 {
-    name:'NQN - Field Services',
+    name:'NQN - UrbeTrack',
     icon:'location-outline',
     components:'linkExternalApp'
 },
@@ -30,8 +30,4 @@ const menuItemsAlt:MenuItem[]=[{
     icon:'person-outline',
     components:'MyProfileScreenDrawer'
 }
-]
-
-Platform.OS==='ios' && menuItemsAlt.splice(4,1);
-
-export const menuItems = menuItemsAlt;
+];

@@ -3,8 +3,7 @@ import { parse } from 'fast-xml-parser'
 import { PromptObserve, DlhrObserveEmplid, PromptObserveType } from '../interfaces/prompInterfaces';
 import PSDB from '../api/PSDB';
 
-
-export const GetPrompt = async () => {
+export const GetPrompt = async (setIsErrorResponse: React.Dispatch<React.SetStateAction<boolean>>) => {
 
 
    let respuesta: PromptObserveType = {}
@@ -28,25 +27,15 @@ export const GetPrompt = async () => {
          {
             'Content-Type': 'text/xml',
             SOAPAction: 'DLHR_APP_PROMPT.v1',
-            
+
          }
       }).then(res => {
-
-
-         console.log("recivio prompt");
-         
-        
-   
+         setIsErrorResponse(false);
          respuesta = {
-            PromptObserve:parse(decodeURIComponent(escape(res.data))),
-         type:'PromptObserveType'
+            PromptObserve: parse(decodeURIComponent(escape(res.data))),
+            type: 'PromptObserveType'
          };
-       
-
- 
-      }).catch(err => { 
-         console.log("error prompt");
-         console.log(err) });
+      }).catch(err => {setIsErrorResponse(true)});
    return respuesta;
 }
 

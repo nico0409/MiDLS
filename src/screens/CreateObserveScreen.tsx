@@ -11,6 +11,9 @@ import { initialObsFormData } from '../data/initialObsFormData';
 import { stepIndicatorStyles } from '../data/stepIndicatorStyles';
 import { AuthContext } from '../context/formContext/AuthContext';
 import { initialObsCardDescr } from '../data/initialObsCardDescr';
+import moment from 'moment';
+import { GetStorage } from '../components/Storage';
+import { DeviceID } from '../interfaces/deviceIdInterface';
 
 interface DataTemp {
     namepage: string;
@@ -44,10 +47,35 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
     const [equipErrorAnim, setEquipErrorAnim] = useState(false);
     const [clientesErrorAnim, setClientesErrorAnim] = useState(false);
     const [sectorErrorAnim, setSectorErrorAnim] = useState(false);
+    const [poliInterTareaErrorAnim, setPoliInterTareaErrorAnim] = useState(false);
+    const [cuasiAccErrorAnim,setCuasiAccErrorAnim] = useState(false);
+    const [reqApsErrorAnim,setReqApsErrorAnim] = useState(false);
+    
+    const showErrorMessage = () => {
+        const msg = "Para continuar debe ingresar datos en los campos resaltados en rojo.";
+                if (Platform.OS === 'android') {
+                    ToastAndroid.showWithGravityAndOffset(msg,
+                        ToastAndroid.LONG,
+                        ToastAndroid.TOP,
+                        25,
+                        50)
+                } else {
+                    Alert.alert(msg);
+                }
+    }
 
     const nextButton = () => {
         if (activeIndex === 1) {
-            navigation.navigate('CreateObserveQuestionsPage');
+
+            !form["m38:DL_POLITINTERTAREA"] && setPoliInterTareaErrorAnim(true);
+            !form["m38:DL_CUASIACC"] && setCuasiAccErrorAnim(true);
+            !form["m38:DL_REQAPSSEG"] && setReqApsErrorAnim(true);
+
+            if (!form["m38:DL_POLITINTERTAREA"] || !form["m38:DL_CUASIACC"] || !form["m38:DL_REQAPSSEG"]){
+                showErrorMessage();
+            }else{
+                navigation.navigate('CreateObserveQuestionsPage');
+            }
         } else {
 
             !form["m38:BUSINESS_UNIT"] && setBusunitErrorAnim(true);
@@ -58,16 +86,7 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
             !form["m38:DL_SECTOR_ID"] && setSectorErrorAnim(true);
 
             if (!form["m38:BUSINESS_UNIT"] || !form["m38:DL_ORIGEN"] || !form["m38:DL_TURNO"] || !form["m38:DL_EQUIPMENT_ID"] || !form["m38:DL_CUSTOMER_ID"] || !form["m38:DL_SECTOR_ID"]) {
-                const msg = "Para continuar debe ingresar datos en los campos resaltados en rojo.";
-                if (Platform.OS === 'android') {
-                    ToastAndroid.showWithGravityAndOffset(msg,
-                        ToastAndroid.LONG,
-                        ToastAndroid.TOP,
-                        25,
-                        50)
-                } else {
-                    Alert.alert(msg);
-                }
+                showErrorMessage();
             } else {
                 setBackButton(true);
                 // @ts-ignore
@@ -91,16 +110,35 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
                         sectorErrorAnim={sectorErrorAnim}
                     />
                     :
-                    <CreateObservePageTwo form={form} onChange={onChange} />
+                    <CreateObservePageTwo form={form} onChange={onChange} poliInterTareaErrorAnim={poliInterTareaErrorAnim} cuasiAccErrorAnim={cuasiAccErrorAnim} reqApsErrorAnim={reqApsErrorAnim}/>
                 }
             </>
         )
     }
 
+    const getDeviceId = async() => {
+
+        function valDeviceObj(object: any): object is DeviceID {
+            return true
+        }
+
+        const getDeviceId = await GetStorage({ StorageType: 'deviceId' });
+        if (getDeviceId !== null) {
+            if (valDeviceObj(getDeviceId)) {
+                console.log("device iDDDDDD;",getDeviceId['soapenv:Envelope']?.['soapenv:Body']?.DLHR_DEVICE_RESP?.dls_device_id!);
+                onChange(getDeviceId['soapenv:Envelope']?.['soapenv:Body']?.DLHR_DEVICE_RESP?.dls_device_id!,"m38:DL_DEVICE_ID")
+            }
+        }
+    }
+
     useEffect(() => {
-        setCardDescr({ ...initialObsCardDescr, ...{ DL_OBSERVADOR: emplidSelect.fieldValue1 } })
-        setFormValue({ ...initialObsFormData, ...{ "m38:DL_OBSERVADOR": emplidSelect.fieldValue1 } })
+        setCardDescr({ ...initialObsCardDescr, ...{ DL_OBSERVADOR: emplidSelect.fieldValue1,DL_IDENTIF_DT: moment().format('YYYY-MM-DD')} })
+        setFormValue({ ...initialObsFormData, ...{ "m38:DL_OBSERVADOR": emplidSelect.fieldValue1,"m38:DL_IDENTIF_DT": moment().format('YYYY-MM-DD')} }) 
     }, [])
+
+    useEffect(()=>{
+    getDeviceId();
+    },[]);
 
     return (
         <SafeAreaView style={{ flex: 1 }}>

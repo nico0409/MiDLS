@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Text, View, StyleSheet, TouchableOpacity, Linking } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Linking,Platform,Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { MenuItem } from '../interfaces/appInterfaces';
 import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types';
@@ -20,7 +20,7 @@ export const FlatLIstMenuItem = ({ menuItem, navigation }: Props) => {
         SendIntentAndroid.isAppInstalled("com.urbetrack.fslite").then(isInstalled => {
 
             isInstalled ?
-                SendIntentAndroid.openApp("com.urbetrack.fslite", {}).then(wasOpened => { console.log("wasOpened: ", wasOpened) })
+                SendIntentAndroid.openApp("com.urbetrack.fslite", {}).then(wasOpened => { })
                 :
                 Linking.openURL("market://details?id=com.urbetrack.fslite");
 
@@ -33,7 +33,8 @@ export const FlatLIstMenuItem = ({ menuItem, navigation }: Props) => {
             onPress={() => {
 
                 if (menuItem.components === 'linkExternalApp') {
-                    openExtApp();
+                    Platform.OS==='ios' ? 
+                    Alert.alert("Esta aplicación aún no está disponible para dispositivos iPhone.") : openExtApp();
                 } else {
                     navigation!.jumpTo(menuItem.components)
                         , menuItem.components === 'TopTapNavigator' && setstate(true)
@@ -48,9 +49,11 @@ export const FlatLIstMenuItem = ({ menuItem, navigation }: Props) => {
                     color={colors.dlsYellowSecondary}
 
                 />
+                <View style={styles.boxText}>
                 <Text style={styles.itemText}>
                     {menuItem.name}
                 </Text>
+                </View>
                 <View style={{ flex: 1 }}></View>
                 <Icon
                     name="chevron-forward-outline"
@@ -67,11 +70,15 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     itemText: {
-        marginLeft: 10,
         fontSize: 18,
         fontFamily: 'StagSans-Light',
 
         color: colors.dlsYellowSecondary,
         /* fontStyle: 'italic',*/
     },
+    boxText: {
+        marginLeft: 10,
+        width:'70%'
+    },
+    
 });

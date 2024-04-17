@@ -4,6 +4,7 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { DlhrAllObserve, M38GetCompIntfcDLHRTAOBSERVCIResponse, objUseForm } from '../interfaces/prompInterfaces';
 import { colors } from '../Themes/DlsTheme';
+import moment from 'moment';
 
 interface Props {
     onChange: (value: string, field: keyof objUseForm) => void;
@@ -17,11 +18,19 @@ const { width } = Dimensions.get('window')
 
 export const DatePickerSelect = ({ onChange, form, cardDescr, setCardDescr, disabled = false }: Props) => {
 
-    const dateInitial = new Date();
-
+    //const dateInitial = new Date();
+    const dateInitial = new Date(moment().format());
+    
+    
     const formatearFechaEnCodigo = (dateString: string) => {
-        let dateToFormat = dateString.split(/[\s-:/]/);
-        return new Date(parseInt(dateToFormat![0]), (parseInt(dateToFormat![1], 10) - 1), parseInt(dateToFormat![2], 10))
+        
+        console.log("dateSTRING: ",dateString);
+        
+        //let dateToFormat = dateString.split(/[\s-:/]/);
+        //let dateFormated = new Date(parseInt(dateToFormat![0]), (parseInt(dateToFormat![1], 10) - 1), parseInt(dateToFormat![2], 10));        
+
+        //return dateFormated;
+        return new Date(moment(dateString).format());
     }
         
     const [date, setDate] = useState(form?.['m38:DL_IDENTIF_DT'] ? formatearFechaEnCodigo(form?.['m38:DL_IDENTIF_DT']) : dateInitial);
@@ -37,12 +46,18 @@ export const DatePickerSelect = ({ onChange, form, cardDescr, setCardDescr, disa
     };
 
     const handleConfirm = (date: Date) => {
-        let dd = String(date.getDate()).padStart(2, '0');
+        console.log("se ejecuta handle confirm");
+        
+        /*let dd = String(date.getDate()).padStart(2, '0');
         let mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
         let yyyy = date.getFullYear();
 
-        let dateFormated = yyyy + '/' + mm + '/' + dd
+        let dateFormated = yyyy + '/' + mm + '/' + dd*/
 
+        let dateFormated = moment(date,'YYYY-MM-DD').format('YYYY/MM/DD');
+
+        console.log("HANDLE CONFIRM dateFormated: ",dateFormated);
+        
         hideDatePicker();
 
         setCardDescr && setCardDescr({ ...cardDescr, ...{ DL_IDENTIF_DT: dateFormated } })
@@ -53,16 +68,22 @@ export const DatePickerSelect = ({ onChange, form, cardDescr, setCardDescr, disa
 
     };
 
-    const formattedDate = (d = new Date) => {
+    const formattedDate = (d:Date) => {
 
-        let month = String(d.getMonth() + 1);
+        console.log("date recibido: ",d);
+        console.log("date recibidoEN MOMENT: ",moment(d,'YYYY-MM-DD').format('DD/MM/YYYY'));
+        console.log(" recibidoEN MOMENT: ",moment().format('DD/MM/YYYY'));
+        
+        
+        /* let month = String(d.getMonth() + 1);
         let day = String(d.getDate());
-        const year = String(d.getFullYear());
+        const year = String(d.getFullYear()); 
 
         if (month.length < 2) month = '0' + month;
-        if (day.length < 2) day = '0' + day;
+        if (day.length < 2) day = '0' + day;*/
 
-        return `${day}/${month}/${year}`;
+        //return `${day}/${month}/${year}`;
+        return moment(d,'YYYY-MM-DD').format('DD/MM/YYYY');
     }
 
     return (

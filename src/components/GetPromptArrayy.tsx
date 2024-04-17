@@ -3,12 +3,7 @@ import { StorageTypes, PromptObserveType, AllObserveType, DlhrAllObserve, Prompt
 import { storageEmplid } from '../interfaces/storageInterface';
 import { GetStorage } from './Storage';
 
-
-
 export const GetPromptArray = (promptypedata:promptType ) => {
-
-   
-   
     
     const promptype: StorageTypes = { StorageType: 'prompt' };
     
@@ -38,18 +33,57 @@ export const GetPromptArray = (promptypedata:promptType ) => {
        
     }
  
-useEffect(() => {
-  
-    dataLoad()
-}, [])
+    const internalPrompts = () => {
+
+        switch (promptypedata.type) {
+            case 'DLHR_POLITINTERTAREA':
+                const dataXlat:any[] = [{
+                    DL_POLITINTERTAREA: "Y",
+                    DESCR: "Si"
+                  },{
+                    DL_POLITINTERTAREA: "N",
+                    DESCR: "No"
+                  }
+                ];
+                setPromptArray(dataXlat);
+                break;
+            case 'DLHR_REQAPSSEG':
+                const dataXlat2:any = [{
+                    DL_REQAPSSEG: "Y",
+                    DESCR: "Si"
+                  },{
+                    DL_REQAPSSEG: "N",
+                    DESCR: "No"
+                  }
+                ]
+                setPromptArray(dataXlat2);
+                break;
+            case 'DLHR_CUASIACC':
+                const dataXlat3:any = [{
+                    DL_CUASIACC: "Y",
+                    DESCR: "Si"
+                  },{
+                    DL_CUASIACC: "N",
+                    DESCR: "No"
+                  }
+                ]
+                setPromptArray(dataXlat3);
+                break;
+        }
+    }
+
+    useEffect(() => {
+        
+        if(promptypedata.type==='DLHR_POLITINTERTAREA' || promptypedata.type==='DLHR_REQAPSSEG' || promptypedata.type==='DLHR_CUASIACC'){
+            internalPrompts();
+        }else{
+            dataLoad();
+        }
+    }, [])
     
-
-  
-   // const oneEquip: any[] = [ !Array.isArray(ArrayEquip) ? ArrayEquip:[]];
-//   return Array.isArray(ArrayEquip) ? ArrayEquip:oneEquip 
-
+    // const oneEquip: any[] = [ !Array.isArray(ArrayEquip) ? ArrayEquip:[]];
+    // return Array.isArray(ArrayEquip) ? ArrayEquip:oneEquip 
 
 return {PromptObArray}
-
 
 }

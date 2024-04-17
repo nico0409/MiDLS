@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Text, View, Dimensions, SafeAreaView, Platform, FlatList, TouchableOpacity, Animated, StyleSheet } from 'react-native';
 import { SearchInput } from '../components/SearchInput';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -15,7 +15,8 @@ import { ModalPromptEmplid } from '../components/ModalPromptEmplid';
 
 import { useIsFocused } from '@react-navigation/native';
 import { useNetInfo } from '@react-native-community/netinfo';
-import { opacity } from '../libs/react-native-redash/src/v1/Colors';
+
+import { AuthContext as AuthcontextGeneral } from '../context/AuthContext'
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
 
@@ -37,7 +38,7 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
 
 
 
-    const { allObserveList, isloading, loadAllObserve } = useAllObserve(route.params!.emplid, useIsFocused())
+    const { allObserveList, isloading, loadAllObserve } = useAllObserve(route.params!.emplid)
 
 
 
@@ -126,11 +127,22 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
     }, [emplid])
 
 
-    useEffect(() => {
+    /* useEffect(() => {
         if (isConnected === true) {
-
+            console.log("se ejecuta is connected");
+            
         }
-    }, [isConnected])
+    }, [isConnected]); */
+
+    const { reloadCardList, setReloadCardList, backgroundRequestReload, setBackgroundRequestReload } = useContext(AuthcontextGeneral);
+
+    useEffect(() => {
+        console.log("reloadCardList?: ", reloadCardList);
+
+        reloadCardList && loadAllObserve();
+        reloadCardList && setReloadCardList(false);
+        setBackgroundRequestReload(false);
+    }, [useIsFocused(), backgroundRequestReload]);
 
     const customImgAddObsv = () => {
         return (
@@ -271,7 +283,7 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
                             justifyContent: 'center',
                             height: ScreenHeight * 0.80,
                             width: ScreenWidt,
-                            backgroundColor:colors.dlsGrayPrimary
+                            backgroundColor: colors.dlsGrayPrimary
                         }}>
                             <Chase size={48} color="#FFF" />
                         </View>

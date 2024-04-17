@@ -1,46 +1,27 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import SplashScreen from 'react-native-splash-screen'
 
 import { TopTapNavigator } from './TopTapNavigator';
-import { SafeAreaView, StyleSheet, useWindowDimensions } from 'react-native';
+import { SafeAreaView, StyleSheet } from 'react-native';
 import { ContactScreen } from '../screens/ContactScreen';
-import { DrawerMenu } from '../components/DrawerMenu';
 import { useNetInfo } from '@react-native-community/netinfo';
-import { WhitOutConection } from '../screens/WhitOutConection';
 import { MenuInterno } from '../components/DrawerMenuFlatList';
 import { RrhhScreen } from '../screens/RrhhScreen';
-import { NewsScreen } from '../screens/NewsScreen';
-import { MyProfileScreen } from '../screens/MyProfileScreen';
 import { PaycheckScreen } from '../screens/PaycheckScreen';
 import { MyProfileScreenDrawer } from '../screens/MyProfileScreenDrawer';
 import { colors } from '../Themes/DlsTheme';
-import { MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
-import { ParamListBase } from '@react-navigation/native';
 import { NavigateProvider } from '../context/NavigateContext';
-import { PromptObserve, StorageTypes, TarjetaObserve } from '../interfaces/prompInterfaces';
+import { StorageTypes } from '../interfaces/prompInterfaces';
 import { GetPrompt } from '../components/GetPrompt';
 import { Asingstorage, GetStorage } from '../components/Storage';
-import { TarjetaObserveScreen } from '../screens/TarjetaObserveScreen';
 import { StackNavigatorObserve } from './StackNavigatorObserve';
-import { types } from '@babel/core';
 import { CheckUpdateAndroid } from '../components/CheckUpdateAndroid';
-/* import checkVersion from 'react-native-store-version'; */
-import { getVersion } from 'react-native-device-info';
-import { SendObserveStorage } from '../components/SendObserveStorage';
 import { CheckUpdateIos } from '../components/CheckUpdateIos';
-
-export type DrawerRoutParams = {
-
-  TopTapNavigator: {
-    needsUpdate: boolean,
-    lockScreen: boolean,
-    link:string
-  }
-}
-
-
+import { GetDeviceId } from '../components/GetDeviceId';
+import { getDeviceInfo } from '../components/getDeviceInfo';
+import { AuthContext } from '../context/AuthContext';
 
 const Drawer = createDrawerNavigator();
 
@@ -52,23 +33,22 @@ const NavigateState = ({ children }: { children: JSX.Element | JSX.Element[] }) 
   )
 }
 
-
-
-
 export const DrawerNavigation = () => {
   const { isConnected } = useNetInfo();
-  const [needsUpdate, setNeedsUpdate] = useState(false);
-  const [lockScreen, setLockScreen] = useState(false);
+  /* const [needsUpdate, setNeedsUpdate] = useState(false);
+  const [lockScreen, setLockScreen] = useState(false); */
   const [endGetPrompt, setendGetPrompt] = useState(false);
- const [link, setLink] = useState("")
+  /* const [link, setLink] = useState(""); */
+  const [isErrorResponse, setIsErrorResponse] = useState(false);
 
+  const {setAppNeedsUpdate, setAppLockScreen, setAppLinkUpdateIos} = useContext(AuthContext)
 
- 
- 
   useEffect(() => {
 
     if (isConnected !== null) {
       if (isConnected === true) {
+        console.log("SE EJECUTO GET PROMPTS");
+
         GetPrompts();
 
       }
@@ -80,21 +60,26 @@ export const DrawerNavigation = () => {
 
     }
 
-
   }, [isConnected])
 
   const GetPrompts = async () => {
 
-
     const prompts: StorageTypes = { StorageType: 'prompt' };
 
+    Asingstorage(prompts, await GetPrompt(setIsErrorResponse));
 
+    const { deviceId, deviceName, brand, model, externalIp } = await getDeviceInfo();
 
-    Asingstorage(prompts, await GetPrompt());
+    if (!deviceId) {
 
-    await CheckUpdateAndroid({ setNeedsUpdate, setLockScreen });
-    await CheckUpdateIos({ setNeedsUpdate, setLockScreen ,setLink});
+      const deviceId: StorageTypes = { StorageType: 'deviceId' };
 
+      Asingstorage(deviceId, await GetDeviceId(deviceName, brand, model, externalIp));
+
+    }
+
+    await CheckUpdateAndroid({ setAppNeedsUpdate, setAppLockScreen });
+    await CheckUpdateIos({ setAppNeedsUpdate, setAppLockScreen, setAppLinkUpdateIos });
 
     SplashScreen.hide();
     setendGetPrompt(true);
@@ -114,7 +99,7 @@ export const DrawerNavigation = () => {
           // drawerContent={(props: any) => <DrawerMenu {...props} />}
           drawerContent={(props: any) => <MenuInterno {...props} />}
         >
-          <Drawer.Screen name="TopTapNavigator" component={TopTapNavigator} initialParams={{ needsUpdate, lockScreen ,link}} />
+          <Drawer.Screen name="TopTapNavigator" component={TopTapNavigator} />
           {/*   <Drawer.Screen name="TopTapNavigator" component={TopTapNavigator} /> */}
           <Drawer.Screen name="ContactScreen" component={ContactScreen} />
           <Drawer.Screen name="RrhhScreen" component={RrhhScreen} />

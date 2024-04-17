@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import RNSingleSelect, { ISingleSelectDataType } from "../libs/react-native-single-select";
 import { Dimensions, ScrollView, Text, View } from 'react-native';
-import { promptType, DlhrBussinesUnit, DlhrOrigen, DlhrPuesto, DlhrTurno, M38GetCompIntfcDLHRTAOBSERVCIResponse, objUseForm, DlhrAps, DlhrAllObserve } from '../interfaces/prompInterfaces';
+import { promptType, DlhrBussinesUnit, DlhrOrigen, DlhrPuesto, DlhrTurno, M38GetCompIntfcDLHRTAOBSERVCIResponse, objUseForm, DlhrAps, DlhrAllObserve,DlPoliInterTarea,DlReqAps,DlCuasiAcc } from '../interfaces/prompInterfaces';
 import { GetPromptArray } from './GetPromptArrayy';
 import Animated, { useSharedValue, useAnimatedStyle, withSpring, withTiming } from 'react-native-reanimated';
 
 interface Props {
     placeholder: string;
-    type: "DLHR_EMPL_BUSSINES_UNIT" | "DLHR_TURNO" | "DLHR_ORIGEN" | "DLHR_PUESTO" | "DLHR_APS";
+    type: "DLHR_EMPL_BUSSINES_UNIT" | "DLHR_TURNO" | "DLHR_ORIGEN" | "DLHR_PUESTO" | "DLHR_APS" | "DLHR_POLITINTERTAREA" | "DLHR_REQAPSSEG" | "DLHR_CUASIACC";
     onChange: (value: string, field: keyof objUseForm) => void;
     form?: M38GetCompIntfcDLHRTAOBSERVCIResponse;
     emplid?: string;
@@ -18,7 +18,7 @@ interface Props {
     scrollViewRef?: React.RefObject<ScrollView>;
 }
 
-interface DlhrPromptsDet extends DlhrOrigen, DlhrPuesto, DlhrTurno, DlhrBussinesUnit, DlhrAps { };
+interface DlhrPromptsDet extends DlhrOrigen, DlhrPuesto, DlhrTurno, DlhrBussinesUnit, DlhrAps,DlPoliInterTarea,DlReqAps,DlCuasiAcc { };
 
 const { width: ScreenWidth } = Dimensions.get("window");
 
@@ -48,7 +48,7 @@ export const PickerSelect = ({ placeholder, type, onChange, form, setCardDescr, 
         } else {
             allArrayC = Array.isArray(PromptObArray) ? PromptObArray : [PromptObArray];
         }
-
+        
         data = allArrayC!.map(
             (item, index) => {
                 let dataItem;
@@ -56,7 +56,7 @@ export const PickerSelect = ({ placeholder, type, onChange, form, setCardDescr, 
                     case "DLHR_ORIGEN":
                         dataItem = item.ORIGEN;
                         fieldData = "m38:DL_ORIGEN";
-                        descr = item.DESCR
+                        descr = item.DESCR;
                         if (form?.['m38:DL_ORIGEN'] === item.ORIGEN.toString()) {
                             itemselect = { id: index, value: item.DESCR, data: { dataItem, fieldData } }
                         }
@@ -66,7 +66,7 @@ export const PickerSelect = ({ placeholder, type, onChange, form, setCardDescr, 
                     case "DLHR_PUESTO":
                         dataItem = item.DL_PUESTO;
                         fieldData = "m38:DL_PUESTO";
-                        descr = item.DESCR
+                        descr = item.DESCR;
                         if (form?.['m38:DL_PUESTO'] === item.DL_PUESTO) {
                             itemselect = { id: index, value: item.DESCR, data: { dataItem, fieldData } }
                         }
@@ -76,7 +76,7 @@ export const PickerSelect = ({ placeholder, type, onChange, form, setCardDescr, 
                     case "DLHR_TURNO":
                         dataItem = item.DL_TURNO;
                         fieldData = "m38:DL_TURNO";
-                        descr = item.DESCR
+                        descr = item.DESCR;
                         if (form?.['m38:DL_TURNO'] == item.DL_TURNO.toString()) {
                             itemselect = { id: index, value: item.DESCR, data: { dataItem, fieldData } }
                         }
@@ -86,12 +86,42 @@ export const PickerSelect = ({ placeholder, type, onChange, form, setCardDescr, 
                     case "DLHR_EMPL_BUSSINES_UNIT":
                         dataItem = item.UNIDAD_DE_NEGOCIO;
                         fieldData = "m38:BUSINESS_UNIT";
-                        descr = item.DESCR
+                        descr = item.DESCR;
                         if (form?.['m38:BUSINESS_UNIT'] === item.UNIDAD_DE_NEGOCIO) {
                             itemselect = { id: index, value: item.DESCR, data: { dataItem, fieldData } }
                         }
                         form?.['m38:BUSINESS_UNIT'] && (titleAnimationValue.value = -5);
                         form?.['m38:BUSINESS_UNIT'] && (heightAnimationValue.value = 20);
+                        break;
+                    case "DLHR_POLITINTERTAREA":
+                        dataItem = item.DL_POLITINTERTAREA;
+                        fieldData = "m38:DL_POLITINTERTAREA";
+                        descr = item.DESCR;
+                        if (form?.['m38:DL_POLITINTERTAREA'] === item.DL_POLITINTERTAREA) {
+                            itemselect = { id: index, value: item.DESCR, data: { dataItem, fieldData } }
+                        }
+                        form?.['m38:DL_POLITINTERTAREA'] && (titleAnimationValue.value = -5);
+                        form?.['m38:DL_POLITINTERTAREA'] && (heightAnimationValue.value = 20);
+                        break;
+                    case "DLHR_REQAPSSEG":
+                        dataItem = item.DL_REQAPSSEG;
+                        fieldData = "m38:DL_REQAPSSEG";
+                        descr = item.DESCR;
+                        if (form?.['m38:DL_REQAPSSEG'] === item.DL_REQAPSSEG) {
+                            itemselect = { id: index, value: item.DESCR, data: { dataItem, fieldData } }
+                        }
+                        form?.['m38:DL_REQAPSSEG'] && (titleAnimationValue.value = -5);
+                        form?.['m38:DL_REQAPSSEG'] && (heightAnimationValue.value = 20);
+                        break;
+                    case "DLHR_CUASIACC":
+                        dataItem = item.DL_CUASIACC;
+                        fieldData = "m38:DL_CUASIACC";
+                        descr = item.DESCR;
+                        if (form?.['m38:DL_CUASIACC'] === item.DL_CUASIACC) {
+                            itemselect = { id: index, value: item.DESCR, data: { dataItem, fieldData } }
+                        }
+                        form?.['m38:DL_CUASIACC'] && (titleAnimationValue.value = -5);
+                        form?.['m38:DL_CUASIACC'] && (heightAnimationValue.value = 20);
                         break;
                 }
                 return { id: index, value: descr, data: { dataItem, fieldData } }

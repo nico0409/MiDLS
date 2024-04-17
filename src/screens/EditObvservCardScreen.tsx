@@ -14,6 +14,8 @@ import List, { List as ListModel } from "../components/AcordionList/List";
 import { colors } from '../Themes/DlsTheme';
 import { EditObservCard } from '../components/EditObserveCard';
 import { AuthContext as AuthcontextGeneral } from '../context/AuthContext'
+import { NewObservCardPnlEdit } from '../components/NewObservCardPnlEdit';
+import { nroTarjetaEmpty } from '../data/nroTarjetaEmpty';
 
 
 
@@ -49,12 +51,17 @@ const list4: ListModel = {
 };
 
 interface Props extends StackScreenProps<RoutstackParams, 'EditObvservCardScreen'> { };
+
+type messageParam = 'RuleGold' | 'Questions';
+
 export const EditObvservCardScreen = ({ navigation, route }: Props) => {
 
     const { setReloadCardList } = useContext(AuthcontextGeneral);
 
     const { isloading, loadObserveCard, form, onChange, stateSend } = UseOneGetObserve(route.params);
 
+    const [isLoadingResponse, setIsLoadingResponse] = useState(false);
+    const [errorType, setErrorType] = useState<string>(route.params.cardOffline!);
     const [editEnabled, setEditEnabled] = useState(false);
     const [saveEnabled, setSaveEnabled] = useState(false);
     const [visibleModal, setVisibleModal] = useState(false);
@@ -82,7 +89,7 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
         { MeuItemType: 'ReglasOro' },
     ]
 
-    const alertSend = (sended: boolean) => {
+    const alertSend = (sended: boolean, typeError?: 'NETWORK' | 'SERVER') => {
         let msg = '';
 
         if (sended) {
@@ -91,71 +98,136 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
             setEditEnabled(false);
             setSaveEnabled(false);
         } else {
-            msg = 'No se pudo procesar la modificación, intente nuevamente.';
+            if (typeError === 'NETWORK') {
+                msg = 'No se pudo procesar el cambio. Hubo un problema de comunicación, verifique su conexión e intente nuevamente.';
+            } else {
+                msg = 'No se pudo procesar el cambio. Su solicitud tuvo un problema con el servidor, comuníquese con el administrador.';
+            }
             setMessageModal(msg);
         }
-        setVisibleModal(true)
+    }
 
-        /* if (Platform.OS === 'android') {
-            ToastAndroid.show(msg, ToastAndroid.SHORT);
+    const questionsErrorMessage = (messageType: messageParam) => {
+
+        var messageStrType = 'categoría en la sección Preguntas';
+
+        if (messageType === 'RuleGold') {
+            messageStrType = 'Regla de Oro';
+        }
+
+        const msg = "Debe seleccionar al menos una " + messageStrType + ".";
+        if (Platform.OS === 'android') {
+            ToastAndroid.showWithGravityAndOffset(msg,
+                ToastAndroid.LONG,
+                ToastAndroid.TOP,
+                25,
+                50)
         } else {
             Alert.alert(msg);
-        } */
-    }
-    
+        }
+    };
+
+    const validateQuestions = () => {
+
+        const sendRequest = () =>{
+            setVisibleModal(true);
+            setIsLoadingResponse(true);
+
+            route.params.Ntarjeta?.substring(0,3) === nroTarjetaEmpty ?
+                NewObservCardPnlEdit({ form, alertSend, setReloadCardList, onChange, formStateSend: stateSend!, setErrorType,setIsLoadingResponse })
+                :
+                EditObservCard({ form: stateSend!, alertSend, setReloadCardList,setIsLoadingResponse });
+        }
+
+        if (form['m38:DL_ORIGEN'] !== "S") {
+
+            if (!form['m38:DL_EQPROTPER'] &&
+                !form['m38:DL_PROCTRAB'] &&
+                !form['m38:DL_EQYHERR'] &&
+                !form['m38:DL_REACCPERS'] &&
+                !form['m38:DL_ORDYLIMPIE'] &&
+                !form['m38:DL_MEDIOAMB'] &&
+                !form['m38:DL_POSIPERS'] &&
+                !form['m38:DL_CONTYPER']) {
+                questionsErrorMessage('Questions');
+                return;
+            };
+
+            if (form['m38:DL_SEG_VIAL'] !== 'Y' &&
+                form['m38:DL_TRBJ_ALT'] !== 'Y' &&
+                form['m38:DL_LN_FUEGO'] !== 'Y' &&
+                form['m38:DL_ESPAC_CONFIN'] !== 'Y' &&
+                form['m38:DL_HER_EQUIP'] !== 'Y' &&
+                form['m38:DL_AIS_ENERG'] !== 'Y' &&
+                form['m38:DL_OP_IZADO'] !== 'Y' &&
+                form['m38:DL_PERM_TRABAJO'] !== 'Y' &&
+                form['m38:DL_MAN_CAMBIO'] !== 'Y') {
+                questionsErrorMessage('RuleGold');
+                return;
+            };
+
+            sendRequest();
+
+        } else {
+            sendRequest();
+        }
+    };
+
     return (
         <View style={{ flex: 1 }}>
             <View style={{ ...styles.container, height: height }}>
                 <View style={{ height: '10%', width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
 
                     <TouchableOpacity
-                        onPress={() => { navigation.pop() }}
+                        onPress={() => {
+                            navigation.pop();
+                        }}
                     >
                         <Icon name="chevron-back-outline" size={40} color={colors.dlsYellowSecondary} />
                     </TouchableOpacity>
 
-                    {(route.params.cardOffline)===true? <></>:
-                     editEnabled ?
-                        <TouchableOpacity
-                            disabled={!saveEnabled}
-                            onPress={() => {
-                                EditObservCard({ form: stateSend!, alertSend, setReloadCardList })
-                            }}
-                        >
-                            <View style={{ flexDirection: 'row' }}>
-                                <Text style={{
-                                    color: 'white',
-                                    alignSelf: 'center',
-                                    paddingRight: 10,
-                                    fontSize: 17,
-                                    fontWeight: 'bold'
+                    {route.params.cardOffline === 'NETWORK' ? <></> :
+                        editEnabled ?
+                            <TouchableOpacity
+                                disabled={!saveEnabled}
+                                onPress={() => {
+                                    validateQuestions();
                                 }}
-                                >
-                                    Guardar
-                                </Text>
-                                <AwesomeIcon name="save" size={30} color={saveEnabled ? colors.dlsYellowSecondary : colors.dlsWhiteBackGround} />
-                            </View>
-                        </TouchableOpacity>
-                        :
-                        <TouchableOpacity
-                            onPress={() => {
-                                setEditEnabled(true)
-                            }}
-                        >
-                            <View style={{ flexDirection: 'row' }}>
-                                <Text style={{
-                                    color: 'white',
-                                    alignSelf: 'center',
-                                    paddingRight: 10,
-                                    fontSize: 17,
-                                    fontWeight: 'bold'
+                            >
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={{
+                                        color: 'white',
+                                        alignSelf: 'center',
+                                        paddingRight: 10,
+                                        fontSize: 17,
+                                        fontWeight: 'bold'
+                                    }}
+                                    >
+                                        Guardar
+                                    </Text>
+                                    <AwesomeIcon name="save" size={30} color={saveEnabled ? colors.dlsYellowSecondary : colors.dlsWhiteBackGround} />
+                                </View>
+                            </TouchableOpacity>
+                            :
+                            <TouchableOpacity
+                                onPress={() => {
+                                    setEditEnabled(true)
                                 }}
-                                >
-                                    Editar
-                                </Text>
-                                <AwesomeIcon name="edit" size={30} color={colors.dlsYellowSecondary} />
-                            </View>
-                        </TouchableOpacity>
+                            >
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={{
+                                        color: 'white',
+                                        alignSelf: 'center',
+                                        paddingRight: 10,
+                                        fontSize: 17,
+                                        fontWeight: 'bold'
+                                    }}
+                                    >
+                                        Editar
+                                    </Text>
+                                    <AwesomeIcon name="edit" size={30} color={colors.dlsYellowSecondary} />
+                                </View>
+                            </TouchableOpacity>
                     }
 
                 </View>
@@ -195,16 +267,18 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
                 }
 
                 <Modal
-                    animationType='slide'
+                    animationType='fade'
                     transparent
                     visible={visibleModal}
                 >
 
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
+                    <View style={{
+                        flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.6)',
+                    }}>
                         <View style={{
                             width: '80%',
-                            height: '30%',
-                            backgroundColor: '#1C1C20',
+                            height: '50%',
+                            backgroundColor: colors.dlsGrayPrimary,
                             borderRadius: 30,
                             shadowColor: "#000",
                             shadowOffset: {
@@ -215,27 +289,32 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
                             shadowRadius: 8.30,
                             elevation: 13,
                         }}>
-                            <View style={{ flex: 1, justifyContent: 'space-between' }}>
-                                <View style={{ flex:1, marginHorizontal: 10, justifyContent: 'center' }}>
-                                    <Text style={{ color: 'white', textAlign: 'center', fontSize: 26, fontWeight: 'bold' }}>
-                                        {messageModal}
-                                    </Text>
+                            {isLoadingResponse ?
+                                <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+                                    <Chase size={60} color="white" />
                                 </View>
-                                <TouchableOpacity
-                                    onPress={() => { setVisibleModal(false) }}
-                                    style={{
-                                        height: '25%',
-                                        borderColor: 'white',
-                                        borderWidth: 4,
-                                        borderRadius: 20,
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        margin: 15
-                                    }}
-                                >
-                                    <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 16 }}>Cerrar Ventana</Text>
-                                </TouchableOpacity>
-                            </View>
+                                :
+                                <View style={{ flex: 1, justifyContent: 'space-between' }}>
+                                    <View style={{ flex: 1, marginHorizontal: 10, justifyContent: 'center' }}>
+                                        <Text style={{ color: 'white', textAlign: 'center', fontSize: 26, fontWeight: 'bold' }}>
+                                            {messageModal}
+                                        </Text>
+                                    </View>
+                                    <TouchableOpacity
+                                        onPress={() => { setVisibleModal(false) }}
+                                        style={{
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            position:'absolute',
+                                            top:15,
+                                            right:15
+                                        }}
+                                    >
+                                    <Icon name="close-outline" size={40} color={colors.dlsYellowSecondary} />
+                                    </TouchableOpacity>
+                                </View>
+                            }
+
                         </View>
                     </View>
                 </Modal>

@@ -3,8 +3,8 @@ import { parse } from 'fast-xml-parser'
 import { IosVersion } from '../interfaces/prompInterfaces';
 
 export const CheckVersionIos = async () => {
-    
-   let respuesta:IosVersion={}
+
+   let respuesta: IosVersion = {}
 
 
 
@@ -25,16 +25,15 @@ export const CheckVersionIos = async () => {
          {
             'Content-Type': 'text/xml',
             SOAPAction: 'DLHR_IOS_VERSION.v1',
-            
+
          }
       }).then(res => {
-      
-         
-         respuesta=parse((res.data));
-            
-      }).catch(err => { 
-         console.log("error version");
-         console.log(err) 
-        });
+
+
+         respuesta = parse((res.data));
+
+      }).catch(err => {
+
+      });
    return respuesta;
 }

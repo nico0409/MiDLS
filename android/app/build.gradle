@@ -141,8 +141,8 @@ android {
         applicationId "com.midls"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 42
-        versionName "1.7.13"
+        versionCode 80
+        versionName "1.11.16"
     }
     splits {
         abi {
@@ -207,6 +207,8 @@ dependencies {
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+
+    compile project(':RNSendIntentModule')
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'

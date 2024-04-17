@@ -4,7 +4,7 @@ import { View, Dimensions, StyleSheet, TouchableOpacity, Text, BackHandler } fro
 import { StackScreenProps } from '@react-navigation/stack';
 import { Chase } from 'react-native-animated-spinkit';
 import Animated, { useSharedValue, useAnimatedStyle, withTiming, withSpring, withDelay } from 'react-native-reanimated';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { colors } from '../Themes/DlsTheme';
 import { AuthContext } from '../context/formContext/AuthContext';
@@ -27,8 +27,9 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
     const { setReloadCardList } = useContext(AuthcontextGeneral);
 
     const [reqSended, setReqSended] = useState<'pending' | 'sended' | 'error'>('pending');
-    const [errorType, setErrorType] = useState<'server' | 'network'>();
+    const [errorType, setErrorType] = useState<'SERVER' | 'NETWORK'>();
     const [bgCircleColor, setBgCircleColor] = useState('grey');
+    const [startBackScreen,setStartBackScreen] = useState(false);
 
     const opacityHomeValue = useSharedValue(0);
     const loadingValue = useSharedValue(0);
@@ -95,9 +96,35 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
 
     useEffect(() => {
         setTimeout(() => {
-            NewObservCard({ form, setReqSended, setBgCircleColor, loadingValue, cardDescr, setCardDescr, setReloadCardList, setErrorType });
+            NewObservCard({ form, setReqSended, setBgCircleColor, loadingValue, cardDescr, setCardDescr, setReloadCardList, setErrorType, setStartBackScreen });
         }, 2000);
     }, [])
+
+    const runNavigationPop = () =>{
+        navigation.removeListener('beforeRemove', () => { });
+        navigation.pop(3);
+    }
+
+    useEffect(() => {
+
+        console.log("se ejecuto startBackScreen: ", startBackScreen);
+
+        startBackScreen &&
+         setTimeout(() => {
+            console.log("se ejecuta set timeout");
+            runNavigationPop();
+        }, 8000);  
+
+        /* switch (errorType) {
+            case "NETWORK":
+            case "SERVER":
+                setTimeout(() => { 
+                    console.log("se ejecuta set timeout navigation");
+                    runNavigationPop();
+                }, 8000)
+                break;
+        } */
+    }, [startBackScreen]);
 
     useEffect(() => {
         navigation.addListener('beforeRemove', (e) => {
@@ -113,26 +140,30 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
 
             <Animated.View style={[styles.iconStatusContainer, animatedIconStatusStyle]}>
                 {reqSended === 'sended' ?
-                    <Icon name="checkmark-circle" size={height <= 593 ? 110 : 140} color="white" />
+                    <Icon name="check-circle-outline" size={height <= 593 ? 110 : 140} color="white" />
                     :
-                    <Icon name="cloud-offline" size={height <= 593 ? 110 : 140} color="white" />
+                    errorType === 'NETWORK' ?
+                        <Icon name="wifi-off" size={height <= 593 ? 110 : 140} color="white" />
+                        :
+                        <Icon name="cloud-off" size={height <= 593 ? 110 : 140} color="white" />
                 }
             </Animated.View>
 
             <Animated.View style={[{ width: '100%', alignItems: 'flex-end' }, animatedHomeIcon]}>
                 <TouchableOpacity
                     style={{ paddingRight: 10, paddingTop: 10 }}
-                    onPress={() => {
-                        /* navigation.replace('TarjetaObserveScreen',{name:emplidSelect.fieldValue2,emplid:emplidSelect.fieldValue1}) */
+                    /* onPress={() => {
                         navigation.removeListener('beforeRemove', () => { });
-                        navigation.pop(3)
-                    }}>
+                        navigation.pop(3);
+                    }} */
+                    onPress={runNavigationPop}
+                    >
                     <Icon name="home" size={40} color="white" />
                 </TouchableOpacity>
             </Animated.View>
 
             <Animated.View style={[styles.loadingContainer, animatedLoadingStyle]}>
-                <Chase size={height <= 593? height <= 593 ? 50 : 90 : 140} color="white" />
+                <Chase size={height <= 593 ? height <= 593 ? 50 : 90 : 140} color="white" />
             </Animated.View>
 
             <Animated.View style={[{ backgroundColor: colors.dlsGrayPrimary, flex: 1, alignItems: 'center', justifyContent: 'space-evenly', borderTopLeftRadius: 60, borderTopRightRadius: 60 }, animatedCardStyle]}>
@@ -144,7 +175,7 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
                         </>
                         :
                         <>
-                            {errorType === 'network' ?
+                            {errorType === 'NETWORK' ?
                                 <>
                                     <Text style={{ color: 'white', fontSize: textTitleSize, fontWeight: 'bold' }}>Ups!</Text>
                                     <Text style={{ color: 'white', fontSize: textDescrSize, fontWeight: 'bold' }}>No hay conexión a internet.</Text>
@@ -153,15 +184,16 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
                                 :
                                 <>
                                     <Text style={{ color: 'white', fontSize: textTitleSize, fontWeight: 'bold' }}>Ups!</Text>
-                                    <Text style={{ color: 'white', fontSize: textDescrSize, fontWeight: 'bold' }}>No hay conexión con el servidor.</Text>
-                                    <Text style={{ color: 'white', fontSize: textDescrSize, fontWeight: 'bold' }}>No te preocupes, la tarjeta se guardó y cuando el dispositivo detecte una conexión, la enviará automáticamente.</Text>
+                                    <Text style={{ color: 'white', fontSize: textDescrSize, fontWeight: 'bold' }}>Hubo un problema con el servidor.</Text>
+                                    <Text style={{ color: 'white', fontSize: textDescrSize, fontWeight: 'bold' }}>No te preocupes, la tarjeta se guardó, revisala o contactá con un administrador.</Text>
                                 </>
                             }
                         </>
                     }
                 </View>
                 <View style={styles.cardContainer}>
-                    <Card index={1} item={cardDescr} />
+                    {/* <Card index={1} item={cardDescr} disabled={errorType === 'NETWORK' || 'SERVER' ? true : false} /> */}
+                    <Card index={1} item={cardDescr} disabled={true} />
                 </View>
             </Animated.View>
 

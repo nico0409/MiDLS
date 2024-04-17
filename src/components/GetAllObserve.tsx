@@ -5,11 +5,11 @@ import PSDB from '../api/PSDB';
 
 
 
-export const GetAllObserve = async (fecha: string, emplid: string) => {
+export const GetAllObserve = async (fecha: string, emplid: string, isError: boolean) => {
 
-  let respuesta:AllObserveType={}
+   let respuesta: AllObserveType = {}
 
-     
+
 
    let xmls = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dlhr="http://xmlns.oracle.com/Enterprise/Tools/schemas/DLHR_MI_DLS.DLHR_REQUEST_ALL_OBSERVE.v1">\
     <soapenv:Header/>\
@@ -37,11 +37,18 @@ export const GetAllObserve = async (fecha: string, emplid: string) => {
          }
       }).then(res => {
 
-        
-          
+         respuesta = {
+            AllObserve: parse(decodeURIComponent(escape(res.data))),
+            type: 'AllObserveType'
+         }
+         isError = false;
+         console.log("get all observe ok, isError: ",isError);
          
-         respuesta={AllObserve: parse(decodeURIComponent(escape(res.data))),
-         type:'AllObserveType'}
-      }).catch(err => { console.log(err) }); 
-return respuesta;
+      }).catch(err => {
+         isError = true;
+         console.log("get all observe error, isError: ",isError);
+         //setErrorResponse(true)
+
+      });
+   return respuesta;
 }
