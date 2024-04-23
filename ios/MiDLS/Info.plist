@@ -34,7 +34,7 @@
 		<true/>
 		<key>NSExceptionDomains</key>
 		<dict>
-			<key>https://midls.dls-archer.com</key>
+			<key>https://midls-dev.dls-archer.com</key>
 			<dict>
 				<key>NSIncludesSubdomains</key>
 				<true/>
@@ -48,7 +48,7 @@
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
 				<true/>
 			</dict>
-			<key>midls.dls-archer.com</key>
+			<key>midls-dev.dls-archer.com</key>
 			<dict>
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
 				<true/>

@@ -58,7 +58,7 @@
     "react-native-svg": "^12.1.1",
     "react-native-tab-view": "^2.16.0",
     "react-native-vector-icons": "^8.1.0",
-    "react-native-webview": "^11.6.5",
+    "react-native-webview": "11.26.1",
     "sp-react-native-in-app-updates": "^1.1.3",
     "yarn": "^1.22.10"
   },

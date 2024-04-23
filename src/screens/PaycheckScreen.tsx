@@ -33,7 +33,7 @@ export const PaycheckScreen = ({ navigation,route }: Props) => {
                 onLoadEnd={() => { signIn(), setLoad(false) }}
                 onNavigationStateChange={navstate => changeURLNews(navstate.url)}
                 style={styless.webview}
-                source={{ uri: 'https://midls.dls-archer.com/midls/mi-recibo/' }} />
+                source={{ uri: 'https://midls-dev.dls-archer.com/midls/mi-recibo/' }} />
             {load &&
                 <View style={{ flex: 1, position: 'absolute', top: '50%', right: '50%' }}>
                     <ActivityIndicator size={35} color="rgba(245,217,47,1)" style={{ marginTop: '60%' }}></ActivityIndicator>
