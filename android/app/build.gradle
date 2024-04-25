@@ -141,8 +141,8 @@ android {
         applicationId "com.midls"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 80
-        versionName "1.11.16"
+        versionCode 84
+        versionName "1.11.20"
     }
     splits {
         abi {
