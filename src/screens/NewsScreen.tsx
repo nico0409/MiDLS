@@ -37,7 +37,7 @@ export const NewsScreen = () => {
           onLoadEnd={() => { signIn(), setLoad(false) }}
           onNavigationStateChange={navstate => changeURLNews(navstate.url)}
           style={styless.webview}
-          source={{ uri: 'https://midls-dev.dls-archer.com/midls/?page_id=419' }}
+          source={{ uri: 'https://midls-dev.dls-archer.com/midls/noticias/' }}
         />
       }
       {load &&
