@@ -33,7 +33,7 @@ export const RrhhScreen = ({ navigation, route }: Props) => {
                     onLoadEnd={() => { signIn(), setLoad(false) }}
                     onNavigationStateChange={navstate => changeURLNews(navstate.url)}
                     style={styless.webview}
-                    source={{ uri: 'https://midls-dev.dls-archer.com/midls/consultas/' }}
+                    source={{ uri: 'https://midls.dls-archer.com/midls/consultas/' }}
                 />
                 {load &&
                     <View style={{ flex: 1, position: 'absolute', top: '50%', right: '50%' }}>

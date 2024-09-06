@@ -51,7 +51,7 @@ interface Props extends MaterialTopTabScreenProps <ParamListBase,'PersonaScreen'
           onNavigationStateChange={navstate=>changeURLProfile(navstate.url)} 
             style={styless.webview}
             key={status}
-            source={{ uri: 'https://midls-dev.dls-archer.com/midls/user/' }} 
+            source={{ uri: 'https://midls.dls-archer.com/midls/user/' }} 
             /> 
         }
             {load &&
