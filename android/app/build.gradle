@@ -142,7 +142,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 84
-        versionName "1.11.20"
+        versionName "1.10.20"  //actualizar
     }
     splits {
         abi {

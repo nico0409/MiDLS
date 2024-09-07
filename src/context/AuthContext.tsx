@@ -1,5 +1,5 @@
 import React, { createContext, useReducer, useState, useEffect } from 'react';
-import { AppState } from 'react-native';
+import { AppState, Platform } from 'react-native';
 import { useNetInfo } from '@react-native-community/netinfo';
 import { authReducer, AuthState } from './authReducer'
 import { SendObserveStorage } from '../components/SendObserveStorage';
@@ -118,34 +118,37 @@ export const AuthProvider = ({ children }: any) => {
 
     };
 
-    const refreshData = async () => {
+    const refreshData = async (minute: number) => {
         console.log("se inicia refresh data");
 
-        await CheckUpdateAndroid({ setAppNeedsUpdate, setAppLockScreen });
-        await CheckUpdateIos({ setAppNeedsUpdate, setAppLockScreen, setAppLinkUpdateIos });
+        /* descomentar Platform.OS === "android" ?
+            await CheckUpdateAndroid({ setAppNeedsUpdate, setAppLockScreen }) :
+            await CheckUpdateIos({ setAppNeedsUpdate, setAppLockScreen, setAppLinkUpdateIos }); */
+         console.log("---------appLockScreen: ",appLockScreen);
 
         if (!appLockScreen) {
 
             const prompts: StorageTypes = { StorageType: 'prompt' };
 
-            await Asingstorage(prompts, await GetPrompt(setIsErrorResponse));
+            if (minute === 55) {
+                await Asingstorage(prompts, await GetPrompt(setIsErrorResponse));
+            } else {
+                await SendObserveStorage();
 
-            await SendObserveStorage();
-
-            console.log("AppState:", AppState.currentState);
-            switch (AppState.currentState) {
-                case 'background':
-                case 'inactive':
-                    await Asingstorage({ StorageType: 'refreshLoadObserveBG' }, { refreshLoadObserve: true });
-                    break;
-                case 'active':
-                    setReloadCardList(true);
-                    setBackgroundRequestReload(true);
-                    break;
-                default:
-                    break;
+                console.log("AppState:", AppState.currentState);
+                switch (AppState.currentState) {
+                    case 'background':
+                    case 'inactive':
+                        await Asingstorage({ StorageType: 'refreshLoadObserveBG' }, { refreshLoadObserve: true });
+                        break;
+                    case 'active':
+                        setReloadCardList(true);
+                        setBackgroundRequestReload(true);
+                        break;
+                    default:
+                        break;
+                }
             }
-
             //setReloadCardList(true);
             //setBackgroundRequestReload(true);
         }
@@ -153,7 +156,7 @@ export const AuthProvider = ({ children }: any) => {
 
     const validateRefreshLoadObserveBG = async () => {
         console.log("comienza a validar refresh interno");
-        
+
         function validateObject(object: any): object is refreshLoadObserveBG {
             return true
         }
@@ -170,21 +173,21 @@ export const AuthProvider = ({ children }: any) => {
         }
 
     }
-    const handleChange = (newState:any) =>{
+    const handleChange = (newState: any) => {
         console.log("se ejecuto handleChange");
-        
+
         if (newState === 'active') {
             validateRefreshLoadObserveBG();
         }
     }
 
     useEffect(() => {
-        
+
         validateRefreshLoadObserveBG();
-        AppState.addEventListener('change', handleChange);  
-      
+        AppState.addEventListener('change', handleChange);
+
         return () => {
-          AppState.removeEventListener('change', handleChange);  
+            AppState.removeEventListener('change', handleChange);
         }
     }, [])
 
@@ -207,8 +210,8 @@ export const AuthProvider = ({ children }: any) => {
             let lastMinuteReaded = 0;
             for (let i = 0; BackgroundService.isRunning(); i++) {
                 let minute = new Date().getMinutes();
-                console.log("minute: ",minute,", lastMinuteReaded: ",lastMinuteReaded);
-                
+                console.log("minute: ", minute, ", lastMinuteReaded: ", lastMinuteReaded);
+
                 switch (minute) {
                     case 0:
                     case 5:
@@ -221,11 +224,21 @@ export const AuthProvider = ({ children }: any) => {
                     case 40:
                     case 45:
                     case 50:
-                    case 55:
-                        if (lastMinuteReaded !== minute){
+                        if (lastMinuteReaded !== minute) {
                             lastMinuteReaded = minute;
-                            refreshData();
+                            refreshData(minute);
                         }
+                        break;
+                    /* descomentar case 0:
+                    case 15:
+                    case 30:
+                    case 45:
+                    case 55:
+                        if (lastMinuteReaded !== minute) {
+                            lastMinuteReaded = minute;
+                            refreshData(minute);
+                        }
+                        break; */
                 }
                 await sleep(30000);
             }

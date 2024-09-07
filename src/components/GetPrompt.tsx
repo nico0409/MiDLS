@@ -8,7 +8,8 @@ export const GetPrompt = async (setIsErrorResponse: React.Dispatch<React.SetStat
 
    let respuesta: PromptObserveType = {}
 
-
+   console.log("se ejecuta GET PROMPT---------"); 
+   
 
    let xmls = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dls="http://xmlns.oracle.com/Enterprise/Tools/schemas/DLS_ICSA_TEST.DOC_TEST2.v1">\
     <soapenv:Header/>\
