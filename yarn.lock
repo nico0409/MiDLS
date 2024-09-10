@@ -5752,10 +5752,10 @@ react-native-awesome-alerts@^1.5.2:
   dependencies:
     prop-types "^15.7.2"
 
-react-native-background-actions@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-background-actions/-/react-native-background-actions-3.0.0.tgz#fbdaf31a5485cea68cff03358516da8ffc2a4fe0"
-  integrity sha512-O/KFdetp8n9cwSfPJQ7hPywTaEHO1ui7ISxKTGkzHxs3IVgEV+QOvKKLxAkTcQs1w5f68KK/LoQsEVwMpbVqew==
+react-native-background-actions@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-background-actions/-/react-native-background-actions-4.0.1.tgz#51fab1df75fb69428c059929284d2ab3b5ff673b"
+  integrity sha512-LADhnb4ag1oH5Lotq0j8K9e2cFmrafFyg2PCME88VkTjqDUgNcJonkNdMCTHN0N3fh+hwAA7nDR4Cxkj9Q8eCw==
   dependencies:
     eventemitter3 "^4.0.7"
 

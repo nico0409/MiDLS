@@ -141,8 +141,8 @@ android {
         applicationId "com.midls"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 84
-        versionName "1.10.20"  //actualizar
+        versionCode 85
+        versionName "1.12.1"  //actualizar
     }
     splits {
         abi {
@@ -200,6 +200,8 @@ android {
 
 dependencies {
 
+    implementation 'org.jetbrains:annotations:16.0.2' 
+
     implementation project(':react-native-splash-screen')
     
     implementation fileTree(dir: "libs", include: ["*.jar"])
@@ -207,7 +209,7 @@ dependencies {
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
-
+    
     compile project(':RNSendIntentModule')
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {

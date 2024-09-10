@@ -77,10 +77,7 @@ export const DrawerNavigation = () => {
       Asingstorage(deviceId, await GetDeviceId(deviceName, brand, model, externalIp));
 
     }
-
-    await CheckUpdateAndroid({ setAppNeedsUpdate, setAppLockScreen });
-    await CheckUpdateIos({ setAppNeedsUpdate, setAppLockScreen, setAppLinkUpdateIos });
-
+    
     SplashScreen.hide();
     setendGetPrompt(true);
   }

@@ -12,6 +12,7 @@ import { CheckUpdateAndroid } from '../components/CheckUpdateAndroid';
 import { CheckUpdateIos } from '../components/CheckUpdateIos';
 
 import BackgroundService from 'react-native-background-actions';
+import { useAppState } from '../hooks/useAppState';
 
 type AuthContextProps = {
     status: 'checking' | 'authenticated' | 'not-authenticated';
@@ -71,6 +72,8 @@ export const AuthProvider = ({ children }: any) => {
     const [appLockScreen, setAppLockScreen] = useState(false);
     const [appLinkUpdateIos, setAppLinkUpdateIos] = useState("");
 
+    const { status } = useAppState();
+
     const [isErrorResponse, setIsErrorResponse] = useState(false);
 
     let currentUrlNews = '';
@@ -118,44 +121,15 @@ export const AuthProvider = ({ children }: any) => {
 
     };
 
-    const refreshData = async (minute: number) => {
-        console.log("se inicia refresh data");
-
-        /* descomentar Platform.OS === "android" ?
-            await CheckUpdateAndroid({ setAppNeedsUpdate, setAppLockScreen }) :
-            await CheckUpdateIos({ setAppNeedsUpdate, setAppLockScreen, setAppLinkUpdateIos }); */
-         console.log("---------appLockScreen: ",appLockScreen);
-
-        if (!appLockScreen) {
-
-            const prompts: StorageTypes = { StorageType: 'prompt' };
-
-            if (minute === 55) {
-                await Asingstorage(prompts, await GetPrompt(setIsErrorResponse));
-            } else {
-                await SendObserveStorage();
-
-                console.log("AppState:", AppState.currentState);
-                switch (AppState.currentState) {
-                    case 'background':
-                    case 'inactive':
-                        await Asingstorage({ StorageType: 'refreshLoadObserveBG' }, { refreshLoadObserve: true });
-                        break;
-                    case 'active':
-                        setReloadCardList(true);
-                        setBackgroundRequestReload(true);
-                        break;
-                    default:
-                        break;
-                }
-            }
-            //setReloadCardList(true);
-            //setBackgroundRequestReload(true);
-        }
-    };
+    const checkAppUpdates = async () => {
+        Platform.OS === "android" && await CheckUpdateAndroid({ setAppNeedsUpdate, setAppLockScreen });
+        Platform.OS === "ios" && await CheckUpdateIos({ setAppNeedsUpdate, setAppLockScreen, setAppLinkUpdateIos });
+    }
 
     const validateRefreshLoadObserveBG = async () => {
-        console.log("comienza a validar refresh interno");
+        console.log("se inicia validateRefreshLoadObserveBG");
+
+        checkAppUpdates();
 
         function validateObject(object: any): object is refreshLoadObserveBG {
             return true
@@ -171,76 +145,63 @@ export const AuthProvider = ({ children }: any) => {
                 getRefreshBGValue.refreshLoadObserve && await Asingstorage({ StorageType: 'refreshLoadObserveBG' }, { refreshLoadObserve: false });
             }
         }
-
-    }
-    const handleChange = (newState: any) => {
-        console.log("se ejecuto handleChange");
-
-        if (newState === 'active') {
-            validateRefreshLoadObserveBG();
-        }
     }
 
-    useEffect(() => {
+    const refreshData = async (refreshPromptToo: boolean) => {
+        console.log("se inicia refresh data: ");
 
-        validateRefreshLoadObserveBG();
-        AppState.addEventListener('change', handleChange);
+        checkAppUpdates();
 
-        return () => {
-            AppState.removeEventListener('change', handleChange);
+        if (appLockScreen) {
+            console.log("background service finished");
+        } else {
+            console.log("background service NO finished");
+            if (refreshPromptToo) {
+                const prompts: StorageTypes = { StorageType: 'prompt' };
+                await Asingstorage(prompts, await GetPrompt(setIsErrorResponse));
+            }
+
+            await SendObserveStorage();
+
+            console.log("AppState:", AppState.currentState);
+            switch (AppState.currentState) {
+                case 'background':
+                case 'inactive':
+                    await Asingstorage({ StorageType: 'refreshLoadObserveBG' }, { refreshLoadObserve: true });
+                    break;
+                case 'active':
+                    setReloadCardList(true);
+                    setBackgroundRequestReload(true);
+                    break;
+                default:
+                    break;
+            }
         }
-    }, [])
-
-    useEffect(() => {
-
-        if (isConnected === true) {
-            console.log("enviando storage");
-
-            sendObserve();
-        }
-
-    }, [isConnected])
+    };
 
     //@ts-ignore
-    const sleep = (time: number) => new Promise((resolve) => setTimeout(() => resolve(), time));
+    const sleep = (time) => new Promise((resolve) => setTimeout(() => resolve(), time));
 
     const veryIntensiveTask = async (taskDataArguments: any) => {
         // Example of an infinite loop task
+        const { delay } = taskDataArguments;
         await new Promise(async (resolve) => {
-            let lastMinuteReaded = 0;
+            let counterTo1hs = 0;
             for (let i = 0; BackgroundService.isRunning(); i++) {
-                let minute = new Date().getMinutes();
-                console.log("minute: ", minute, ", lastMinuteReaded: ", lastMinuteReaded);
+                if (i > 0 && i % 15 === 0) {
+                    counterTo1hs = counterTo1hs + 1;
+                    if (counterTo1hs === 4) {
+                        /* true = refresh prompt too */
+                        refreshData(true);/* se ejecuta cada 1hs */
+                        counterTo1hs = 0;
+                        console.log(new Date());
 
-                switch (minute) {
-                    case 0:
-                    case 5:
-                    case 10:
-                    case 15:
-                    case 20:
-                    case 25:
-                    case 30:
-                    case 35:
-                    case 40:
-                    case 45:
-                    case 50:
-                        if (lastMinuteReaded !== minute) {
-                            lastMinuteReaded = minute;
-                            refreshData(minute);
-                        }
-                        break;
-                    /* descomentar case 0:
-                    case 15:
-                    case 30:
-                    case 45:
-                    case 55:
-                        if (lastMinuteReaded !== minute) {
-                            lastMinuteReaded = minute;
-                            refreshData(minute);
-                        }
-                        break; */
+                    } else {
+                        refreshData(false);/* se ejecuta cada 15min */
+                        console.log(new Date());
+                    }
                 }
-                await sleep(30000);
+                await sleep(delay);
             }
         });
     };
@@ -253,30 +214,37 @@ export const AuthProvider = ({ children }: any) => {
             name: 'ic_launcher',
             type: 'mipmap',
         },
-        linkingURI: '-',
+        color: '#ff00ff',
+        linkingURI: ' ',
         parameters: {
-            delay: 1000,
+            delay: 60000,/* 1 min */
         },
     };
 
-    useEffect(() => {
-
-        /* BackgroundTimer no funciona correctamente en Android 13, se utiliza Background Service en su reemplazo */
-        /* BackgroundTimer.runBackgroundTimer(() => {
-            console.log("se ejecuto background timer ", new Date());
-            refreshData();
-        }, 600000); */
+    const runBackgroundService = async () => {
         console.log("BackgroundService.isRunning():", BackgroundService.isRunning());
         if (BackgroundService.isRunning()) {
             console.log("servicio ya ejecutado");
         } else {
             console.log("ejecutar back service");
-            BackgroundService.start(veryIntensiveTask, options);
+            await BackgroundService.start(veryIntensiveTask, options);
         }
-        /* BackgroundService.updateNotification({taskDesc: 'New ExampleTask description'}); // Only Android, iOS will ignore this call */
-        // iOS will also run everything here in the background until .stop() is called
-        //BackgroundService.stop();
+    };
 
+    useEffect(() => {
+        if (status === "active") {
+            validateRefreshLoadObserveBG();
+        }
+    }, [status]);
+
+    useEffect(() => {
+        if (isConnected === true) {
+            sendObserve();
+        }
+    }, [isConnected]);
+
+    useEffect(() => {
+        runBackgroundService();
     }, []);
 
     return (
