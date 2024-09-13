@@ -2,9 +2,9 @@ import React from "react";
 import { View, Text, SafeAreaView, StyleSheet } from "react-native";
 import { M38GetCompIntfcDLHRTAOBSERVCIResponse, objUseForm } from '../interfaces/prompInterfaces';
 
-import BouncyCheckboxGroup, {
+/* import BouncyCheckboxGroup, {
   ICheckboxButton,
-} from "../libs/react-native-bouncy-checkbox-group";
+} from "../libs/react-native-bouncy-checkbox-group"; */
 
 import { QuestionsData } from '../data/QuestionsData';
 import { Questions, questionType } from "../interfaces/QuestionInterfaces";
@@ -88,7 +88,7 @@ export const QuestionsCmp = ({ form, questiontType, onChange, darkText = false }
               justifyContent: "center",
             }}
           >
-            <BouncyCheckboxGroup
+            {/* <BouncyCheckboxGroup
               data={data[0]?.choices!}
               style={{ flexDirection: "column" }}
               initial={initialValue}
@@ -99,7 +99,7 @@ export const QuestionsCmp = ({ form, questiontType, onChange, darkText = false }
                   onChange(mapIndexToValue(selectedItem.id), data[0].field)
                 }
               }}
-            />
+            /> */}
           </View>
 
         </View>
