@@ -16,7 +16,7 @@ import { NavigationContext } from '../context/NavigateContext';
 
 
 
-interface Props extends MaterialTopTabScreenProps <ParamListBase,'PersonaScreen'>{
+interface Props extends MaterialTopTabScreenProps <ParamListBase,'MyProfileScreen'>{
 
 }
 

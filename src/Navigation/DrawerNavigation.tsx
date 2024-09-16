@@ -92,7 +92,7 @@ export const DrawerNavigation = () => {
         <WhitOutConection />
         :*/}
         {endGetPrompt && <Drawer.Navigator
-
+          screenOptions={{headerShown: false}}
           // drawerContent={(props: any) => <DrawerMenu {...props} />}
           drawerContent={(props: any) => <MenuInterno {...props} />}
         >

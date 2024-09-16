@@ -42,6 +42,7 @@ npm-debug.log
 yarn-error.log
 !node_modules/react-native-reanimated/metro-config
 !node_modules/react-native-reanimated/tsconfig.json
+!node_modules/react-native-tab-view/src/TabBar.tsx
 
 # fastlane
 #

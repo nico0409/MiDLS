@@ -50,7 +50,7 @@ const list4: ListModel = {
     ],
 };
 
-interface Props extends StackScreenProps<RoutstackParams, 'EditObvservCardScreen'> { };
+interface Props extends StackScreenProps<any,any> { };
 
 type messageParam = 'RuleGold' | 'Questions';
 
@@ -58,10 +58,10 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
 
     const { setReloadCardList } = useContext(AuthcontextGeneral);
 
-    const { isloading, loadObserveCard, form, onChange, stateSend } = UseOneGetObserve(route.params);
+    const { isloading, loadObserveCard, form, onChange, stateSend } = UseOneGetObserve(route.params!);
 
     const [isLoadingResponse, setIsLoadingResponse] = useState(false);
-    const [errorType, setErrorType] = useState<string>(route.params.cardOffline!);
+    const [errorType, setErrorType] = useState<string>(route.params!.cardOffline);
     const [editEnabled, setEditEnabled] = useState(false);
     const [saveEnabled, setSaveEnabled] = useState(false);
     const [visibleModal, setVisibleModal] = useState(false);
@@ -133,7 +133,7 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
             setVisibleModal(true);
             setIsLoadingResponse(true);
 
-            route.params.Ntarjeta?.substring(0,3) === nroTarjetaEmpty ?
+            route.params!.Ntarjeta.substring(0,3) === nroTarjetaEmpty ?
                 NewObservCardPnlEdit({ form, alertSend, setReloadCardList, onChange, formStateSend: stateSend!, setErrorType,setIsLoadingResponse })
                 :
                 EditObservCard({ form: stateSend!, alertSend, setReloadCardList,setIsLoadingResponse });
@@ -186,7 +186,7 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
                         <Icon name="chevron-back-outline" size={40} color={colors.dlsYellowSecondary} />
                     </TouchableOpacity>
 
-                    {route.params.cardOffline === 'NETWORK' ? <></> :
+                    {route.params!.cardOffline === 'NETWORK' ? <></> :
                         editEnabled ?
                             <TouchableOpacity
                                 disabled={!saveEnabled}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { DrawerContentComponentProps, DrawerContentOptions, DrawerContentScrollView } from '@react-navigation/drawer';
+import { DrawerContentComponentProps } from '@react-navigation/drawer';
 import { View, Image, FlatList, StyleSheet, TouchableOpacity, Text, Modal, Dimensions } from 'react-native';
 import { menuItems } from '../data/MenuItems';
 import { FlatLIstMenuItem } from './FlatLIstMenuItem';
@@ -11,13 +11,12 @@ import { Contact } from './Contact';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { RedesContent } from './RedesContent';
 import { DeviceInfoContent } from './DeviceInfoContent';
-import { color } from 'react-native-reanimated';
 
 const { height } = Dimensions.get('window');
 
 
 
-export const MenuInterno = (DrawerNavigation: DrawerContentComponentProps<DrawerContentOptions>) => {
+export const MenuInterno = (DrawerNavigation: DrawerContentComponentProps) => {
 
   const { navigation } = DrawerNavigation;
   const [isVisible, setIsVisible] = useState(false);
@@ -145,7 +144,7 @@ export const MenuInterno = (DrawerNavigation: DrawerContentComponentProps<Drawer
           onPress={() => { setIsVisible2(true) }}
         >
           <Icon
-            name='md-information-circle'
+            name='information-circle'
             size={30}
             color={colors.dlsYellowSecondary}
           />
