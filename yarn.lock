@@ -1600,9 +1600,9 @@ __metadata:
   linkType: hard
 
 "@eslint-community/regexpp@npm:^4.10.0, @eslint-community/regexpp@npm:^4.11.0":
-  version: 4.11.0
-  resolution: "@eslint-community/regexpp@npm:4.11.0"
-  checksum: 10c0/0f6328869b2741e2794da4ad80beac55cba7de2d3b44f796a60955b0586212ec75e6b0253291fd4aad2100ad471d1480d8895f2b54f1605439ba4c875e05e523
+  version: 4.11.1
+  resolution: "@eslint-community/regexpp@npm:4.11.1"
+  checksum: 10c0/fbcc1cb65ef5ed5b92faa8dc542e035269065e7ebcc0b39c81a4fe98ad35cfff20b3c8df048641de15a7757e07d69f85e2579c1a5055f993413ba18c055654f8
   languageName: node
   linkType: hard
 
@@ -3256,11 +3256,11 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*":
-  version: 22.5.4
-  resolution: "@types/node@npm:22.5.4"
+  version: 22.5.5
+  resolution: "@types/node@npm:22.5.5"
   dependencies:
     undici-types: "npm:~6.19.2"
-  checksum: 10c0/b445daa7eecd761ad4d778b882d6ff7bcc3b4baad2086ea9804db7c5d4a4ab0298b00d7f5315fc640a73b5a1d52bbf9628e09c9fec0cf44dbf9b4df674a8717d
+  checksum: 10c0/ead9495cfc6b1da5e7025856dcce2591e9bae635357410c0d2dd619fce797d2a1d402887580ca4b336cb78168b195224869967de370a23f61663cf1e4836121c
   languageName: node
   linkType: hard
 
@@ -3327,13 +3327,13 @@ __metadata:
   linkType: hard
 
 "@types/react@npm:^17":
-  version: 17.0.80
-  resolution: "@types/react@npm:17.0.80"
+  version: 17.0.81
+  resolution: "@types/react@npm:17.0.81"
   dependencies:
     "@types/prop-types": "npm:*"
     "@types/scheduler": "npm:^0.16"
     csstype: "npm:^3.0.2"
-  checksum: 10c0/c5d2862564212a41a327ea9c7e70b9d3996d9b0f67971d39519d42d1f3ae6ddf76b183457b7b0be9d7b5d6ff0aaeed5711448423406d20018f082077c984eec4
+  checksum: 10c0/7c371002b6443d92b3df33b24d2989d5eb555765bc2c31917b1325279bdeb79103aac524ea5a52cf36d8c61baed0f30a55dc87521b35771ec5cd4c0a4fef8245
   languageName: node
   linkType: hard
 
@@ -4902,9 +4902,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.5.4":
-  version: 1.5.21
-  resolution: "electron-to-chromium@npm:1.5.21"
-  checksum: 10c0/c8da5f70059425fbdfd30e392653674196b2e59b06ce0d3ee094daaf26947131a1e13af72684f8b38f9d3679a6e0fdeceae2fd8a24518c851314048942f96a03
+  version: 1.5.23
+  resolution: "electron-to-chromium@npm:1.5.23"
+  checksum: 10c0/a2f76d3ffae24635ff13597a7e4ddd73bd7ee2124e021d34a60faafc5a1afda567e6d26c0c84abc5c2d7622d9daf9bb25ed7dd2970019dcf4b9a28c02c13cab4
   languageName: node
   linkType: hard
 
@@ -4967,11 +4967,11 @@ __metadata:
   linkType: hard
 
 "envinfo@npm:^7.13.0":
-  version: 7.13.0
-  resolution: "envinfo@npm:7.13.0"
+  version: 7.14.0
+  resolution: "envinfo@npm:7.14.0"
   bin:
     envinfo: dist/cli.js
-  checksum: 10c0/9c279213cbbb353b3171e8e333fd2ed564054abade08ab3d735fe136e10a0e14e0588e1ce77e6f01285f2462eaca945d64f0778be5ae3d9e82804943e36a4411
+  checksum: 10c0/059a031eee101e056bd9cc5cbfe25c2fab433fe1780e86cf0a82d24a000c6931e327da6a8ffb3dce528a24f83f256e7efc0b36813113eff8fdc6839018efe327
   languageName: node
   linkType: hard
 
@@ -5695,9 +5695,9 @@ __metadata:
   linkType: hard
 
 "flow-parser@npm:0.*":
-  version: 0.245.2
-  resolution: "flow-parser@npm:0.245.2"
-  checksum: 10c0/4e691714f5507a079ef28286625ad7f8212e4acaf377866ce9643264dd4fc26793b7d114227ef6b4e255f63d2493d52cd38778abc0afd640aab602f7f283899c
+  version: 0.246.0
+  resolution: "flow-parser@npm:0.246.0"
+  checksum: 10c0/cdecd7434a9b8c2f59ed7f8233c0f10026c4d6d5619d47060403e723d78d3ebce2e6e3c7cf89f7b693ff0412c28c05fa0760997c0134edf1e78a4c90381dbc9d
   languageName: node
   linkType: hard
 
@@ -7910,6 +7910,7 @@ __metadata:
     react-native-background-actions: "npm:^4.0.1"
     react-native-background-timer: "npm:^2.4.1"
     react-native-bouncy-checkbox: "npm:^4.1.2"
+    react-native-bouncy-checkbox-group: "npm:^1.0.0"
     react-native-check-version: "npm:^1.0.20"
     react-native-device-info: "npm:^10.4.0"
     react-native-gesture-handler: "npm:^2.19.0"
@@ -7917,7 +7918,7 @@ __metadata:
     react-native-modal-datetime-picker: "npm:^11.0.0"
     react-native-network-info: "npm:^5.2.1"
     react-native-pager-view: "npm:^6.4.1"
-    react-native-reanimated: "npm:^3.15.1"
+    react-native-reanimated: "npm:3.15.1"
     react-native-redash: "npm:^16.2.2"
     react-native-safe-area-context: "npm:^3.2.0"
     react-native-screens: "npm:^3.34.0"
@@ -8964,7 +8965,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-bouncy-checkbox@npm:^4.1.2":
+"react-native-bouncy-checkbox-group@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "react-native-bouncy-checkbox-group@npm:1.0.0"
+  dependencies:
+    react-native-bouncy-checkbox: "npm:>= 4.0.0"
+  checksum: 10c0/c33909c88b9e66c021685b95878c5e4618aa3e3591eb86be30d6bef57868e6129690e8ca553388409b92e7137d5e482bcb0776d626a0c8427d2637feff79d5a2
+  languageName: node
+  linkType: hard
+
+"react-native-bouncy-checkbox@npm:>= 4.0.0, react-native-bouncy-checkbox@npm:^4.1.2":
   version: 4.1.2
   resolution: "react-native-bouncy-checkbox@npm:4.1.2"
   dependencies:
@@ -9048,7 +9058,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-reanimated@npm:^3.15.1":
+"react-native-reanimated@npm:3.15.1":
   version: 3.15.1
   resolution: "react-native-reanimated@npm:3.15.1"
   dependencies:
@@ -9215,8 +9225,8 @@ __metadata:
   linkType: hard
 
 "react-native-vector-icons@npm:^10.1.0":
-  version: 10.1.0
-  resolution: "react-native-vector-icons@npm:10.1.0"
+  version: 10.2.0
+  resolution: "react-native-vector-icons@npm:10.2.0"
   dependencies:
     prop-types: "npm:^15.7.2"
     yargs: "npm:^16.1.1"
@@ -9225,7 +9235,7 @@ __metadata:
     fa5-upgrade: bin/fa5-upgrade.sh
     fa6-upgrade: bin/fa6-upgrade.sh
     generate-icon: bin/generate-icon.js
-  checksum: 10c0/fd6df2090857c7b124a0d2d800fb8c5fc1b1fa78e0af5136bd984bdd5690cf46ea7961689d41c5f324cb21f6b5375643d50384132d9321f52e73e7e6f1f7dd46
+  checksum: 10c0/76a7f327b40b29e567f48a49ebc3ad87b755d4e431d66fec3566dfe5e673084cee9b1663f10903a6572aab31c7bcec45100172afb1d46055dfacbbe46b92b348
   languageName: node
   linkType: hard
 
