@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, memo, useRef } from "react";
 import { Dimensions, Platform, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 
-import Animated from "react-native-reanimated";
-import { mix, useTransition } from "react-native-redash/src/v1/";
+import Animated, { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
 
 import Chevron from "./Chevron";
 import { ListItem } from "./ListItem";
@@ -11,7 +10,6 @@ import { MeuItemType, M38GetCompIntfcDLHRTAOBSERVCIResponse } from '../../interf
 import { Prompt } from '../Prompt';
 import { PickerSelect } from '../PickerSelect';
 import { colors } from "../../Themes/DlsTheme";
-import { CustomSwitchObserve } from '../CustomSwitchObserve';
 import CheckBox from "@react-native-community/checkbox";
 import { InputModal } from "../InputModal";
 import { QuestionsCmp } from "../Questions";
@@ -38,18 +36,20 @@ interface ListProps {
 const { height: heightDimension } = Dimensions.get('window');
 //37,5
 
-export default ({ form, onChange, list, MeuItemType, scrollViewRef, displayOnly }: ListProps) => {
+export default memo(({ form, onChange, list, MeuItemType, scrollViewRef, displayOnly }: ListProps) => {
 
   const LIST_ITEM_HEIGHT = heightDimension * 0.68;
-  const { interpolateNode } = Animated;
-  const [open, setOpen] = useState(false);
-  const transition = useTransition(open);
+  //const { interpolateNode } = Animated;
+  //const [open, setOpen] = useState(false);
+  //const transition = useTiming(!open);
   const { emplidSelect } = useContext(AuthContext);
-  const height = mix(transition, 0, LIST_ITEM_HEIGHT * 1);
-  const bottomRadius = interpolateNode(transition, {
-    inputRange: [0, 16 / 420],
-    outputRange: [8, 0],
-  });
+  const height = useSharedValue(0);
+  const rotateChevronValue = useSharedValue(0);
+  //const height = mix(transition.value, 0, LIST_ITEM_HEIGHT * 1);
+  /* const bottomRadius = interpolate(transition.value,
+    [0, 16 / 420],
+    [8, 0]
+  ); */
 
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
 
@@ -58,62 +58,73 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef, displayOnly 
       setToggleCheckBox(form["m38:DL_ADESTACAR"] === 'Y' ? true : false)
   }, [])
 
+  const setTransitionOpen = () => {
+    if (height.value === 0){height.value = LIST_ITEM_HEIGHT}
+    if (height.value === LIST_ITEM_HEIGHT){height.value = 0}
+    if (rotateChevronValue.value ===0){rotateChevronValue.value = Math.PI}
+    if (rotateChevronValue.value ===Math.PI){rotateChevronValue.value = 0}
+    console.log("rotateChevronValue.value1",rotateChevronValue.value  );
+    
+
+  }
+
+
   const scrollto = () => {
+    setTransitionOpen();
     switch (MeuItemType.MeuItemType) {
       case 'Registro':
-        
-        
-        setOpen((prev) => !prev);  
         setTimeout(() => {
           scrollViewRef?.current?.scrollTo({ y: heightDimension <= 593 ? heightDimension <= 534 ? 0 : 20 : 40, animated: true })
-        }, 200);
+        }, 100);
         break;
       case 'Comentarios':
-        
-        setOpen((prev) => !prev)  ;
-  setTimeout(() => {
-    scrollViewRef?.current?.scrollTo({ y: heightDimension <= 593 ? heightDimension <= 534 ? 100 : 120 : 160, animated: true })
-}, 200);
-        
+        setTimeout(() => {
+          scrollViewRef?.current?.scrollTo({ y: heightDimension <= 593 ? heightDimension <= 534 ? 100 : 120 : 160, animated: true })
+        }, 100);
         break;
       case 'Preguntas':
-        setOpen((prev) => !prev)  ;
         setTimeout(() => {
-          scrollViewRef?.current?.scrollTo({ y: heightDimension <= 593 ? heightDimension <= 534 ? 200 : 240 : 300, animated: true }) 
-        }, 200);
-        
-        
+          scrollViewRef?.current?.scrollTo({ y: heightDimension <= 593 ? heightDimension <= 534 ? 200 : 240 : 300, animated: true })
+        }, 100);
         break;
       case 'ReglasOro':
-        
-        setOpen((prev) => !prev)  ;
-
         setTimeout(() => {
           scrollViewRef?.current?.scrollTo({ y: heightDimension <= 593 ? heightDimension <= 534 ? 300 : 340 : 420, animated: true })
-        }, 200);
- 
+        }, 100);
         break;
     }
   }
+  const heightListOpen = useAnimatedStyle(() => {
+    return {
+      height: withSpring(height.value,{
+        mass: 1,
+        damping: 100,
+        stiffness: 250,})
+    };
+  });
 
   return (
     <>
-      <TouchableWithoutFeedback onPress={() => { scrollto() }}>
+      <TouchableWithoutFeedback onPress={() => {
+        console.log("se toca boton chevron------");
+
+        scrollto();
+      }}>
         <Animated.View
           style={[
             styles.container,
-            {
+            /* {
               borderBottomLeftRadius: bottomRadius,
               borderBottomRightRadius: bottomRadius,
-            },
+            }, */
           ]}
         >
           <Text style={styles.title}>{list.name}</Text>
-          <Chevron {...{ transition }} />
+          <Chevron rotateChevronValue={rotateChevronValue} />
         </Animated.View>
       </TouchableWithoutFeedback>
 
-      <Animated.View style={[styles.items, { height }]}>
+      <Animated.View style={[styles.items, heightListOpen]}>
         <ScrollView
           style={{
             borderBottomLeftRadius: 8,
@@ -209,19 +220,19 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef, displayOnly 
                   disabled={displayOnly}
                 />
 
-                <PickerSelect 
+                <PickerSelect
                   form={form}
-                  placeholder="¿Aplico interrupción de tareas?" 
-                  type="DLHR_POLITINTERTAREA" 
-                  onChange={onChange} 
+                  placeholder="¿Aplico interrupción de tareas?"
+                  type="DLHR_POLITINTERTAREA"
+                  onChange={onChange}
                   disabled={displayOnly}
                 />
 
-                <PickerSelect 
+                <PickerSelect
                   form={form}
-                  placeholder="Cuasi accidente" 
-                  type="DLHR_CUASIACC" 
-                  onChange={onChange} 
+                  placeholder="Cuasi accidente"
+                  type="DLHR_CUASIACC"
+                  onChange={onChange}
                   disabled={displayOnly}
                 />
 
@@ -252,7 +263,7 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef, displayOnly 
                     width: '100%',
                     justifyContent: 'space-between',
                     paddingHorizontal: 30,
-                    marginVertical: Platform.OS==='ios'?10:0
+                    marginVertical: Platform.OS === 'ios' ? 10 : 0
                   }}>
                   <Text style={{ color: colors.dlsTextwhite, fontSize: 15 }}>A destacar</Text>
                   <CheckBox
@@ -266,12 +277,12 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef, displayOnly 
                     }}
                   />
                 </View>
-                
-                <PickerSelect 
+
+                <PickerSelect
                   form={form}
-                  placeholder="Requiere APS de seguimiento *" 
-                  type="DLHR_REQAPSSEG" 
-                  onChange={onChange} 
+                  placeholder="Requiere APS de seguimiento *"
+                  type="DLHR_REQAPSSEG"
+                  onChange={onChange}
                   disabled={displayOnly}
                 />
 
@@ -332,7 +343,7 @@ export default ({ form, onChange, list, MeuItemType, scrollViewRef, displayOnly 
       </Animated.View>
     </>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {

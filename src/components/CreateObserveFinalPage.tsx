@@ -95,13 +95,16 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
     });
 
     useEffect(() => {
-        setTimeout(() => {
+        /* setTimeout(() => {
             NewObservCard({ form, setReqSended, setBgCircleColor, loadingValue, cardDescr, setCardDescr, setReloadCardList, setErrorType, setStartBackScreen });
-        }, 2000);
+        }, 2000); */
+
+            NewObservCard({ form, setReqSended, setBgCircleColor, loadingValue, cardDescr, setCardDescr, setReloadCardList, setErrorType, setStartBackScreen });
+
     }, [])
 
     const runNavigationPop = () =>{
-        navigation.removeListener('beforeRemove', () => { });
+        //navigation.removeListener('beforeRemove', () => { });
         navigation.pop(3);
     }
 
@@ -109,11 +112,11 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
 
         console.log("se ejecuto startBackScreen: ", startBackScreen);
 
-        startBackScreen &&
+        /* startBackScreen &&
          setTimeout(() => {
             console.log("se ejecuta set timeout");
             runNavigationPop();
-        }, 8000);  
+        }, 8000); */  
 
         /* switch (errorType) {
             case "NETWORK":
@@ -126,12 +129,12 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
         } */
     }, [startBackScreen]);
 
-    useEffect(() => {
+    /* useEffect(() => {
         navigation.addListener('beforeRemove', (e) => {
             // Prevent default behavior of leaving the screen
             e.preventDefault();
-        })
-    }, []);
+        }) 
+    }, []); */
 
     return (
         <View style={{ flex: 1, backgroundColor: colors.dlsGrayPrimary }}>
@@ -152,10 +155,6 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
             <Animated.View style={[{ width: '100%', alignItems: 'flex-end' }, animatedHomeIcon]}>
                 <TouchableOpacity
                     style={{ paddingRight: 10, paddingTop: 10 }}
-                    /* onPress={() => {
-                        navigation.removeListener('beforeRemove', () => { });
-                        navigation.pop(3);
-                    }} */
                     onPress={runNavigationPop}
                     >
                     <Icon name="home" size={40} color="white" />

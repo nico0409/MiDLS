@@ -1,10 +1,8 @@
 import React from "react";
-import { StyleSheet, processColor } from "react-native";
+import { StyleSheet } from "react-native";
 
-import Animated from "react-native-reanimated";
-import { mix } from "react-native-redash/src/v1";
-import  Icon  from "react-native-vector-icons/Ionicons";
-import { mixColor } from "../../libs/react-native-redash/src/v1";
+import Animated, { SharedValue, useAnimatedStyle, withTiming } from "react-native-reanimated";
+import Icon from "react-native-vector-icons/Ionicons";
 import { colors } from "../../Themes/DlsTheme";
 
 const size = 30;
@@ -19,21 +17,24 @@ const styles = StyleSheet.create({
 });
 
 interface ChevronProps {
-  transition: Animated.Node<number>;
+  rotateChevronValue: SharedValue<number>
 }
 
-export default ({ transition }: ChevronProps) => {
-  const rotateZ = mix(transition, Math.PI, 0) as any;
-  const backgroundColor = mixColor(
-    transition,
-    processColor(colors.dlsBtonColosWhite)!,
-    processColor(colors.dlsBluePrimary)!
-  ) as any
+export default ({rotateChevronValue }: ChevronProps) => {
+  
+  const rotateChevron = useAnimatedStyle(() => {
+    return {
+      transform: [{
+        rotateZ: withTiming(`${rotateChevronValue.value}rad`, { duration: 200 })
+      }],
+    };
+  });
+
   return (
     <Animated.View
-      style={[styles.container,  { transform: [{ rotateZ }], backgroundColor }  ]}
+      style={[styles.container, rotateChevron]}
     >
-      <Icon name="chevron-up" color="black" size={24} />
+      <Icon name="chevron-up" color={colors.dlsYellowSecondary} size={24} />
     </Animated.View>
   );
 };

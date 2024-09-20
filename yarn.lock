@@ -7919,7 +7919,7 @@ __metadata:
     react-native-network-info: "npm:^5.2.1"
     react-native-pager-view: "npm:^6.4.1"
     react-native-reanimated: "npm:3.15.1"
-    react-native-redash: "npm:^16.2.2"
+    react-native-redash: "npm:^18.1.3"
     react-native-safe-area-context: "npm:^3.2.0"
     react-native-screens: "npm:^3.34.0"
     react-native-send-intent: "npm:^1.3.0"
@@ -9081,9 +9081,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-redash@npm:^16.2.2":
-  version: 16.3.0
-  resolution: "react-native-redash@npm:16.3.0"
+"react-native-redash@npm:^18.1.3":
+  version: 18.1.3
+  resolution: "react-native-redash@npm:18.1.3"
   dependencies:
     abs-svg-path: "npm:^0.1.1"
     normalize-svg-path: "npm:^1.0.1"
@@ -9093,7 +9093,7 @@ __metadata:
     react-native: "*"
     react-native-gesture-handler: "*"
     react-native-reanimated: ">=2.0.0"
-  checksum: 10c0/0913cebe9dba4a013568e3bc2dd3ea7c5b7f6df783d0b4cd9591a75f57af6de0a879773a49b834a521d3d106dafcdf53f49029d1c021deba2ca103c26c98af4d
+  checksum: 10c0/70f96f15a54cf3bc8ac5d1d7b76e2ef23b699058ad48ce55e2df67880f1a7494924763aa05eba8c8501a893dc4a70fda6b89fb83660f7e09dcbe3c5523dc5355
   languageName: node
   linkType: hard
 

@@ -224,12 +224,12 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
                             form['m38:DL_MAN_CAMBIO'] !== 'Y') {
                             questionsErrorMessage('RuleGold');
                         } else {
-                            onChange(moment().format('YYYY-MM-DD HH:mm:ss'), 'm38:DL_MIDLS_DTTM');
+                            //onChange(moment().format('YYYY-MM-DD HH:mm:ss'), 'm38:DL_MIDLS_DTTM');
                             navigation.navigate('CreateObserveFinalPage');
                         }
                     } else {
 
-                        onChange(moment().format('YYYY-MM-DD HH:mm:ss'), 'm38:DL_MIDLS_DTTM');
+                        //onChange(moment().format('YYYY-MM-DD HH:mm:ss'), 'm38:DL_MIDLS_DTTM');
                         navigation.navigate('CreateObserveFinalPage');
                     };
                 } else {

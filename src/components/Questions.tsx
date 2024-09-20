@@ -17,20 +17,20 @@ interface Props {
 
 export const QuestionsCmp = ({ form, questiontType, onChange, darkText = false }: Props) => {
 
-  let initialValue = 0
+  let initialValue = "0";
 
   const mapValuesToIndex = (value: string = '') => {
     switch (value) {
       case 'A':
-        return 0
+        return "0"
       case 'B':
-        return 1
+        return "1"
       case 'C':
-        return 2
+        return "2"
       case 'D':
-        return 3
+        return "3"
       default:
-        return 4
+        return "NotFound"
     }
   }
 
@@ -61,7 +61,7 @@ export const QuestionsCmp = ({ form, questiontType, onChange, darkText = false }
       fontSize: 16
     }
   });
-
+  
   if (form !== undefined) {
     initialValue = mapValuesToIndex(form?.[data[0].field]!)
   }
