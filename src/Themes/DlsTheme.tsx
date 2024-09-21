@@ -5,7 +5,7 @@ const {width,height} = Dimensions.get('window');
 export const styless = StyleSheet.create({
   containerWebView: {
     flex: 1,
-    paddingTop: '5%',
+    //paddingTop: '5%',
     justifyContent: 'center',
   },
   webview: {

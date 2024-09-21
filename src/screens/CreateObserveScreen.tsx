@@ -141,7 +141,7 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
         },[]); */
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1,backgroundColor: colors.dlsGrayPrimary}}>
             <View style={{ flex: 1, backgroundColor: colors.dlsGrayPrimary }}>
 
                 <View style={{ height: 60, width: '100%', flexDirection: 'row', alignItems: 'center' }}>

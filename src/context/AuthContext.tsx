@@ -1,5 +1,5 @@
 import React, { createContext, useReducer, useState, useEffect } from 'react';
-import { AppState, Platform } from 'react-native';
+import { AppState, Platform, PermissionsAndroid } from 'react-native';
 import { useNetInfo } from '@react-native-community/netinfo';
 import { authReducer, AuthState } from './authReducer'
 import { SendObserveStorage } from '../components/SendObserveStorage';
@@ -13,6 +13,7 @@ import { CheckUpdateIos } from '../components/CheckUpdateIos';
 
 import BackgroundService from 'react-native-background-actions';
 import { useAppState } from '../hooks/useAppState';
+import { colors } from '../Themes/DlsTheme';
 
 type AuthContextProps = {
     status: 'checking' | 'authenticated' | 'not-authenticated';
@@ -208,13 +209,13 @@ export const AuthProvider = ({ children }: any) => {
 
     const options = {
         taskName: 'Mi Dls Sincronización',
-        taskTitle: 'Mi Dls',
+        taskTitle: 'Mi Dls - Sincronización',
         taskDesc: 'Servicio de sincronización de datos Activo.',
         taskIcon: {
-            name: 'ic_launcher',
+            name: 'white_dls_logo',
             type: 'mipmap',
         },
-        color: '#ff00ff',
+        color: colors.dlsGrayPrimary,
         linkingURI: ' ',
         parameters: {
             delay: 60000,/* 1 min */
@@ -245,6 +246,21 @@ export const AuthProvider = ({ children }: any) => {
 
     useEffect(() => {
         runBackgroundService();
+    }, []);
+
+    const requestNotificationPermission = async () => {
+        if (Platform.OS === 'android' && Platform.Version >= 33) {
+            const granted = await PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
+            );
+            if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
+                console.log("Permiso para notificaciones denegado");
+            }
+        }
+    };
+
+    useEffect(() => {
+        requestNotificationPermission();
     }, []);
 
     return (

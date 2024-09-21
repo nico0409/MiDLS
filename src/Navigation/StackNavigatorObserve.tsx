@@ -134,10 +134,7 @@ export const StackNavigatorObserve = ({ navigation }: Props) => {
                         :
                         <Stack.Navigator
                             screenOptions={{
-                                headerShown: false,
-                                cardStyle: {
-                                    backgroundColor: 'white'
-                                }
+                                headerShown: false
                             }}
                         >
                             {showWelcomeScreen &&

@@ -174,7 +174,7 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
     };
 
     return (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1 ,backgroundColor:colors.dlsGrayPrimary}}>
             <View style={{ ...styles.container, height: height }}>
                 <View style={{ height: '10%', width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
 

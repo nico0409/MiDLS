@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { View, Dimensions, StyleSheet, TouchableOpacity, Text, BackHandler } from 'react-native';
 
 import { StackScreenProps } from '@react-navigation/stack';
@@ -11,6 +11,7 @@ import { AuthContext } from '../context/formContext/AuthContext';
 import { AuthContext as AuthcontextGeneral } from '../context/AuthContext'
 import { NewObservCard } from './NewObservCard';
 import Card from './Transformations/components/Card';
+import { useFocusEffect } from '@react-navigation/native';
 
 interface Props extends StackScreenProps<any, any> { };
 
@@ -29,7 +30,7 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
     const [reqSended, setReqSended] = useState<'pending' | 'sended' | 'error'>('pending');
     const [errorType, setErrorType] = useState<'SERVER' | 'NETWORK'>();
     const [bgCircleColor, setBgCircleColor] = useState('grey');
-    const [startBackScreen,setStartBackScreen] = useState(false);
+    const [startBackScreen, setStartBackScreen] = useState(false);
 
     const opacityHomeValue = useSharedValue(0);
     const loadingValue = useSharedValue(0);
@@ -95,46 +96,30 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
     });
 
     useEffect(() => {
-        /* setTimeout(() => {
-            NewObservCard({ form, setReqSended, setBgCircleColor, loadingValue, cardDescr, setCardDescr, setReloadCardList, setErrorType, setStartBackScreen });
-        }, 2000); */
 
-            NewObservCard({ form, setReqSended, setBgCircleColor, loadingValue, cardDescr, setCardDescr, setReloadCardList, setErrorType, setStartBackScreen });
+        NewObservCard({ form, setReqSended, setBgCircleColor, loadingValue, cardDescr, setCardDescr, setReloadCardList, setErrorType, setStartBackScreen });
 
     }, [])
 
-    const runNavigationPop = () =>{
+    const runNavigationPop = () => {
+        //navigation.pop(3);
+        navigation.replace('TarjetaObserveScreen');
         //navigation.removeListener('beforeRemove', () => { });
-        navigation.pop(3);
-    }
+    };
 
-    useEffect(() => {
-
-        console.log("se ejecuto startBackScreen: ", startBackScreen);
-
-        /* startBackScreen &&
-         setTimeout(() => {
-            console.log("se ejecuta set timeout");
-            runNavigationPop();
-        }, 8000); */  
-
-        /* switch (errorType) {
-            case "NETWORK":
-            case "SERVER":
-                setTimeout(() => { 
-                    console.log("se ejecuta set timeout navigation");
-                    runNavigationPop();
-                }, 8000)
-                break;
-        } */
-    }, [startBackScreen]);
-
-    /* useEffect(() => {
-        navigation.addListener('beforeRemove', (e) => {
-            // Prevent default behavior of leaving the screen
-            e.preventDefault();
-        }) 
-    }, []); */
+    useFocusEffect(
+        useCallback(() => {
+            const onBackPress = () => {
+              navigation.pop(3)
+              return true; // Esto previene el comportamiento por defecto
+            };
+        
+            BackHandler.addEventListener('hardwareBackPress', onBackPress);
+        
+            return () =>
+              BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+          }, [navigation])
+        );
 
     return (
         <View style={{ flex: 1, backgroundColor: colors.dlsGrayPrimary }}>
@@ -156,7 +141,7 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
                 <TouchableOpacity
                     style={{ paddingRight: 10, paddingTop: 10 }}
                     onPress={runNavigationPop}
-                    >
+                >
                     <Icon name="home" size={40} color="white" />
                 </TouchableOpacity>
             </Animated.View>

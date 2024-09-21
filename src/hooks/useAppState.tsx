@@ -18,9 +18,9 @@ export const useAppState = () => {
       setAppState(newStatus);
     }
 
-    AppState.addEventListener('change', appStateChange);
+    const subscription = AppState.addEventListener('change', appStateChange);
     return () => {
-      AppState.removeEventListener('change', appStateChange);
+      subscription.remove();
     };
   }, []);
 
