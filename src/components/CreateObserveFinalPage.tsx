@@ -102,9 +102,7 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
     }, [])
 
     const runNavigationPop = () => {
-        //navigation.pop(3);
-        navigation.replace('TarjetaObserveScreen');
-        //navigation.removeListener('beforeRemove', () => { });
+        navigation.pop(3)
     };
 
     useFocusEffect(
