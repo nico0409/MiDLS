@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const PSDB = axios.create({
-    baseURL: 'http://10.0.10.251:27600/PSIGW/PeopleSoftServiceListeningConnector',
+    baseURL: 'http://www.dls-peoplesoft.com:57609/PSIGW/PeopleSoftServiceListeningConnector',
     timeout: 30000 
 });
 
