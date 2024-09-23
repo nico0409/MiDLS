@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
-import { SharedValue } from 'react-native-reanimated';
 import { colors } from '../Themes/DlsTheme';
 import { objUseForm, promptType, DlhrAllObserve } from '../interfaces/prompInterfaces';
 import { AuthContext } from '../context/formContext/AuthContext';

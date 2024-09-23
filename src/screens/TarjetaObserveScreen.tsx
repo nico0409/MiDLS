@@ -17,6 +17,10 @@ import { useIsFocused } from '@react-navigation/native';
 import { useNetInfo } from '@react-native-community/netinfo';
 
 import { AuthContext as AuthcontextGeneral } from '../context/AuthContext'
+import { AuthContext as AuthcontextForm} from '../context/formContext/AuthContext';
+import { initialObsFormData } from '../data/initialObsFormData';
+import { initialObsCardDescr } from '../data/initialObsCardDescr';
+import moment from 'moment';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
 
@@ -36,6 +40,8 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
     const [term, setTerm] = useState('')
     const [placeHolder, setPlaceHolder] = useState<fieldSearchType>({ label: 'Numero de tarjeta' })
 
+    const { reloadCardList, setReloadCardList, backgroundRequestReload, setBackgroundRequestReload } = useContext(AuthcontextGeneral);
+    const { setFormValue,setCardDescr } = useContext(AuthcontextForm);
 
 
     const { allObserveList, isloading, loadAllObserve } = useAllObserve(route.params!.emplid)
@@ -119,22 +125,13 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
 
     useEffect(() => {
         if (emplid.fieldValue1 !== route.params!.emplid) {
-
             navigation.replace(
                 'TarjetaObserveScreen',
                 { name: emplid.fieldValue2, emplid: emplid.fieldValue1 });
+
+            setReloadCardList(true);
         }
     }, [emplid])
-
-
-    /* useEffect(() => {
-        if (isConnected === true) {
-            console.log("se ejecuta is connected");
-            
-        }
-    }, [isConnected]); */
-
-    const { reloadCardList, setReloadCardList, backgroundRequestReload, setBackgroundRequestReload } = useContext(AuthcontextGeneral);
 
     useEffect(() => {
         console.log("reloadCardList?: ", reloadCardList);
@@ -297,7 +294,9 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
                 activeOpacity={0.6}
                 style={{ zIndex: 999, ...styles.addButtonContainer }}
                 onPress={() => {
-                    navigation.navigate('CreateObserveScreen')
+                    setCardDescr({ ...initialObsCardDescr, ...{ DL_OBSERVADOR: emplid.fieldValue1,DL_IDENTIF_DT: moment().format('YYYY-MM-DD')} })
+                    setFormValue({ ...initialObsFormData, ...{ "m38:DL_OBSERVADOR": emplid.fieldValue1,"m38:DL_IDENTIF_DT": moment().format('YYYY-MM-DD')} }) 
+                    navigation.navigate('CreateObserveScreen');
                 }}
             >
                 <View style={styles.addButton} >

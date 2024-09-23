@@ -20,7 +20,7 @@ export const CheckUpdateAndroid = async ({ setAppNeedsUpdate, setAppLockScreen }
             if (check.needsUpdate === true) {
                 let oldVersArr = DeviceInfo.getVersion().split('.');
                 let newVersArr = check.version.split('.');
-
+                
                 if (parseInt(newVersArr[0]) > parseInt(oldVersArr[0])) {
                     setAppLockScreen(true);
                 } else if (parseInt(newVersArr[1]) > parseInt(oldVersArr[1])) {

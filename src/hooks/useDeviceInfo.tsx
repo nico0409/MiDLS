@@ -11,6 +11,7 @@ export const useDeviceInfo = () => {
     const [deviceName, setDeviceName] = useState('');
     const [model, setModel] = useState('');
     const [externalIp, setExternalIp] = useState('');
+    const [currentAppVersion,setCurrentAppVersion] = useState('');
 
     const getDeviceId = async () => {
 
@@ -35,6 +36,8 @@ export const useDeviceInfo = () => {
         await NetworkInfo.getIPV4Address().then(ipV4Addres => {
             ipV4Addres && setExternalIp(ipV4Addres);
         });
+
+        setCurrentAppVersion(DeviceInfo.getVersion());
     };
 
     useEffect(() => {
@@ -45,6 +48,6 @@ export const useDeviceInfo = () => {
     }, []);
 
 
-    return { deviceId, brand, deviceName, model, externalIp }
+    return { deviceId, brand, deviceName, model, externalIp,currentAppVersion }
 
 }

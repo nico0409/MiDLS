@@ -1,5 +1,5 @@
 import { Dimensions } from 'react-native';
-import { SharedValue, log } from 'react-native-reanimated';
+import { SharedValue } from 'react-native-reanimated';
 import { j2xParser, parse } from 'fast-xml-parser';
 
 import PSDB from '../api/PSDB';
@@ -108,8 +108,9 @@ export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingVal
          const newForm = {
             ...form,
             ...{ "m38:DL_NTARJETA": nroTarjetaEmpty + ((arrayCardsDescrOffline ? (arrayCardsDescrOffline.length + 1) : 1).toString()),
-                 "m38:DL_PREV_COLOR_ST": err.response ? 'R' : 'O',
-                 "m38:DL_DEFERRED_CARD": "Y"},
+                 //"m38:DL_PREV_COLOR_ST": err.response ? 'R' : 'O',
+                 //"m38:DL_DEFERRED_CARD": "Y"
+               },
          }
 
 

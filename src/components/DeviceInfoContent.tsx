@@ -14,7 +14,7 @@ import moment from 'moment';
 
 export const DeviceInfoContent = () => {
 
-    const { deviceId,brand, deviceName, model, externalIp } = useDeviceInfo();
+    const { deviceId,brand, deviceName, model, externalIp,currentAppVersion } = useDeviceInfo();
     const {setReloadCardList} = useContext(AuthContext)
 
     const [lastUpdDataDate, setLastUpdDataDate] = useState('-');
@@ -107,6 +107,10 @@ export const DeviceInfoContent = () => {
                 <View style={styles.fieldContainer}>
                     <Text style={styles.fieldTextStyle}>Fecha actualización Observe:</Text>
                     <Text style={styles.valueTextStyle}>{lastTObsUpdateDttm}</Text>
+                </View>
+                <View style={styles.fieldContainer}>
+                    <Text style={styles.fieldTextStyle}>Versión de la App:</Text>
+                    <Text style={styles.valueTextStyle}>{currentAppVersion}</Text>
                 </View>
             </View>
 

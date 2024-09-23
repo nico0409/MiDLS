@@ -19,7 +19,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 
 
 /* interface Props extends DrawerScreenProps<RoutstackParams, 'TarjetaObserveScreen'> { }; */
-interface Props extends StackScreenProps<RoutstackParams, 'TarjetaObserveScreen'> { };
+interface Props extends StackScreenProps<any, any> { };
 export const EmplidObserveScreen = ({ navigation, route }: Props) => {
 
 

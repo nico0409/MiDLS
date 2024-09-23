@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer,DarkTheme } from '@react-navigation/native';
 
 
 
@@ -20,7 +20,7 @@ const AppState=({children}:{children:JSX.Element|JSX.Element[]})=>{
 
  const App = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={DarkTheme}>
       <AppState>
         <DrawerNavigation/>
       </AppState>

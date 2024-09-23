@@ -24,7 +24,6 @@ export const DatePickerSelect = ({ onChange, form, cardDescr, setCardDescr, disa
     
     const formatearFechaEnCodigo = (dateString: string) => {
         
-        console.log("dateSTRING: ",dateString);
         
         //let dateToFormat = dateString.split(/[\s-:/]/);
         //let dateFormated = new Date(parseInt(dateToFormat![0]), (parseInt(dateToFormat![1], 10) - 1), parseInt(dateToFormat![2], 10));        
@@ -69,10 +68,6 @@ export const DatePickerSelect = ({ onChange, form, cardDescr, setCardDescr, disa
     };
 
     const formattedDate = (d:Date) => {
-
-        console.log("date recibido: ",d);
-        console.log("date recibidoEN MOMENT: ",moment(d,'YYYY-MM-DD').format('DD/MM/YYYY'));
-        console.log(" recibidoEN MOMENT: ",moment().format('DD/MM/YYYY'));
         
         
         /* let month = String(d.getMonth() + 1);

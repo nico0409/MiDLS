@@ -18,19 +18,19 @@ const Tab = createMaterialTopTabNavigator();
 
 
 export const TopTapNavigator = ({ navigation, route }: Props) => {
-  
+
   return (
     <SafeAreaView style={styles.container}>
 
       <ToggleDrawerHeader navigation={navigation} route={route} />
 
       <Tab.Navigator
-      
-     /*  sceneContainerStyle={{
-        backgroundColor: colors.dlsGrayPrimary
-      }} */
-        swipeEnabled={false}
-        
+
+        /*  sceneContainerStyle={{
+           backgroundColor: colors.dlsGrayPrimary
+         }} */
+        /* swipeEnabled={false}
+
         tabBarOptions={{
           showIcon: true,
           showLabel: false,
@@ -47,11 +47,25 @@ export const TopTapNavigator = ({ navigation, route }: Props) => {
             shadowRadius: 5,
             elevation: 3,
           }
-          
-
-        }}
-          initialRouteName='NewsScreen'
+        }} */
+        initialRouteName='NewsScreen'
         screenOptions={({ route }) => ({
+          swipeEnabled: false,
+          tabBarShowIcon: true,
+          tabBarShowLabel: false,
+          tabBarPressColor: colors.dlsYellowSecondary,
+          tabBarActiveTintColor: colors.dlsYellowSecondary,
+          tabBarInactiveTintColor: colors.dlsBluePrimary,
+          tabBarIndicatorStyle: { backgroundColor: colors.dlsBluePrimary },
+          tabBarStyle: {
+            paddingVertical: 6,
+            backgroundColor: colors.dlsGrayPrimary,
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: -3 },
+            shadowOpacity: 0.13,
+            shadowRadius: 5,
+            elevation: 3,
+          },
           tabBarIcon: ({ color, focused }) => {
 
             let iconName: string = '';
@@ -76,9 +90,9 @@ export const TopTapNavigator = ({ navigation, route }: Props) => {
         })}
 
       >
-        <Tab.Screen name="NewsScreen" component={NewsScreen} options={{ title: 'Home' }}  />
+        <Tab.Screen name="NewsScreen" component={NewsScreen} options={{ title: 'Home' }} />
         <Tab.Screen name="MapScreen" component={MapScreen} />
-        <Tab.Screen name="MyProfileScreen" component={MyProfileScreen}  />
+        <Tab.Screen name="MyProfileScreen" component={MyProfileScreen} />
       </Tab.Navigator>
 
     </SafeAreaView>

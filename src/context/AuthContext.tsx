@@ -1,5 +1,5 @@
 import React, { createContext, useReducer, useState, useEffect } from 'react';
-import { AppState } from 'react-native';
+import { AppState, Platform, PermissionsAndroid } from 'react-native';
 import { useNetInfo } from '@react-native-community/netinfo';
 import { authReducer, AuthState } from './authReducer'
 import { SendObserveStorage } from '../components/SendObserveStorage';
@@ -12,6 +12,8 @@ import { CheckUpdateAndroid } from '../components/CheckUpdateAndroid';
 import { CheckUpdateIos } from '../components/CheckUpdateIos';
 
 import BackgroundService from 'react-native-background-actions';
+import { useAppState } from '../hooks/useAppState';
+import { colors } from '../Themes/DlsTheme';
 
 type AuthContextProps = {
     status: 'checking' | 'authenticated' | 'not-authenticated';
@@ -71,6 +73,8 @@ export const AuthProvider = ({ children }: any) => {
     const [appLockScreen, setAppLockScreen] = useState(false);
     const [appLinkUpdateIos, setAppLinkUpdateIos] = useState("");
 
+    const { status } = useAppState();
+
     const [isErrorResponse, setIsErrorResponse] = useState(false);
 
     let currentUrlNews = '';
@@ -118,17 +122,45 @@ export const AuthProvider = ({ children }: any) => {
 
     };
 
-    const refreshData = async () => {
-        console.log("se inicia refresh data");
+    const checkAppUpdates = async () => {
+        Platform.OS === "android" && await CheckUpdateAndroid({ setAppNeedsUpdate, setAppLockScreen });
+        Platform.OS === "ios" && await CheckUpdateIos({ setAppNeedsUpdate, setAppLockScreen, setAppLinkUpdateIos });
+    }
 
-        await CheckUpdateAndroid({ setAppNeedsUpdate, setAppLockScreen });
-        await CheckUpdateIos({ setAppNeedsUpdate, setAppLockScreen, setAppLinkUpdateIos });
+    const validateRefreshLoadObserveBG = async () => {
+        console.log("se inicia validateRefreshLoadObserveBG");
 
-        if (!appLockScreen) {
+        checkAppUpdates();
 
-            const prompts: StorageTypes = { StorageType: 'prompt' };
+        function validateObject(object: any): object is refreshLoadObserveBG {
+            return true
+        }
+        const getRefreshBGValue = await GetStorage({ StorageType: 'refreshLoadObserveBG' });
 
-            await Asingstorage(prompts, await GetPrompt(setIsErrorResponse));
+        if (getRefreshBGValue !== null) {
+            if (validateObject(getRefreshBGValue)) {
+                console.log("getRefreshBGValue.refreshLoadObserve", getRefreshBGValue.refreshLoadObserve);
+
+                getRefreshBGValue.refreshLoadObserve && setReloadCardList(true);
+                getRefreshBGValue.refreshLoadObserve && setBackgroundRequestReload(true);
+                getRefreshBGValue.refreshLoadObserve && await Asingstorage({ StorageType: 'refreshLoadObserveBG' }, { refreshLoadObserve: false });
+            }
+        }
+    }
+
+    const refreshData = async (refreshPromptToo: boolean) => {
+        console.log("se inicia refresh data: ");
+
+        checkAppUpdates();
+
+        if (appLockScreen) {
+            console.log("background service finished");
+        } else {
+            console.log("background service NO finished");
+            if (refreshPromptToo) {
+                const prompts: StorageTypes = { StorageType: 'prompt' };
+                await Asingstorage(prompts, await GetPrompt(setIsErrorResponse));
+            }
 
             await SendObserveStorage();
 
@@ -145,125 +177,90 @@ export const AuthProvider = ({ children }: any) => {
                 default:
                     break;
             }
-
-            //setReloadCardList(true);
-            //setBackgroundRequestReload(true);
         }
     };
 
-    const validateRefreshLoadObserveBG = async () => {
-        console.log("comienza a validar refresh interno");
-        
-        function validateObject(object: any): object is refreshLoadObserveBG {
-            return true
-        }
-        const getRefreshBGValue = await GetStorage({ StorageType: 'refreshLoadObserveBG' });
-
-        if (getRefreshBGValue !== null) {
-            if (validateObject(getRefreshBGValue)) {
-                console.log("getRefreshBGValue.refreshLoadObserve", getRefreshBGValue.refreshLoadObserve);
-
-                getRefreshBGValue.refreshLoadObserve && setReloadCardList(true);
-                getRefreshBGValue.refreshLoadObserve && setBackgroundRequestReload(true);
-                getRefreshBGValue.refreshLoadObserve && await Asingstorage({ StorageType: 'refreshLoadObserveBG' }, { refreshLoadObserve: false });
-            }
-        }
-
-    }
-    const handleChange = (newState:any) =>{
-        console.log("se ejecuto handleChange");
-        
-        if (newState === 'active') {
-            validateRefreshLoadObserveBG();
-        }
-    }
-
-    useEffect(() => {
-        
-        validateRefreshLoadObserveBG();
-        AppState.addEventListener('change', handleChange);  
-      
-        return () => {
-          AppState.removeEventListener('change', handleChange);  
-        }
-    }, [])
-
-    useEffect(() => {
-
-        if (isConnected === true) {
-            console.log("enviando storage");
-
-            sendObserve();
-        }
-
-    }, [isConnected])
-
     //@ts-ignore
-    const sleep = (time: number) => new Promise((resolve) => setTimeout(() => resolve(), time));
+    const sleep = (time) => new Promise((resolve) => setTimeout(() => resolve(), time));
 
     const veryIntensiveTask = async (taskDataArguments: any) => {
         // Example of an infinite loop task
+        const { delay } = taskDataArguments;
         await new Promise(async (resolve) => {
-            let lastMinuteReaded = 0;
+            let counterTo1hs = 0;
             for (let i = 0; BackgroundService.isRunning(); i++) {
-                let minute = new Date().getMinutes();
-                console.log("minute: ",minute,", lastMinuteReaded: ",lastMinuteReaded);
-                
-                switch (minute) {
-                    case 0:
-                    case 5:
-                    case 10:
-                    case 15:
-                    case 20:
-                    case 25:
-                    case 30:
-                    case 35:
-                    case 40:
-                    case 45:
-                    case 50:
-                    case 55:
-                        if (lastMinuteReaded !== minute){
-                            lastMinuteReaded = minute;
-                            refreshData();
-                        }
+                if (i > 0 && i % 15 === 0) {
+                    counterTo1hs = counterTo1hs + 1;
+                    if (counterTo1hs === 4) {
+                        /* true = refresh prompt too */
+                        refreshData(true);/* se ejecuta cada 1hs */
+                        counterTo1hs = 0;
+                        console.log(new Date());
+
+                    } else {
+                        refreshData(false);/* se ejecuta cada 15min */
+                        console.log(new Date());
+                    }
                 }
-                await sleep(30000);
+                await sleep(delay);
             }
         });
     };
 
     const options = {
         taskName: 'Mi Dls Sincronización',
-        taskTitle: 'Mi Dls',
+        taskTitle: 'Mi Dls - Sincronización',
         taskDesc: 'Servicio de sincronización de datos Activo.',
         taskIcon: {
-            name: 'ic_launcher',
+            name: 'white_dls_logo',
             type: 'mipmap',
         },
-        linkingURI: '-',
+        color: colors.dlsGrayPrimary,
+        linkingURI: ' ',
         parameters: {
-            delay: 1000,
+            delay: 60000,/* 1 min */
         },
     };
 
-    useEffect(() => {
-
-        /* BackgroundTimer no funciona correctamente en Android 13, se utiliza Background Service en su reemplazo */
-        /* BackgroundTimer.runBackgroundTimer(() => {
-            console.log("se ejecuto background timer ", new Date());
-            refreshData();
-        }, 600000); */
+    const runBackgroundService = async () => {
         console.log("BackgroundService.isRunning():", BackgroundService.isRunning());
         if (BackgroundService.isRunning()) {
             console.log("servicio ya ejecutado");
         } else {
             console.log("ejecutar back service");
-            BackgroundService.start(veryIntensiveTask, options);
+            await BackgroundService.start(veryIntensiveTask, options);
         }
-        /* BackgroundService.updateNotification({taskDesc: 'New ExampleTask description'}); // Only Android, iOS will ignore this call */
-        // iOS will also run everything here in the background until .stop() is called
-        //BackgroundService.stop();
+    };
 
+    useEffect(() => {
+        if (status === "active") {
+            validateRefreshLoadObserveBG();
+        }
+    }, [status]);
+
+    useEffect(() => {
+        if (isConnected === true) {
+            sendObserve();
+        }
+    }, [isConnected]);
+
+    useEffect(() => {
+        runBackgroundService();
+    }, []);
+
+    const requestNotificationPermission = async () => {
+        if (Platform.OS === 'android' && Platform.Version >= 33) {
+            const granted = await PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
+            );
+            if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
+                console.log("Permiso para notificaciones denegado");
+            }
+        }
+    };
+
+    useEffect(() => {
+        requestNotificationPermission();
     }, []);
 
     return (

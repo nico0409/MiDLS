@@ -129,9 +129,9 @@ export const UpdateErrorState = async (item: number) => {
     const data = await GetStorage({ StorageType: 'offlineObserveCards' });
     const dataDescr = await GetStorage({ StorageType: 'offlineObserveCardsDescr' });
 
-    if (isofflineObserveCard(data)) {
+    /* if (isofflineObserveCard(data)) {
         data[item]['m38:DL_PREV_COLOR_ST'] = 'R';
-    }
+    } */
 
     if (isofflineObserveCardDescr(dataDescr)) {
         dataDescr[item].ERR_TYPE = 'SERVER';

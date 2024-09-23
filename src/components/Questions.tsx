@@ -1,10 +1,9 @@
 import React from "react";
 import { View, Text, SafeAreaView, StyleSheet } from "react-native";
 import { M38GetCompIntfcDLHRTAOBSERVCIResponse, objUseForm } from '../interfaces/prompInterfaces';
-
 import BouncyCheckboxGroup, {
-  ICheckboxButton,
-} from "../libs/react-native-bouncy-checkbox-group";
+  CheckboxButton
+} from "react-native-bouncy-checkbox-group";
 
 import { QuestionsData } from '../data/QuestionsData';
 import { Questions, questionType } from "../interfaces/QuestionInterfaces";
@@ -18,32 +17,32 @@ interface Props {
 
 export const QuestionsCmp = ({ form, questiontType, onChange, darkText = false }: Props) => {
 
-  let initialValue = 0
+  let initialValue = "0";
 
   const mapValuesToIndex = (value: string = '') => {
     switch (value) {
       case 'A':
-        return 0
+        return "0"
       case 'B':
-        return 1
+        return "1"
       case 'C':
-        return 2
+        return "2"
       case 'D':
-        return 3
+        return "3"
       default:
-        return 4
+        return "NotFound"
     }
   }
 
-  const mapIndexToValue = (index: number) => {
+  const mapIndexToValue = (index: string|number) => {
     switch (index) {
-      case 0:
+      case "0":
         return 'A'
-      case 1:
+      case "1":
         return 'B'
-      case 2:
+      case "2":
         return 'C'
-      case 3:
+      case "3":
         return 'D'
       default:
         return 'A'
@@ -62,7 +61,7 @@ export const QuestionsCmp = ({ form, questiontType, onChange, darkText = false }
       fontSize: 16
     }
   });
-
+  
   if (form !== undefined) {
     initialValue = mapValuesToIndex(form?.[data[0].field]!)
   }
@@ -92,7 +91,7 @@ export const QuestionsCmp = ({ form, questiontType, onChange, darkText = false }
               data={data[0]?.choices!}
               style={{ flexDirection: "column" }}
               initial={initialValue}
-              onChange={(selectedItem: ICheckboxButton) => {
+              onChange={(selectedItem: CheckboxButton) => {
                 if(selectedItem===undefined){
                   onChange('', data[0].field)
                 }else{

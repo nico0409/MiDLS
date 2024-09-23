@@ -302,11 +302,11 @@ export interface M38GetCompIntfcDLHRTAOBSERVCIResponse {
   "m38:CREATEOPRID"?: string;
   "m38:LASTUPDDTTM"?: string;
   "m38:LASTUPDOPRID"?: string;
-  "m38:DL_MIDLS_DTTM"?: string;
+  /* "m38:DL_MIDLS_DTTM"?: string;
   "m38:DL_PREV_COLOR_ST"?: string;
   "m38:DL_DEFERRED_CARD"?: string;
   "m38:DL_DEVICE_ID"?: string;
-  "m38:ERROR_MESSAGE_TXT"?: string;
+  "m38:ERROR_MESSAGE_TXT"?: string; */
 }
 
 export interface objUseForm {
@@ -351,11 +351,11 @@ export interface objUseForm {
   "m38:CREATEOPRID"?: string;
   "m38:LASTUPDDTTM"?: string;
   "m38:LASTUPDOPRID"?: string;
-  "m38:DL_MIDLS_DTTM"?: string;
+  /* "m38:DL_MIDLS_DTTM"?: string;
   "m38:DL_PREV_COLOR_ST"?: string;
   "m38:DL_DEFERRED_CARD"?: string;
   "m38:DL_DEVICE_ID"?: string;
-  "m38:ERROR_MESSAGE_TXT"?: string;
+  "m38:ERROR_MESSAGE_TXT"?: string; */
 }
 
 

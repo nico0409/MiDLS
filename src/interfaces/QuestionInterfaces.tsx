@@ -1,4 +1,4 @@
-import { ICheckboxButton, } from "react-native-bouncy-checkbox-group";
+import { CheckboxButton } from "react-native-bouncy-checkbox-group";
 import { objUseForm } from './prompInterfaces';
 
 export interface QuestionData {
@@ -18,7 +18,7 @@ export type Questions = {
 
   type: questionType
   question: string,
-  choices: ICheckboxButton[]
+  choices: CheckboxButton[]
   field: keyof objUseForm;
 }
 

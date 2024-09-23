@@ -22,7 +22,7 @@ import { nroTarjetaEmpty } from '../data/nroTarjetaEmpty';
 
 
 
-const list: ListModel = {
+const list1: ListModel = {
     name: "Registro",
     items: [
         { name: " ", points: "0" },
@@ -50,7 +50,7 @@ const list4: ListModel = {
     ],
 };
 
-interface Props extends StackScreenProps<RoutstackParams, 'EditObvservCardScreen'> { };
+interface Props extends StackScreenProps<any, any> { };
 
 type messageParam = 'RuleGold' | 'Questions';
 
@@ -58,10 +58,10 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
 
     const { setReloadCardList } = useContext(AuthcontextGeneral);
 
-    const { isloading, loadObserveCard, form, onChange, stateSend } = UseOneGetObserve(route.params);
+    const { isloading, loadObserveCard, form, onChange, stateSend } = UseOneGetObserve(route.params!);
 
     const [isLoadingResponse, setIsLoadingResponse] = useState(false);
-    const [errorType, setErrorType] = useState<string>(route.params.cardOffline!);
+    const [errorType, setErrorType] = useState<string>(route.params!.cardOffline);
     const [editEnabled, setEditEnabled] = useState(false);
     const [saveEnabled, setSaveEnabled] = useState(false);
     const [visibleModal, setVisibleModal] = useState(false);
@@ -129,14 +129,14 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
 
     const validateQuestions = () => {
 
-        const sendRequest = () =>{
+        const sendRequest = () => {
             setVisibleModal(true);
             setIsLoadingResponse(true);
 
-            route.params.Ntarjeta?.substring(0,3) === nroTarjetaEmpty ?
-                NewObservCardPnlEdit({ form, alertSend, setReloadCardList, onChange, formStateSend: stateSend!, setErrorType,setIsLoadingResponse })
+            route.params!.Ntarjeta.substring(0, 3) === nroTarjetaEmpty ?
+                NewObservCardPnlEdit({ form, alertSend, setReloadCardList, onChange, formStateSend: stateSend!, setErrorType, setIsLoadingResponse })
                 :
-                EditObservCard({ form: stateSend!, alertSend, setReloadCardList,setIsLoadingResponse });
+                EditObservCard({ form: stateSend!, alertSend, setReloadCardList, setIsLoadingResponse });
         }
 
         if (form['m38:DL_ORIGEN'] !== "S") {
@@ -174,7 +174,7 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
     };
 
     return (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1 ,backgroundColor:colors.dlsGrayPrimary}}>
             <View style={{ ...styles.container, height: height }}>
                 <View style={{ height: '10%', width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
 
@@ -186,7 +186,7 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
                         <Icon name="chevron-back-outline" size={40} color={colors.dlsYellowSecondary} />
                     </TouchableOpacity>
 
-                    {route.params.cardOffline === 'NETWORK' ? <></> :
+                    {route.params!.cardOffline === 'NETWORK' ? <></> :
                         editEnabled ?
                             <TouchableOpacity
                                 disabled={!saveEnabled}
@@ -254,7 +254,7 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
                             </View>
 
                             <ScrollView ref={scrollViewRef} scrollEnabled={false} showsVerticalScrollIndicator={false}>
-                                <List {...{ list }} MeuItemType={menus[0]} form={form} onChange={onChange} scrollViewRef={scrollViewRef} displayOnly={!editEnabled} />
+                                <List {...{ list: list1 }} MeuItemType={menus[0]} form={form} onChange={onChange} scrollViewRef={scrollViewRef} displayOnly={!editEnabled} />
                                 <List {...{ list: list2 }} MeuItemType={menus[1]} form={form} onChange={onChange} scrollViewRef={scrollViewRef} displayOnly={!editEnabled} />
                                 <List {...{ list: list3 }} MeuItemType={menus[2]} form={form} onChange={onChange} scrollViewRef={scrollViewRef} displayOnly={!editEnabled} />
                                 <List {...{ list: list4 }} MeuItemType={menus[3]} form={form} onChange={onChange} scrollViewRef={scrollViewRef} displayOnly={!editEnabled} />
@@ -290,7 +290,7 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
                             elevation: 13,
                         }}>
                             {isLoadingResponse ?
-                                <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+                                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                                     <Chase size={60} color="white" />
                                 </View>
                                 :
@@ -305,12 +305,12 @@ export const EditObvservCardScreen = ({ navigation, route }: Props) => {
                                         style={{
                                             alignItems: 'center',
                                             justifyContent: 'center',
-                                            position:'absolute',
-                                            top:15,
-                                            right:15
+                                            position: 'absolute',
+                                            top: 15,
+                                            right: 15
                                         }}
                                     >
-                                    <Icon name="close-outline" size={40} color={colors.dlsYellowSecondary} />
+                                        <Icon name="close-outline" size={40} color={colors.dlsYellowSecondary} />
                                     </TouchableOpacity>
                                 </View>
                             }
