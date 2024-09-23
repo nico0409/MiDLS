@@ -125,20 +125,13 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
 
     useEffect(() => {
         if (emplid.fieldValue1 !== route.params!.emplid) {
-
             navigation.replace(
                 'TarjetaObserveScreen',
                 { name: emplid.fieldValue2, emplid: emplid.fieldValue1 });
+
+            setReloadCardList(true);
         }
     }, [emplid])
-
-
-    /* useEffect(() => {
-        if (isConnected === true) {
-            console.log("se ejecuta is connected");
-            
-        }
-    }, [isConnected]); */
 
     useEffect(() => {
         console.log("reloadCardList?: ", reloadCardList);
