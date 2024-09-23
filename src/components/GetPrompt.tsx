@@ -27,7 +27,7 @@ export const GetPrompt = async (setIsErrorResponse: React.Dispatch<React.SetStat
          headers:
          {
             'Content-Type': 'text/xml',
-            SOAPAction: 'DLHR_APP_PROMPT.v1',
+            SOAPAction: 'DLHR_APP_PROMPT.v2',
 
          }
       }).then(res => {
