@@ -91,8 +91,8 @@ android {
         applicationId "com.midls"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 95
-        versionName "1.12.10" 
+        versionCode 96
+        versionName "1.12.11" 
     }
     
     signingConfigs {
