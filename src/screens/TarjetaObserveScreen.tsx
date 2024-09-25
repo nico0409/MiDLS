@@ -13,7 +13,6 @@ import Wallet from '../components/Wallet';
 import { Chase } from 'react-native-animated-spinkit'
 import { ModalPromptEmplid } from '../components/ModalPromptEmplid';
 
-import { useIsFocused } from '@react-navigation/native';
 import { useNetInfo } from '@react-native-community/netinfo';
 
 import { AuthContext as AuthcontextGeneral } from '../context/AuthContext'
@@ -21,6 +20,7 @@ import { AuthContext as AuthcontextForm} from '../context/formContext/AuthContex
 import { initialObsFormData } from '../data/initialObsFormData';
 import { initialObsCardDescr } from '../data/initialObsCardDescr';
 import moment from 'moment';
+import useScreenFocus from '../hooks/useScreenFocus';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
 
@@ -32,6 +32,7 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
 
 
     const { isConnected } = useNetInfo();
+    const isScreenFocused = useScreenFocus();
     const ScreenWidt = Dimensions.get('window').width;
     const ScreenHeight = Dimensions.get('window').height;
     const { top } = useSafeAreaInsets();
@@ -128,18 +129,19 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
             navigation.replace(
                 'TarjetaObserveScreen',
                 { name: emplid.fieldValue2, emplid: emplid.fieldValue1 });
-
+            
             setReloadCardList(true);
         }
     }, [emplid])
 
     useEffect(() => {
         console.log("reloadCardList?: ", reloadCardList);
-
+        if (isScreenFocused){
         reloadCardList && loadAllObserve();
         reloadCardList && setReloadCardList(false);
-        setBackgroundRequestReload(false);
-    }, [useIsFocused(), backgroundRequestReload]);
+        backgroundRequestReload && setBackgroundRequestReload(false);
+    }
+    }, [isScreenFocused, backgroundRequestReload]);
 
     const customImgAddObsv = () => {
         return (

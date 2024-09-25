@@ -3,13 +3,9 @@ import { parse } from 'fast-xml-parser';
 import { AllObserve, AllObserveType } from '../interfaces/prompInterfaces';
 import PSDB from '../api/PSDB';
 
-
-
 export const GetAllObserve = async (fecha: string, emplid: string, isError: boolean) => {
 
    let respuesta: AllObserveType = {}
-
-
 
    let xmls = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dlhr="http://xmlns.oracle.com/Enterprise/Tools/schemas/DLHR_MI_DLS.DLHR_REQUEST_ALL_OBSERVE.v1">\
     <soapenv:Header/>\
@@ -23,8 +19,6 @@ export const GetAllObserve = async (fecha: string, emplid: string, isError: bool
     </soapenv:Body>\
  </soapenv:Envelope>`;
 
-
-
    await PSDB.post('/DLHR_APP_MIDLS_PROMP.1.wsdl',
       xmls,
       {
@@ -36,19 +30,13 @@ export const GetAllObserve = async (fecha: string, emplid: string, isError: bool
             responseEncoding: 'binary'
          }
       }).then(res => {
-
          respuesta = {
             AllObserve: parse(decodeURIComponent(escape(res.data))),
             type: 'AllObserveType'
          }
          isError = false;
-         console.log("get all observe ok, isError: ",isError);
-         
       }).catch(err => {
          isError = true;
-         console.log("get all observe error, isError: ",isError);
-         //setErrorResponse(true)
-
       });
    return respuesta;
 }

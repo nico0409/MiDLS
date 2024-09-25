@@ -69,9 +69,6 @@ export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingVal
       setStartBackScreen(true);
    }
 
- 
-   setReloadCardList(true);
-
    PSDB.post('/CI_DLHR_TA_OBSERV_CI.1.wsdl',
       xmls,
       {
@@ -90,6 +87,7 @@ export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingVal
          })
          
          await runAnimation(true);
+         setReloadCardList(true);
 
       }).catch(async (err) => {
 
@@ -131,5 +129,6 @@ export const NewObservCard = ({ form, setReqSended, setBgCircleColor, loadingVal
 
          setErrorType(err.response ? 'SERVER' : 'NETWORK');
          await runAnimation(false,err.response ? 'SERVER' : 'NETWORK');
+         setReloadCardList(true);
       });
 }
