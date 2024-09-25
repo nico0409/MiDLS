@@ -14,6 +14,8 @@ import { CheckUpdateIos } from '../components/CheckUpdateIos';
 import BackgroundService from 'react-native-background-actions';
 import { useAppState } from '../hooks/useAppState';
 import { colors } from '../Themes/DlsTheme';
+import { CheckUpdateAndroidBoolean } from '../components/CheckUpdateAndroidBoolean';
+import { CheckUpdateIosBoolean } from '../components/CheckUpdateIosBoolean';
 
 type AuthContextProps = {
     status: 'checking' | 'authenticated' | 'not-authenticated';
@@ -149,12 +151,13 @@ export const AuthProvider = ({ children }: any) => {
     }
 
     const refreshData = async (refreshPromptToo: boolean) => {
-        console.log("se inicia refresh data: ");
-
-        checkAppUpdates();
-
-        if (appLockScreen) {
+        
+        //se chequea primero las validaciones de la version de la app en boolean porque si validamos por States, no lo hace correctamente.
+        if (await CheckUpdateAndroidBoolean() || await CheckUpdateIosBoolean()) {
             console.log("background service finished");
+            await BackgroundService.stop();
+            //se chequeo que se ejecuta codigo despues de hacer el stop, asi que enviamos a ejecutar checkAppUpdates para que muestre el modal en el momento en caso de estar con la app activa
+            await checkAppUpdates();
         } else {
             console.log("background service NO finished");
             if (refreshPromptToo) {
@@ -189,16 +192,19 @@ export const AuthProvider = ({ children }: any) => {
         await new Promise(async (resolve) => {
             let counterTo1hs = 0;
             for (let i = 0; BackgroundService.isRunning(); i++) {
+
                 if (i > 0 && i % 15 === 0) {
                     counterTo1hs = counterTo1hs + 1;
                     if (counterTo1hs === 4) {
-                        /* true = refresh prompt too */
-                        refreshData(true);/* se ejecuta cada 1hs */
+                        //true = refresh prompt too
+                        // se ejecuta cada 1hs
+                        refreshData(true);
                         counterTo1hs = 0;
                         console.log(new Date());
 
                     } else {
-                        refreshData(false);/* se ejecuta cada 15min */
+                        // se ejecuta cada 15min 
+                        refreshData(false);
                         console.log(new Date());
                     }
                 }

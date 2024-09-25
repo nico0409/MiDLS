@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import { Dimensions, Image, Text, View, StyleSheet, TouchableOpacity, ScrollView, Platform } from 'react-native';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -10,6 +10,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { colors } from '../Themes/DlsTheme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CheckBox from '@react-native-community/checkbox';
+import { AuthContext } from '../context/AuthContext';
 
 interface Props extends StackScreenProps<any, any> { };
 
@@ -21,6 +22,8 @@ export const SlidesScreen = ({ navigation }: Props) => {
 
     //CheckBox
     const [toggleCheckBox, setToggleCheckBox] = useState(false)
+
+    const { setReloadCardList } = useContext(AuthContext)
 
     
     const renderItem = (item: Slide) => {
@@ -94,6 +97,9 @@ export const SlidesScreen = ({ navigation }: Props) => {
     }
 
     const finalActionEvents = async () => {
+        
+        setReloadCardList(true);
+
         toggleCheckBox &&
             await AsyncStorage.setItem('welcomeScreenLoaded', 'loaded');
 
