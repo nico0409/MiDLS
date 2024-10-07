@@ -29,7 +29,7 @@ export const GetDeviceId = async (nombre: string, marca: string, modelo: string,
 
             }
         }).then(res => {
-            respuesta = parse(decodeURIComponent(escape(res.data)));
+            respuesta = parse(decodeURIComponent(encodeURIComponent(res.data)));
 
         }).catch(err => {
         

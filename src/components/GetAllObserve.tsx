@@ -31,7 +31,7 @@ export const GetAllObserve = async (fecha: string, emplid: string, isError: bool
          }
       }).then(res => {
          respuesta = {
-            AllObserve: parse(decodeURIComponent(escape(res.data))),
+            AllObserve: parse(decodeURIComponent(encodeURIComponent(res.data))),
             type: 'AllObserveType'
          }
          isError = false;
