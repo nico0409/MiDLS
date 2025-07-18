@@ -33,7 +33,7 @@ export const GetPrompt = async (setIsErrorResponse: React.Dispatch<React.SetStat
       }).then(res => {
          setIsErrorResponse(false);
          respuesta = {
-            PromptObserve: parse(decodeURIComponent(escape(res.data))),
+            PromptObserve: parse(decodeURIComponent(encodeURIComponent(res.data))),
             type: 'PromptObserveType'
          };
       }).catch(err => {setIsErrorResponse(true)});
