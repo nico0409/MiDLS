@@ -2,6 +2,7 @@ import React from 'react';
 import PSDB from '../api/PSDB';
 import { parse } from 'fast-xml-parser';
 import { DeviceID, DlhrDeviceResp } from '../interfaces/deviceIdInterface';
+import utf8 from 'utf8';
 
 export const GetDeviceId = async (nombre: string, marca: string, modelo: string, ip: string) => {
 
@@ -29,7 +30,7 @@ export const GetDeviceId = async (nombre: string, marca: string, modelo: string,
 
             }
         }).then(res => {
-            respuesta = parse(decodeURIComponent(encodeURIComponent(res.data)));
+            respuesta = parse(utf8.decode(res.data));
 
         }).catch(err => {
         

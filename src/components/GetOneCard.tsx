@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { parse } from 'fast-xml-parser'
 import { PromptObserve, DlhrObserveEmplid, AllObserveType, InterfGetOnesCard, OneObservType } from '../interfaces/prompInterfaces';
 import PSDB from '../api/PSDB';
-
+import utf8 from 'utf8';
 
 export const GetOneCard = async (OneCard: InterfGetOnesCard) => {
 
@@ -28,7 +28,7 @@ export const GetOneCard = async (OneCard: InterfGetOnesCard) => {
             }
         }).then(
             res => {              
-                respuesta = parse(decodeURIComponent(encodeURIComponent(res.data)))
+                respuesta = parse(utf8.decode(res.data))
             }
 
         ))

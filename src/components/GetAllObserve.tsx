@@ -2,6 +2,7 @@ import React from 'react';
 import { parse } from 'fast-xml-parser';
 import { AllObserve, AllObserveType } from '../interfaces/prompInterfaces';
 import PSDB from '../api/PSDB';
+import utf8 from 'utf8';
 
 export const GetAllObserve = async (fecha: string, emplid: string, isError: boolean) => {
 
@@ -31,7 +32,7 @@ export const GetAllObserve = async (fecha: string, emplid: string, isError: bool
          }
       }).then(res => {
          respuesta = {
-            AllObserve: parse(decodeURIComponent(encodeURIComponent(res.data))),
+            AllObserve: parse(utf8.decode(res.data)),
             type: 'AllObserveType'
          }
          isError = false;
