@@ -31,8 +31,16 @@ export const GetAllObserve = async (fecha: string, emplid: string, isError: bool
             responseEncoding: 'binary'
          }
       }).then(res => {
+         //con esta validacion verifica si debe hacer decode
+         let resData:string;
+         if (/Ã[\x80-\xBF]|Â[\x80-\xBF]|â[\x80-\xBF]|�/.test(res.data)){
+            resData = utf8.decode(res.data);
+         }else{
+            resData = res.data;
+         }
+         
          respuesta = {
-            AllObserve: parse(utf8.decode(res.data)),
+            AllObserve: parse(resData),
             type: 'AllObserveType'
          }
          isError = false;

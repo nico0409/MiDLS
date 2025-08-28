@@ -27,8 +27,15 @@ export const GetOneCard = async (OneCard: InterfGetOnesCard) => {
                 SOAPAction: 'GET.V1'
             }
         }).then(
-            res => {              
-                respuesta = parse(utf8.decode(res.data))
+            res => {    
+                //con esta validacion verifica si debe hacer decode
+                let resData:string;
+                if (/Ã[\x80-\xBF]|Â[\x80-\xBF]|â[\x80-\xBF]|�/.test(res.data)){
+                   resData = utf8.decode(res.data);
+                }else{
+                   resData = res.data;
+                }          
+                respuesta = parse(resData);
             }
 
         ))

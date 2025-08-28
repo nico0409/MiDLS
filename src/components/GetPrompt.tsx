@@ -32,9 +32,17 @@ export const GetPrompt = async (setIsErrorResponse: React.Dispatch<React.SetStat
 
          }
       }).then(res => {
+         //con esta validacion verifica si debe hacer decode
+         let resData:string;
+         if (/Ã[\x80-\xBF]|Â[\x80-\xBF]|â[\x80-\xBF]|�/.test(res.data)){
+            resData = utf8.decode(res.data);
+         }else{
+            resData = res.data;
+         }
+
          setIsErrorResponse(false);
          respuesta = {
-            PromptObserve: parse(utf8.decode(res.data)),
+            PromptObserve: parse(resData),
             type: 'PromptObserveType'
          };
       }).catch(err => {setIsErrorResponse(true)});
