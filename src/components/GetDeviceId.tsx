@@ -30,7 +30,15 @@ export const GetDeviceId = async (nombre: string, marca: string, modelo: string,
 
             }
         }).then(res => {
-            respuesta = parse(utf8.decode(res.data));
+            //con esta validacion verifica si debe hacer decode
+            let resData:string;
+            if (/Ã[\x80-\xBF]|Â[\x80-\xBF]|â[\x80-\xBF]|�/.test(res.data)){
+               resData = utf8.decode(res.data);
+            }else{
+               resData = res.data;
+            }
+            
+            respuesta = parse(resData);
 
         }).catch(err => {
         
