@@ -1,7 +1,8 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 
-import { NavigationContainer,DarkTheme } from '@react-navigation/native';
+import { NavigationContainer, DarkTheme } from '@react-navigation/native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 
 
@@ -10,21 +11,23 @@ import { DrawerNavigation } from './src/Navigation/DrawerNavigation';
 
 
 
-const AppState=({children}:{children:JSX.Element|JSX.Element[]})=>{
-  return(
+const AppState = ({ children }: { children: JSX.Element | JSX.Element[] }) => {
+  return (
     <AuthProvider>
-    {children}
+      {children}
     </AuthProvider>
   )
 }
 
- const App = () => {
+const App = () => {
   return (
-    <NavigationContainer theme={DarkTheme}>
-      <AppState>
-        <DrawerNavigation/>
-      </AppState>
-    </NavigationContainer>
+    <SafeAreaProvider>
+      <NavigationContainer theme={DarkTheme}>
+        <AppState>
+          <DrawerNavigation />
+        </AppState>
+      </NavigationContainer>
+    </SafeAreaProvider>
   )
 }
 

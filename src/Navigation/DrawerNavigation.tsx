@@ -4,7 +4,8 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import SplashScreen from 'react-native-splash-screen'
 
 import { TopTapNavigator } from './TopTapNavigator';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { ContactScreen } from '../screens/ContactScreen';
 import { useNetInfo } from '@react-native-community/netinfo';
 import { MenuInterno } from '../components/DrawerMenuFlatList';
