@@ -7751,7 +7751,7 @@ __metadata:
     react-native-modal-datetime-picker: "npm:^11.0.0"
     react-native-network-info: "npm:^5.2.1"
     react-native-pager-view: "npm:^6.4.1"
-    react-native-reanimated: "npm:3.15.1"
+    react-native-reanimated: "npm:3.18.0"
     react-native-redash: "npm:^18.1.3"
     react-native-safe-area-context: "npm:^5.6.1"
     react-native-screens: "npm:^3.34.0"
@@ -7763,7 +7763,7 @@ __metadata:
     react-native-splash-screen: "npm:^3.3.0"
     react-native-step-indicator: "npm:^1.0.3"
     react-native-store-version: "npm:^1.3.2"
-    react-native-svg: "npm:^12.1.1"
+    react-native-svg: "npm:^15.8.0"
     react-native-tab-view: "npm:^3.5.2"
     react-native-vector-icons: "npm:^10.1.0"
     react-native-webview: "npm:^13.12.2"
@@ -8851,6 +8851,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-is-edge-to-edge@npm:1.1.7":
+  version: 1.1.7
+  resolution: "react-native-is-edge-to-edge@npm:1.1.7"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 10c0/b7a37437f439b1e27a4d980de01994aa71b9091dc3ed00c21172d5505fb11978cd5ed3a43f97c89d502a3a08cf26e5cea6435b8d6e93d3557a92dd43563f7021
+  languageName: node
+  linkType: hard
+
 "react-native-linear-gradient@npm:^2.8.3":
   version: 2.8.3
   resolution: "react-native-linear-gradient@npm:2.8.3"
@@ -8892,9 +8902,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-reanimated@npm:3.15.1":
-  version: 3.15.1
-  resolution: "react-native-reanimated@npm:3.15.1"
+"react-native-reanimated@npm:3.18.0":
+  version: 3.18.0
+  resolution: "react-native-reanimated@npm:3.18.0"
   dependencies:
     "@babel/plugin-transform-arrow-functions": "npm:^7.0.0-0"
     "@babel/plugin-transform-class-properties": "npm:^7.0.0-0"
@@ -8907,11 +8917,12 @@ __metadata:
     "@babel/preset-typescript": "npm:^7.16.7"
     convert-source-map: "npm:^2.0.0"
     invariant: "npm:^2.2.4"
+    react-native-is-edge-to-edge: "npm:1.1.7"
   peerDependencies:
     "@babel/core": ^7.0.0-0
     react: "*"
     react-native: "*"
-  checksum: 10c0/d402ecc602617093cf464d315aa4c0a3e42431a9c41d027f2f2f276ec44801c668dd5c64925de8c1cd5db478908a5a62d186684c2373a27053afe47d7002fe06
+  checksum: 10c0/7420f410a76b2a46f1a0a7df41f8b2508aade8de26fd00eb7305bf25b3ab27e7c06f52ec76d221d8c7317ca3e2bdf842c51216f2adba7fbb60ce321c171d1437
   languageName: node
   linkType: hard
 
@@ -9032,16 +9043,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-svg@npm:^12.1.1":
-  version: 12.5.1
-  resolution: "react-native-svg@npm:12.5.1"
+"react-native-svg@npm:^15.8.0":
+  version: 15.13.0
+  resolution: "react-native-svg@npm:15.13.0"
   dependencies:
     css-select: "npm:^5.1.0"
     css-tree: "npm:^1.1.3"
+    warn-once: "npm:0.1.1"
   peerDependencies:
     react: "*"
-    react-native: ">=0.50.0"
-  checksum: 10c0/20fc5f9ac4c2a841aa4087d202c23f20ab7d49c4a7aa4f82307b08fd3962bae8008942a4b95bc16250b72c94829e3a858f29716f388a924c7feb58e030ee08d7
+    react-native: "*"
+  checksum: 10c0/89ba2ed640f78e69d44980473530fdb83e24336a1a43936e19f532e772c41e8532ee1d4f3ae003339e817a3e3b055aa2a8ee3c0da31754cd2c83fa1a81130d6a
   languageName: node
   linkType: hard
 
@@ -10603,7 +10615,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"warn-once@npm:^0.1.0":
+"warn-once@npm:0.1.1, warn-once@npm:^0.1.0":
   version: 0.1.1
   resolution: "warn-once@npm:0.1.1"
   checksum: 10c0/f531e7b2382124f51e6d8f97b8c865246db8ab6ff4e53257a2d274e0f02b97d7201eb35db481843dc155815e154ad7afb53b01c4d4db15fb5aa073562496aff7
