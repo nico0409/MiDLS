@@ -1,4 +1,3 @@
-
 {
   "extends": "@react-native/typescript-config/tsconfig.json",
   "include": ["node_modules/react-native-redash/lib/typescript/index.d.ts"]

@@ -1,18 +1,5 @@
 Existen cambios personalizados en dependencias de terceros para tomar en cuenta
-para esta version de react-native(0.75.2):
-
-"react-native-reanimated": "^3.15.1":
-En la documentacion de esta version menciona de configurar nuestro metro.config.js:
-"Step 3: Wrap metro config with reanimated wrapper (recommended)
-Wrap your existing Metro configuration in the metro.config.js file with the wrapWithReanimatedMetroConfig function."
-Pero el problema fue que no se descargaban los siguientes archivos de la libreria(no se si es debido a yarn o la misma libreria).
-La solucion fue buscar los archivos en el github de la dependencia y insertarlo manualmente en nuestro node_modules:
-node_modules/react-native-reanimated/metro-config
-node_modules/react-native-reanimated/tsconfig.json
-
-Los archivos de la dependencia los pueden encontrar en esta ruta de este proyecto(para backup):
-src/customBackup/node_modules/react-native-reanimated-3.15.1
-
+para esta version de react-native(0.76.3):
 
 "react-native-tab-view": "^3.5.2" (esta dependencia tiene relacion con @react-navigation)
 En este caso, metro nos daba el siguiente error:
