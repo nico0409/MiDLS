@@ -1,6 +1,6 @@
 import React, { useContext, useRef, useState } from 'react'
 import { Dimensions, Image, Text, View, StyleSheet, TouchableOpacity, ScrollView, Platform } from 'react-native';
-import Carousel, { Pagination } from 'react-native-snap-carousel';
+import Carousel, { Pagination } from 'react-native-snap-carousel-v4';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { useSharedValue, useAnimatedStyle, withTiming, withDelay } from 'react-native-reanimated';
 import { items } from '../data/SlideData';
@@ -119,13 +119,14 @@ export const SlidesScreen = ({ navigation }: Props) => {
             <Carousel
                 //ref={(c) => { this._carousel = c; }}
                 data={items}
-                renderItem={({ item }: { item: Slide }) => renderItem(item)}
+                renderItem={({ item }) => renderItem(item)}
                 ref={carouselRef}
                 sliderWidth={screenWidth}
                 itemWidth={screenWidth}
                 scrollEnabled={false}
                 layout="default"
                 inactiveSlideOpacity={1}
+                vertical={false}
                 onSnapToItem={(index) => {
                     setActivIndex(index)
                     index === items.length - 1 && runWidthAnimation()
