@@ -12,7 +12,6 @@
 
 namespace facebook::react {
 
-extern const char LEGACY_RNCViewPagerComponentName[] = "LEGACY_RNCViewPager";
 extern const char RNCViewPagerComponentName[] = "RNCViewPager";
 
 } // namespace facebook::react

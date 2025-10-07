@@ -1,7 +1,8 @@
 #import "AppDelegate.h"
 
 #import <React/RCTBundleURLProvider.h>
-#import "RNSplashScreen.h"  // here
+//#import "RNSplashScreen.h"  // here
+#import "RNBootSplash.h"
 
 @implementation AppDelegate
 
@@ -11,7 +12,8 @@
     // You can add your custom initial props in the dictionary below.
   // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};
-  [RNSplashScreen show];  // here
+  //[RNSplashScreen show];  // here
+  [RNBootSplash initWithStoryboard:@"BootSplash" rootView:self.window.rootViewController.view];
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
 

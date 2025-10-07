@@ -21,6 +21,8 @@
 		849EFFE726A923C2001EB59F /* web_hi_res_512.png in Resources */ = {isa = PBXBuildFile; fileRef = 849EFFE626A923C1001EB59F /* web_hi_res_512.png */; };
 		A32EA6F057FD031D7414866A /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 17162144F7B414E11A6E1BD7 /* PrivacyInfo.xcprivacy */; };
 		D828606CAA9BF8E26FEE3DDC /* libPods-MiDLS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36EEF1E43FB494147FA128CB /* libPods-MiDLS.a */; };
+		A6390D608C9E424AACA39ECF /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2291795D95D04694AEE29E4F /* BootSplash.storyboard */; };
+		DA3F1919CD50427C9B91D595 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD6F3C21DA2B4EFF8FC1237F /* Colors.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +78,8 @@
 		EB79FB884B6C4077ADD141EA /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F5C78FA63883CC7CEBB5E472 /* Pods-MiDLS-MiDLSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MiDLS-MiDLSTests.debug.xcconfig"; path = "Target Support Files/Pods-MiDLS-MiDLSTests/Pods-MiDLS-MiDLSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		2291795D95D04694AEE29E4F /* BootSplash.storyboard */ = {isa = PBXFileReference; name = "BootSplash.storyboard"; path = "MiDLS/BootSplash.storyboard"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		FD6F3C21DA2B4EFF8FC1237F /* Colors.xcassets */ = {isa = PBXFileReference; name = "Colors.xcassets"; path = "MiDLS/Colors.xcassets"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = folder.assetcatalog; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +131,8 @@
 				13B07FB71A68108700A75B9A /* main.m */,
 				13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */,
 				17162144F7B414E11A6E1BD7 /* PrivacyInfo.xcprivacy */,
+				2291795D95D04694AEE29E4F /* BootSplash.storyboard */,
+				FD6F3C21DA2B4EFF8FC1237F /* Colors.xcassets */,
 			);
 			name = MiDLS;
 			sourceTree = "<group>";
@@ -324,6 +330,8 @@
 				845C5299269F4FCE00921287 /* Ionicons.js in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				A32EA6F057FD031D7414866A /* PrivacyInfo.xcprivacy in Resources */,
+				A6390D608C9E424AACA39ECF /* BootSplash.storyboard in Resources */,
+				DA3F1919CD50427C9B91D595 /* Colors.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -398,13 +406,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-MiDLS/Pods-MiDLS-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-MiDLS/Pods-MiDLS-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -419,13 +423,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-MiDLS-MiDLSTests/Pods-MiDLS-MiDLSTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-MiDLS-MiDLSTests/Pods-MiDLS-MiDLSTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -440,13 +440,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-MiDLS-MiDLSTests/Pods-MiDLS-MiDLSTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-MiDLS-MiDLSTests/Pods-MiDLS-MiDLSTests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -461,13 +457,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-MiDLS/Pods-MiDLS-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-MiDLS/Pods-MiDLS-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -724,7 +716,10 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
@@ -797,7 +792,10 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;

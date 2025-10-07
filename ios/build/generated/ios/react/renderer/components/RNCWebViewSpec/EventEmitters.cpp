@@ -87,6 +87,23 @@ $payload.setProperty(runtime, "description", $event.description);
 }
 
 
+void RNCWebViewEventEmitter::onLoadingSubResourceError(OnLoadingSubResourceError $event) const {
+  dispatchEvent("loadingSubResourceError", [$event=std::move($event)](jsi::Runtime &runtime) {
+    auto $payload = jsi::Object(runtime);
+    $payload.setProperty(runtime, "url", $event.url);
+$payload.setProperty(runtime, "loading", $event.loading);
+$payload.setProperty(runtime, "title", $event.title);
+$payload.setProperty(runtime, "canGoBack", $event.canGoBack);
+$payload.setProperty(runtime, "canGoForward", $event.canGoForward);
+$payload.setProperty(runtime, "lockIdentifier", $event.lockIdentifier);
+$payload.setProperty(runtime, "domain", $event.domain);
+$payload.setProperty(runtime, "code", $event.code);
+$payload.setProperty(runtime, "description", $event.description);
+    return $payload;
+  });
+}
+
+
 void RNCWebViewEventEmitter::onLoadingFinish(OnLoadingFinish $event) const {
   dispatchEvent("loadingFinish", [$event=std::move($event)](jsi::Runtime &runtime) {
     auto $payload = jsi::Object(runtime);

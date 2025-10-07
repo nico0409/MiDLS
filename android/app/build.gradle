@@ -137,7 +137,7 @@ dependencies {
 
     implementation 'org.jetbrains:annotations:16.0.2' 
 
-    implementation project(':react-native-splash-screen')
+    //implementation project(':react-native-splash-screen')
     //implementation project(':react-native-vector-icons')
     
     implementation project(':react-native-send-intent')

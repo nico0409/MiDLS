@@ -49,6 +49,16 @@
                       reject:(RCTPromiseRejectBlock)reject;
 
 @end
+
+@interface NativeRNVectorIconsSpecBase : NSObject {
+@protected
+facebook::react::EventEmitterCallback _eventEmitterCallback;
+}
+- (void)setEventEmitterCallback:(EventEmitterCallbackWrapper *)eventEmitterCallbackWrapper;
+
+
+@end
+
 namespace facebook::react {
   /**
    * ObjC++ class for module 'NativeRNVectorIcons'

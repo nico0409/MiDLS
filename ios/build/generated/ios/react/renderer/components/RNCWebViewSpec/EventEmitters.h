@@ -61,6 +61,18 @@ class RNCWebViewEventEmitter : public ViewEventEmitter {
     std::string description;
     };
 
+  struct OnLoadingSubResourceError {
+      std::string url;
+    bool loading;
+    std::string title;
+    bool canGoBack;
+    bool canGoForward;
+    double lockIdentifier;
+    std::string domain;
+    int code;
+    std::string description;
+    };
+
   enum class OnLoadingFinishNavigationType {
     Click,
     Formsubmit,
@@ -243,6 +255,8 @@ class RNCWebViewEventEmitter : public ViewEventEmitter {
   void onFileDownload(OnFileDownload value) const;
 
   void onLoadingError(OnLoadingError value) const;
+
+  void onLoadingSubResourceError(OnLoadingSubResourceError value) const;
 
   void onLoadingFinish(OnLoadingFinish value) const;
 

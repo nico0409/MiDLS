@@ -14,22 +14,6 @@
 
 namespace facebook::react {
 
-LEGACY_RNCViewPagerProps::LEGACY_RNCViewPagerProps(
-    const PropsParserContext &context,
-    const LEGACY_RNCViewPagerProps &sourceProps,
-    const RawProps &rawProps): ViewProps(context, sourceProps, rawProps),
-
-    scrollEnabled(convertRawProp(context, rawProps, "scrollEnabled", sourceProps.scrollEnabled, {true})),
-    layoutDirection(convertRawProp(context, rawProps, "layoutDirection", sourceProps.layoutDirection, {LEGACY_RNCViewPagerLayoutDirection::Ltr})),
-    initialPage(convertRawProp(context, rawProps, "initialPage", sourceProps.initialPage, {0})),
-    orientation(convertRawProp(context, rawProps, "orientation", sourceProps.orientation, {LEGACY_RNCViewPagerOrientation::Horizontal})),
-    offscreenPageLimit(convertRawProp(context, rawProps, "offscreenPageLimit", sourceProps.offscreenPageLimit, {0})),
-    pageMargin(convertRawProp(context, rawProps, "pageMargin", sourceProps.pageMargin, {0})),
-    overScrollMode(convertRawProp(context, rawProps, "overScrollMode", sourceProps.overScrollMode, {LEGACY_RNCViewPagerOverScrollMode::Auto})),
-    overdrag(convertRawProp(context, rawProps, "overdrag", sourceProps.overdrag, {false})),
-    keyboardDismissMode(convertRawProp(context, rawProps, "keyboardDismissMode", sourceProps.keyboardDismissMode, {LEGACY_RNCViewPagerKeyboardDismissMode::None})),
-    useLegacy(convertRawProp(context, rawProps, "useLegacy", sourceProps.useLegacy, {true}))
-      {}
 RNCViewPagerProps::RNCViewPagerProps(
     const PropsParserContext &context,
     const RNCViewPagerProps &sourceProps,
@@ -43,8 +27,7 @@ RNCViewPagerProps::RNCViewPagerProps(
     pageMargin(convertRawProp(context, rawProps, "pageMargin", sourceProps.pageMargin, {0})),
     overScrollMode(convertRawProp(context, rawProps, "overScrollMode", sourceProps.overScrollMode, {RNCViewPagerOverScrollMode::Auto})),
     overdrag(convertRawProp(context, rawProps, "overdrag", sourceProps.overdrag, {false})),
-    keyboardDismissMode(convertRawProp(context, rawProps, "keyboardDismissMode", sourceProps.keyboardDismissMode, {RNCViewPagerKeyboardDismissMode::None})),
-    useLegacy(convertRawProp(context, rawProps, "useLegacy", sourceProps.useLegacy, {true}))
+    keyboardDismissMode(convertRawProp(context, rawProps, "keyboardDismissMode", sourceProps.keyboardDismissMode, {RNCViewPagerKeyboardDismissMode::None}))
       {}
 
 } // namespace facebook::react

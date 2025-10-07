@@ -18,17 +18,6 @@
 
 namespace facebook::react {
 
-JSI_EXPORT extern const char LEGACY_RNCViewPagerComponentName[];
-
-/*
- * `ShadowNode` for <LEGACY_RNCViewPager> component.
- */
-using LEGACY_RNCViewPagerShadowNode = ConcreteViewShadowNode<
-    LEGACY_RNCViewPagerComponentName,
-    LEGACY_RNCViewPagerProps,
-    LEGACY_RNCViewPagerEventEmitter,
-    LEGACY_RNCViewPagerState>;
-
 JSI_EXPORT extern const char RNCViewPagerComponentName[];
 
 /*

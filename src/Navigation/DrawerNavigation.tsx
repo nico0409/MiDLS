@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
-import SplashScreen from 'react-native-splash-screen'
+import BootSplash from "react-native-bootsplash";
 
 import { TopTapNavigator } from './TopTapNavigator';
 import { StyleSheet } from 'react-native';
@@ -56,7 +56,7 @@ export const DrawerNavigation = () => {
       else {
 
         setendGetPrompt(true);
-        SplashScreen.hide();
+        BootSplash.hide({fade:true});
       }
 
     }
@@ -79,7 +79,7 @@ export const DrawerNavigation = () => {
 
     }
     
-    SplashScreen.hide();
+    BootSplash.hide({fade:true});
     setendGetPrompt(true);
   }
 

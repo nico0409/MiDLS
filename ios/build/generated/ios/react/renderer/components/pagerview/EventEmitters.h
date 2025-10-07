@@ -13,42 +13,6 @@
 
 
 namespace facebook::react {
-class LEGACY_RNCViewPagerEventEmitter : public ViewEventEmitter {
- public:
-  using ViewEventEmitter::ViewEventEmitter;
-
-  struct OnPageScroll {
-      double position;
-    double offset;
-    };
-
-  struct OnPageSelected {
-      double position;
-    };
-
-  enum class OnPageScrollStateChangedPageScrollState {
-    Idle,
-    Dragging,
-    Settling
-  };
-
-  static char const *toString(const OnPageScrollStateChangedPageScrollState value) {
-    switch (value) {
-      case OnPageScrollStateChangedPageScrollState::Idle: return "idle";
-      case OnPageScrollStateChangedPageScrollState::Dragging: return "dragging";
-      case OnPageScrollStateChangedPageScrollState::Settling: return "settling";
-    }
-  }
-
-  struct OnPageScrollStateChanged {
-      OnPageScrollStateChangedPageScrollState pageScrollState;
-    };
-  void onPageScroll(OnPageScroll value) const;
-
-  void onPageSelected(OnPageSelected value) const;
-
-  void onPageScrollStateChanged(OnPageScrollStateChanged value) const;
-};
 class RNCViewPagerEventEmitter : public ViewEventEmitter {
  public:
   using ViewEventEmitter::ViewEventEmitter;

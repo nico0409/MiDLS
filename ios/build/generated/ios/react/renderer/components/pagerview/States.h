@@ -14,18 +14,6 @@
 
 namespace facebook::react {
 
-class LEGACY_RNCViewPagerState {
-public:
-  LEGACY_RNCViewPagerState() = default;
-
-#ifdef ANDROID
-  LEGACY_RNCViewPagerState(LEGACY_RNCViewPagerState const &previousState, folly::dynamic data){};
-  folly::dynamic getDynamic() const {
-    return {};
-  };
-#endif
-};
-
 class RNCViewPagerState {
 public:
   RNCViewPagerState() = default;

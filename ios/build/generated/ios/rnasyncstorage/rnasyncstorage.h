@@ -45,6 +45,16 @@
 - (void)clear:(RCTResponseSenderBlock)callback;
 
 @end
+
+@interface NativeAsyncStorageModuleSpecBase : NSObject {
+@protected
+facebook::react::EventEmitterCallback _eventEmitterCallback;
+}
+- (void)setEventEmitterCallback:(EventEmitterCallbackWrapper *)eventEmitterCallbackWrapper;
+
+
+@end
+
 namespace facebook::react {
   /**
    * ObjC++ class for module 'NativeAsyncStorageModule'

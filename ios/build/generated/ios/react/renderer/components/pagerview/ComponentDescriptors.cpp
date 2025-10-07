@@ -16,7 +16,6 @@ namespace facebook::react {
 
 void pagerview_registerComponentDescriptorsFromCodegen(
   std::shared_ptr<const ComponentDescriptorProviderRegistry> registry) {
-registry->add(concreteComponentDescriptorProvider<LEGACY_RNCViewPagerComponentDescriptor>());
 registry->add(concreteComponentDescriptorProvider<RNCViewPagerComponentDescriptor>());
 }
 
