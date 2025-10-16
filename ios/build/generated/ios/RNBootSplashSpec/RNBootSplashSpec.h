@@ -30,6 +30,8 @@
 #import <optional>
 #import <vector>
 
+
+NS_ASSUME_NONNULL_BEGIN
 namespace JS {
   namespace NativeRNBootSplash {
     struct Constants {
@@ -105,4 +107,5 @@ inline JS::NativeRNBootSplash::Constants::Builder::Builder(const Input i) : _fac
 inline JS::NativeRNBootSplash::Constants::Builder::Builder(Constants i) : _factory(^{
   return i.unsafeRawValue();
 }) {}
+NS_ASSUME_NONNULL_END
 #endif // RNBootSplashSpec_H

@@ -30,6 +30,8 @@
 #import <optional>
 #import <vector>
 
+
+NS_ASSUME_NONNULL_BEGIN
 namespace JS {
   namespace NativeSafeAreaContext {
     struct ConstantsInitialWindowMetricsInsets {
@@ -220,4 +222,5 @@ inline JS::NativeSafeAreaContext::Constants::Builder::Builder(const Input i) : _
 inline JS::NativeSafeAreaContext::Constants::Builder::Builder(Constants i) : _factory(^{
   return i.unsafeRawValue();
 }) {}
+NS_ASSUME_NONNULL_END
 #endif // safeareacontext_H

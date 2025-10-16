@@ -31,6 +31,8 @@
 #import <vector>
 
 
+NS_ASSUME_NONNULL_BEGIN
+
 @protocol NativeRNCWebViewModuleSpec <RCTBridgeModule, RCTTurboModule>
 
 - (void)isFileUploadSupported:(RCTPromiseResolveBlock)resolve
@@ -59,4 +61,5 @@ namespace facebook::react {
   };
 } // namespace facebook::react
 
+NS_ASSUME_NONNULL_END
 #endif // RNCWebViewSpec_H

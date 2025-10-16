@@ -31,6 +31,8 @@
 #import <vector>
 
 
+NS_ASSUME_NONNULL_BEGIN
+
 @protocol NativeAsyncStorageModuleSpec <RCTBridgeModule, RCTTurboModule>
 
 - (void)multiGet:(NSArray *)keys
@@ -65,4 +67,5 @@ namespace facebook::react {
   };
 } // namespace facebook::react
 
+NS_ASSUME_NONNULL_END
 #endif // rnasyncstorage_H

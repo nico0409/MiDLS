@@ -31,6 +31,8 @@
 #import <vector>
 
 
+NS_ASSUME_NONNULL_BEGIN
+
 @protocol NativeRNGestureHandlerModuleSpec <RCTBridgeModule, RCTTurboModule>
 
 - (void)handleSetJSResponder:(double)tag
@@ -69,4 +71,5 @@ namespace facebook::react {
   };
 } // namespace facebook::react
 
+NS_ASSUME_NONNULL_END
 #endif // rngesturehandler_codegen_H

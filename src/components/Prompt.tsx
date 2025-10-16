@@ -406,7 +406,7 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
                     alignSelf: 'center',
                     height: height * 0.6,
                     width: width * 0.95,
-                    top: '20%'
+                    top: '15%'
                 }}>
                     <View style={{
                         ...styles.cardPrompt,
@@ -419,8 +419,8 @@ export const Prompt = ({ setemplid, onChange, promptType, form, setCardDescr, ca
                             placeholder={placeHolderSrch}
                             style={{
                                 ...styles.SearchInput,
-                                width: width - 40,
-                                top: (Platform.OS === 'ios') ? top : top + 10
+                                width: width - 40, 
+                                top: '5%'//(Platform.OS === 'ios') ? top : top + 10
                             }}
                             onSeeFlatList={setSeeFlatList}
                         />

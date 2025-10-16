@@ -31,6 +31,8 @@
 #import <vector>
 
 
+NS_ASSUME_NONNULL_BEGIN
+
 @protocol NativeScreensModuleSpec <RCTBridgeModule, RCTTurboModule>
 
 
@@ -56,4 +58,5 @@ namespace facebook::react {
   };
 } // namespace facebook::react
 
+NS_ASSUME_NONNULL_END
 #endif // rnscreens_H
