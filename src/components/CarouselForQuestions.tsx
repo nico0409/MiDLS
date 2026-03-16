@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
 import { Dimensions, ScrollView, Text, View } from 'react-native';
 import { QuestionsCmp } from './Questions';
-import Carousel, { Pagination } from 'react-native-snap-carousel';
+import Carousel, { Pagination } from 'react-native-snap-carousel-v4';
 import { questionsRGold } from '../interfaces/QuestionInterfaces';
 import { AuthContext } from '../context/formContext/AuthContext';
 import { Rulegold } from './Rulegold';
@@ -81,6 +81,7 @@ export const CarouselForQuestions = ({ data, moveCarousel, indexScreen }: Props)
                 sliderWidth={windowWidth}
                 itemWidth={windowWidth}
                 ref={carouselRef}
+                vertical={false}
                 onSnapToItem={(index) => {
                     setActiveIndex(index)
                 }}

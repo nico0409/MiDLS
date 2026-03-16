@@ -13,14 +13,24 @@ namespace facebook::react {
 
 static jsi::Value __hostFunction_NativeReanimatedModuleCxxSpecJSI_installTurboModule(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeReanimatedModuleCxxSpecJSI *>(&turboModule)->installTurboModule(
-    rt,
-    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asString(rt)
+    rt
   );
 }
 
 NativeReanimatedModuleCxxSpecJSI::NativeReanimatedModuleCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
   : TurboModule("ReanimatedModule", jsInvoker) {
-  methodMap_["installTurboModule"] = MethodMetadata {1, __hostFunction_NativeReanimatedModuleCxxSpecJSI_installTurboModule};
+  methodMap_["installTurboModule"] = MethodMetadata {0, __hostFunction_NativeReanimatedModuleCxxSpecJSI_installTurboModule};
+}
+static jsi::Value __hostFunction_NativeWorkletsModuleCxxSpecJSI_installTurboModule(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeWorkletsModuleCxxSpecJSI *>(&turboModule)->installTurboModule(
+    rt,
+    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asString(rt)
+  );
+}
+
+NativeWorkletsModuleCxxSpecJSI::NativeWorkletsModuleCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("WorkletsModule", jsInvoker) {
+  methodMap_["installTurboModule"] = MethodMetadata {1, __hostFunction_NativeWorkletsModuleCxxSpecJSI_installTurboModule};
 }
 
 

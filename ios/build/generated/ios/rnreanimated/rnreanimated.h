@@ -31,11 +31,23 @@
 #import <vector>
 
 
+NS_ASSUME_NONNULL_BEGIN
+
 @protocol NativeReanimatedModuleSpec <RCTBridgeModule, RCTTurboModule>
 
-- (NSNumber *)installTurboModule:(NSString *)valueUnpackerCode;
+- (NSNumber *)installTurboModule;
 
 @end
+
+@interface NativeReanimatedModuleSpecBase : NSObject {
+@protected
+facebook::react::EventEmitterCallback _eventEmitterCallback;
+}
+- (void)setEventEmitterCallback:(EventEmitterCallbackWrapper *)eventEmitterCallbackWrapper;
+
+
+@end
+
 namespace facebook::react {
   /**
    * ObjC++ class for module 'NativeReanimatedModule'
@@ -46,4 +58,31 @@ namespace facebook::react {
   };
 } // namespace facebook::react
 
+@protocol NativeWorkletsModuleSpec <RCTBridgeModule, RCTTurboModule>
+
+- (NSNumber *)installTurboModule:(NSString *)valueUnpackerCode;
+
+@end
+
+@interface NativeWorkletsModuleSpecBase : NSObject {
+@protected
+facebook::react::EventEmitterCallback _eventEmitterCallback;
+}
+- (void)setEventEmitterCallback:(EventEmitterCallbackWrapper *)eventEmitterCallbackWrapper;
+
+
+@end
+
+namespace facebook::react {
+  /**
+   * ObjC++ class for module 'NativeWorkletsModule'
+   */
+  class JSI_EXPORT NativeWorkletsModuleSpecJSI : public ObjCTurboModule {
+  public:
+    NativeWorkletsModuleSpecJSI(const ObjCTurboModule::InitParams &params);
+  };
+} // namespace facebook::react
+
+
+NS_ASSUME_NONNULL_END
 #endif // rnreanimated_H

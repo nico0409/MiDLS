@@ -6,7 +6,8 @@ import com.facebook.react.ReactActivityDelegate
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled
 import com.facebook.react.defaults.DefaultReactActivityDelegate
  
-import org.devio.rn.splashscreen.SplashScreen
+//import org.devio.rn.splashscreen.SplashScreen
+import com.zoontek.rnbootsplash.RNBootSplash;
 
 class MainActivity : ReactActivity() {
 
@@ -25,8 +26,10 @@ class MainActivity : ReactActivity() {
       DefaultReactActivityDelegate(this, mainComponentName, fabricEnabled)
 
   override fun onCreate(savedInstanceState: Bundle?) {
-      SplashScreen.show(this)
-      super.onCreate(null) // SplashScreen actually will call super.onCreate
+      //SplashScreen.show(this)
+      //super.onCreate(null) // SplashScreen actually will call super.onCreate
+      RNBootSplash.init(this, R.style.BootTheme)
+      super.onCreate(savedInstanceState)
     }
 
     // Clase interna para el delegado - react-native-screens

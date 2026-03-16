@@ -242,6 +242,23 @@ static inline std::string toString(const RNCWebViewMediaCapturePermissionGrantTy
     case RNCWebViewMediaCapturePermissionGrantType::GrantIfSameHostElseDeny: return "grantIfSameHostElseDeny";
   }
 }
+enum class RNCWebViewIndicatorStyle { Default, Black, White };
+
+static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, RNCWebViewIndicatorStyle &result) {
+  auto string = (std::string)value;
+  if (string == "default") { result = RNCWebViewIndicatorStyle::Default; return; }
+  if (string == "black") { result = RNCWebViewIndicatorStyle::Black; return; }
+  if (string == "white") { result = RNCWebViewIndicatorStyle::White; return; }
+  abort();
+}
+
+static inline std::string toString(const RNCWebViewIndicatorStyle &value) {
+  switch (value) {
+    case RNCWebViewIndicatorStyle::Default: return "default";
+    case RNCWebViewIndicatorStyle::Black: return "black";
+    case RNCWebViewIndicatorStyle::White: return "white";
+  }
+}
 struct RNCWebViewContentInsetStruct {
   double top{0.0};
   double left{0.0};
@@ -424,65 +441,67 @@ class RNCWebViewProps final : public ViewProps {
   bool nestedScrollEnabled{false};
   std::string overScrollMode{};
   bool saveFormDataDisabled{false};
-  bool scalesPageToFit{false};
-  bool setBuiltInZoomControls{false};
+  bool scalesPageToFit{true};
+  bool setBuiltInZoomControls{true};
   bool setDisplayZoomControls{false};
-  bool setSupportMultipleWindows{false};
+  bool setSupportMultipleWindows{true};
   int textZoom{0};
-  bool thirdPartyCookiesEnabled{false};
+  bool thirdPartyCookiesEnabled{true};
   bool hasOnScroll{false};
   std::string allowingReadAccessToURL{};
   bool allowsBackForwardNavigationGestures{false};
   bool allowsInlineMediaPlayback{false};
   bool allowsPictureInPictureMediaPlayback{false};
   bool allowsAirPlayForMediaPlayback{false};
-  bool allowsLinkPreview{false};
-  bool automaticallyAdjustContentInsets{false};
-  bool autoManageStatusBarEnabled{false};
-  bool bounces{false};
+  bool allowsLinkPreview{true};
+  bool automaticallyAdjustContentInsets{true};
+  bool autoManageStatusBarEnabled{true};
+  bool bounces{true};
   RNCWebViewContentInsetStruct contentInset{};
   RNCWebViewContentInsetAdjustmentBehavior contentInsetAdjustmentBehavior{RNCWebViewContentInsetAdjustmentBehavior::Never};
   RNCWebViewContentMode contentMode{RNCWebViewContentMode::Recommended};
   RNCWebViewDataDetectorTypesMask dataDetectorTypes{static_cast<RNCWebViewDataDetectorTypesMask>(RNCWebViewDataDetectorTypes::PhoneNumber)};
   double decelerationRate{0.0};
-  bool directionalLockEnabled{false};
+  bool directionalLockEnabled{true};
   bool enableApplePay{false};
   bool hideKeyboardAccessoryView{false};
-  bool keyboardDisplayRequiresUserAction{false};
+  bool keyboardDisplayRequiresUserAction{true};
   bool limitsNavigationsToAppBoundDomains{false};
   RNCWebViewMediaCapturePermissionGrantType mediaCapturePermissionGrantType{RNCWebViewMediaCapturePermissionGrantType::Prompt};
   bool pagingEnabled{false};
   bool pullToRefreshEnabled{false};
   bool refreshControlLightMode{false};
-  bool scrollEnabled{false};
+  bool scrollEnabled{true};
   bool sharedCookiesEnabled{false};
-  bool textInteractionEnabled{false};
-  bool useSharedProcessPool{false};
+  bool textInteractionEnabled{true};
+  bool useSharedProcessPool{true};
   std::vector<RNCWebViewMenuItemsStruct> menuItems{};
   std::vector<std::string> suppressMenuItems{};
   bool hasOnFileDownload{false};
-  bool fraudulentWebsiteWarningEnabled{false};
+  bool fraudulentWebsiteWarningEnabled{true};
   bool allowFileAccessFromFileURLs{false};
   bool allowUniversalAccessFromFileURLs{false};
   std::string applicationNameForUserAgent{};
   RNCWebViewBasicAuthCredentialStruct basicAuthCredential{};
-  bool cacheEnabled{false};
+  bool cacheEnabled{true};
   bool incognito{false};
   std::string injectedJavaScript{};
   std::string injectedJavaScriptBeforeContentLoaded{};
-  bool injectedJavaScriptForMainFrameOnly{false};
-  bool injectedJavaScriptBeforeContentLoadedForMainFrameOnly{false};
+  bool injectedJavaScriptForMainFrameOnly{true};
+  bool injectedJavaScriptBeforeContentLoadedForMainFrameOnly{true};
   bool javaScriptCanOpenWindowsAutomatically{false};
-  bool javaScriptEnabled{false};
+  bool javaScriptEnabled{true};
   bool webviewDebuggingEnabled{false};
-  bool mediaPlaybackRequiresUserAction{false};
+  bool mediaPlaybackRequiresUserAction{true};
   bool messagingEnabled{false};
   bool hasOnOpenWindowEvent{false};
-  bool showsHorizontalScrollIndicator{false};
-  bool showsVerticalScrollIndicator{false};
+  bool showsHorizontalScrollIndicator{true};
+  bool showsVerticalScrollIndicator{true};
+  RNCWebViewIndicatorStyle indicatorStyle{RNCWebViewIndicatorStyle::Default};
   RNCWebViewNewSourceStruct newSource{};
   std::string userAgent{};
   std::string injectedJavaScriptObject{};
+  bool paymentRequestEnabled{false};
 };
 
 } // namespace facebook::react

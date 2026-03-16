@@ -16,7 +16,6 @@
 
 namespace facebook::react {
 
-using LEGACY_RNCViewPagerComponentDescriptor = ConcreteComponentDescriptor<LEGACY_RNCViewPagerShadowNode>;
 using RNCViewPagerComponentDescriptor = ConcreteComponentDescriptor<RNCViewPagerShadowNode>;
 
 void pagerview_registerComponentDescriptorsFromCodegen(

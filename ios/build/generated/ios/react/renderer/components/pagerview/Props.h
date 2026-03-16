@@ -14,88 +14,6 @@
 
 namespace facebook::react {
 
-enum class LEGACY_RNCViewPagerLayoutDirection { Ltr, Rtl };
-
-static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, LEGACY_RNCViewPagerLayoutDirection &result) {
-  auto string = (std::string)value;
-  if (string == "ltr") { result = LEGACY_RNCViewPagerLayoutDirection::Ltr; return; }
-  if (string == "rtl") { result = LEGACY_RNCViewPagerLayoutDirection::Rtl; return; }
-  abort();
-}
-
-static inline std::string toString(const LEGACY_RNCViewPagerLayoutDirection &value) {
-  switch (value) {
-    case LEGACY_RNCViewPagerLayoutDirection::Ltr: return "ltr";
-    case LEGACY_RNCViewPagerLayoutDirection::Rtl: return "rtl";
-  }
-}
-enum class LEGACY_RNCViewPagerOrientation { Horizontal, Vertical };
-
-static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, LEGACY_RNCViewPagerOrientation &result) {
-  auto string = (std::string)value;
-  if (string == "horizontal") { result = LEGACY_RNCViewPagerOrientation::Horizontal; return; }
-  if (string == "vertical") { result = LEGACY_RNCViewPagerOrientation::Vertical; return; }
-  abort();
-}
-
-static inline std::string toString(const LEGACY_RNCViewPagerOrientation &value) {
-  switch (value) {
-    case LEGACY_RNCViewPagerOrientation::Horizontal: return "horizontal";
-    case LEGACY_RNCViewPagerOrientation::Vertical: return "vertical";
-  }
-}
-enum class LEGACY_RNCViewPagerOverScrollMode { Auto, Always, Never };
-
-static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, LEGACY_RNCViewPagerOverScrollMode &result) {
-  auto string = (std::string)value;
-  if (string == "auto") { result = LEGACY_RNCViewPagerOverScrollMode::Auto; return; }
-  if (string == "always") { result = LEGACY_RNCViewPagerOverScrollMode::Always; return; }
-  if (string == "never") { result = LEGACY_RNCViewPagerOverScrollMode::Never; return; }
-  abort();
-}
-
-static inline std::string toString(const LEGACY_RNCViewPagerOverScrollMode &value) {
-  switch (value) {
-    case LEGACY_RNCViewPagerOverScrollMode::Auto: return "auto";
-    case LEGACY_RNCViewPagerOverScrollMode::Always: return "always";
-    case LEGACY_RNCViewPagerOverScrollMode::Never: return "never";
-  }
-}
-enum class LEGACY_RNCViewPagerKeyboardDismissMode { None, OnDrag };
-
-static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, LEGACY_RNCViewPagerKeyboardDismissMode &result) {
-  auto string = (std::string)value;
-  if (string == "none") { result = LEGACY_RNCViewPagerKeyboardDismissMode::None; return; }
-  if (string == "on-drag") { result = LEGACY_RNCViewPagerKeyboardDismissMode::OnDrag; return; }
-  abort();
-}
-
-static inline std::string toString(const LEGACY_RNCViewPagerKeyboardDismissMode &value) {
-  switch (value) {
-    case LEGACY_RNCViewPagerKeyboardDismissMode::None: return "none";
-    case LEGACY_RNCViewPagerKeyboardDismissMode::OnDrag: return "on-drag";
-  }
-}
-
-class LEGACY_RNCViewPagerProps final : public ViewProps {
- public:
-  LEGACY_RNCViewPagerProps() = default;
-  LEGACY_RNCViewPagerProps(const PropsParserContext& context, const LEGACY_RNCViewPagerProps &sourceProps, const RawProps &rawProps);
-
-#pragma mark - Props
-
-  bool scrollEnabled{true};
-  LEGACY_RNCViewPagerLayoutDirection layoutDirection{LEGACY_RNCViewPagerLayoutDirection::Ltr};
-  int initialPage{0};
-  LEGACY_RNCViewPagerOrientation orientation{LEGACY_RNCViewPagerOrientation::Horizontal};
-  int offscreenPageLimit{0};
-  int pageMargin{0};
-  LEGACY_RNCViewPagerOverScrollMode overScrollMode{LEGACY_RNCViewPagerOverScrollMode::Auto};
-  bool overdrag{false};
-  LEGACY_RNCViewPagerKeyboardDismissMode keyboardDismissMode{LEGACY_RNCViewPagerKeyboardDismissMode::None};
-  bool useLegacy{true};
-};
-
 enum class RNCViewPagerLayoutDirection { Ltr, Rtl };
 
 static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, RNCViewPagerLayoutDirection &result) {
@@ -175,7 +93,6 @@ class RNCViewPagerProps final : public ViewProps {
   RNCViewPagerOverScrollMode overScrollMode{RNCViewPagerOverScrollMode::Auto};
   bool overdrag{false};
   RNCViewPagerKeyboardDismissMode keyboardDismissMode{RNCViewPagerKeyboardDismissMode::None};
-  bool useLegacy{true};
 };
 
 } // namespace facebook::react

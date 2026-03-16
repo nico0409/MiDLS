@@ -8,7 +8,6 @@ import { listRedesDLS } from '../data/listRedes';
 import { colors, styless } from '../Themes/DlsTheme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { FlatListRedes } from './FlatListRedes';
-import { color } from 'react-native-reanimated';
 
 
 const { height } = Dimensions.get("window");
@@ -20,8 +19,8 @@ export const RedesContent = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.textRedes}>DLS Latinoamérica</Text>
-            <FlatListRedes lista={listRedesDLS} setVisible={setIsVisible} setPressedRow={setPressedRow} owner='DLS' />
+            {/* <Text style={styles.textRedes}>DLS Latinoamérica</Text>
+            <FlatListRedes lista={listRedesDLS} setVisible={setIsVisible} setPressedRow={setPressedRow} owner='DLS' /> */}
             <Text style={{ ...styles.textRedes }}>Archer - the well company</Text>
             <View style={{ height: '40%' }}>
                 <FlatListRedes lista={listRedesDLS} setVisible={setIsVisible} setPressedRow={setPressedRow} owner='ARCHER' />
@@ -57,7 +56,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         // paddingTop: '5%'
-        margin: 5
+        marginLeft: 10,
+        justifyContent: 'space-evenly',
 
 
     },

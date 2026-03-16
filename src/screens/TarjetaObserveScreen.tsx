@@ -210,7 +210,7 @@ export const TarjetaObserveScreen = ({ navigation, route }: Props) => {
                         width: ScreenWidt - 80,
 
                         borderRadius: 100,
-                        top: (Platform.OS === 'ios') ? top : top + 10
+                        top: '10%' //(Platform.OS === 'ios') ? top : top + 10
                     }
                     }
                     term={term}

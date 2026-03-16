@@ -1,7 +1,7 @@
 import React, { useRef, useState, useContext, useEffect } from 'react'
 import { SafeAreaView, Dimensions, View, Text, TouchableOpacity, StyleSheet, Platform, ToastAndroid, Alert } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
-import Carousel from 'react-native-snap-carousel';
+import Carousel from 'react-native-snap-carousel-v4';
 import StepIndicator from 'react-native-step-indicator';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { colors } from '../Themes/DlsTheme';
@@ -180,6 +180,7 @@ export const CreateObserveScreen = ({ navigation }: Props) => {
                     sliderWidth={windowWidth}
                     itemWidth={windowWidth}
                     ref={carouselRef}
+                    vertical={false}
                     onSnapToItem={(index) => {
                         setActiveIndex(index)
                     }}
