@@ -112,10 +112,11 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
               return true; // Esto previene el comportamiento por defecto
             };
         
-            BackHandler.addEventListener('hardwareBackPress', onBackPress);
-        
+            const subscription = BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
             return () =>
-              BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+                subscription.remove();
+            //   BackHandler.removeEventListener('hardwareBackPress', onBackPress);
           }, [navigation])
         );
 

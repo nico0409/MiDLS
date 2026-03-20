@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
-import { SafeAreaView, View, StyleSheet, Dimensions, Platform, ToastAndroid, Alert } from 'react-native';
+import { SafeAreaView, View, StyleSheet, Dimensions, Platform, ToastAndroid, Alert,TouchableOpacity } from 'react-native';
 import Animated, { useSharedValue, withTiming, withDelay, useAnimatedStyle, interpolate, interpolateColor } from 'react-native-reanimated';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+// import { TouchableOpacity } from 'react-native-gesture-handler';
 import { colors } from '../Themes/DlsTheme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import StepIndicator from 'react-native-step-indicator';
@@ -153,7 +153,7 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
 
     const runAnimation = (nextPrev: 'next' | 'prev') => {
 
-        opacityPagesValue.value = withTiming(1, { duration: 200 });
+        /* opacityPagesValue.value = withTiming(1, { duration: 200 });
 
         animatedBGCircleValue.value = nextPrev === 'next' ? 0 : 1;
         animatedBGCircleValue.value = withTiming(nextPrev === 'next' ? 1 : 0, { duration }, () => {
@@ -162,10 +162,10 @@ export const CreateObserveQuestionsPage = ({ navigation, route }: Props) => {
 
         animatedBGColorValue.value = withTiming((activeIndex % 2) === 0 ? 1 : 0, { duration });
 
-        /*  setTrasladeCarousel(nextPrev === 'next' ? trasladeCarousel - windowWidth : trasladeCarousel + windowWidth); */
+        //  setTrasladeCarousel(nextPrev === 'next' ? trasladeCarousel - windowWidth : trasladeCarousel + windowWidth);
 
         //para iconos
-        setCurrentColor(currentColor === colors.dlsGrayPrimary ? colors.dlsYellowSecondary : colors.dlsGrayPrimary);
+        setCurrentColor(currentColor === colors.dlsGrayPrimary ? colors.dlsYellowSecondary : colors.dlsGrayPrimary); */
 
         setActiveIndex(nextPrev === 'next' ? activeIndex + 1 : activeIndex - 1);
     }
