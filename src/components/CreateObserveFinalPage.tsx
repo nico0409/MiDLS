@@ -102,7 +102,8 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
     }, [])
 
     const runNavigationPop = () => {
-        navigation.pop(3)
+        // navigation.pop(3)
+        navigation.popToTop()
     };
 
     useFocusEffect(
