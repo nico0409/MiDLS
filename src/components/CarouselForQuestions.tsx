@@ -60,7 +60,7 @@ export const CarouselForQuestions = ({ data, moveCarousel, indexScreen }: Props)
             case 3:
                 return (
                     <ScrollView>
-                    <QuestionsCmp questiontType={item.questionsRGold![0]} form={form} onChange={onChange} darkText/>
+                    <QuestionsCmp questiontType={item.questionsRGold![0]} form={form} onChange={onChange} /* darkText *//>
                     </ScrollView>
                 );
             default:

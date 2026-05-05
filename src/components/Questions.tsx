@@ -90,7 +90,7 @@ export const QuestionsCmp = ({ form, questiontType, onChange, darkText = false }
             <BouncyCheckboxGroup
               data={data[0]?.choices!}
               style={{ flexDirection: "column" }}
-              initial={initialValue}
+              initial={Number(initialValue)}
               onChange={(selectedItem: CheckboxButton) => {
                 if(selectedItem===undefined){
                   onChange('', data[0].field)
