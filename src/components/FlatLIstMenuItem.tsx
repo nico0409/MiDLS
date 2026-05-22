@@ -2,17 +2,22 @@ import React, { useContext } from 'react'
 import { Text, View, StyleSheet, TouchableOpacity, Linking,Platform,Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { MenuItem } from '../interfaces/appInterfaces';
-import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types';
+import {
+  DrawerContentComponentProps
+} from '@react-navigation/drawer';
 import { colors } from '../Themes/DlsTheme';
 import { NavigationContext } from '../context/NavigateContext';
 import SendIntentAndroid from 'react-native-send-intent';
 
 interface Props {
     menuItem: MenuItem
-    navigation?: DrawerNavigationHelpers
+    drawerNavigation: DrawerContentComponentProps
 }
 
-export const FlatLIstMenuItem = ({ menuItem, navigation }: Props) => {
+export const FlatLIstMenuItem = ({ menuItem, drawerNavigation }: Props) => {
+
+  const { navigation } = drawerNavigation;
+
     const { setstate } = useContext(NavigationContext)
 
     const openExtApp = () => {

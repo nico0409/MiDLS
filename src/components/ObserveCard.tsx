@@ -1,40 +1,43 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { Text, TouchableOpacity, View, StyleSheet, Dimensions, Image, Button ,Animated} from 'react-native';
-
-
-
-
+import { Text, TouchableOpacity, View, StyleSheet, Dimensions, Animated } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { DlhrAllObserve } from '../interfaces/prompInterfaces';
 import { colors } from '../Themes/DlsTheme';
-import { transform } from '@babel/core';
-import { Extrapolate } from 'react-native-reanimated';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
+type RootStackParams = {
+    EditObvservCardScreen: {
+        busineesUnit?: string;
+        IdentifDt?: string;
+        Ntarjeta?: string;
+    };
+};
 
-
-
+type NavigationProp = NativeStackNavigationProp<RootStackParams>;
 
 const windowWhidth = Dimensions.get('window').width
 const height = Dimensions.get('window').height
 
 interface props {
-    y:Animated.Value
+    y: Animated.Value
     observe: DlhrAllObserve
     setTerm: (string: string) => void
-    index:number
+    index: number
 }
 
-export const ObserveCard = ({ observe, setTerm, y,index }: props) => {
+export const ObserveCard = ({ observe, setTerm, y, index }: props) => {
 
 
     const isMounted = useRef(true)
-    const navigation = useNavigation();
+    // const navigation = useNavigation();
 
-const translateY=  Animated.add(y,y.interpolate({
-    inputRange:[0,0.00001+index * (height * 0.25)],
-    outputRange:[0,index * (height * 0.25)] ,
-    extrapolateRight:"clamp",
-}))  
+    const navigation = useNavigation<NavigationProp>();
+
+    const translateY = Animated.add(y, y.interpolate({
+        inputRange: [0, 0.00001 + index * (height * 0.25)],
+        outputRange: [0, index * (height * 0.25)],
+        extrapolateRight: "clamp",
+    }))
 
 
     return (
@@ -42,21 +45,22 @@ const translateY=  Animated.add(y,y.interpolate({
 
             activeOpacity={0.9}
             onPress={
-                () => (navigation.navigate('EditObvservCardScreen' ,
+                () => (navigation.navigate('EditObvservCardScreen',
                     {
                         busineesUnit: observe.BUSINESS_UNIT,
                         IdentifDt: observe.DL_IDENTIF_DT,
                         Ntarjeta: observe.NroTarjeta
-                    } ), setTerm(''))
+                    }), setTerm(''))
             }
         >
             <Animated.View style={
-                [ {...styles.cardContainer,
+                [{
+                    ...styles.cardContainer,
                     width: windowWhidth * 0.8,
                     height: height * 0.25,
                     backgroundColor: colors.dlsGrayPrimary,
                 },
-                 { transform : [{translateY}]}]
+                { transform: [{ translateY }] }]
             }>
                 <View>
                     <Text style={styles.name}>

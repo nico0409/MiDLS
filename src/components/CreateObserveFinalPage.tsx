@@ -109,7 +109,8 @@ export const CreateObserveFinalPage = ({ navigation }: Props) => {
     useFocusEffect(
         useCallback(() => {
             const onBackPress = () => {
-              navigation.pop(3)
+            //   navigation.pop(3)
+            navigation.popToTop()
               return true; // Esto previene el comportamiento por defecto
             };
         

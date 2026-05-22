@@ -95,7 +95,7 @@ export const MenuInterno = (DrawerNavigation: DrawerContentComponentProps) => {
 
         <FlatList
           data={menuItems}
-          renderItem={({ item }) => <FlatLIstMenuItem menuItem={item} navigation={navigation} />}
+          renderItem={({ item }) => <FlatLIstMenuItem menuItem={item} drawerNavigation={DrawerNavigation} />}
           keyExtractor={(item) => item.name}
           //ListHeaderComponent={ () => <HeaderTitle title="Opciones de menú"></HeaderTitle>}
           /* ListFooterComponent={() => <DrawerMenu />} */

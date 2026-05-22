@@ -3,13 +3,12 @@ import { View, StyleSheet, Text, Image } from 'react-native';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import { PropsRedes, PropsRedespro } from '../interfaces/PropsRedes';
+import { PropsRedes } from '../interfaces/PropsRedes';
 import { colors } from '../Themes/DlsTheme';
-import { color } from 'react-native-reanimated';
 
 const alternativePath = require('../assets/logoArcher.png');
 
-export const IconDescrRedes = ({ type, nameIcon, requireImage = alternativePath, color, size, descr ,index}: PropsRedespro) => {
+export const IconDescrRedes = ({ type, nameIcon, requireImage = alternativePath, color, size, descr ,index}: PropsRedes) => {
   
  
 

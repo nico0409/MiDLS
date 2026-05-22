@@ -41,6 +41,8 @@ export const GetPrompt = async (setIsErrorResponse: React.Dispatch<React.SetStat
          }
 
          setIsErrorResponse(false);
+         console.log(parse(resData));
+         
          respuesta = {
             PromptObserve: parse(resData),
             type: 'PromptObserveType'

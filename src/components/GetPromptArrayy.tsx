@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { StorageTypes, PromptObserveType, AllObserveType, DlhrAllObserve, PromptObserve, promptType, objUseForm } from '../interfaces/prompInterfaces';
+import { StorageTypes, PromptObserveType, AllObserveType, DlhrAllObserve, PromptObserve, promptType, objUseForm ,statusAuthStorage , lastDataUpdateDttm ,refreshLoadObserveBG} from '../interfaces/prompInterfaces';
 import { storageEmplid } from '../interfaces/storageInterface';
+import { DeviceID } from '../interfaces/deviceIdInterface';
 import { GetStorage } from './Storage';
 
 export const GetPromptArray = (promptypedata:promptType ) => {
     
     const promptype: StorageTypes = { StorageType: 'prompt' };
     
-    let prompt: PromptObserveType | AllObserveType | DlhrAllObserve[] |objUseForm[] |storageEmplid |undefined = {}
+    let prompt: PromptObserveType | AllObserveType | DlhrAllObserve[] | objUseForm[] | storageEmplid | statusAuthStorage | lastDataUpdateDttm | DeviceID | refreshLoadObserveBG| null = {}
 
    /*  const [PromptObserveList, setPromptObserveList] = useState<PromptObserve>({}) */
     const [PromptObArray, setPromptArray] = useState<any[]>([])

@@ -94,12 +94,12 @@ export const StackNavigatorObserve = ({ navigation }: Props) => {
                     <Icon name="chevron-back-outline" size={40} color={colors.dlsYellowSecondary} />
                 </TouchableOpacity>
 
-                <View style={{ flex: 1}}>
+                <View style={{ flex: 1 }}>
                     <View style={{
                         height: '50%',
                         justifyContent: 'center',
                         alignItems: 'center',
-                        
+
                     }}>
                         <Image source={require('../assets/login_img.png')}
                             style={{
@@ -111,8 +111,8 @@ export const StackNavigatorObserve = ({ navigation }: Props) => {
                         />
                     </View>
 
-                    <View style={{ flex: 1,paddingTop:20}}>
-                        <Text style={{ color: 'white', paddingHorizontal: 35,fontSize: 32, fontFamily: 'Stag-Semibold',textAlign:'center'}}>
+                    <View style={{ flex: 1, paddingTop: 20 }}>
+                        <Text style={{ color: 'white', paddingHorizontal: 35, fontSize: 32, fontFamily: 'Stag-Semibold', textAlign: 'center' }}>
                             Por  favor  inicie  sesión  en  la  aplicación  para  poder  utilizar  esta  funcionalidad.
                         </Text>
                     </View>
@@ -133,8 +133,10 @@ export const StackNavigatorObserve = ({ navigation }: Props) => {
                         <Loading />
                         :
                         <Stack.Navigator
+                            // detachInactiveScreens={false}
                             screenOptions={{
-                                headerShown: false
+                                headerShown: false,
+                                freezeOnBlur: false,
                             }}
                         >
                             {showWelcomeScreen &&
